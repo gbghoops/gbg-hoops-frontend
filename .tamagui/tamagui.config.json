@@ -20615,82 +20615,84 @@
       "heading": {
         "family": "panchang_bold",
         "size": {
-          "1": 1,
-          "2": 2,
-          "4": 4,
-          "5": 5,
-          "6": 6,
-          "8": 8,
-          "10": 10,
-          "12": 12,
-          "14": 14,
-          "16": 16,
-          "18": 18,
-          "20": 20,
-          "22": 22,
-          "24": 24,
-          "26": 26,
-          "28": 28,
-          "30": 30,
-          "35": 35,
-          "40": 40,
-          "45": 45,
-          "50": 50,
-          "55": 55,
-          "60": 60,
-          "65": 65,
-          "70": 70,
-          "75": 75,
-          "80": 80,
-          "85": 85,
-          "90": 90,
-          "95": 95,
-          "100": 100,
-          "small": 16,
-          "medium": 20,
-          "large": 24,
-          "true": 20,
+          "1": 0,
+          "2": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "8": 0,
+          "10": 0,
+          "12": 0,
+          "14": 0,
+          "16": 0,
+          "18": 0,
+          "20": 0,
+          "22": 0,
+          "24": 0,
+          "26": 0,
+          "28": 0,
+          "30": 0,
+          "35": 0,
+          "40": 0,
+          "45": 0,
+          "50": 0,
+          "55": 0,
+          "60": 0,
+          "65": 0,
+          "70": 0,
+          "75": 0,
+          "80": 0,
+          "85": 0,
+          "90": 0,
+          "95": 0,
+          "100": 0,
+          "small": 0,
+          "medium": 0,
+          "large": 0,
+          "true": 0,
+          "spacing20": 0,
           ".5": 0.5
         }
       },
       "body": {
         "family": "gilroy_regular",
         "size": {
-          "1": 1,
-          "2": 2,
-          "4": 4,
-          "5": 5,
-          "6": 6,
-          "8": 8,
-          "10": 10,
-          "12": 12,
-          "14": 14,
-          "16": 16,
-          "18": 18,
-          "20": 20,
-          "22": 22,
-          "24": 24,
-          "26": 26,
-          "28": 28,
-          "30": 30,
-          "35": 35,
-          "40": 40,
-          "45": 45,
-          "50": 50,
-          "55": 55,
-          "60": 60,
-          "65": 65,
-          "70": 70,
-          "75": 75,
-          "80": 80,
-          "85": 85,
-          "90": 90,
-          "95": 95,
-          "100": 100,
+          "1": 0,
+          "2": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "8": 0,
+          "10": 0,
+          "12": 0,
+          "14": 0,
+          "16": 0,
+          "18": 0,
+          "20": 0,
+          "22": 0,
+          "24": 0,
+          "26": 0,
+          "28": 0,
+          "30": 0,
+          "35": 0,
+          "40": 0,
+          "45": 0,
+          "50": 0,
+          "55": 0,
+          "60": 0,
+          "65": 0,
+          "70": 0,
+          "75": 0,
+          "80": 0,
+          "85": 0,
+          "90": 0,
+          "95": 0,
+          "100": 0,
           "small": 10,
           "medium": 14,
           "large": 18,
           "true": 14,
+          "spacing20": 0,
           ".5": 0.5
         },
         "lineHeight": {
@@ -20729,6 +20731,7 @@
           "medium": 12,
           "large": 16,
           "true": 12,
+          "spacing20": 12,
           ".5": 12
         },
         "color": {
@@ -20977,6 +20980,13 @@
             "val": "#000000",
             "variable": ""
           },
+          "spacing20": {
+            "isVar": true,
+            "key": "$black",
+            "name": "color-1",
+            "val": "#000000",
+            "variable": ""
+          },
           ".5": {
             "isVar": true,
             "key": "$black",
@@ -20991,221 +21001,123 @@
             "val": "#000000",
             "variable": ""
           },
+          "gold": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-2",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "grey": {
+            "isVar": true,
+            "key": "$grey",
+            "name": "color-3",
+            "val": "#353535",
+            "variable": ""
+          },
           "white": {
             "isVar": true,
             "key": "$white",
-            "name": "color-2",
+            "name": "color-4",
             "val": "#FFFFFF",
             "variable": ""
           },
-          "primary_background": {
+          "accent_hightlight": {
             "isVar": true,
-            "key": "$primary_background",
-            "name": "color-3",
-            "val": "rgba(16, 17, 18, 1)",
-            "variable": ""
-          },
-          "android_tab_bar_background": {
-            "isVar": true,
-            "key": "$android_tab_bar_background",
-            "name": "color-4",
-            "val": "rgba(14, 15, 16, 1)",
-            "variable": ""
-          },
-          "transparent": {
-            "isVar": true,
-            "key": "$transparent",
+            "key": "$accent_hightlight",
             "name": "color-5",
-            "val": "rgba(0,0,0,0)",
+            "val": "#FFF415",
             "variable": ""
           },
-          "translucent_white_1": {
+          "accent_hot": {
             "isVar": true,
-            "key": "$translucent_white_1",
+            "key": "$accent_hot",
             "name": "color-6",
-            "val": "rgba(255,255,255,0.1)",
+            "val": "#FD901B",
             "variable": ""
           },
-          "translucent_white_25": {
+          "accent_dominant": {
             "isVar": true,
-            "key": "$translucent_white_25",
+            "key": "$accent_dominant",
             "name": "color-7",
-            "val": "rgba(255,255,255,0.25)",
+            "val": "#A35614",
             "variable": ""
           },
-          "translucent_white_35": {
+          "accent_grey": {
             "isVar": true,
-            "key": "$translucent_white_35",
+            "key": "$accent_grey",
             "name": "color-8",
-            "val": "rgba(255,255,255,0.35)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_white_05": {
+          "surface_primary": {
             "isVar": true,
-            "key": "$translucent_white_05",
+            "key": "$surface_primary",
             "name": "color-9",
-            "val": "rgba(255,255,255,0.05)",
+            "val": "#353535",
             "variable": ""
           },
-          "translucent_grey_50": {
+          "surface_secondary": {
             "isVar": true,
-            "key": "$translucent_grey_50",
+            "key": "$surface_secondary",
             "name": "color-10",
-            "val": "rgba(250,250,250,0.5)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "light_primary": {
+          "surface_brand": {
             "isVar": true,
-            "key": "$light_primary",
+            "key": "$surface_brand",
             "name": "color-11",
-            "val": "rgba(247, 248, 249, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "light_secondary": {
+          "surface_accent": {
             "isVar": true,
-            "key": "$light_secondary",
+            "key": "$surface_accent",
             "name": "color-12",
-            "val": "rgba(179, 185, 196, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "neutral_secondary": {
+          "text_primary": {
             "isVar": true,
-            "key": "$neutral_secondary",
+            "key": "$text_primary",
             "name": "color-13",
-            "val": "rgba(40, 46, 51, 1)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "neutral_base": {
+          "text_secondary": {
             "isVar": true,
-            "key": "$neutral_base",
+            "key": "$text_secondary",
             "name": "color-14",
-            "val": "rgba(29, 33, 37, 1)",
+            "val": "#353535",
             "variable": ""
           },
-          "border_default": {
+          "text_brand": {
             "isVar": true,
-            "key": "$border_default",
+            "key": "$text_brand",
             "name": "color-15",
-            "val": "rgba(69, 79, 89, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "border_active": {
+          "text_accent": {
             "isVar": true,
-            "key": "$border_active",
+            "key": "$text_accent",
             "name": "color-16",
-            "val": "rgba(117, 230, 78, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_black_85": {
+          "border_primary": {
             "isVar": true,
-            "key": "$translucent_black_85",
+            "key": "$border_primary",
             "name": "color-17",
-            "val": "rgba(0,0,0,0.85)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "gray_primary": {
+          "border_brand": {
             "isVar": true,
-            "key": "$gray_primary",
+            "key": "$border_brand",
             "name": "color-18",
-            "val": "#FAFAFA",
-            "variable": ""
-          },
-          "gray_900": {
-            "isVar": true,
-            "key": "$gray_900",
-            "name": "color-19",
-            "val": "#1A1A1C",
-            "variable": ""
-          },
-          "green_primary": {
-            "isVar": true,
-            "key": "$green_primary",
-            "name": "color-20",
-            "val": "rgba(117, 230, 78, 1)",
-            "variable": ""
-          },
-          "green_secondary": {
-            "isVar": true,
-            "key": "$green_secondary",
-            "name": "color-21",
-            "val": "#B4FF69",
-            "variable": ""
-          },
-          "yellow_primary": {
-            "isVar": true,
-            "key": "$yellow_primary",
-            "name": "color-22",
-            "val": "#FFBC2F",
-            "variable": ""
-          },
-          "red_primary": {
-            "isVar": true,
-            "key": "$red_primary",
-            "name": "color-23",
-            "val": "#E53C3C",
-            "variable": ""
-          },
-          "danger_700": {
-            "isVar": true,
-            "key": "$danger_700",
-            "name": "color-24",
-            "val": "#DC1B02",
-            "variable": ""
-          },
-          "danger_500": {
-            "isVar": true,
-            "key": "$danger_500",
-            "name": "color-25",
-            "val": "#F63824",
-            "variable": ""
-          },
-          "warning_500": {
-            "isVar": true,
-            "key": "$warning_500",
-            "name": "color-26",
-            "val": "#D79D00",
-            "variable": ""
-          },
-          "success_500": {
-            "isVar": true,
-            "key": "$success_500",
-            "name": "color-27",
-            "val": "#62BF41",
-            "variable": ""
-          },
-          "purple_primary": {
-            "isVar": true,
-            "key": "$purple_primary",
-            "name": "color-28",
-            "val": "#7E69FF",
-            "variable": ""
-          },
-          "orange_primary": {
-            "isVar": true,
-            "key": "$orange_primary",
-            "name": "color-29",
-            "val": "#FF8269",
-            "variable": ""
-          },
-          "fb_blue": {
-            "isVar": true,
-            "key": "$fb_blue",
-            "name": "color-30",
-            "val": "#1877F2",
-            "variable": ""
-          },
-          "twitter_blue": {
-            "isVar": true,
-            "key": "$twitter_blue",
-            "name": "color-31",
-            "val": "#1DA1F2",
-            "variable": ""
-          },
-          "apple_black": {
-            "isVar": true,
-            "key": "$apple_black",
-            "name": "color-32",
-            "val": "#000000",
+            "val": "#FDBF0B",
             "variable": ""
           }
         }
@@ -21213,41 +21125,42 @@
       "gilroyMedium": {
         "family": "gilroy_medium",
         "size": {
-          "1": 1,
-          "2": 2,
-          "4": 4,
-          "5": 5,
-          "6": 6,
-          "8": 8,
-          "10": 10,
-          "12": 12,
-          "14": 14,
-          "16": 16,
-          "18": 18,
-          "20": 20,
-          "22": 22,
-          "24": 24,
-          "26": 26,
-          "28": 28,
-          "30": 30,
-          "35": 35,
-          "40": 40,
-          "45": 45,
-          "50": 50,
-          "55": 55,
-          "60": 60,
-          "65": 65,
-          "70": 70,
-          "75": 75,
-          "80": 80,
-          "85": 85,
-          "90": 90,
-          "95": 95,
-          "100": 100,
+          "1": 0,
+          "2": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "8": 0,
+          "10": 0,
+          "12": 0,
+          "14": 0,
+          "16": 0,
+          "18": 0,
+          "20": 0,
+          "22": 0,
+          "24": 0,
+          "26": 0,
+          "28": 0,
+          "30": 0,
+          "35": 0,
+          "40": 0,
+          "45": 0,
+          "50": 0,
+          "55": 0,
+          "60": 0,
+          "65": 0,
+          "70": 0,
+          "75": 0,
+          "80": 0,
+          "85": 0,
+          "90": 0,
+          "95": 0,
+          "100": 0,
           "small": 10,
           "medium": 14,
           "large": 18,
           "true": 14,
+          "spacing20": 0,
           ".5": 0.5
         },
         "lineHeight": {
@@ -21286,6 +21199,7 @@
           "medium": 12,
           "large": 16,
           "true": 12,
+          "spacing20": 12,
           ".5": 12
         },
         "color": {
@@ -21534,6 +21448,13 @@
             "val": "#000000",
             "variable": ""
           },
+          "spacing20": {
+            "isVar": true,
+            "key": "$black",
+            "name": "color-1",
+            "val": "#000000",
+            "variable": ""
+          },
           ".5": {
             "isVar": true,
             "key": "$black",
@@ -21548,221 +21469,123 @@
             "val": "#000000",
             "variable": ""
           },
+          "gold": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-2",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "grey": {
+            "isVar": true,
+            "key": "$grey",
+            "name": "color-3",
+            "val": "#353535",
+            "variable": ""
+          },
           "white": {
             "isVar": true,
             "key": "$white",
-            "name": "color-2",
+            "name": "color-4",
             "val": "#FFFFFF",
             "variable": ""
           },
-          "primary_background": {
+          "accent_hightlight": {
             "isVar": true,
-            "key": "$primary_background",
-            "name": "color-3",
-            "val": "rgba(16, 17, 18, 1)",
-            "variable": ""
-          },
-          "android_tab_bar_background": {
-            "isVar": true,
-            "key": "$android_tab_bar_background",
-            "name": "color-4",
-            "val": "rgba(14, 15, 16, 1)",
-            "variable": ""
-          },
-          "transparent": {
-            "isVar": true,
-            "key": "$transparent",
+            "key": "$accent_hightlight",
             "name": "color-5",
-            "val": "rgba(0,0,0,0)",
+            "val": "#FFF415",
             "variable": ""
           },
-          "translucent_white_1": {
+          "accent_hot": {
             "isVar": true,
-            "key": "$translucent_white_1",
+            "key": "$accent_hot",
             "name": "color-6",
-            "val": "rgba(255,255,255,0.1)",
+            "val": "#FD901B",
             "variable": ""
           },
-          "translucent_white_25": {
+          "accent_dominant": {
             "isVar": true,
-            "key": "$translucent_white_25",
+            "key": "$accent_dominant",
             "name": "color-7",
-            "val": "rgba(255,255,255,0.25)",
+            "val": "#A35614",
             "variable": ""
           },
-          "translucent_white_35": {
+          "accent_grey": {
             "isVar": true,
-            "key": "$translucent_white_35",
+            "key": "$accent_grey",
             "name": "color-8",
-            "val": "rgba(255,255,255,0.35)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_white_05": {
+          "surface_primary": {
             "isVar": true,
-            "key": "$translucent_white_05",
+            "key": "$surface_primary",
             "name": "color-9",
-            "val": "rgba(255,255,255,0.05)",
+            "val": "#353535",
             "variable": ""
           },
-          "translucent_grey_50": {
+          "surface_secondary": {
             "isVar": true,
-            "key": "$translucent_grey_50",
+            "key": "$surface_secondary",
             "name": "color-10",
-            "val": "rgba(250,250,250,0.5)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "light_primary": {
+          "surface_brand": {
             "isVar": true,
-            "key": "$light_primary",
+            "key": "$surface_brand",
             "name": "color-11",
-            "val": "rgba(247, 248, 249, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "light_secondary": {
+          "surface_accent": {
             "isVar": true,
-            "key": "$light_secondary",
+            "key": "$surface_accent",
             "name": "color-12",
-            "val": "rgba(179, 185, 196, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "neutral_secondary": {
+          "text_primary": {
             "isVar": true,
-            "key": "$neutral_secondary",
+            "key": "$text_primary",
             "name": "color-13",
-            "val": "rgba(40, 46, 51, 1)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "neutral_base": {
+          "text_secondary": {
             "isVar": true,
-            "key": "$neutral_base",
+            "key": "$text_secondary",
             "name": "color-14",
-            "val": "rgba(29, 33, 37, 1)",
+            "val": "#353535",
             "variable": ""
           },
-          "border_default": {
+          "text_brand": {
             "isVar": true,
-            "key": "$border_default",
+            "key": "$text_brand",
             "name": "color-15",
-            "val": "rgba(69, 79, 89, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "border_active": {
+          "text_accent": {
             "isVar": true,
-            "key": "$border_active",
+            "key": "$text_accent",
             "name": "color-16",
-            "val": "rgba(117, 230, 78, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_black_85": {
+          "border_primary": {
             "isVar": true,
-            "key": "$translucent_black_85",
+            "key": "$border_primary",
             "name": "color-17",
-            "val": "rgba(0,0,0,0.85)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "gray_primary": {
+          "border_brand": {
             "isVar": true,
-            "key": "$gray_primary",
+            "key": "$border_brand",
             "name": "color-18",
-            "val": "#FAFAFA",
-            "variable": ""
-          },
-          "gray_900": {
-            "isVar": true,
-            "key": "$gray_900",
-            "name": "color-19",
-            "val": "#1A1A1C",
-            "variable": ""
-          },
-          "green_primary": {
-            "isVar": true,
-            "key": "$green_primary",
-            "name": "color-20",
-            "val": "rgba(117, 230, 78, 1)",
-            "variable": ""
-          },
-          "green_secondary": {
-            "isVar": true,
-            "key": "$green_secondary",
-            "name": "color-21",
-            "val": "#B4FF69",
-            "variable": ""
-          },
-          "yellow_primary": {
-            "isVar": true,
-            "key": "$yellow_primary",
-            "name": "color-22",
-            "val": "#FFBC2F",
-            "variable": ""
-          },
-          "red_primary": {
-            "isVar": true,
-            "key": "$red_primary",
-            "name": "color-23",
-            "val": "#E53C3C",
-            "variable": ""
-          },
-          "danger_700": {
-            "isVar": true,
-            "key": "$danger_700",
-            "name": "color-24",
-            "val": "#DC1B02",
-            "variable": ""
-          },
-          "danger_500": {
-            "isVar": true,
-            "key": "$danger_500",
-            "name": "color-25",
-            "val": "#F63824",
-            "variable": ""
-          },
-          "warning_500": {
-            "isVar": true,
-            "key": "$warning_500",
-            "name": "color-26",
-            "val": "#D79D00",
-            "variable": ""
-          },
-          "success_500": {
-            "isVar": true,
-            "key": "$success_500",
-            "name": "color-27",
-            "val": "#62BF41",
-            "variable": ""
-          },
-          "purple_primary": {
-            "isVar": true,
-            "key": "$purple_primary",
-            "name": "color-28",
-            "val": "#7E69FF",
-            "variable": ""
-          },
-          "orange_primary": {
-            "isVar": true,
-            "key": "$orange_primary",
-            "name": "color-29",
-            "val": "#FF8269",
-            "variable": ""
-          },
-          "fb_blue": {
-            "isVar": true,
-            "key": "$fb_blue",
-            "name": "color-30",
-            "val": "#1877F2",
-            "variable": ""
-          },
-          "twitter_blue": {
-            "isVar": true,
-            "key": "$twitter_blue",
-            "name": "color-31",
-            "val": "#1DA1F2",
-            "variable": ""
-          },
-          "apple_black": {
-            "isVar": true,
-            "key": "$apple_black",
-            "name": "color-32",
-            "val": "#000000",
+            "val": "#FDBF0B",
             "variable": ""
           }
         }
@@ -21770,41 +21593,42 @@
       "gilroySemibold": {
         "family": "gilroy_semibold",
         "size": {
-          "1": 1,
-          "2": 2,
-          "4": 4,
-          "5": 5,
-          "6": 6,
-          "8": 8,
-          "10": 10,
-          "12": 12,
-          "14": 14,
-          "16": 16,
-          "18": 18,
-          "20": 20,
-          "22": 22,
-          "24": 24,
-          "26": 26,
-          "28": 28,
-          "30": 30,
-          "35": 35,
-          "40": 40,
-          "45": 45,
-          "50": 50,
-          "55": 55,
-          "60": 60,
-          "65": 65,
-          "70": 70,
-          "75": 75,
-          "80": 80,
-          "85": 85,
-          "90": 90,
-          "95": 95,
-          "100": 100,
+          "1": 0,
+          "2": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "8": 0,
+          "10": 0,
+          "12": 0,
+          "14": 0,
+          "16": 0,
+          "18": 0,
+          "20": 0,
+          "22": 0,
+          "24": 0,
+          "26": 0,
+          "28": 0,
+          "30": 0,
+          "35": 0,
+          "40": 0,
+          "45": 0,
+          "50": 0,
+          "55": 0,
+          "60": 0,
+          "65": 0,
+          "70": 0,
+          "75": 0,
+          "80": 0,
+          "85": 0,
+          "90": 0,
+          "95": 0,
+          "100": 0,
           "small": 10,
           "medium": 14,
           "large": 18,
           "true": 14,
+          "spacing20": 0,
           ".5": 0.5
         },
         "lineHeight": {
@@ -21843,6 +21667,7 @@
           "medium": 12,
           "large": 16,
           "true": 12,
+          "spacing20": 12,
           ".5": 12
         },
         "color": {
@@ -22091,6 +21916,13 @@
             "val": "#000000",
             "variable": ""
           },
+          "spacing20": {
+            "isVar": true,
+            "key": "$black",
+            "name": "color-1",
+            "val": "#000000",
+            "variable": ""
+          },
           ".5": {
             "isVar": true,
             "key": "$black",
@@ -22105,221 +21937,123 @@
             "val": "#000000",
             "variable": ""
           },
+          "gold": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-2",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "grey": {
+            "isVar": true,
+            "key": "$grey",
+            "name": "color-3",
+            "val": "#353535",
+            "variable": ""
+          },
           "white": {
             "isVar": true,
             "key": "$white",
-            "name": "color-2",
+            "name": "color-4",
             "val": "#FFFFFF",
             "variable": ""
           },
-          "primary_background": {
+          "accent_hightlight": {
             "isVar": true,
-            "key": "$primary_background",
-            "name": "color-3",
-            "val": "rgba(16, 17, 18, 1)",
-            "variable": ""
-          },
-          "android_tab_bar_background": {
-            "isVar": true,
-            "key": "$android_tab_bar_background",
-            "name": "color-4",
-            "val": "rgba(14, 15, 16, 1)",
-            "variable": ""
-          },
-          "transparent": {
-            "isVar": true,
-            "key": "$transparent",
+            "key": "$accent_hightlight",
             "name": "color-5",
-            "val": "rgba(0,0,0,0)",
+            "val": "#FFF415",
             "variable": ""
           },
-          "translucent_white_1": {
+          "accent_hot": {
             "isVar": true,
-            "key": "$translucent_white_1",
+            "key": "$accent_hot",
             "name": "color-6",
-            "val": "rgba(255,255,255,0.1)",
+            "val": "#FD901B",
             "variable": ""
           },
-          "translucent_white_25": {
+          "accent_dominant": {
             "isVar": true,
-            "key": "$translucent_white_25",
+            "key": "$accent_dominant",
             "name": "color-7",
-            "val": "rgba(255,255,255,0.25)",
+            "val": "#A35614",
             "variable": ""
           },
-          "translucent_white_35": {
+          "accent_grey": {
             "isVar": true,
-            "key": "$translucent_white_35",
+            "key": "$accent_grey",
             "name": "color-8",
-            "val": "rgba(255,255,255,0.35)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_white_05": {
+          "surface_primary": {
             "isVar": true,
-            "key": "$translucent_white_05",
+            "key": "$surface_primary",
             "name": "color-9",
-            "val": "rgba(255,255,255,0.05)",
+            "val": "#353535",
             "variable": ""
           },
-          "translucent_grey_50": {
+          "surface_secondary": {
             "isVar": true,
-            "key": "$translucent_grey_50",
+            "key": "$surface_secondary",
             "name": "color-10",
-            "val": "rgba(250,250,250,0.5)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "light_primary": {
+          "surface_brand": {
             "isVar": true,
-            "key": "$light_primary",
+            "key": "$surface_brand",
             "name": "color-11",
-            "val": "rgba(247, 248, 249, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "light_secondary": {
+          "surface_accent": {
             "isVar": true,
-            "key": "$light_secondary",
+            "key": "$surface_accent",
             "name": "color-12",
-            "val": "rgba(179, 185, 196, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "neutral_secondary": {
+          "text_primary": {
             "isVar": true,
-            "key": "$neutral_secondary",
+            "key": "$text_primary",
             "name": "color-13",
-            "val": "rgba(40, 46, 51, 1)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "neutral_base": {
+          "text_secondary": {
             "isVar": true,
-            "key": "$neutral_base",
+            "key": "$text_secondary",
             "name": "color-14",
-            "val": "rgba(29, 33, 37, 1)",
+            "val": "#353535",
             "variable": ""
           },
-          "border_default": {
+          "text_brand": {
             "isVar": true,
-            "key": "$border_default",
+            "key": "$text_brand",
             "name": "color-15",
-            "val": "rgba(69, 79, 89, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "border_active": {
+          "text_accent": {
             "isVar": true,
-            "key": "$border_active",
+            "key": "$text_accent",
             "name": "color-16",
-            "val": "rgba(117, 230, 78, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_black_85": {
+          "border_primary": {
             "isVar": true,
-            "key": "$translucent_black_85",
+            "key": "$border_primary",
             "name": "color-17",
-            "val": "rgba(0,0,0,0.85)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "gray_primary": {
+          "border_brand": {
             "isVar": true,
-            "key": "$gray_primary",
+            "key": "$border_brand",
             "name": "color-18",
-            "val": "#FAFAFA",
-            "variable": ""
-          },
-          "gray_900": {
-            "isVar": true,
-            "key": "$gray_900",
-            "name": "color-19",
-            "val": "#1A1A1C",
-            "variable": ""
-          },
-          "green_primary": {
-            "isVar": true,
-            "key": "$green_primary",
-            "name": "color-20",
-            "val": "rgba(117, 230, 78, 1)",
-            "variable": ""
-          },
-          "green_secondary": {
-            "isVar": true,
-            "key": "$green_secondary",
-            "name": "color-21",
-            "val": "#B4FF69",
-            "variable": ""
-          },
-          "yellow_primary": {
-            "isVar": true,
-            "key": "$yellow_primary",
-            "name": "color-22",
-            "val": "#FFBC2F",
-            "variable": ""
-          },
-          "red_primary": {
-            "isVar": true,
-            "key": "$red_primary",
-            "name": "color-23",
-            "val": "#E53C3C",
-            "variable": ""
-          },
-          "danger_700": {
-            "isVar": true,
-            "key": "$danger_700",
-            "name": "color-24",
-            "val": "#DC1B02",
-            "variable": ""
-          },
-          "danger_500": {
-            "isVar": true,
-            "key": "$danger_500",
-            "name": "color-25",
-            "val": "#F63824",
-            "variable": ""
-          },
-          "warning_500": {
-            "isVar": true,
-            "key": "$warning_500",
-            "name": "color-26",
-            "val": "#D79D00",
-            "variable": ""
-          },
-          "success_500": {
-            "isVar": true,
-            "key": "$success_500",
-            "name": "color-27",
-            "val": "#62BF41",
-            "variable": ""
-          },
-          "purple_primary": {
-            "isVar": true,
-            "key": "$purple_primary",
-            "name": "color-28",
-            "val": "#7E69FF",
-            "variable": ""
-          },
-          "orange_primary": {
-            "isVar": true,
-            "key": "$orange_primary",
-            "name": "color-29",
-            "val": "#FF8269",
-            "variable": ""
-          },
-          "fb_blue": {
-            "isVar": true,
-            "key": "$fb_blue",
-            "name": "color-30",
-            "val": "#1877F2",
-            "variable": ""
-          },
-          "twitter_blue": {
-            "isVar": true,
-            "key": "$twitter_blue",
-            "name": "color-31",
-            "val": "#1DA1F2",
-            "variable": ""
-          },
-          "apple_black": {
-            "isVar": true,
-            "key": "$apple_black",
-            "name": "color-32",
-            "val": "#000000",
+            "val": "#FDBF0B",
             "variable": ""
           }
         }
@@ -22327,41 +22061,42 @@
       "gilroyBold": {
         "family": "gilroy_bold",
         "size": {
-          "1": 1,
-          "2": 2,
-          "4": 4,
-          "5": 5,
-          "6": 6,
-          "8": 8,
-          "10": 10,
-          "12": 12,
-          "14": 14,
-          "16": 16,
-          "18": 18,
-          "20": 20,
-          "22": 22,
-          "24": 24,
-          "26": 26,
-          "28": 28,
-          "30": 30,
-          "35": 35,
-          "40": 40,
-          "45": 45,
-          "50": 50,
-          "55": 55,
-          "60": 60,
-          "65": 65,
-          "70": 70,
-          "75": 75,
-          "80": 80,
-          "85": 85,
-          "90": 90,
-          "95": 95,
-          "100": 100,
+          "1": 0,
+          "2": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "8": 0,
+          "10": 0,
+          "12": 0,
+          "14": 0,
+          "16": 0,
+          "18": 0,
+          "20": 0,
+          "22": 0,
+          "24": 0,
+          "26": 0,
+          "28": 0,
+          "30": 0,
+          "35": 0,
+          "40": 0,
+          "45": 0,
+          "50": 0,
+          "55": 0,
+          "60": 0,
+          "65": 0,
+          "70": 0,
+          "75": 0,
+          "80": 0,
+          "85": 0,
+          "90": 0,
+          "95": 0,
+          "100": 0,
           "small": 10,
           "medium": 14,
           "large": 18,
           "true": 14,
+          "spacing20": 0,
           ".5": 0.5
         },
         "lineHeight": {
@@ -22400,6 +22135,7 @@
           "medium": 12,
           "large": 16,
           "true": 12,
+          "spacing20": 12,
           ".5": 12
         },
         "color": {
@@ -22648,6 +22384,13 @@
             "val": "#000000",
             "variable": ""
           },
+          "spacing20": {
+            "isVar": true,
+            "key": "$black",
+            "name": "color-1",
+            "val": "#000000",
+            "variable": ""
+          },
           ".5": {
             "isVar": true,
             "key": "$black",
@@ -22662,221 +22405,123 @@
             "val": "#000000",
             "variable": ""
           },
+          "gold": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-2",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "grey": {
+            "isVar": true,
+            "key": "$grey",
+            "name": "color-3",
+            "val": "#353535",
+            "variable": ""
+          },
           "white": {
             "isVar": true,
             "key": "$white",
-            "name": "color-2",
+            "name": "color-4",
             "val": "#FFFFFF",
             "variable": ""
           },
-          "primary_background": {
+          "accent_hightlight": {
             "isVar": true,
-            "key": "$primary_background",
-            "name": "color-3",
-            "val": "rgba(16, 17, 18, 1)",
-            "variable": ""
-          },
-          "android_tab_bar_background": {
-            "isVar": true,
-            "key": "$android_tab_bar_background",
-            "name": "color-4",
-            "val": "rgba(14, 15, 16, 1)",
-            "variable": ""
-          },
-          "transparent": {
-            "isVar": true,
-            "key": "$transparent",
+            "key": "$accent_hightlight",
             "name": "color-5",
-            "val": "rgba(0,0,0,0)",
+            "val": "#FFF415",
             "variable": ""
           },
-          "translucent_white_1": {
+          "accent_hot": {
             "isVar": true,
-            "key": "$translucent_white_1",
+            "key": "$accent_hot",
             "name": "color-6",
-            "val": "rgba(255,255,255,0.1)",
+            "val": "#FD901B",
             "variable": ""
           },
-          "translucent_white_25": {
+          "accent_dominant": {
             "isVar": true,
-            "key": "$translucent_white_25",
+            "key": "$accent_dominant",
             "name": "color-7",
-            "val": "rgba(255,255,255,0.25)",
+            "val": "#A35614",
             "variable": ""
           },
-          "translucent_white_35": {
+          "accent_grey": {
             "isVar": true,
-            "key": "$translucent_white_35",
+            "key": "$accent_grey",
             "name": "color-8",
-            "val": "rgba(255,255,255,0.35)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_white_05": {
+          "surface_primary": {
             "isVar": true,
-            "key": "$translucent_white_05",
+            "key": "$surface_primary",
             "name": "color-9",
-            "val": "rgba(255,255,255,0.05)",
+            "val": "#353535",
             "variable": ""
           },
-          "translucent_grey_50": {
+          "surface_secondary": {
             "isVar": true,
-            "key": "$translucent_grey_50",
+            "key": "$surface_secondary",
             "name": "color-10",
-            "val": "rgba(250,250,250,0.5)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "light_primary": {
+          "surface_brand": {
             "isVar": true,
-            "key": "$light_primary",
+            "key": "$surface_brand",
             "name": "color-11",
-            "val": "rgba(247, 248, 249, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "light_secondary": {
+          "surface_accent": {
             "isVar": true,
-            "key": "$light_secondary",
+            "key": "$surface_accent",
             "name": "color-12",
-            "val": "rgba(179, 185, 196, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "neutral_secondary": {
+          "text_primary": {
             "isVar": true,
-            "key": "$neutral_secondary",
+            "key": "$text_primary",
             "name": "color-13",
-            "val": "rgba(40, 46, 51, 1)",
+            "val": "#FFFFFF",
             "variable": ""
           },
-          "neutral_base": {
+          "text_secondary": {
             "isVar": true,
-            "key": "$neutral_base",
+            "key": "$text_secondary",
             "name": "color-14",
-            "val": "rgba(29, 33, 37, 1)",
+            "val": "#353535",
             "variable": ""
           },
-          "border_default": {
+          "text_brand": {
             "isVar": true,
-            "key": "$border_default",
+            "key": "$text_brand",
             "name": "color-15",
-            "val": "rgba(69, 79, 89, 1)",
+            "val": "#FDBF0B",
             "variable": ""
           },
-          "border_active": {
+          "text_accent": {
             "isVar": true,
-            "key": "$border_active",
+            "key": "$text_accent",
             "name": "color-16",
-            "val": "rgba(117, 230, 78, 1)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "translucent_black_85": {
+          "border_primary": {
             "isVar": true,
-            "key": "$translucent_black_85",
+            "key": "$border_primary",
             "name": "color-17",
-            "val": "rgba(0,0,0,0.85)",
+            "val": "#A4A4A4",
             "variable": ""
           },
-          "gray_primary": {
+          "border_brand": {
             "isVar": true,
-            "key": "$gray_primary",
+            "key": "$border_brand",
             "name": "color-18",
-            "val": "#FAFAFA",
-            "variable": ""
-          },
-          "gray_900": {
-            "isVar": true,
-            "key": "$gray_900",
-            "name": "color-19",
-            "val": "#1A1A1C",
-            "variable": ""
-          },
-          "green_primary": {
-            "isVar": true,
-            "key": "$green_primary",
-            "name": "color-20",
-            "val": "rgba(117, 230, 78, 1)",
-            "variable": ""
-          },
-          "green_secondary": {
-            "isVar": true,
-            "key": "$green_secondary",
-            "name": "color-21",
-            "val": "#B4FF69",
-            "variable": ""
-          },
-          "yellow_primary": {
-            "isVar": true,
-            "key": "$yellow_primary",
-            "name": "color-22",
-            "val": "#FFBC2F",
-            "variable": ""
-          },
-          "red_primary": {
-            "isVar": true,
-            "key": "$red_primary",
-            "name": "color-23",
-            "val": "#E53C3C",
-            "variable": ""
-          },
-          "danger_700": {
-            "isVar": true,
-            "key": "$danger_700",
-            "name": "color-24",
-            "val": "#DC1B02",
-            "variable": ""
-          },
-          "danger_500": {
-            "isVar": true,
-            "key": "$danger_500",
-            "name": "color-25",
-            "val": "#F63824",
-            "variable": ""
-          },
-          "warning_500": {
-            "isVar": true,
-            "key": "$warning_500",
-            "name": "color-26",
-            "val": "#D79D00",
-            "variable": ""
-          },
-          "success_500": {
-            "isVar": true,
-            "key": "$success_500",
-            "name": "color-27",
-            "val": "#62BF41",
-            "variable": ""
-          },
-          "purple_primary": {
-            "isVar": true,
-            "key": "$purple_primary",
-            "name": "color-28",
-            "val": "#7E69FF",
-            "variable": ""
-          },
-          "orange_primary": {
-            "isVar": true,
-            "key": "$orange_primary",
-            "name": "color-29",
-            "val": "#FF8269",
-            "variable": ""
-          },
-          "fb_blue": {
-            "isVar": true,
-            "key": "$fb_blue",
-            "name": "color-30",
-            "val": "#1877F2",
-            "variable": ""
-          },
-          "twitter_blue": {
-            "isVar": true,
-            "key": "$twitter_blue",
-            "name": "color-31",
-            "val": "#1DA1F2",
-            "variable": ""
-          },
-          "apple_black": {
-            "isVar": true,
-            "key": "$apple_black",
-            "name": "color-32",
-            "val": "#000000",
+            "val": "#FDBF0B",
             "variable": ""
           }
         }
@@ -22959,7 +22604,7 @@
     },
     "themes": {
       "dark": {
-        "background": "rgba(16, 17, 18, 1)",
+        "background": "#353535",
         "color": "#FFFFFF",
         "id": "dark"
       }
@@ -22973,221 +22618,123 @@
           "val": "#000000",
           "variable": ""
         },
+        "gold": {
+          "isVar": true,
+          "key": "$gold",
+          "name": "color-2",
+          "val": "#FDBF0B",
+          "variable": ""
+        },
+        "grey": {
+          "isVar": true,
+          "key": "$grey",
+          "name": "color-3",
+          "val": "#353535",
+          "variable": ""
+        },
         "white": {
           "isVar": true,
           "key": "$white",
-          "name": "color-2",
+          "name": "color-4",
           "val": "#FFFFFF",
           "variable": ""
         },
-        "primary_background": {
+        "accent_hightlight": {
           "isVar": true,
-          "key": "$primary_background",
-          "name": "color-3",
-          "val": "rgba(16, 17, 18, 1)",
-          "variable": ""
-        },
-        "android_tab_bar_background": {
-          "isVar": true,
-          "key": "$android_tab_bar_background",
-          "name": "color-4",
-          "val": "rgba(14, 15, 16, 1)",
-          "variable": ""
-        },
-        "transparent": {
-          "isVar": true,
-          "key": "$transparent",
+          "key": "$accent_hightlight",
           "name": "color-5",
-          "val": "rgba(0,0,0,0)",
+          "val": "#FFF415",
           "variable": ""
         },
-        "translucent_white_1": {
+        "accent_hot": {
           "isVar": true,
-          "key": "$translucent_white_1",
+          "key": "$accent_hot",
           "name": "color-6",
-          "val": "rgba(255,255,255,0.1)",
+          "val": "#FD901B",
           "variable": ""
         },
-        "translucent_white_25": {
+        "accent_dominant": {
           "isVar": true,
-          "key": "$translucent_white_25",
+          "key": "$accent_dominant",
           "name": "color-7",
-          "val": "rgba(255,255,255,0.25)",
+          "val": "#A35614",
           "variable": ""
         },
-        "translucent_white_35": {
+        "accent_grey": {
           "isVar": true,
-          "key": "$translucent_white_35",
+          "key": "$accent_grey",
           "name": "color-8",
-          "val": "rgba(255,255,255,0.35)",
+          "val": "#A4A4A4",
           "variable": ""
         },
-        "translucent_white_05": {
+        "surface_primary": {
           "isVar": true,
-          "key": "$translucent_white_05",
+          "key": "$surface_primary",
           "name": "color-9",
-          "val": "rgba(255,255,255,0.05)",
+          "val": "#353535",
           "variable": ""
         },
-        "translucent_grey_50": {
+        "surface_secondary": {
           "isVar": true,
-          "key": "$translucent_grey_50",
+          "key": "$surface_secondary",
           "name": "color-10",
-          "val": "rgba(250,250,250,0.5)",
+          "val": "#FFFFFF",
           "variable": ""
         },
-        "light_primary": {
+        "surface_brand": {
           "isVar": true,
-          "key": "$light_primary",
+          "key": "$surface_brand",
           "name": "color-11",
-          "val": "rgba(247, 248, 249, 1)",
+          "val": "#FDBF0B",
           "variable": ""
         },
-        "light_secondary": {
+        "surface_accent": {
           "isVar": true,
-          "key": "$light_secondary",
+          "key": "$surface_accent",
           "name": "color-12",
-          "val": "rgba(179, 185, 196, 1)",
+          "val": "#A4A4A4",
           "variable": ""
         },
-        "neutral_secondary": {
+        "text_primary": {
           "isVar": true,
-          "key": "$neutral_secondary",
+          "key": "$text_primary",
           "name": "color-13",
-          "val": "rgba(40, 46, 51, 1)",
+          "val": "#FFFFFF",
           "variable": ""
         },
-        "neutral_base": {
+        "text_secondary": {
           "isVar": true,
-          "key": "$neutral_base",
+          "key": "$text_secondary",
           "name": "color-14",
-          "val": "rgba(29, 33, 37, 1)",
+          "val": "#353535",
           "variable": ""
         },
-        "border_default": {
+        "text_brand": {
           "isVar": true,
-          "key": "$border_default",
+          "key": "$text_brand",
           "name": "color-15",
-          "val": "rgba(69, 79, 89, 1)",
+          "val": "#FDBF0B",
           "variable": ""
         },
-        "border_active": {
+        "text_accent": {
           "isVar": true,
-          "key": "$border_active",
+          "key": "$text_accent",
           "name": "color-16",
-          "val": "rgba(117, 230, 78, 1)",
+          "val": "#A4A4A4",
           "variable": ""
         },
-        "translucent_black_85": {
+        "border_primary": {
           "isVar": true,
-          "key": "$translucent_black_85",
+          "key": "$border_primary",
           "name": "color-17",
-          "val": "rgba(0,0,0,0.85)",
+          "val": "#A4A4A4",
           "variable": ""
         },
-        "gray_primary": {
+        "border_brand": {
           "isVar": true,
-          "key": "$gray_primary",
+          "key": "$border_brand",
           "name": "color-18",
-          "val": "#FAFAFA",
-          "variable": ""
-        },
-        "gray_900": {
-          "isVar": true,
-          "key": "$gray_900",
-          "name": "color-19",
-          "val": "#1A1A1C",
-          "variable": ""
-        },
-        "green_primary": {
-          "isVar": true,
-          "key": "$green_primary",
-          "name": "color-20",
-          "val": "rgba(117, 230, 78, 1)",
-          "variable": ""
-        },
-        "green_secondary": {
-          "isVar": true,
-          "key": "$green_secondary",
-          "name": "color-21",
-          "val": "#B4FF69",
-          "variable": ""
-        },
-        "yellow_primary": {
-          "isVar": true,
-          "key": "$yellow_primary",
-          "name": "color-22",
-          "val": "#FFBC2F",
-          "variable": ""
-        },
-        "red_primary": {
-          "isVar": true,
-          "key": "$red_primary",
-          "name": "color-23",
-          "val": "#E53C3C",
-          "variable": ""
-        },
-        "danger_700": {
-          "isVar": true,
-          "key": "$danger_700",
-          "name": "color-24",
-          "val": "#DC1B02",
-          "variable": ""
-        },
-        "danger_500": {
-          "isVar": true,
-          "key": "$danger_500",
-          "name": "color-25",
-          "val": "#F63824",
-          "variable": ""
-        },
-        "warning_500": {
-          "isVar": true,
-          "key": "$warning_500",
-          "name": "color-26",
-          "val": "#D79D00",
-          "variable": ""
-        },
-        "success_500": {
-          "isVar": true,
-          "key": "$success_500",
-          "name": "color-27",
-          "val": "#62BF41",
-          "variable": ""
-        },
-        "purple_primary": {
-          "isVar": true,
-          "key": "$purple_primary",
-          "name": "color-28",
-          "val": "#7E69FF",
-          "variable": ""
-        },
-        "orange_primary": {
-          "isVar": true,
-          "key": "$orange_primary",
-          "name": "color-29",
-          "val": "#FF8269",
-          "variable": ""
-        },
-        "fb_blue": {
-          "isVar": true,
-          "key": "$fb_blue",
-          "name": "color-30",
-          "val": "#1877F2",
-          "variable": ""
-        },
-        "twitter_blue": {
-          "isVar": true,
-          "key": "$twitter_blue",
-          "name": "color-31",
-          "val": "#1DA1F2",
-          "variable": ""
-        },
-        "apple_black": {
-          "isVar": true,
-          "key": "$apple_black",
-          "name": "color-32",
-          "val": "#000000",
+          "val": "#FDBF0B",
           "variable": ""
         }
       },
@@ -23196,217 +22743,217 @@
           "isVar": true,
           "key": "$1",
           "name": "space-1",
-          "val": 1,
+          "val": 0,
           "variable": ""
         },
         "2": {
           "isVar": true,
           "key": "$2",
           "name": "space-2",
-          "val": 2,
+          "val": 0,
           "variable": ""
         },
         "4": {
           "isVar": true,
           "key": "$4",
           "name": "space-3",
-          "val": 4,
+          "val": 0,
           "variable": ""
         },
         "5": {
           "isVar": true,
           "key": "$5",
           "name": "space-4",
-          "val": 5,
+          "val": 0,
           "variable": ""
         },
         "6": {
           "isVar": true,
           "key": "$6",
           "name": "space-5",
-          "val": 6,
+          "val": 0,
           "variable": ""
         },
         "8": {
           "isVar": true,
           "key": "$8",
           "name": "space-6",
-          "val": 8,
+          "val": 0,
           "variable": ""
         },
         "10": {
           "isVar": true,
           "key": "$10",
           "name": "space-7",
-          "val": 10,
+          "val": 0,
           "variable": ""
         },
         "12": {
           "isVar": true,
           "key": "$12",
           "name": "space-8",
-          "val": 12,
+          "val": 0,
           "variable": ""
         },
         "14": {
           "isVar": true,
           "key": "$14",
           "name": "space-9",
-          "val": 14,
+          "val": 0,
           "variable": ""
         },
         "16": {
           "isVar": true,
           "key": "$16",
           "name": "space-10",
-          "val": 16,
+          "val": 0,
           "variable": ""
         },
         "18": {
           "isVar": true,
           "key": "$18",
           "name": "space-11",
-          "val": 18,
+          "val": 0,
           "variable": ""
         },
         "20": {
           "isVar": true,
           "key": "$20",
           "name": "space-12",
-          "val": 20,
+          "val": 0,
           "variable": ""
         },
         "22": {
           "isVar": true,
           "key": "$22",
           "name": "space-13",
-          "val": 22,
+          "val": 0,
           "variable": ""
         },
         "24": {
           "isVar": true,
           "key": "$24",
           "name": "space-14",
-          "val": 24,
+          "val": 0,
           "variable": ""
         },
         "26": {
           "isVar": true,
           "key": "$26",
           "name": "space-15",
-          "val": 26,
+          "val": 0,
           "variable": ""
         },
         "28": {
           "isVar": true,
           "key": "$28",
           "name": "space-16",
-          "val": 28,
+          "val": 0,
           "variable": ""
         },
         "30": {
           "isVar": true,
           "key": "$30",
           "name": "space-17",
-          "val": 30,
+          "val": 0,
           "variable": ""
         },
         "35": {
           "isVar": true,
           "key": "$35",
           "name": "space-18",
-          "val": 35,
+          "val": 0,
           "variable": ""
         },
         "40": {
           "isVar": true,
           "key": "$40",
           "name": "space-19",
-          "val": 40,
+          "val": 0,
           "variable": ""
         },
         "45": {
           "isVar": true,
           "key": "$45",
           "name": "space-20",
-          "val": 45,
+          "val": 0,
           "variable": ""
         },
         "50": {
           "isVar": true,
           "key": "$50",
           "name": "space-21",
-          "val": 50,
+          "val": 0,
           "variable": ""
         },
         "55": {
           "isVar": true,
           "key": "$55",
           "name": "space-22",
-          "val": 55,
+          "val": 0,
           "variable": ""
         },
         "60": {
           "isVar": true,
           "key": "$60",
           "name": "space-23",
-          "val": 60,
+          "val": 0,
           "variable": ""
         },
         "65": {
           "isVar": true,
           "key": "$65",
           "name": "space-24",
-          "val": 65,
+          "val": 0,
           "variable": ""
         },
         "70": {
           "isVar": true,
           "key": "$70",
           "name": "space-25",
-          "val": 70,
+          "val": 0,
           "variable": ""
         },
         "75": {
           "isVar": true,
           "key": "$75",
           "name": "space-26",
-          "val": 75,
+          "val": 0,
           "variable": ""
         },
         "80": {
           "isVar": true,
           "key": "$80",
           "name": "space-27",
-          "val": 80,
+          "val": 0,
           "variable": ""
         },
         "85": {
           "isVar": true,
           "key": "$85",
           "name": "space-28",
-          "val": 85,
+          "val": 0,
           "variable": ""
         },
         "90": {
           "isVar": true,
           "key": "$90",
           "name": "space-29",
-          "val": 90,
+          "val": 0,
           "variable": ""
         },
         "95": {
           "isVar": true,
           "key": "$95",
           "name": "space-30",
-          "val": 95,
+          "val": 0,
           "variable": ""
         },
         "100": {
           "isVar": true,
           "key": "$100",
           "name": "space-31",
-          "val": 100,
+          "val": 0,
           "variable": ""
         },
         "small": {
@@ -23437,10 +22984,17 @@
           "val": 14,
           "variable": ""
         },
+        "spacing20": {
+          "isVar": true,
+          "key": "$spacing20",
+          "name": "space-36",
+          "val": 0,
+          "variable": ""
+        },
         ".5": {
           "isVar": true,
           "key": "$.5",
-          "name": "space-36",
+          "name": "space-37",
           "val": 0.5,
           "variable": ""
         }
@@ -23450,217 +23004,217 @@
           "isVar": true,
           "key": "$1",
           "name": "size-1",
-          "val": 1,
+          "val": 0,
           "variable": ""
         },
         "2": {
           "isVar": true,
           "key": "$2",
           "name": "size-2",
-          "val": 2,
+          "val": 0,
           "variable": ""
         },
         "4": {
           "isVar": true,
           "key": "$4",
           "name": "size-3",
-          "val": 4,
+          "val": 0,
           "variable": ""
         },
         "5": {
           "isVar": true,
           "key": "$5",
           "name": "size-4",
-          "val": 5,
+          "val": 0,
           "variable": ""
         },
         "6": {
           "isVar": true,
           "key": "$6",
           "name": "size-5",
-          "val": 6,
+          "val": 0,
           "variable": ""
         },
         "8": {
           "isVar": true,
           "key": "$8",
           "name": "size-6",
-          "val": 8,
+          "val": 0,
           "variable": ""
         },
         "10": {
           "isVar": true,
           "key": "$10",
           "name": "size-7",
-          "val": 10,
+          "val": 0,
           "variable": ""
         },
         "12": {
           "isVar": true,
           "key": "$12",
           "name": "size-8",
-          "val": 12,
+          "val": 0,
           "variable": ""
         },
         "14": {
           "isVar": true,
           "key": "$14",
           "name": "size-9",
-          "val": 14,
+          "val": 0,
           "variable": ""
         },
         "16": {
           "isVar": true,
           "key": "$16",
           "name": "size-10",
-          "val": 16,
+          "val": 0,
           "variable": ""
         },
         "18": {
           "isVar": true,
           "key": "$18",
           "name": "size-11",
-          "val": 18,
+          "val": 0,
           "variable": ""
         },
         "20": {
           "isVar": true,
           "key": "$20",
           "name": "size-12",
-          "val": 20,
+          "val": 0,
           "variable": ""
         },
         "22": {
           "isVar": true,
           "key": "$22",
           "name": "size-13",
-          "val": 22,
+          "val": 0,
           "variable": ""
         },
         "24": {
           "isVar": true,
           "key": "$24",
           "name": "size-14",
-          "val": 24,
+          "val": 0,
           "variable": ""
         },
         "26": {
           "isVar": true,
           "key": "$26",
           "name": "size-15",
-          "val": 26,
+          "val": 0,
           "variable": ""
         },
         "28": {
           "isVar": true,
           "key": "$28",
           "name": "size-16",
-          "val": 28,
+          "val": 0,
           "variable": ""
         },
         "30": {
           "isVar": true,
           "key": "$30",
           "name": "size-17",
-          "val": 30,
+          "val": 0,
           "variable": ""
         },
         "35": {
           "isVar": true,
           "key": "$35",
           "name": "size-18",
-          "val": 35,
+          "val": 0,
           "variable": ""
         },
         "40": {
           "isVar": true,
           "key": "$40",
           "name": "size-19",
-          "val": 40,
+          "val": 0,
           "variable": ""
         },
         "45": {
           "isVar": true,
           "key": "$45",
           "name": "size-20",
-          "val": 45,
+          "val": 0,
           "variable": ""
         },
         "50": {
           "isVar": true,
           "key": "$50",
           "name": "size-21",
-          "val": 50,
+          "val": 0,
           "variable": ""
         },
         "55": {
           "isVar": true,
           "key": "$55",
           "name": "size-22",
-          "val": 55,
+          "val": 0,
           "variable": ""
         },
         "60": {
           "isVar": true,
           "key": "$60",
           "name": "size-23",
-          "val": 60,
+          "val": 0,
           "variable": ""
         },
         "65": {
           "isVar": true,
           "key": "$65",
           "name": "size-24",
-          "val": 65,
+          "val": 0,
           "variable": ""
         },
         "70": {
           "isVar": true,
           "key": "$70",
           "name": "size-25",
-          "val": 70,
+          "val": 0,
           "variable": ""
         },
         "75": {
           "isVar": true,
           "key": "$75",
           "name": "size-26",
-          "val": 75,
+          "val": 0,
           "variable": ""
         },
         "80": {
           "isVar": true,
           "key": "$80",
           "name": "size-27",
-          "val": 80,
+          "val": 0,
           "variable": ""
         },
         "85": {
           "isVar": true,
           "key": "$85",
           "name": "size-28",
-          "val": 85,
+          "val": 0,
           "variable": ""
         },
         "90": {
           "isVar": true,
           "key": "$90",
           "name": "size-29",
-          "val": 90,
+          "val": 0,
           "variable": ""
         },
         "95": {
           "isVar": true,
           "key": "$95",
           "name": "size-30",
-          "val": 95,
+          "val": 0,
           "variable": ""
         },
         "100": {
           "isVar": true,
           "key": "$100",
           "name": "size-31",
-          "val": 100,
+          "val": 0,
           "variable": ""
         },
         "small": {
@@ -23691,10 +23245,17 @@
           "val": 14,
           "variable": ""
         },
+        "spacing20": {
+          "isVar": true,
+          "key": "$spacing20",
+          "name": "size-36",
+          "val": 0,
+          "variable": ""
+        },
         ".5": {
           "isVar": true,
           "key": "$.5",
-          "name": "size-36",
+          "name": "size-37",
           "val": 0.5,
           "variable": ""
         }
@@ -23704,217 +23265,217 @@
           "isVar": true,
           "key": "$1",
           "name": "radius-1",
-          "val": 1,
+          "val": 0,
           "variable": ""
         },
         "2": {
           "isVar": true,
           "key": "$2",
           "name": "radius-2",
-          "val": 2,
+          "val": 0,
           "variable": ""
         },
         "4": {
           "isVar": true,
           "key": "$4",
           "name": "radius-3",
-          "val": 4,
+          "val": 0,
           "variable": ""
         },
         "5": {
           "isVar": true,
           "key": "$5",
           "name": "radius-4",
-          "val": 5,
+          "val": 0,
           "variable": ""
         },
         "6": {
           "isVar": true,
           "key": "$6",
           "name": "radius-5",
-          "val": 6,
+          "val": 0,
           "variable": ""
         },
         "8": {
           "isVar": true,
           "key": "$8",
           "name": "radius-6",
-          "val": 8,
+          "val": 0,
           "variable": ""
         },
         "10": {
           "isVar": true,
           "key": "$10",
           "name": "radius-7",
-          "val": 10,
+          "val": 0,
           "variable": ""
         },
         "12": {
           "isVar": true,
           "key": "$12",
           "name": "radius-8",
-          "val": 12,
+          "val": 0,
           "variable": ""
         },
         "14": {
           "isVar": true,
           "key": "$14",
           "name": "radius-9",
-          "val": 14,
+          "val": 0,
           "variable": ""
         },
         "16": {
           "isVar": true,
           "key": "$16",
           "name": "radius-10",
-          "val": 16,
+          "val": 0,
           "variable": ""
         },
         "18": {
           "isVar": true,
           "key": "$18",
           "name": "radius-11",
-          "val": 18,
+          "val": 0,
           "variable": ""
         },
         "20": {
           "isVar": true,
           "key": "$20",
           "name": "radius-12",
-          "val": 20,
+          "val": 0,
           "variable": ""
         },
         "22": {
           "isVar": true,
           "key": "$22",
           "name": "radius-13",
-          "val": 22,
+          "val": 0,
           "variable": ""
         },
         "24": {
           "isVar": true,
           "key": "$24",
           "name": "radius-14",
-          "val": 24,
+          "val": 0,
           "variable": ""
         },
         "26": {
           "isVar": true,
           "key": "$26",
           "name": "radius-15",
-          "val": 26,
+          "val": 0,
           "variable": ""
         },
         "28": {
           "isVar": true,
           "key": "$28",
           "name": "radius-16",
-          "val": 28,
+          "val": 0,
           "variable": ""
         },
         "30": {
           "isVar": true,
           "key": "$30",
           "name": "radius-17",
-          "val": 30,
+          "val": 0,
           "variable": ""
         },
         "35": {
           "isVar": true,
           "key": "$35",
           "name": "radius-18",
-          "val": 35,
+          "val": 0,
           "variable": ""
         },
         "40": {
           "isVar": true,
           "key": "$40",
           "name": "radius-19",
-          "val": 40,
+          "val": 0,
           "variable": ""
         },
         "45": {
           "isVar": true,
           "key": "$45",
           "name": "radius-20",
-          "val": 45,
+          "val": 0,
           "variable": ""
         },
         "50": {
           "isVar": true,
           "key": "$50",
           "name": "radius-21",
-          "val": 50,
+          "val": 0,
           "variable": ""
         },
         "55": {
           "isVar": true,
           "key": "$55",
           "name": "radius-22",
-          "val": 55,
+          "val": 0,
           "variable": ""
         },
         "60": {
           "isVar": true,
           "key": "$60",
           "name": "radius-23",
-          "val": 60,
+          "val": 0,
           "variable": ""
         },
         "65": {
           "isVar": true,
           "key": "$65",
           "name": "radius-24",
-          "val": 65,
+          "val": 0,
           "variable": ""
         },
         "70": {
           "isVar": true,
           "key": "$70",
           "name": "radius-25",
-          "val": 70,
+          "val": 0,
           "variable": ""
         },
         "75": {
           "isVar": true,
           "key": "$75",
           "name": "radius-26",
-          "val": 75,
+          "val": 0,
           "variable": ""
         },
         "80": {
           "isVar": true,
           "key": "$80",
           "name": "radius-27",
-          "val": 80,
+          "val": 0,
           "variable": ""
         },
         "85": {
           "isVar": true,
           "key": "$85",
           "name": "radius-28",
-          "val": 85,
+          "val": 0,
           "variable": ""
         },
         "90": {
           "isVar": true,
           "key": "$90",
           "name": "radius-29",
-          "val": 90,
+          "val": 0,
           "variable": ""
         },
         "95": {
           "isVar": true,
           "key": "$95",
           "name": "radius-30",
-          "val": 95,
+          "val": 0,
           "variable": ""
         },
         "100": {
           "isVar": true,
           "key": "$100",
           "name": "radius-31",
-          "val": 100,
+          "val": 0,
           "variable": ""
         },
         "small": {
@@ -23945,10 +23506,17 @@
           "val": 14,
           "variable": ""
         },
+        "spacing20": {
+          "isVar": true,
+          "key": "$spacing20",
+          "name": "radius-36",
+          "val": 0,
+          "variable": ""
+        },
         ".5": {
           "isVar": true,
           "key": "$.5",
-          "name": "radius-36",
+          "name": "radius-37",
           "val": 0.5,
           "variable": ""
         }
@@ -24181,438 +23749,340 @@
         "val": "#000000",
         "variable": ""
       },
+      "$color.gold": {
+        "isVar": true,
+        "key": "$gold",
+        "name": "color-2",
+        "val": "#FDBF0B",
+        "variable": ""
+      },
+      "$color.grey": {
+        "isVar": true,
+        "key": "$grey",
+        "name": "color-3",
+        "val": "#353535",
+        "variable": ""
+      },
       "$color.white": {
         "isVar": true,
         "key": "$white",
-        "name": "color-2",
+        "name": "color-4",
         "val": "#FFFFFF",
         "variable": ""
       },
-      "$color.primary_background": {
+      "$color.accent_hightlight": {
         "isVar": true,
-        "key": "$primary_background",
-        "name": "color-3",
-        "val": "rgba(16, 17, 18, 1)",
-        "variable": ""
-      },
-      "$color.android_tab_bar_background": {
-        "isVar": true,
-        "key": "$android_tab_bar_background",
-        "name": "color-4",
-        "val": "rgba(14, 15, 16, 1)",
-        "variable": ""
-      },
-      "$color.transparent": {
-        "isVar": true,
-        "key": "$transparent",
+        "key": "$accent_hightlight",
         "name": "color-5",
-        "val": "rgba(0,0,0,0)",
+        "val": "#FFF415",
         "variable": ""
       },
-      "$color.translucent_white_1": {
+      "$color.accent_hot": {
         "isVar": true,
-        "key": "$translucent_white_1",
+        "key": "$accent_hot",
         "name": "color-6",
-        "val": "rgba(255,255,255,0.1)",
+        "val": "#FD901B",
         "variable": ""
       },
-      "$color.translucent_white_25": {
+      "$color.accent_dominant": {
         "isVar": true,
-        "key": "$translucent_white_25",
+        "key": "$accent_dominant",
         "name": "color-7",
-        "val": "rgba(255,255,255,0.25)",
+        "val": "#A35614",
         "variable": ""
       },
-      "$color.translucent_white_35": {
+      "$color.accent_grey": {
         "isVar": true,
-        "key": "$translucent_white_35",
+        "key": "$accent_grey",
         "name": "color-8",
-        "val": "rgba(255,255,255,0.35)",
+        "val": "#A4A4A4",
         "variable": ""
       },
-      "$color.translucent_white_05": {
+      "$color.surface_primary": {
         "isVar": true,
-        "key": "$translucent_white_05",
+        "key": "$surface_primary",
         "name": "color-9",
-        "val": "rgba(255,255,255,0.05)",
+        "val": "#353535",
         "variable": ""
       },
-      "$color.translucent_grey_50": {
+      "$color.surface_secondary": {
         "isVar": true,
-        "key": "$translucent_grey_50",
+        "key": "$surface_secondary",
         "name": "color-10",
-        "val": "rgba(250,250,250,0.5)",
+        "val": "#FFFFFF",
         "variable": ""
       },
-      "$color.light_primary": {
+      "$color.surface_brand": {
         "isVar": true,
-        "key": "$light_primary",
+        "key": "$surface_brand",
         "name": "color-11",
-        "val": "rgba(247, 248, 249, 1)",
+        "val": "#FDBF0B",
         "variable": ""
       },
-      "$color.light_secondary": {
+      "$color.surface_accent": {
         "isVar": true,
-        "key": "$light_secondary",
+        "key": "$surface_accent",
         "name": "color-12",
-        "val": "rgba(179, 185, 196, 1)",
+        "val": "#A4A4A4",
         "variable": ""
       },
-      "$color.neutral_secondary": {
+      "$color.text_primary": {
         "isVar": true,
-        "key": "$neutral_secondary",
+        "key": "$text_primary",
         "name": "color-13",
-        "val": "rgba(40, 46, 51, 1)",
+        "val": "#FFFFFF",
         "variable": ""
       },
-      "$color.neutral_base": {
+      "$color.text_secondary": {
         "isVar": true,
-        "key": "$neutral_base",
+        "key": "$text_secondary",
         "name": "color-14",
-        "val": "rgba(29, 33, 37, 1)",
+        "val": "#353535",
         "variable": ""
       },
-      "$color.border_default": {
+      "$color.text_brand": {
         "isVar": true,
-        "key": "$border_default",
+        "key": "$text_brand",
         "name": "color-15",
-        "val": "rgba(69, 79, 89, 1)",
+        "val": "#FDBF0B",
         "variable": ""
       },
-      "$color.border_active": {
+      "$color.text_accent": {
         "isVar": true,
-        "key": "$border_active",
+        "key": "$text_accent",
         "name": "color-16",
-        "val": "rgba(117, 230, 78, 1)",
+        "val": "#A4A4A4",
         "variable": ""
       },
-      "$color.translucent_black_85": {
+      "$color.border_primary": {
         "isVar": true,
-        "key": "$translucent_black_85",
+        "key": "$border_primary",
         "name": "color-17",
-        "val": "rgba(0,0,0,0.85)",
+        "val": "#A4A4A4",
         "variable": ""
       },
-      "$color.gray_primary": {
+      "$color.border_brand": {
         "isVar": true,
-        "key": "$gray_primary",
+        "key": "$border_brand",
         "name": "color-18",
-        "val": "#FAFAFA",
-        "variable": ""
-      },
-      "$color.gray_900": {
-        "isVar": true,
-        "key": "$gray_900",
-        "name": "color-19",
-        "val": "#1A1A1C",
-        "variable": ""
-      },
-      "$color.green_primary": {
-        "isVar": true,
-        "key": "$green_primary",
-        "name": "color-20",
-        "val": "rgba(117, 230, 78, 1)",
-        "variable": ""
-      },
-      "$color.green_secondary": {
-        "isVar": true,
-        "key": "$green_secondary",
-        "name": "color-21",
-        "val": "#B4FF69",
-        "variable": ""
-      },
-      "$color.yellow_primary": {
-        "isVar": true,
-        "key": "$yellow_primary",
-        "name": "color-22",
-        "val": "#FFBC2F",
-        "variable": ""
-      },
-      "$color.red_primary": {
-        "isVar": true,
-        "key": "$red_primary",
-        "name": "color-23",
-        "val": "#E53C3C",
-        "variable": ""
-      },
-      "$color.danger_700": {
-        "isVar": true,
-        "key": "$danger_700",
-        "name": "color-24",
-        "val": "#DC1B02",
-        "variable": ""
-      },
-      "$color.danger_500": {
-        "isVar": true,
-        "key": "$danger_500",
-        "name": "color-25",
-        "val": "#F63824",
-        "variable": ""
-      },
-      "$color.warning_500": {
-        "isVar": true,
-        "key": "$warning_500",
-        "name": "color-26",
-        "val": "#D79D00",
-        "variable": ""
-      },
-      "$color.success_500": {
-        "isVar": true,
-        "key": "$success_500",
-        "name": "color-27",
-        "val": "#62BF41",
-        "variable": ""
-      },
-      "$color.purple_primary": {
-        "isVar": true,
-        "key": "$purple_primary",
-        "name": "color-28",
-        "val": "#7E69FF",
-        "variable": ""
-      },
-      "$color.orange_primary": {
-        "isVar": true,
-        "key": "$orange_primary",
-        "name": "color-29",
-        "val": "#FF8269",
-        "variable": ""
-      },
-      "$color.fb_blue": {
-        "isVar": true,
-        "key": "$fb_blue",
-        "name": "color-30",
-        "val": "#1877F2",
-        "variable": ""
-      },
-      "$color.twitter_blue": {
-        "isVar": true,
-        "key": "$twitter_blue",
-        "name": "color-31",
-        "val": "#1DA1F2",
-        "variable": ""
-      },
-      "$color.apple_black": {
-        "isVar": true,
-        "key": "$apple_black",
-        "name": "color-32",
-        "val": "#000000",
+        "val": "#FDBF0B",
         "variable": ""
       },
       "$space.1": {
         "isVar": true,
         "key": "$1",
         "name": "space-1",
-        "val": 1,
+        "val": 0,
         "variable": ""
       },
       "$space.2": {
         "isVar": true,
         "key": "$2",
         "name": "space-2",
-        "val": 2,
+        "val": 0,
         "variable": ""
       },
       "$space.4": {
         "isVar": true,
         "key": "$4",
         "name": "space-3",
-        "val": 4,
+        "val": 0,
         "variable": ""
       },
       "$space.5": {
         "isVar": true,
         "key": "$5",
         "name": "space-4",
-        "val": 5,
+        "val": 0,
         "variable": ""
       },
       "$space.6": {
         "isVar": true,
         "key": "$6",
         "name": "space-5",
-        "val": 6,
+        "val": 0,
         "variable": ""
       },
       "$space.8": {
         "isVar": true,
         "key": "$8",
         "name": "space-6",
-        "val": 8,
+        "val": 0,
         "variable": ""
       },
       "$space.10": {
         "isVar": true,
         "key": "$10",
         "name": "space-7",
-        "val": 10,
+        "val": 0,
         "variable": ""
       },
       "$space.12": {
         "isVar": true,
         "key": "$12",
         "name": "space-8",
-        "val": 12,
+        "val": 0,
         "variable": ""
       },
       "$space.14": {
         "isVar": true,
         "key": "$14",
         "name": "space-9",
-        "val": 14,
+        "val": 0,
         "variable": ""
       },
       "$space.16": {
         "isVar": true,
         "key": "$16",
         "name": "space-10",
-        "val": 16,
+        "val": 0,
         "variable": ""
       },
       "$space.18": {
         "isVar": true,
         "key": "$18",
         "name": "space-11",
-        "val": 18,
+        "val": 0,
         "variable": ""
       },
       "$space.20": {
         "isVar": true,
         "key": "$20",
         "name": "space-12",
-        "val": 20,
+        "val": 0,
         "variable": ""
       },
       "$space.22": {
         "isVar": true,
         "key": "$22",
         "name": "space-13",
-        "val": 22,
+        "val": 0,
         "variable": ""
       },
       "$space.24": {
         "isVar": true,
         "key": "$24",
         "name": "space-14",
-        "val": 24,
+        "val": 0,
         "variable": ""
       },
       "$space.26": {
         "isVar": true,
         "key": "$26",
         "name": "space-15",
-        "val": 26,
+        "val": 0,
         "variable": ""
       },
       "$space.28": {
         "isVar": true,
         "key": "$28",
         "name": "space-16",
-        "val": 28,
+        "val": 0,
         "variable": ""
       },
       "$space.30": {
         "isVar": true,
         "key": "$30",
         "name": "space-17",
-        "val": 30,
+        "val": 0,
         "variable": ""
       },
       "$space.35": {
         "isVar": true,
         "key": "$35",
         "name": "space-18",
-        "val": 35,
+        "val": 0,
         "variable": ""
       },
       "$space.40": {
         "isVar": true,
         "key": "$40",
         "name": "space-19",
-        "val": 40,
+        "val": 0,
         "variable": ""
       },
       "$space.45": {
         "isVar": true,
         "key": "$45",
         "name": "space-20",
-        "val": 45,
+        "val": 0,
         "variable": ""
       },
       "$space.50": {
         "isVar": true,
         "key": "$50",
         "name": "space-21",
-        "val": 50,
+        "val": 0,
         "variable": ""
       },
       "$space.55": {
         "isVar": true,
         "key": "$55",
         "name": "space-22",
-        "val": 55,
+        "val": 0,
         "variable": ""
       },
       "$space.60": {
         "isVar": true,
         "key": "$60",
         "name": "space-23",
-        "val": 60,
+        "val": 0,
         "variable": ""
       },
       "$space.65": {
         "isVar": true,
         "key": "$65",
         "name": "space-24",
-        "val": 65,
+        "val": 0,
         "variable": ""
       },
       "$space.70": {
         "isVar": true,
         "key": "$70",
         "name": "space-25",
-        "val": 70,
+        "val": 0,
         "variable": ""
       },
       "$space.75": {
         "isVar": true,
         "key": "$75",
         "name": "space-26",
-        "val": 75,
+        "val": 0,
         "variable": ""
       },
       "$space.80": {
         "isVar": true,
         "key": "$80",
         "name": "space-27",
-        "val": 80,
+        "val": 0,
         "variable": ""
       },
       "$space.85": {
         "isVar": true,
         "key": "$85",
         "name": "space-28",
-        "val": 85,
+        "val": 0,
         "variable": ""
       },
       "$space.90": {
         "isVar": true,
         "key": "$90",
         "name": "space-29",
-        "val": 90,
+        "val": 0,
         "variable": ""
       },
       "$space.95": {
         "isVar": true,
         "key": "$95",
         "name": "space-30",
-        "val": 95,
+        "val": 0,
         "variable": ""
       },
       "$space.100": {
         "isVar": true,
         "key": "$100",
         "name": "space-31",
-        "val": 100,
+        "val": 0,
         "variable": ""
       },
       "$space.small": {
@@ -24643,10 +24113,17 @@
         "val": 14,
         "variable": ""
       },
+      "$space.spacing20": {
+        "isVar": true,
+        "key": "$spacing20",
+        "name": "space-36",
+        "val": 0,
+        "variable": ""
+      },
       "$space..5": {
         "isVar": true,
         "key": "$.5",
-        "name": "space-36",
+        "name": "space-37",
         "val": 0.5,
         "variable": ""
       },
@@ -24654,217 +24131,217 @@
         "isVar": true,
         "key": "$1",
         "name": "size-1",
-        "val": 1,
+        "val": 0,
         "variable": ""
       },
       "$size.2": {
         "isVar": true,
         "key": "$2",
         "name": "size-2",
-        "val": 2,
+        "val": 0,
         "variable": ""
       },
       "$size.4": {
         "isVar": true,
         "key": "$4",
         "name": "size-3",
-        "val": 4,
+        "val": 0,
         "variable": ""
       },
       "$size.5": {
         "isVar": true,
         "key": "$5",
         "name": "size-4",
-        "val": 5,
+        "val": 0,
         "variable": ""
       },
       "$size.6": {
         "isVar": true,
         "key": "$6",
         "name": "size-5",
-        "val": 6,
+        "val": 0,
         "variable": ""
       },
       "$size.8": {
         "isVar": true,
         "key": "$8",
         "name": "size-6",
-        "val": 8,
+        "val": 0,
         "variable": ""
       },
       "$size.10": {
         "isVar": true,
         "key": "$10",
         "name": "size-7",
-        "val": 10,
+        "val": 0,
         "variable": ""
       },
       "$size.12": {
         "isVar": true,
         "key": "$12",
         "name": "size-8",
-        "val": 12,
+        "val": 0,
         "variable": ""
       },
       "$size.14": {
         "isVar": true,
         "key": "$14",
         "name": "size-9",
-        "val": 14,
+        "val": 0,
         "variable": ""
       },
       "$size.16": {
         "isVar": true,
         "key": "$16",
         "name": "size-10",
-        "val": 16,
+        "val": 0,
         "variable": ""
       },
       "$size.18": {
         "isVar": true,
         "key": "$18",
         "name": "size-11",
-        "val": 18,
+        "val": 0,
         "variable": ""
       },
       "$size.20": {
         "isVar": true,
         "key": "$20",
         "name": "size-12",
-        "val": 20,
+        "val": 0,
         "variable": ""
       },
       "$size.22": {
         "isVar": true,
         "key": "$22",
         "name": "size-13",
-        "val": 22,
+        "val": 0,
         "variable": ""
       },
       "$size.24": {
         "isVar": true,
         "key": "$24",
         "name": "size-14",
-        "val": 24,
+        "val": 0,
         "variable": ""
       },
       "$size.26": {
         "isVar": true,
         "key": "$26",
         "name": "size-15",
-        "val": 26,
+        "val": 0,
         "variable": ""
       },
       "$size.28": {
         "isVar": true,
         "key": "$28",
         "name": "size-16",
-        "val": 28,
+        "val": 0,
         "variable": ""
       },
       "$size.30": {
         "isVar": true,
         "key": "$30",
         "name": "size-17",
-        "val": 30,
+        "val": 0,
         "variable": ""
       },
       "$size.35": {
         "isVar": true,
         "key": "$35",
         "name": "size-18",
-        "val": 35,
+        "val": 0,
         "variable": ""
       },
       "$size.40": {
         "isVar": true,
         "key": "$40",
         "name": "size-19",
-        "val": 40,
+        "val": 0,
         "variable": ""
       },
       "$size.45": {
         "isVar": true,
         "key": "$45",
         "name": "size-20",
-        "val": 45,
+        "val": 0,
         "variable": ""
       },
       "$size.50": {
         "isVar": true,
         "key": "$50",
         "name": "size-21",
-        "val": 50,
+        "val": 0,
         "variable": ""
       },
       "$size.55": {
         "isVar": true,
         "key": "$55",
         "name": "size-22",
-        "val": 55,
+        "val": 0,
         "variable": ""
       },
       "$size.60": {
         "isVar": true,
         "key": "$60",
         "name": "size-23",
-        "val": 60,
+        "val": 0,
         "variable": ""
       },
       "$size.65": {
         "isVar": true,
         "key": "$65",
         "name": "size-24",
-        "val": 65,
+        "val": 0,
         "variable": ""
       },
       "$size.70": {
         "isVar": true,
         "key": "$70",
         "name": "size-25",
-        "val": 70,
+        "val": 0,
         "variable": ""
       },
       "$size.75": {
         "isVar": true,
         "key": "$75",
         "name": "size-26",
-        "val": 75,
+        "val": 0,
         "variable": ""
       },
       "$size.80": {
         "isVar": true,
         "key": "$80",
         "name": "size-27",
-        "val": 80,
+        "val": 0,
         "variable": ""
       },
       "$size.85": {
         "isVar": true,
         "key": "$85",
         "name": "size-28",
-        "val": 85,
+        "val": 0,
         "variable": ""
       },
       "$size.90": {
         "isVar": true,
         "key": "$90",
         "name": "size-29",
-        "val": 90,
+        "val": 0,
         "variable": ""
       },
       "$size.95": {
         "isVar": true,
         "key": "$95",
         "name": "size-30",
-        "val": 95,
+        "val": 0,
         "variable": ""
       },
       "$size.100": {
         "isVar": true,
         "key": "$100",
         "name": "size-31",
-        "val": 100,
+        "val": 0,
         "variable": ""
       },
       "$size.small": {
@@ -24895,10 +24372,17 @@
         "val": 14,
         "variable": ""
       },
+      "$size.spacing20": {
+        "isVar": true,
+        "key": "$spacing20",
+        "name": "size-36",
+        "val": 0,
+        "variable": ""
+      },
       "$size..5": {
         "isVar": true,
         "key": "$.5",
-        "name": "size-36",
+        "name": "size-37",
         "val": 0.5,
         "variable": ""
       },
@@ -24906,217 +24390,217 @@
         "isVar": true,
         "key": "$1",
         "name": "radius-1",
-        "val": 1,
+        "val": 0,
         "variable": ""
       },
       "$radius.2": {
         "isVar": true,
         "key": "$2",
         "name": "radius-2",
-        "val": 2,
+        "val": 0,
         "variable": ""
       },
       "$radius.4": {
         "isVar": true,
         "key": "$4",
         "name": "radius-3",
-        "val": 4,
+        "val": 0,
         "variable": ""
       },
       "$radius.5": {
         "isVar": true,
         "key": "$5",
         "name": "radius-4",
-        "val": 5,
+        "val": 0,
         "variable": ""
       },
       "$radius.6": {
         "isVar": true,
         "key": "$6",
         "name": "radius-5",
-        "val": 6,
+        "val": 0,
         "variable": ""
       },
       "$radius.8": {
         "isVar": true,
         "key": "$8",
         "name": "radius-6",
-        "val": 8,
+        "val": 0,
         "variable": ""
       },
       "$radius.10": {
         "isVar": true,
         "key": "$10",
         "name": "radius-7",
-        "val": 10,
+        "val": 0,
         "variable": ""
       },
       "$radius.12": {
         "isVar": true,
         "key": "$12",
         "name": "radius-8",
-        "val": 12,
+        "val": 0,
         "variable": ""
       },
       "$radius.14": {
         "isVar": true,
         "key": "$14",
         "name": "radius-9",
-        "val": 14,
+        "val": 0,
         "variable": ""
       },
       "$radius.16": {
         "isVar": true,
         "key": "$16",
         "name": "radius-10",
-        "val": 16,
+        "val": 0,
         "variable": ""
       },
       "$radius.18": {
         "isVar": true,
         "key": "$18",
         "name": "radius-11",
-        "val": 18,
+        "val": 0,
         "variable": ""
       },
       "$radius.20": {
         "isVar": true,
         "key": "$20",
         "name": "radius-12",
-        "val": 20,
+        "val": 0,
         "variable": ""
       },
       "$radius.22": {
         "isVar": true,
         "key": "$22",
         "name": "radius-13",
-        "val": 22,
+        "val": 0,
         "variable": ""
       },
       "$radius.24": {
         "isVar": true,
         "key": "$24",
         "name": "radius-14",
-        "val": 24,
+        "val": 0,
         "variable": ""
       },
       "$radius.26": {
         "isVar": true,
         "key": "$26",
         "name": "radius-15",
-        "val": 26,
+        "val": 0,
         "variable": ""
       },
       "$radius.28": {
         "isVar": true,
         "key": "$28",
         "name": "radius-16",
-        "val": 28,
+        "val": 0,
         "variable": ""
       },
       "$radius.30": {
         "isVar": true,
         "key": "$30",
         "name": "radius-17",
-        "val": 30,
+        "val": 0,
         "variable": ""
       },
       "$radius.35": {
         "isVar": true,
         "key": "$35",
         "name": "radius-18",
-        "val": 35,
+        "val": 0,
         "variable": ""
       },
       "$radius.40": {
         "isVar": true,
         "key": "$40",
         "name": "radius-19",
-        "val": 40,
+        "val": 0,
         "variable": ""
       },
       "$radius.45": {
         "isVar": true,
         "key": "$45",
         "name": "radius-20",
-        "val": 45,
+        "val": 0,
         "variable": ""
       },
       "$radius.50": {
         "isVar": true,
         "key": "$50",
         "name": "radius-21",
-        "val": 50,
+        "val": 0,
         "variable": ""
       },
       "$radius.55": {
         "isVar": true,
         "key": "$55",
         "name": "radius-22",
-        "val": 55,
+        "val": 0,
         "variable": ""
       },
       "$radius.60": {
         "isVar": true,
         "key": "$60",
         "name": "radius-23",
-        "val": 60,
+        "val": 0,
         "variable": ""
       },
       "$radius.65": {
         "isVar": true,
         "key": "$65",
         "name": "radius-24",
-        "val": 65,
+        "val": 0,
         "variable": ""
       },
       "$radius.70": {
         "isVar": true,
         "key": "$70",
         "name": "radius-25",
-        "val": 70,
+        "val": 0,
         "variable": ""
       },
       "$radius.75": {
         "isVar": true,
         "key": "$75",
         "name": "radius-26",
-        "val": 75,
+        "val": 0,
         "variable": ""
       },
       "$radius.80": {
         "isVar": true,
         "key": "$80",
         "name": "radius-27",
-        "val": 80,
+        "val": 0,
         "variable": ""
       },
       "$radius.85": {
         "isVar": true,
         "key": "$85",
         "name": "radius-28",
-        "val": 85,
+        "val": 0,
         "variable": ""
       },
       "$radius.90": {
         "isVar": true,
         "key": "$90",
         "name": "radius-29",
-        "val": 90,
+        "val": 0,
         "variable": ""
       },
       "$radius.95": {
         "isVar": true,
         "key": "$95",
         "name": "radius-30",
-        "val": 95,
+        "val": 0,
         "variable": ""
       },
       "$radius.100": {
         "isVar": true,
         "key": "$100",
         "name": "radius-31",
-        "val": 100,
+        "val": 0,
         "variable": ""
       },
       "$radius.small": {
@@ -25147,10 +24631,17 @@
         "val": 14,
         "variable": ""
       },
+      "$radius.spacing20": {
+        "isVar": true,
+        "key": "$spacing20",
+        "name": "radius-36",
+        "val": 0,
+        "variable": ""
+      },
       "$radius..5": {
         "isVar": true,
         "key": "$.5",
-        "name": "radius-36",
+        "name": "radius-37",
         "val": 0.5,
         "variable": ""
       },
