@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const MainLayout = () => {
 	SplashScreen.preventAutoHideAsync();
@@ -32,7 +33,7 @@ const MainLayout = () => {
 
 	return (
 		<TamaguiProvider config={TamaguiConfig}>
-			<Slot />
+			<SafeAreaProvider>{loaded ? <Slot /> : null}</SafeAreaProvider>
 		</TamaguiProvider>
 	);
 };

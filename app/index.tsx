@@ -8,7 +8,7 @@ export default function Page() {
 			justifyContent="center"
 			ac={"center"}
 		>
-			<Text color="$text_primary" ta="center">
+			<Text color="$text_primary" ta="center" fontFamily={"$heading"}>
 				Home page
 			</Text>
 		</Stack>

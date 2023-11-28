@@ -56,44 +56,11 @@ const appConfig = createTamagui({
 	defaultTheme: "dark",
 	fonts: {
 		heading: createFont({
-			family: "panchang_bold",
+			family: "acumin_pro_bold",
 			size: sizes.headings,
 		}),
 		body: createFont({
-			family: "gilroy_regular",
-			size: sizes.p,
-			lineHeight: {
-				small: 8,
-				medium: 12,
-				large: 16,
-				true: 12,
-			},
-			color: tokens.color,
-		}),
-		gilroyMedium: createFont({
-			family: "gilroy_medium",
-			size: sizes.p,
-			lineHeight: {
-				small: 8,
-				medium: 12,
-				large: 16,
-				true: 12,
-			},
-			color: tokens.color,
-		}),
-		gilroySemibold: createFont({
-			family: "gilroy_semibold",
-			size: sizes.p,
-			lineHeight: {
-				small: 8,
-				medium: 12,
-				large: 16,
-				true: 12,
-			},
-			color: tokens.color,
-		}),
-		gilroyBold: createFont({
-			family: "gilroy_bold",
+			family: "acumin_pro_regular",
 			size: sizes.p,
 			lineHeight: {
 				small: 8,
