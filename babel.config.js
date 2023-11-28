@@ -5,16 +5,8 @@ module.exports = function (api) {
 		plugins: [
 			// optional, only if you ever use process.env
 			"transform-inline-environment-variables",
+			"expo-router/babel",
 			// NOTE: this is optional, you don't *need* the compiler
-			[
-				"@tamagui/babel-plugin",
-				{
-					components: ["tamagui"],
-					config: "./tamagui.config.ts",
-					logTimings: true,
-				},
-			],
-			// // NOTE: this is optional, you don't *need* the compiler
 			// [
 			// 	"@tamagui/babel-plugin",
 			// 	{
@@ -29,6 +21,8 @@ module.exports = function (api) {
 					root: ["./"],
 					extensions: [".ts", ".tsx"],
 					alias: {
+						"@assets": "./assets",
+						"@src": "./src",
 						"@": ["."],
 					},
 				},
