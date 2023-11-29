@@ -27,11 +27,11 @@ const MOCK_PASSWORD = "gbg1234";
 export default function AuthProvider({ children }: PropsWithChildren) {
 	const [user, setUser] = useState<User | null>(null);
 
-	const { setItem, getItem, removeItem } = new LargeSecureStore();
+	const secureStore = new LargeSecureStore();
 
 	const updateUserData = async () => {
-		const email = await getItem("USER_EMAIL");
-		const userId = await getItem("USER_ID");
+		const email = await secureStore.getItem("USER_EMAIL");
+		const userId = await secureStore.getItem("USER_ID");
 
 		if (!email || !userId) {
 			return;
@@ -44,8 +44,8 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 	};
 
 	const setUserData = async (email: string, id: string) => {
-		await setItem("USER_EMAIL", email);
-		await setItem("USER_ID", id);
+		await secureStore.setItem("USER_EMAIL", email);
+		await secureStore.setItem("USER_ID", id);
 	};
 
 	useEffect(() => {
@@ -61,6 +61,8 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 			const userId = faker.string.uuid();
 
 			await setUserData(email, userId);
+
+			updateUserData();
 		} else {
 			throw new Error("Invalid credentials");
 		}
@@ -69,8 +71,8 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 	}
 
 	async function logout() {
-		await removeItem("USER_EMAIL");
-		await removeItem("USER_ID");
+		await secureStore.removeItem("USER_EMAIL");
+		await secureStore.removeItem("USER_ID");
 
 		setUser(null);
 	}
@@ -81,3 +83,13 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 		</AuthContext.Provider>
 	);
 }
+
+export const useAuthState = () => {
+	const context = useContext(AuthContext);
+
+	if (context === undefined) {
+		throw new Error("useAuthState must be used within a AuthProvider");
+	}
+
+	return context;
+};

@@ -36,8 +36,14 @@ const MainLayout = () => {
 	return (
 		<TamaguiProvider config={TamaguiConfig}>
 			<AuthProvider>
-				<StatusBar style="light" />
-				<SafeAreaProvider>{loaded ? <Slot /> : null}</SafeAreaProvider>
+				<SafeAreaProvider>
+					{loaded ? (
+						<>
+							<StatusBar style="light" />
+							<Slot />
+						</>
+					) : null}
+				</SafeAreaProvider>
 			</AuthProvider>
 		</TamaguiProvider>
 	);
