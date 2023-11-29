@@ -9,7 +9,7 @@ export const base = {
 };
 export const colors = {
 	black: "#000000",
-
+	transparent: "rgba(0, 0, 0, 0)",
 	gold: base.gold,
 	grey: base.grey,
 	white: base.white,
@@ -21,6 +21,8 @@ export const colors = {
 
 	surface_primary: base.grey,
 	surface_secondary: base.white,
+	surface_background: base.grey,
+	surface_foreground: base.white,
 	surface_brand: base.gold,
 	surface_accent: base.grey_accent,
 

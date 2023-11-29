@@ -1,4 +1,4 @@
-import { widthNormalized as wn } from "@/src/utils/normalize-dimensions";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 
 const defaultSizes = {
 	small: 10,

@@ -6,6 +6,8 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import AuthProvider from "@src/context/auth-context";
 
 const MainLayout = () => {
 	SplashScreen.preventAutoHideAsync();
@@ -33,7 +35,16 @@ const MainLayout = () => {
 
 	return (
 		<TamaguiProvider config={TamaguiConfig}>
-			<SafeAreaProvider>{loaded ? <Slot /> : null}</SafeAreaProvider>
+			<AuthProvider>
+				<SafeAreaProvider>
+					{loaded ? (
+						<>
+							<StatusBar style="light" />
+							<Slot />
+						</>
+					) : null}
+				</SafeAreaProvider>
+			</AuthProvider>
 		</TamaguiProvider>
 	);
 };
