@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export const CustomSafeAreaView = styled(SafeAreaView, {
 	flex: 1,
-	backgroundColor: "$surface_primary",
+	backgroundColor: "$surface_background",
 });
 
 // <--- Ignore Tamagui TS error.

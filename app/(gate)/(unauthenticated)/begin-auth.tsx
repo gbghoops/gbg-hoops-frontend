@@ -1,0 +1,90 @@
+import React from "react";
+import { Dimensions } from "react-native";
+import { View, Text, Stack, YStack } from "tamagui";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Video, ResizeMode } from "expo-av";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { StyledImage } from "@src/components/styled-components";
+import Button from "@src/components/button/Button";
+import { useRouter } from "expo-router";
+
+const BeginAuth = () => {
+	const router = useRouter();
+	const insets = useSafeAreaInsets();
+	return (
+		<Stack
+			f={1}
+			position={"relative"}
+			backgroundColor={"$surface_background"}
+			pt={insets.top}
+			pb={insets.bottom}
+		>
+			<YStack zIndex={1} px={"$20"} f={1}>
+				<YStack
+					justifyContent="center"
+					alignItems="center"
+					alignContent="center"
+				>
+					<View
+						w={wn(400)}
+						h={wn(400)}
+						justifyContent="center"
+						ai="center"
+						marginHorizontal="auto"
+						marginTop={wn(30)}
+					>
+						<StyledImage
+							source={require("@assets/gbg-hoops-logo.png")}
+						/>
+					</View>
+				</YStack>
+				<View mt="auto" mb={wn(30)}>
+					<Button
+						text="Let's Go!"
+						fullWidth
+						onPress={() => {
+							router.push("/login");
+						}}
+					/>
+				</View>
+			</YStack>
+			{/* Video Background */}
+			<BackgroundVideo />
+		</Stack>
+	);
+};
+
+const BackgroundVideo = () => {
+	const { width, height } = Dimensions.get("window");
+	return (
+		<View
+			pos="absolute"
+			top={0}
+			left={0}
+			width={width}
+			height={height}
+			zIndex={0}
+		>
+			<View
+				pos="absolute"
+				height={"100%"}
+				width={"100%"}
+				zIndex={1}
+				backgroundColor={"rgba(30, 30, 30, 0.85)"}
+			/>
+			<Video
+				shouldPlay
+				isLooping
+				resizeMode={ResizeMode.COVER}
+				source={require("@assets/video/gbg-hoops-reel.mp4")}
+				style={{
+					width: "100%",
+					height: "100%",
+					zIndex: 0,
+				}}
+			/>
+		</View>
+	);
+};
+
+export default BeginAuth;

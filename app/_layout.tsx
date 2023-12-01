@@ -8,9 +8,13 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AuthProvider from "@src/context/auth-context";
+import * as SystemUI from "expo-system-ui";
+import { colors } from "@src/styles/theme/colors";
 
 const MainLayout = () => {
 	SplashScreen.preventAutoHideAsync();
+
+	SystemUI.setBackgroundColorAsync(colors.surface_background);
 
 	async function changeScreenOrientation() {
 		await ScreenOrientation.lockAsync(

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAuthState } from "@src/context/auth-context";
 import { Slot, useRouter } from "expo-router";
-import { CustomSafeAreaView } from "@src/components/styled-components";
+import CustomSafeAreaView from "@src/components/CustomSafeAreaView";
 
 export default function GatingLayout() {
 	const authState = useAuthState();
@@ -12,12 +12,8 @@ export default function GatingLayout() {
 			return router.replace("/home");
 		}
 
-		return router.replace("/login");
+		return router.replace("/begin-auth");
 	}, [authState?.user]);
 
-	return (
-		<CustomSafeAreaView>
-			<Slot />
-		</CustomSafeAreaView>
-	);
+	return <Slot />;
 }
