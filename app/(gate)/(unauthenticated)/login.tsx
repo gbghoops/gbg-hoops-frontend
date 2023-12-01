@@ -1,8 +1,8 @@
-import { Stack, Text, View, YStack, styled } from "tamagui";
+import { Stack, Text, View, XStack, YStack, styled } from "tamagui";
 import { StyledImage } from "@src/components/styled-components";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { FieldType, TitledTextField } from "@src/components/titled-text-field";
-import { ActivityIndicator, Linking } from "react-native";
+import { Linking } from "react-native";
 import * as Burnt from "burnt";
 import { useAuthState } from "@src/context/auth-context";
 import { useEffect, useState } from "react";
@@ -10,11 +10,17 @@ import * as EmailValidator from "email-validator";
 import Button from "@src/components/button/Button";
 import CustomSafeAreaView from "@src/components/CustomSafeAreaView";
 
+interface LoginErrorProps {
+	error: true;
+	message: string;
+}
 export default function Page() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const [loginLoading, setLoginLoading] = useState(false);
+
+	const [error, setError] = useState<LoginErrorProps | null>(null);
 
 	const authState = useAuthState();
 
@@ -77,8 +83,41 @@ export default function Page() {
 						/>
 					</View>
 				</YStack>
+				{/* Error container */}
+				<View minHeight={wn(55)}>
+					<XStack
+						borderWidth={1}
+						borderColor="$error_primary"
+						my={wn(25)}
+						py={wn(10)}
+						px={wn(10)}
+						justifyContent="flex-start"
+						alignItems="center"
+					>
+						<View w={wn(24)} h={wn(24)} jc="center" ai="center">
+							<StyledImage
+								source={require("@assets/icon/error.png")}
+							/>
+						</View>
+						<View f={1} ml={wn(5)}>
+							<Text
+								fontFamily={"$body"}
+								fontSize={wn(17)}
+								lineHeight={wn(18)}
+							>
+								We couldn’t find an email associated with this
+								account. Please visit our website to create one.
+							</Text>
+						</View>
+					</XStack>
+				</View>
 
-				<YStack mt={"$60"}>
+				<YStack mt={wn(10)}>
+					<View mb={wn(20)}>
+						<Text fontFamily={"$heading"} fontSize={wn(24)}>
+							LOG IN
+						</Text>
+					</View>
 					{/* Email Address */}
 					<View>
 						<TitledTextField
@@ -98,17 +137,19 @@ export default function Page() {
 							handleChange={(value) => setPassword(value)}
 						/>
 					</View>
+
+					<View mt={wn(20)}>
+						<Button
+							text="Login"
+							fullWidth
+							loading={loginLoading}
+							isDisabled={loginLoading}
+							onPress={simulateLogin}
+						/>
+					</View>
 				</YStack>
 
 				<YStack mt={"auto"}>
-					<Button
-						text="Login"
-						fullWidth
-						loading={loginLoading}
-						isDisabled={loginLoading}
-						onPress={simulateLogin}
-					/>
-
 					<View mt={wn(20)}>
 						<Text
 							color="$surface_foreground"
