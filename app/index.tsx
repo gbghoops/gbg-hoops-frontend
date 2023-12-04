@@ -1,16 +1,12 @@
-import { Stack, Text } from "tamagui";
+import { useAuthState } from "@src/context/auth-context";
+import { Redirect, useRouter } from "expo-router";
 
-export default function Page() {
-    return (
-        <Stack
-            backgroundColor={"$surface_primary"}
-            f={1}
-            justifyContent="center"
-            ac={"center"}
-        >
-            <Text color="$text_primary" ta="center" fontFamily={"$heading"}>
-                Home page
-            </Text>
-        </Stack>
-    );
+export default function Entry() {
+    const authState = useAuthState();
+
+    if (!authState?.user) {
+        return <Redirect href="/login" />;
+    }
+
+    return <Redirect href="/home" />;
 }

@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import AuthProvider from "@src/context/auth-context";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { TamaguiProvider, Theme } from "tamagui";
 
 import TamaguiConfig from "@/tamagui.config";
@@ -34,7 +36,16 @@ const MainLayout = () => {
 
     return (
         <TamaguiProvider config={TamaguiConfig}>
-            <SafeAreaProvider>{loaded ? <Slot /> : null}</SafeAreaProvider>
+            <AuthProvider>
+                <SafeAreaProvider>
+                    {loaded ? (
+                        <>
+                            <StatusBar style="light" />
+                            <Slot />
+                        </>
+                    ) : null}
+                </SafeAreaProvider>
+            </AuthProvider>
         </TamaguiProvider>
     );
 };

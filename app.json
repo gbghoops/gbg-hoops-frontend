@@ -33,6 +33,17 @@
 			}
 		},
 		"owner": "gbg-hoops",
-		"plugins": ["expo-router"]
+		"plugins": [
+			"expo-router",
+			"expo-build-properties",
+			[
+				"expo-build-properties",
+				{
+					"ios": {
+						"deploymentTarget": "13.0"
+					}
+				}
+			]
+		]
 	}
 }
