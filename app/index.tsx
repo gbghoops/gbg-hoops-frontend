@@ -1,12 +1,12 @@
-import { useRouter, Redirect } from "expo-router";
 import { useAuthState } from "@src/context/auth-context";
+import { Redirect } from "expo-router";
 
 export default function Entry() {
-	const authState = useAuthState();
+    const authState = useAuthState();
 
-	if (!authState?.user) {
-		return <Redirect href="/login" />;
-	}
+    if (!authState?.user) {
+        return <Redirect href="/login" />;
+    }
 
-	return <Redirect href="/home" />;
+    return <Redirect href="/home" />;
 }

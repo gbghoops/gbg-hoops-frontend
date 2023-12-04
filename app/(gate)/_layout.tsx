@@ -1,19 +1,23 @@
 import { useEffect } from "react";
+import { CustomSafeAreaView } from "@src/components/styled-components";
 import { useAuthState } from "@src/context/auth-context";
 import { Slot, useRouter } from "expo-router";
-import CustomSafeAreaView from "@src/components/CustomSafeAreaView";
 
 export default function GatingLayout() {
-	const authState = useAuthState();
-	const router = useRouter();
+    const authState = useAuthState();
+    const router = useRouter();
 
-	useEffect(() => {
-		if (authState?.user) {
-			return router.replace("/home");
-		}
+    useEffect(() => {
+        if (authState?.user) {
+            return router.replace("/home");
+        }
 
-		return router.replace("/begin-auth");
-	}, [authState?.user]);
+        return router.replace("/login");
+    }, [authState?.user]);
 
-	return <Slot />;
+    return (
+        <CustomSafeAreaView>
+            <Slot />
+        </CustomSafeAreaView>
+    );
 }
