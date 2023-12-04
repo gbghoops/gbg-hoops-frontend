@@ -6,7 +6,7 @@ import { Slot } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { TamaguiProvider, Theme } from "tamagui";
+import { TamaguiProvider } from "tamagui";
 
 import TamaguiConfig from "@/tamagui.config";
 
