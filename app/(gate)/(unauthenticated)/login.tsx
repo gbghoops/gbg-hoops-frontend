@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Linking } from "react-native";
 import Button from "@src/components/button/Button";
 import CustomSafeAreaView from "@src/components/CustomSafeAreaView";
 import { StyledImage } from "@src/components/styled-components";
-import { FieldType, TitledTextField } from "@src/components/titled-text-field";
+import {
+    FieldType,
+    TitledTextField,
+} from "@src/components/titled-text-field/TitledTextField";
 import { useAuthState } from "@src/context/auth-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import * as Burnt from "burnt";
 import * as EmailValidator from "email-validator";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
 interface LoginErrorProps {
-    error: true;
+    state: boolean;
     message: string;
 }
 export default function Page() {
@@ -22,7 +24,18 @@ export default function Page() {
 
     const [error, setError] = useState<LoginErrorProps | null>(null);
 
+    const [emailErrored, setEmailErrored] = useState(false);
+
     const authState = useAuthState();
+
+    const clearError = () => {
+        setError(null);
+    };
+
+    useEffect(() => {
+        clearError();
+        setEmailErrored(false);
+    }, [email, password]);
 
     const handleLogin = async () => {
         if (!loginLoading) {
@@ -33,10 +46,7 @@ export default function Page() {
         const isPasswordValid = password.length;
 
         if (!isEmailValid || !isPasswordValid) {
-            Burnt.toast({
-                title: "Please enter a valid email and password",
-                preset: "error",
-            });
+            setEmailErrored(true);
 
             setLoginLoading(false);
             return;
@@ -46,9 +56,9 @@ export default function Page() {
             await authState?.login(email, password);
         } catch (e) {
             if (e instanceof Error) {
-                Burnt.toast({
-                    title: e.message,
-                    preset: "error",
+                setError({
+                    state: true,
+                    message: e.message,
                 });
             }
         }
@@ -63,6 +73,8 @@ export default function Page() {
             await handleLogin();
         }, 2000);
     };
+
+    const loginDisabled = !email.length || !password.length || loginLoading;
 
     return (
         <CustomSafeAreaView>
@@ -82,32 +94,32 @@ export default function Page() {
                     </View>
                 </YStack>
                 {/* Error container */}
-                <View minHeight={wn(55)}>
-                    <XStack
-                        borderWidth={1}
-                        borderColor="$error_primary"
-                        my={wn(25)}
-                        py={wn(10)}
-                        px={wn(10)}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                    >
-                        <View w={wn(24)} h={wn(24)} jc="center" ai="center">
-                            <StyledImage
-                                source={require("@assets/icon/error.png")}
-                            />
-                        </View>
-                        <View f={1} ml={wn(5)}>
-                            <Text
-                                fontFamily={"$body"}
-                                fontSize={wn(17)}
-                                lineHeight={wn(18)}
-                            >
-                                We couldn’t find an email associated with this
-                                account. Please visit our website to create one.
-                            </Text>
-                        </View>
-                    </XStack>
+                <View minHeight={wn(60)} mt={wn(20)}>
+                    {error && error?.state ? (
+                        <XStack
+                            borderWidth={1}
+                            borderColor="$error_primary"
+                            py={wn(10)}
+                            px={wn(10)}
+                            justifyContent="flex-start"
+                            alignItems="center"
+                        >
+                            <View w={wn(24)} h={wn(24)} jc="center" ai="center">
+                                <StyledImage
+                                    source={require("@assets/icon/error.png")}
+                                />
+                            </View>
+                            <View f={1} ml={wn(5)}>
+                                <Text
+                                    fontFamily={"$body"}
+                                    fontSize={wn(17)}
+                                    lineHeight={wn(18)}
+                                >
+                                    {error.message}
+                                </Text>
+                            </View>
+                        </XStack>
+                    ) : null}
                 </View>
 
                 <YStack mt={wn(10)}>
@@ -121,13 +133,27 @@ export default function Page() {
                         <TitledTextField
                             title="Email Address"
                             type={FieldType.EMAIL}
+                            errorMessage={
+                                emailErrored
+                                    ? "please enter a valid email address"
+                                    : ""
+                            }
                             placeholder="Enter your email address"
-                            handleChange={(value) => setEmail(value)}
+                            handleChange={(value) => {
+                                setEmail(value);
+                                setEmailErrored(false);
+                            }}
+                            handleFocus={() => {
+                                setEmailErrored(false);
+                            }}
+                            handleBlur={() => {
+                                setEmailErrored(false);
+                            }}
                         />
                     </View>
 
                     {/* Password */}
-                    <View mt={wn(20)}>
+                    <View mt={wn(10)}>
                         <TitledTextField
                             title="Password"
                             type={FieldType.PASSWORD}
@@ -136,12 +162,12 @@ export default function Page() {
                         />
                     </View>
 
-                    <View mt={wn(20)}>
+                    <View mt={wn(5)}>
                         <Button
-                            text="Login"
+                            text="Continue"
                             fullWidth
                             loading={loginLoading}
-                            isDisabled={loginLoading}
+                            isDisabled={loginDisabled}
                             onPress={simulateLogin}
                         />
                     </View>
