@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthProvider from "@src/context/auth-context";
+import { colors } from "@src/styles/theme/colors";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import * as SystemUI from "expo-system-ui";
 import { TamaguiProvider } from "tamagui";
 
 import TamaguiConfig from "@/tamagui.config";
@@ -13,7 +15,9 @@ import TamaguiConfig from "@/tamagui.config";
 const MainLayout = () => {
     SplashScreen.preventAutoHideAsync();
 
-    async function changeScreenOrientation(): Promise<void> {
+    SystemUI.setBackgroundColorAsync(colors.surface_background);
+
+    async function changeScreenOrientation() {
         await ScreenOrientation.lockAsync(
             ScreenOrientation.OrientationLock.PORTRAIT_UP,
         );
