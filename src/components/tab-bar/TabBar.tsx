@@ -96,7 +96,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                                 onPress={onPress}
                                 animation={"medium"}
                                 pressStyle={{
-                                    opacity: 0,
+                                    opacity: 0.6,
                                 }}
                             >
                                 <View
