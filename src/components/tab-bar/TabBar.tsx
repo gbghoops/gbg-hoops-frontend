@@ -1,19 +1,15 @@
 import React from "react";
-import { Dimensions, Platform, StyleSheet, ViewStyle } from "react-native";
+import { Dimensions, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { colors } from "@src/styles/theme/colors";
-import {
-    heightNormalized,
-    widthNormalized,
-} from "@src/utils/normalize-dimensions";
-import { router } from "expo-router";
+import { widthNormalized } from "@src/utils/normalize-dimensions";
 import {
     MotiTransitionProp,
     StyleValueWithReplacedTransforms,
     View as MotiView,
 } from "moti";
-import { Image, styled, Text, View } from "tamagui";
+import { Text, View } from "tamagui";
 
 import { tabBarRoutes } from "@/src/constants/tab-bar-routes";
 

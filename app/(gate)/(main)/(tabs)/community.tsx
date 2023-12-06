@@ -1,6 +1,6 @@
-import { Stack, Text, View } from "tamagui";
+import { Stack, Text } from "tamagui";
 
-export default function Page() {
+export default function CommunityPage() {
     return (
         <Stack
             backgroundColor={"$surface_background"}

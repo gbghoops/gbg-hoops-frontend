@@ -1,7 +1,7 @@
 import { useAuthState } from "@src/context/auth-context";
 import { Stack, Text, View } from "tamagui";
 
-export default function Page() {
+export default function HomePage() {
     const authState = useAuthState();
     return (
         <Stack
