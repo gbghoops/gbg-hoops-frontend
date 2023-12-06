@@ -10,6 +10,7 @@ export enum FieldType {
     EMAIL = "EMAIL",
     PASSWORD = "PASSWORD",
     TEXT = "TEXT",
+    NUMERIC = "NUMERIC",
 }
 
 interface TitledTextFieldProps {
@@ -49,6 +50,21 @@ export const TitledTextField = ({
         setValue(initialValue ?? "");
     }, [initialValue]);
 
+    const resolveKeyboardType = (fieldType: FieldType) => {
+        switch (fieldType) {
+            case FieldType.EMAIL:
+                return "email-address";
+            case FieldType.NUMERIC:
+                return "numeric";
+            case FieldType.PASSWORD:
+                return "default";
+            case FieldType.TEXT:
+                return "default";
+            default:
+                return "default";
+        }
+    };
+
     return (
         <View>
             <StyledInputContainer
@@ -73,11 +89,22 @@ export const TitledTextField = ({
                         type === FieldType.EMAIL ? "none" : "sentences"
                     }
                     placeholder={placeholder}
-                    keyboardType={
-                        type === FieldType.EMAIL ? "email-address" : "default"
-                    }
+                    keyboardType={resolveKeyboardType(type)}
                     value={value}
-                    onChangeText={(value) => setValue(value)}
+                    onChangeText={(value) => {
+                        // First Handle Numeric values...
+                        if (type === FieldType.NUMERIC) {
+                            if (
+                                /^\d+$/.test(value.toString()) ||
+                                value === ""
+                            ) {
+                                return setValue(value);
+                            }
+                            return;
+                        }
+
+                        setValue(value);
+                    }}
                     onFocus={() => {
                         setIsFocused(true);
                         handleFocus && handleFocus();
@@ -108,7 +135,7 @@ export const TitledTextField = ({
                 </View>
             </StyledInputContainer>
             {/* Error Message container */}
-            <View height={wn(14)} mt={wn(5)}>
+            <View mt={wn(5)}>
                 {errorMessage ? (
                     <Text
                         fontFamily={"$body"}

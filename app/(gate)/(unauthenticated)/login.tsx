@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Linking } from "react-native";
 import Button from "@src/components/button/Button";
 import CustomSafeAreaView from "@src/components/CustomSafeAreaView";
+import Link from "@src/components/link/Link";
 import { StyledImage } from "@src/components/styled-components";
 import {
     FieldType,
@@ -10,6 +11,8 @@ import {
 import { useAuthState } from "@src/context/auth-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import * as EmailValidator from "email-validator";
+import { useRouter } from "expo-router";
+import { Stack as NavigationStack } from "expo-router";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
 interface LoginErrorProps {
@@ -27,6 +30,8 @@ export default function Page() {
     const [emailErrored, setEmailErrored] = useState(false);
 
     const authState = useAuthState();
+
+    const router = useRouter();
 
     const clearError = () => {
         setError(null);
@@ -78,6 +83,12 @@ export default function Page() {
 
     return (
         <CustomSafeAreaView>
+            <NavigationStack.Screen
+                options={{
+                    header: () => null,
+                    gestureEnabled: false,
+                }}
+            />
             <Stack f={1} px={"$20"} backgroundColor={"$surface_background"}>
                 <YStack justifyContent="center" alignItems="center">
                     <View
@@ -94,7 +105,7 @@ export default function Page() {
                     </View>
                 </YStack>
                 {/* Error container */}
-                <View minHeight={wn(60)} mt={wn(20)}>
+                <View mt={wn(20)}>
                     {error && error?.state ? (
                         <XStack
                             borderWidth={1}
@@ -123,7 +134,7 @@ export default function Page() {
                 </View>
 
                 <YStack mt={wn(10)}>
-                    <View mb={wn(20)}>
+                    <View mb={wn(10)}>
                         <Text fontFamily={"$heading"} fontSize={wn(24)}>
                             LOG IN
                         </Text>
@@ -171,28 +182,38 @@ export default function Page() {
                             onPress={simulateLogin}
                         />
                     </View>
+
+                    <View mt={wn(20)}>
+                        <Link
+                            onPress={() => {
+                                router.push("/forgot-password");
+                            }}
+                        >
+                            Forgot Password
+                        </Link>
+                    </View>
                 </YStack>
 
-                <YStack mt={"auto"}>
+                <YStack mt={"auto"} mb={"$20"}>
                     <View mt={wn(20)}>
                         <Text
                             color="$surface_foreground"
                             fontSize={wn(16)}
                             textAlign="center"
+                            fontFamily={"$body"}
                         >
                             {`Don't have an account?`}
                         </Text>
                         <View flexDirection="row" jc="center" mt={wn(5)}>
-                            <Text
-                                fontSize={wn(16)}
-                                textDecorationLine="underline"
-                                color="$gold"
+                            <Link
                                 onPress={() => {
                                     Linking.openURL("https://gbghoops.com");
                                 }}
-                            >{`Visit our website`}</Text>
+                            >{`Visit our website`}</Link>
                             <Text fontSize={wn(16)}> </Text>
-                            <Text fontSize={wn(16)}>to create one</Text>
+                            <Text fontSize={wn(16)} fontFamily={"$body"}>
+                                to create one
+                            </Text>
                         </View>
                     </View>
                 </YStack>

@@ -5,7 +5,7 @@ export default function Page() {
     const authState = useAuthState();
     return (
         <Stack
-            backgroundColor={"$surface_primary"}
+            backgroundColor={"$surface_background"}
             f={1}
             justifyContent="center"
             ac={"center"}

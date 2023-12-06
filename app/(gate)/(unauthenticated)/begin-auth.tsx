@@ -6,6 +6,7 @@ import { StyledImage } from "@src/components/styled-components";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
+import { Stack as NavigationStack } from "expo-router";
 import { Stack, Text, View, YStack } from "tamagui";
 
 const BeginAuth = () => {
@@ -65,6 +66,9 @@ const BackgroundVideo = () => {
             height={height}
             zIndex={0}
         >
+            <NavigationStack.Screen
+                options={{ header: () => null, gestureEnabled: false }}
+            />
             <View
                 pos="absolute"
                 height={"100%"}
