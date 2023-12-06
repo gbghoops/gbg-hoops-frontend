@@ -31,7 +31,7 @@ interface TitledTextFieldProps {
 export const TitledTextField = ({
     title,
     placeholder,
-    delayIndex = 1,
+
     type,
     value: initialValue,
     handleChange,
@@ -39,7 +39,6 @@ export const TitledTextField = ({
     handleFocus,
     errorMessage = "",
 }: TitledTextFieldProps) => {
-    const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState(initialValue ?? "");
 
     useEffect(() => {
@@ -106,11 +105,9 @@ export const TitledTextField = ({
                         setValue(value);
                     }}
                     onFocus={() => {
-                        setIsFocused(true);
                         handleFocus && handleFocus();
                     }}
                     onBlur={() => {
-                        setIsFocused(false);
                         handleBlur && handleBlur();
                     }}
                 />

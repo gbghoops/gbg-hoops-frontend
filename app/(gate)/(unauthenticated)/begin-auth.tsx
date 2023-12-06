@@ -7,7 +7,7 @@ import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Stack as NavigationStack } from "expo-router";
-import { Stack, Text, View, YStack } from "tamagui";
+import { Stack, View, YStack } from "tamagui";
 
 const BeginAuth = () => {
     const router = useRouter();

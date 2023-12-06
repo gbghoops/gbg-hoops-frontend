@@ -1,12 +1,9 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
-import {
-    heightNormalized as hn,
-    widthNormalized as wn,
-} from "@src/utils/normalize-dimensions";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
-import { Text, View } from "tamagui";
+import { View } from "tamagui";
 
 interface ProgressState {
     progress: number;
