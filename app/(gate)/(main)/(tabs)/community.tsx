@@ -9,7 +9,7 @@ export default function CommunityPage() {
             ac={"center"}
         >
             <Text color="$text_primary" ta="center" fontFamily={"$heading"}>
-                Programs page
+                Community page
             </Text>
         </Stack>
     );

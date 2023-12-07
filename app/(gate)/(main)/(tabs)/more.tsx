@@ -9,7 +9,7 @@ export default function MorePage() {
             ac={"center"}
         >
             <Text color="$text_primary" ta="center" fontFamily={"$heading"}>
-                Programs page
+                More page
             </Text>
         </Stack>
     );

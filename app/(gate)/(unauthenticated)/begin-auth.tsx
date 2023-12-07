@@ -20,6 +20,9 @@ const BeginAuth = () => {
             pt={insets.top}
             pb={insets.bottom}
         >
+            <NavigationStack.Screen
+                options={{ header: () => null, gestureEnabled: false }}
+            />
             <YStack zIndex={1} px={"$20"} f={1}>
                 <YStack
                     justifyContent="center"
@@ -66,9 +69,6 @@ const BackgroundVideo = () => {
             height={height}
             zIndex={0}
         >
-            <NavigationStack.Screen
-                options={{ header: () => null, gestureEnabled: false }}
-            />
             <View
                 pos="absolute"
                 height={"100%"}
