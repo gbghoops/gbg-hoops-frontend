@@ -1,13 +1,17 @@
 import { ImageBackground, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Button from "@src/components/button/Button";
 import HomeScreenBanner from "@src/components/home-screen-banner/HomeScreenBanner";
+import Link from "@src/components/link/Link";
+import BackgroundVideo from "@src/components/screen-components/Home/BackgroundVideo/BackgroundVideo";
+import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
+import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Avatar, ScrollView, Stack, Text, View } from "tamagui";
 
 export default function HomePage() {
-    const { top } = useSafeAreaInsets();
+    const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
     return (
         <Stack
@@ -23,11 +27,12 @@ export default function HomePage() {
                 <ScrollView
                     f={1}
                     decelerationRate={"fast"}
+                    bounces={false}
                     showsVerticalScrollIndicator={false}
                 >
-                    <Stack f={1} ac={"center"}>
+                    <Stack f={1} ac={"center"} pb={bottom + wn(120)}>
                         {/* Header Banner */}
-                        <View height={wn(280)} position="relative">
+                        <View height={wn(280) + top} position="relative">
                             {/* Banner Background Video container */}
                             <BackgroundVideo />
                             <View
@@ -80,32 +85,132 @@ export default function HomePage() {
                             </View>
                         </View>
                         {/* Body */}
-                        <View mx={wn(20)}>
+                        <View>
                             {/* Intro Banner */}
-                            <HomeScreenBanner
-                                onPress={() => {
-                                    router.push("/programs");
-                                }}
-                            >
-                                <View f={1} p={wn(20)}>
+                            <View px={wn(20)}>
+                                <HomeScreenBanner
+                                    onPress={() => {
+                                        router.push("/programs");
+                                    }}
+                                >
+                                    <View f={1} p={wn(20)}>
+                                        <Text
+                                            fontFamily={"$heading"}
+                                            fontSize={wn(24)}
+                                            lh={wn(26)}
+                                            textTransform="uppercase"
+                                        >
+                                            {`What's New`}
+                                        </Text>
+                                        <Text
+                                            fontFamily={"$body"}
+                                            fontSize={wn(16)}
+                                            lh={wn(18)}
+                                            mt={wn(11)}
+                                        >
+                                            {`Welcome to the GBG Hoops app! Expolore out programs or create your own workout.`}
+                                        </Text>
+                                    </View>
+                                </HomeScreenBanner>
+                            </View>
+
+                            {/* Recommended For you section... */}
+                            <View>
+                                {/* Heading */}
+                                <View
+                                    fd={"row"}
+                                    jc={"space-between"}
+                                    ai={"center"}
+                                    mt={wn(40)}
+                                    px={wn(20)}
+                                >
                                     <Text
-                                        fontFamily={"$heading"}
+                                        ff={"$heading"}
                                         fontSize={wn(24)}
-                                        lh={wn(26)}
                                         textTransform="uppercase"
                                     >
-                                        {`What's New`}
+                                        Recommended For You
                                     </Text>
-                                    <Text
-                                        fontFamily={"$body"}
-                                        fontSize={wn(16)}
-                                        lh={wn(18)}
-                                        mt={wn(11)}
+                                    <Link
+                                        bold
+                                        onPress={() => {
+                                            router.push("/programs");
+                                        }}
                                     >
-                                        {`Welcome to the GBG Hoops app! Expolore out programs or create your own workout.`}
+                                        See all Programs
+                                    </Link>
+                                </View>
+                                {/* Program Cards */}
+                                <View mt={wn(20)}>
+                                    <RenderRecommendedProgramCard />
+                                </View>
+                            </View>
+
+                            {/* Workout of th Day */}
+                            <View mt={wn(20)} px={wn(20)}>
+                                {/* Heading */}
+                                <View
+                                    fd={"row"}
+                                    jc={"space-between"}
+                                    ai={"center"}
+                                    mt={wn(30)}
+                                >
+                                    <Text
+                                        ff={"$heading"}
+                                        fontSize={wn(24)}
+                                        textTransform="uppercase"
+                                    >
+                                        Workout of the day
                                     </Text>
                                 </View>
-                            </HomeScreenBanner>
+
+                                <View mt={wn(20)}>
+                                    <WorkoutOfTheDayCard
+                                        onPress={() => {}}
+                                        programDuration="60 min"
+                                        title="EDD Stability"
+                                        programImage={require("@assets/programs/eod-mobility-program-screen.png")}
+                                    />
+                                </View>
+                            </View>
+
+                            {/* Coach2Coach */}
+                            <View mt={wn(50)} mx={wn(20)}>
+                                <View
+                                    backgroundColor={"$surface_primary"}
+                                    p={wn(20)}
+                                    pb={wn(30)}
+                                >
+                                    <Text
+                                        textTransform="uppercase"
+                                        textAlign="center"
+                                        fontSize={wn(24)}
+                                        fontFamily={"$heading"}
+                                        my={wn(10)}
+                                    >
+                                        Coach2Coach
+                                    </Text>
+                                    <Text
+                                        textAlign="center"
+                                        fontFamily={"$body"}
+                                        fontSize={wn(16)}
+                                        px={wn(20)}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna
+                                        aliqua.
+                                    </Text>
+                                    <View fd="row" jc="center" mt="$20">
+                                        <Button
+                                            text="BOOK CALL"
+                                            onPress={() => {}}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+
+                            {/* Refer a Friend */}
                         </View>
                     </Stack>
                 </ScrollView>
@@ -113,38 +218,6 @@ export default function HomePage() {
         </Stack>
     );
 }
-
-const BackgroundVideo = () => {
-    return (
-        <View
-            pos="absolute"
-            top={0}
-            left={0}
-            width={"100%"}
-            height={"100%"}
-            zIndex={0}
-        >
-            <View
-                pos="absolute"
-                height={"100%"}
-                width={"100%"}
-                zIndex={1}
-                backgroundColor={"rgba(20, 20, 20, 0.75)"}
-            />
-            <Video
-                shouldPlay
-                isLooping
-                resizeMode={ResizeMode.COVER}
-                source={require("@assets/video/gbg-reel-landscape.mp4")}
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 0,
-                }}
-            />
-        </View>
-    );
-};
 
 const styles = StyleSheet.create({
     ImageBackground: {

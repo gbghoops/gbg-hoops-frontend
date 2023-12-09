@@ -11,6 +11,7 @@
 	"dependencies": {
 		"@react-native-async-storage/async-storage": "1.18.2",
 		"@react-navigation/stack": "^6.3.20",
+		"@shopify/flash-list": "^1.6.3",
 		"@tamagui/animations-moti": "^1.74.11",
 		"@tamagui/animations-react-native": "^1.74.15",
 		"@tamagui/babel-plugin": "^1.74.11",

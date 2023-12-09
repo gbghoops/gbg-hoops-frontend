@@ -1,4 +1,3 @@
-import { Header } from "@src/components/stack-header/StackHeader";
 import { useAuthState } from "@src/context/auth-context";
 import { Stack as RouterStack } from "expo-router";
 import { Stack, Text, View } from "tamagui";
@@ -11,11 +10,6 @@ export default function SettingsScreen() {
             justifyContent="center"
             ac={"center"}
         >
-            <RouterStack.Screen
-                options={{
-                    header: () => <Header />,
-                }}
-            />
             <Text color="$text_primary" ta="center" fontFamily={"$heading"}>
                 Settings page
             </Text>

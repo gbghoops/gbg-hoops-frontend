@@ -5,6 +5,7 @@ interface LinkProps extends PropsWithChildren {
     onPress: () => void;
     fontSize?: number;
     color?: string;
+    bold?: boolean;
     textAlignment?: "left" | "center" | "right";
 }
 
@@ -13,13 +14,14 @@ export default function Link({
     fontSize,
     children,
     color,
+    bold,
     textAlignment,
 }: LinkProps) {
     return (
         <Text
             fontSize={fontSize ?? wn(16)}
             color={color ?? "$gold"}
-            fontFamily={"$body"}
+            fontFamily={bold ? "$heading" : "$body"}
             onPress={onPress}
             textAlign={textAlignment ?? "left"}
             textDecorationLine="underline"
