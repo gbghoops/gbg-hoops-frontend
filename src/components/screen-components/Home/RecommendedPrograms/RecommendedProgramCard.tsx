@@ -15,7 +15,7 @@ export interface RecommendedProgramCardProps {
 }
 
 const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
-    const { id, poster, video, programTitle, isLastItem, isVisible } = props;
+    const { poster, video, programTitle, isLastItem, isVisible } = props;
     const programVideo = useRef<Video>(null);
 
     useEffect(() => {

@@ -1,5 +1,4 @@
 import { useAuthState } from "@src/context/auth-context";
-import { Stack as RouterStack } from "expo-router";
 import { Stack, Text, View } from "tamagui";
 export default function SettingsScreen() {
     const authState = useAuthState();

@@ -1,10 +1,11 @@
 import { ImageBackground, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Button from "@src/components/button/Button";
 import HomeScreenBanner from "@src/components/home-screen-banner/HomeScreenBanner";
 import Link from "@src/components/link/Link";
 import BackgroundVideo from "@src/components/screen-components/Home/BackgroundVideo/BackgroundVideo";
+import Coach2Coach from "@src/components/screen-components/Home/Coach2Coach/Coach2Coach";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
+import ReferAFriend from "@src/components/screen-components/Home/ReferAFriend/ReferAFriend";
 import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
@@ -175,42 +176,9 @@ export default function HomePage() {
                             </View>
 
                             {/* Coach2Coach */}
-                            <View mt={wn(50)} mx={wn(20)}>
-                                <View
-                                    backgroundColor={"$surface_primary"}
-                                    p={wn(20)}
-                                    pb={wn(30)}
-                                >
-                                    <Text
-                                        textTransform="uppercase"
-                                        textAlign="center"
-                                        fontSize={wn(24)}
-                                        fontFamily={"$heading"}
-                                        my={wn(10)}
-                                    >
-                                        Coach2Coach
-                                    </Text>
-                                    <Text
-                                        textAlign="center"
-                                        fontFamily={"$body"}
-                                        fontSize={wn(16)}
-                                        px={wn(20)}
-                                    >
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna
-                                        aliqua.
-                                    </Text>
-                                    <View fd="row" jc="center" mt="$20">
-                                        <Button
-                                            text="BOOK CALL"
-                                            onPress={() => {}}
-                                        />
-                                    </View>
-                                </View>
-                            </View>
-
+                            <Coach2Coach />
                             {/* Refer a Friend */}
+                            <ReferAFriend />
                         </View>
                     </Stack>
                 </ScrollView>
