@@ -107,8 +107,8 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                                 >
                                     <View
                                         alignItems="center"
-                                        justifyContent="space-between"
-                                        height={widthNormalized(40)}
+                                        justifyContent="center"
+                                        height={"100%"}
                                     >
                                         <View
                                             height={widthNormalized(25)}
