@@ -21,6 +21,7 @@ interface LoginErrorProps {
 }
 export default function Page() {
     const [email, setEmail] = useState("");
+
     const [password, setPassword] = useState("");
 
     const [loginLoading, setLoginLoading] = useState(false);
@@ -114,6 +115,15 @@ export default function Page() {
                             px={wn(10)}
                             justifyContent="flex-start"
                             alignItems="center"
+                            animation={"medium"}
+                            enterStyle={{
+                                opacity: 0,
+                                y: 10,
+                            }}
+                            exitStyle={{
+                                opacity: 0,
+                                y: -10,
+                            }}
                         >
                             <View w={wn(24)} h={wn(24)} jc="center" ai="center">
                                 <StyledImage
@@ -133,7 +143,7 @@ export default function Page() {
                     ) : null}
                 </View>
 
-                <YStack mt={wn(10)}>
+                <YStack mt={wn(10)} animation={"medium"}>
                     <View mb={wn(10)}>
                         <Text fontFamily={"$heading"} fontSize={wn(24)}>
                             LOG IN

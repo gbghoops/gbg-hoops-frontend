@@ -11,7 +11,7 @@ export default function GatingLayout() {
             return router.replace("/home");
         }
 
-        return router.replace("/login");
+        return router.replace("/begin-auth");
     }, [authState?.user]);
 
     return <Slot />;

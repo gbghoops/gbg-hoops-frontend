@@ -96,34 +96,46 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                                 onPress={onPress}
                                 animation={"medium"}
                                 pressStyle={{
-                                    opacity: 0,
+                                    opacity: 0.6,
                                 }}
                             >
                                 <View
                                     flex={1}
+                                    opacity={isFocused ? 1 : 0.75}
                                     alignItems="center"
                                     justifyContent="center"
-                                    opacity={isFocused ? 1 : 0.75}
                                 >
-                                    {icon &&
-                                        icon({
-                                            focused: isFocused,
-                                            size: 24,
-                                            color: isFocused
-                                                ? colors.gold
-                                                : colors.white,
-                                        })}
-                                    <Text
-                                        fontFamily={"$heading"}
-                                        marginTop={5}
-                                        color={
-                                            isFocused
-                                                ? colors.gold
-                                                : colors.white
-                                        }
+                                    <View
+                                        alignItems="center"
+                                        justifyContent="center"
+                                        height={"100%"}
                                     >
-                                        {label as string}
-                                    </Text>
+                                        <View
+                                            height={widthNormalized(25)}
+                                            width={"100%"}
+                                            justifyContent="center"
+                                        >
+                                            {icon &&
+                                                icon({
+                                                    focused: isFocused,
+                                                    size: 24,
+                                                    color: isFocused
+                                                        ? colors.gold
+                                                        : colors.white,
+                                                })}
+                                        </View>
+                                        <Text
+                                            fontFamily={"$heading"}
+                                            marginTop={5}
+                                            color={
+                                                isFocused
+                                                    ? colors.gold
+                                                    : colors.white
+                                            }
+                                        >
+                                            {label as string}
+                                        </Text>
+                                    </View>
                                 </View>
                             </View>
                         );
