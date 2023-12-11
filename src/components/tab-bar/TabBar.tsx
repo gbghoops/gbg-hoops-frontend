@@ -9,7 +9,7 @@ import {
     StyleValueWithReplacedTransforms,
     View as MotiView,
 } from "moti";
-import { Text, View } from "tamagui";
+import { Stack, Text, View } from "tamagui";
 
 import { tabBarRoutes } from "@/src/constants/tab-bar-routes";
 
@@ -51,6 +51,14 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                 backgroundColor={"$surface_primary"}
                 borderRadius={widthNormalized(15)}
                 position="relative"
+                shadowColor={"rgba(25, 25, 25, 0.0025)"}
+                shadowOffset={{
+                    width: 0,
+                    height: 4,
+                }}
+                shadowOpacity={0.3}
+                shadowRadius={4.65}
+                elevationAndroid={7}
             >
                 {state.routes
                     .filter((route) => {
