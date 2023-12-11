@@ -9,7 +9,7 @@ import {
     StyleValueWithReplacedTransforms,
     View as MotiView,
 } from "moti";
-import { Stack, Text, View } from "tamagui";
+import { Text, View } from "tamagui";
 
 import { tabBarRoutes } from "@/src/constants/tab-bar-routes";
 
