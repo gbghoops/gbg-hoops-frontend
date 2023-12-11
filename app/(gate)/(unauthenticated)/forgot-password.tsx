@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Keyboard } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import EnterNewPassword from "@src/components/screen-components/ForgotPassword/EnterNewPassword";
 import EnterResetPasswordEmail from "@src/components/screen-components/ForgotPassword/EnterResetPasswordEmail";
@@ -47,16 +49,18 @@ export default function ForgotPassword() {
     };
 
     return (
-        <View f={1} px={wn(20)} pb={bottom + wn(20)}>
+        <View f={1} px={wn(20)} pb={bottom + wn(20)} onPress={Keyboard.dismiss}>
             {/* Forgot Password content */}
-            <AnimatePresence>
-                <RenderPasswordResetState
-                    changePasswordResetState={(state) =>
-                        setPasswordResetState(state)
-                    }
-                    passwordResetState={passwordResetState}
-                />
-            </AnimatePresence>
+            <KeyboardAwareScrollView>
+                <AnimatePresence>
+                    <RenderPasswordResetState
+                        changePasswordResetState={(state) =>
+                            setPasswordResetState(state)
+                        }
+                        passwordResetState={passwordResetState}
+                    />
+                </AnimatePresence>
+            </KeyboardAwareScrollView>
         </View>
     );
 }

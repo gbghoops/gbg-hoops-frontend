@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Linking } from "react-native";
+import { Keyboard, Linking } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Button from "@src/components/button/Button";
 import CustomSafeAreaView from "@src/components/CustomSafeAreaView";
 import Link from "@src/components/link/Link";
@@ -90,119 +91,131 @@ export default function Page() {
                     gestureEnabled: false,
                 }}
             />
-            <Stack f={1} px={"$20"} backgroundColor={"$surface_background"}>
-                <YStack justifyContent="center" alignItems="center">
-                    <View
-                        w={wn(135)}
-                        h={wn(200)}
-                        justifyContent="center"
-                        ac="center"
-                        marginHorizontal="auto"
-                        marginTop={wn(30)}
-                    >
-                        <StyledImage
-                            source={require("@assets/gbg-hoops-logo.png")}
-                        />
-                    </View>
-                </YStack>
-                {/* Error container */}
-                <View mt={wn(20)}>
-                    {error && error?.state ? (
-                        <XStack
-                            borderWidth={1}
-                            borderColor="$error_primary"
-                            py={wn(10)}
-                            px={wn(10)}
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            animation={"medium"}
-                            enterStyle={{
-                                opacity: 0,
-                                y: 10,
-                            }}
-                            exitStyle={{
-                                opacity: 0,
-                                y: -10,
-                            }}
+            <Stack
+                f={1}
+                px={"$20"}
+                backgroundColor={"$surface_background"}
+                onPress={Keyboard.dismiss}
+            >
+                <KeyboardAwareScrollView>
+                    <YStack justifyContent="center" alignItems="center">
+                        <View
+                            w={wn(135)}
+                            h={wn(200)}
+                            justifyContent="center"
+                            ac="center"
+                            marginHorizontal="auto"
+                            marginTop={wn(30)}
                         >
-                            <View w={wn(24)} h={wn(24)} jc="center" ai="center">
-                                <StyledImage
-                                    source={require("@assets/icon/error.png")}
-                                />
-                            </View>
-                            <View f={1} ml={wn(5)}>
-                                <Text
-                                    fontFamily={"$body"}
-                                    fontSize={wn(17)}
-                                    lineHeight={wn(18)}
-                                >
-                                    {error.message}
-                                </Text>
-                            </View>
-                        </XStack>
-                    ) : null}
-                </View>
-
-                <YStack mt={wn(10)} animation={"medium"}>
-                    <View mb={wn(10)}>
-                        <Text fontFamily={"$heading"} fontSize={wn(24)}>
-                            LOG IN
-                        </Text>
-                    </View>
-                    {/* Email Address */}
-                    <View>
-                        <TitledTextField
-                            title="Email Address"
-                            type={FieldType.EMAIL}
-                            errorMessage={
-                                emailErrored
-                                    ? "please enter a valid email address"
-                                    : ""
-                            }
-                            placeholder="Enter your email address"
-                            handleChange={(value) => {
-                                setEmail(value);
-                                setEmailErrored(false);
-                            }}
-                            handleFocus={() => {
-                                setEmailErrored(false);
-                            }}
-                            handleBlur={() => {
-                                setEmailErrored(false);
-                            }}
-                        />
-                    </View>
-
-                    {/* Password */}
-                    <View mt={wn(10)}>
-                        <TitledTextField
-                            title="Password"
-                            type={FieldType.PASSWORD}
-                            placeholder="••••••••••••"
-                            handleChange={(value) => setPassword(value)}
-                        />
-                    </View>
-
-                    <View mt={wn(5)}>
-                        <Button
-                            text="Continue"
-                            fullWidth
-                            loading={loginLoading}
-                            isDisabled={loginDisabled}
-                            onPress={simulateLogin}
-                        />
-                    </View>
-
+                            <StyledImage
+                                source={require("@assets/gbg-hoops-logo.png")}
+                            />
+                        </View>
+                    </YStack>
+                    {/* Error container */}
                     <View mt={wn(20)}>
-                        <Link
-                            onPress={() => {
-                                router.push("/forgot-password");
-                            }}
-                        >
-                            Forgot Password
-                        </Link>
+                        {error && error?.state ? (
+                            <XStack
+                                borderWidth={1}
+                                borderColor="$error_primary"
+                                py={wn(10)}
+                                px={wn(10)}
+                                justifyContent="flex-start"
+                                alignItems="center"
+                                animation={"medium"}
+                                enterStyle={{
+                                    opacity: 0,
+                                    y: 10,
+                                }}
+                                exitStyle={{
+                                    opacity: 0,
+                                    y: -10,
+                                }}
+                            >
+                                <View
+                                    w={wn(24)}
+                                    h={wn(24)}
+                                    jc="center"
+                                    ai="center"
+                                >
+                                    <StyledImage
+                                        source={require("@assets/icon/error.png")}
+                                    />
+                                </View>
+                                <View f={1} ml={wn(5)}>
+                                    <Text
+                                        fontFamily={"$body"}
+                                        fontSize={wn(17)}
+                                        lineHeight={wn(18)}
+                                    >
+                                        {error.message}
+                                    </Text>
+                                </View>
+                            </XStack>
+                        ) : null}
                     </View>
-                </YStack>
+
+                    <YStack mt={wn(10)} animation={"medium"}>
+                        <View mb={wn(10)}>
+                            <Text fontFamily={"$heading"} fontSize={wn(24)}>
+                                LOG IN
+                            </Text>
+                        </View>
+                        {/* Email Address */}
+                        <View>
+                            <TitledTextField
+                                title="Email Address"
+                                type={FieldType.EMAIL}
+                                errorMessage={
+                                    emailErrored
+                                        ? "please enter a valid email address"
+                                        : ""
+                                }
+                                placeholder="Enter your email address"
+                                handleChange={(value) => {
+                                    setEmail(value);
+                                    setEmailErrored(false);
+                                }}
+                                handleFocus={() => {
+                                    setEmailErrored(false);
+                                }}
+                                handleBlur={() => {
+                                    setEmailErrored(false);
+                                }}
+                            />
+                        </View>
+
+                        {/* Password */}
+                        <View mt={wn(10)}>
+                            <TitledTextField
+                                title="Password"
+                                type={FieldType.PASSWORD}
+                                placeholder="••••••••••••"
+                                handleChange={(value) => setPassword(value)}
+                            />
+                        </View>
+
+                        <View mt={wn(5)}>
+                            <Button
+                                text="Continue"
+                                fullWidth
+                                loading={loginLoading}
+                                isDisabled={loginDisabled}
+                                onPress={simulateLogin}
+                            />
+                        </View>
+
+                        <View mt={wn(20)}>
+                            <Link
+                                onPress={() => {
+                                    router.push("/forgot-password");
+                                }}
+                            >
+                                Forgot Password
+                            </Link>
+                        </View>
+                    </YStack>
+                </KeyboardAwareScrollView>
 
                 <YStack mt={"auto"} mb={"$20"}>
                     <View mt={wn(20)}>
