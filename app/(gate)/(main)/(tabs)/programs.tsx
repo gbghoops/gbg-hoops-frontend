@@ -27,11 +27,13 @@ const ProgramTabs = () => {
         ),
         [],
     );
+
+    const headerHeight = wn(80);
+
     return (
         <Tabs.Container
             renderHeader={renderProgramsPageHeader}
-            revealHeaderOnScroll
-            snapThreshold={0.5}
+            headerHeight={headerHeight}
             renderTabBar={(props) => (
                 <MaterialTabBar
                     {...props}
@@ -112,10 +114,6 @@ const PageHeader = styled(Text, {
 });
 
 const styles = StyleSheet.create({
-    box: {
-        height: 250,
-        width: "100%",
-    },
     tabBarStyle: {
         backgroundColor: colors.surface_background,
         borderBottomWidth: 1,

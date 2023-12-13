@@ -9,7 +9,7 @@ export const ForYouTab = () => {
     const { bottom } = useSafeAreaInsets();
 
     return (
-        <Tabs.ScrollView>
+        <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
             <View f={1} pb={bottom + wn(120)}>
                 <BuildYoutWorkoutCards />
             </View>
