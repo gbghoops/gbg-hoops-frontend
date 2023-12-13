@@ -3,7 +3,7 @@ import { Octicons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
-import { View } from "tamagui";
+import { Avatar, Text, View } from "tamagui";
 
 interface ProgressState {
     progress: number;
@@ -13,11 +13,17 @@ interface HeaderProps {
     onBackPressed?: () => void;
     progress?: ProgressState;
     canGoBack?: boolean;
+    showAvatar?: boolean;
 }
 
-export const Header = ({ onBackPressed, canGoBack = true }: HeaderProps) => {
+export const Header = ({
+    onBackPressed,
+    canGoBack = true,
+    showAvatar = false,
+}: HeaderProps) => {
     const { back, canGoBack: checkCanGoBack, replace } = useRouter();
     const { top } = useSafeAreaInsets();
+    const router = useRouter();
 
     const canRouterGoBack = checkCanGoBack();
 
@@ -29,10 +35,10 @@ export const Header = ({ onBackPressed, canGoBack = true }: HeaderProps) => {
         <View
             ac="center"
             ai={"center"}
-            justifyContent="flex-start"
-            height={"$60"}
+            justifyContent="space-between"
+            height={wn(60) + top}
             fd={"row"}
-            marginTop={top}
+            paddingTop={top}
             paddingHorizontal={"$20"}
             backgroundColor={"$surface_background"}
         >
@@ -64,6 +70,36 @@ export const Header = ({ onBackPressed, canGoBack = true }: HeaderProps) => {
                     </View>
                 ) : null}
             </View>
+
+            {/* Avatar */}
+            {showAvatar ? (
+                <View ml={"auto"}>
+                    <Avatar
+                        circular
+                        size={"$40"}
+                        animation={"medium"}
+                        onPress={() => {
+                            router.push("/settings");
+                        }}
+                        pressStyle={{
+                            opacity: 0.85,
+                            scale: 0.9,
+                        }}
+                    >
+                        <Avatar.Image src="http://placekitten123.com/200/300" />
+                        <Avatar.Fallback bc="$gold" ai="center" jc="center">
+                            <Text
+                                color="$black"
+                                fontFamily={"$body"}
+                                fontSize={wn(20)}
+                                lineHeight={wn(22)}
+                            >
+                                AB
+                            </Text>
+                        </Avatar.Fallback>
+                    </Avatar>
+                </View>
+            ) : null}
         </View>
     );
 };
