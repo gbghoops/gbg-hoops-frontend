@@ -5,6 +5,7 @@ import {
     MaterialTabItem,
     Tabs,
 } from "react-native-collapsible-tab-view";
+import { ForYouTab } from "@src/components/screen-components/Programs/Tabs/ForYouTab";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Stack, styled, Text, View } from "tamagui";
@@ -47,19 +48,7 @@ const ProgramTabs = () => {
         >
             {/* For You */}
             <Tabs.Tab name="For you">
-                <Tabs.ScrollView style={{ borderWidth: 1, borderColor: "red" }}>
-                    <View
-                        f={1}
-                        width={"100%"}
-                        borderWidth={1}
-                        borderColor={"$gold"}
-                    >
-                        <View style={[styles.box, styles.boxA]}>
-                            <Text color={"$text_primary"}>Tab 1</Text>
-                        </View>
-                        <View style={[styles.box, styles.boxB]} />
-                    </View>
-                </Tabs.ScrollView>
+                <ForYouTab />
             </Tabs.Tab>
 
             {/* All Programs */}
@@ -148,12 +137,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.gold,
         height: wn(3),
         color: "rgba(255, 255, 255, 0.5)",
-    },
-    boxA: {
-        backgroundColor: "white",
-    },
-    boxB: {
-        backgroundColor: "#D8D8D8",
     },
     header: {
         height: wn(100),

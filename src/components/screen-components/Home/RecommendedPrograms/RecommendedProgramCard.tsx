@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { ImageURISource } from "react-native";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { AVPlaybackSource, ResizeMode, Video } from "expo-av";
 import { Text, View } from "tamagui";
 
@@ -27,8 +26,8 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
     }, [isVisible]);
     return (
         <View
-            pl={wn(20)}
-            pr={isLastItem ? wn(20) : null}
+            pl="$20"
+            pr={isLastItem ? "$20" : null}
             animation={"medium"}
             pressStyle={{
                 opacity: 0.85,
@@ -36,7 +35,7 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
             }}
         >
             {/* Image */}
-            <View width={wn(220)} height={wn(220)} position="relative">
+            <View width="$220" height="$220" position="relative">
                 <View f={1}>
                     <Video
                         ref={programVideo}
@@ -56,8 +55,8 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                     />
                 </View>
             </View>
-            <View mt={wn(10)}>
-                <Text color={"$gold"} fontFamily={"$heading"} fontSize={wn(16)}>
+            <View mt="$10">
+                <Text color={"$gold"} fontFamily={"$heading"} fontSize="$16">
                     {programTitle}
                 </Text>
             </View>

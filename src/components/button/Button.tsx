@@ -1,9 +1,5 @@
 import { ActivityIndicator, FlexAlignType } from "react-native";
 import usePressInteractionStates from "@src/hooks/usePressInteractionStates";
-import {
-    heightNormalized as hn,
-    widthNormalized as wn,
-} from "@src/utils/normalize-dimensions";
 import { MotiPressable } from "moti/interactions";
 import { View } from "tamagui";
 
@@ -91,7 +87,7 @@ export default function Button(props: ButtonProps) {
             <StyledButton
                 isDisabled={isDisabled}
                 justifyContent={justifyContent}
-                minHeight={props.height ?? hn(54)}
+                minHeight={props.height ?? "$54"}
                 fullWidth={fullWidth}
                 secondary_transparent={secondary_transparent}
                 secondary_white={secondary_white}
@@ -100,7 +96,7 @@ export default function Button(props: ButtonProps) {
                 {Icon && iconPosition === "left" ? <Icon /> : <EmptyView />}
                 {!loading ? (
                     <StyledText
-                        fontSize={fontSize ?? wn(20)}
+                        fontSize={fontSize ?? "$20"}
                         secondary_transparent={secondary_transparent}
                     >
                         {text}

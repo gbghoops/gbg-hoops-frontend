@@ -1,6 +1,5 @@
 import { ImageURISource } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
 interface WorkoutOfTheDayCardProps {
@@ -25,7 +24,7 @@ const WorkoutOfTheDayCard = ({
             }}
         >
             {/* Image */}
-            <View width={"100%"} height={wn(200)}>
+            <View width={"100%"} height="$200">
                 <StyledImage
                     source={programImage}
                     resizeMode={"cover"}
@@ -36,11 +35,11 @@ const WorkoutOfTheDayCard = ({
                 />
             </View>
             {/* Title */}
-            <View jc={"space-between"} fd={"row"} ai={"center"} mt={wn(15)}>
-                <Text fontFamily={"$heading"} fontSize={wn(20)} color={"$gold"}>
+            <View jc={"space-between"} fd={"row"} ai={"center"} mt="$15">
+                <Text fontFamily={"$heading"} fontSize="$20" color={"$gold"}>
                     {title}
                 </Text>
-                <Text fontFamily={"$heading"} fontSize={wn(20)}>
+                <Text fontFamily={"$heading"} fontSize="$20">
                     {programDuration}
                 </Text>
             </View>

@@ -1,9 +1,9 @@
 import React from "react";
-import { Dimensions, ViewStyle } from "react-native";
+import { Dimensions, StyleSheet, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { colors } from "@src/styles/theme/colors";
-import { widthNormalized } from "@src/utils/normalize-dimensions";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import {
     MotiTransitionProp,
     StyleValueWithReplacedTransforms,
@@ -32,14 +32,16 @@ const TabBar: React.FC<BottomTabBarProps> = ({
         delay: 100,
     };
 
+    const tabBarBottom = bottom + wn(10);
+
     return (
         <View
-            height={widthNormalized(70)}
+            height="$70"
             backgroundColor={"$transparent"}
             flexDirection={"row"}
             justifyContent={"center"}
             position="absolute"
-            bottom={bottom + widthNormalized(10)}
+            bottom={tabBarBottom}
             left={0}
             right={0}
             width={"100%"}
@@ -49,7 +51,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                 width={"95%"}
                 flexDirection="row"
                 backgroundColor={"$surface_primary"}
-                borderRadius={widthNormalized(15)}
+                borderRadius="$15"
                 position="relative"
                 shadowColor={"rgba(25, 25, 25, 0.0025)"}
                 shadowOffset={{
@@ -119,7 +121,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                                         height={"100%"}
                                     >
                                         <View
-                                            height={widthNormalized(25)}
+                                            height="$26"
                                             width={"100%"}
                                             justifyContent="center"
                                         >
@@ -157,21 +159,25 @@ const TabBar: React.FC<BottomTabBarProps> = ({
                         translateX: deriveGradientPosition(state.index),
                     }}
                     transition={{ ...indicatorTransition }}
-                    style={{
-                        position: "absolute",
-                        width: TAB_ITEM_WIDTH,
-                        top: 0,
-                        height: widthNormalized(4),
-                        zIndex: 2,
-                        left: TAB_ITEM_WIDTH * 0.5,
-                    }}
+                    style={styles.backgroundGradient}
                 >
-                    <View h={widthNormalized(4)} backgroundColor={"$gold"} />
+                    <View h="$4" backgroundColor={"$gold"} />
                 </MotiView>
             </View>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    backgroundGradient: {
+        position: "absolute",
+        width: TAB_ITEM_WIDTH,
+        top: 0,
+        height: wn(4),
+        zIndex: 2,
+        left: TAB_ITEM_WIDTH * 0.5,
+    },
+});
 
 const deriveGradientPosition = (index: number) => {
     return WINDOW_WIDTH * 0.95 * (index / 4);

@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text } from "tamagui";
 interface LinkProps extends PropsWithChildren {
     onPress: () => void;
@@ -19,7 +18,7 @@ export default function Link({
 }: LinkProps) {
     return (
         <Text
-            fontSize={fontSize ?? wn(16)}
+            fontSize={fontSize ?? "$16"}
             color={color ?? "$gold"}
             fontFamily={bold ? "$heading" : "$body"}
             onPress={onPress}

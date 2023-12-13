@@ -43,7 +43,7 @@ export const Header = ({
             backgroundColor={"$surface_background"}
         >
             {/* Back Button */}
-            <View width={wn(36)} height={wn(36)}>
+            <View width="$36" height="$36">
                 {canGoBack ? (
                     <View
                         width={"100%"}
@@ -64,7 +64,7 @@ export const Header = ({
                     >
                         <Octicons
                             name="arrow-left"
-                            size={wn(36)}
+                            size={36}
                             color={colors.gold}
                         />
                     </View>
@@ -91,8 +91,8 @@ export const Header = ({
                             <Text
                                 color="$black"
                                 fontFamily={"$body"}
-                                fontSize={wn(20)}
-                                lineHeight={wn(22)}
+                                fontSize="$20"
+                                lineHeight={22}
                             >
                                 AB
                             </Text>
