@@ -11,7 +11,6 @@ import exerciseData from "@src/components/screen-components/Programs/WorkoutDeta
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-// import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "tamagui";
 
 // Icon sizes:
@@ -20,7 +19,7 @@ const exerciseInfoIconSize = wn(20);
 
 export default function WorkoutDetails() {
     const [exerciseSheetOpen, setExerciseSheetOpen] = useState(false);
-    // const { slug } = useLocalSearchParams();
+
     const { bottom } = useSafeAreaInsets();
 
     return (
