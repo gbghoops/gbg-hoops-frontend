@@ -56,6 +56,7 @@ const ScreenTabs = () => {
                     href: "/community",
                     tabBarLabel: "Community",
                     title: "Community",
+                    header: () => <Header showAvatar canGoBack={false} />,
                     tabBarIcon: ({ focused }) => {
                         return (
                             <CommunityIcon
@@ -71,6 +72,7 @@ const ScreenTabs = () => {
                     href: "/more",
                     tabBarLabel: "More",
                     title: "More",
+                    header: () => <Header showAvatar canGoBack={false} />,
                     tabBarIcon: ({ focused }) => {
                         return (
                             <MoreIcon

@@ -70,9 +70,6 @@ const Coach2Coach = () => {
                         backgroundColor={"rgb(220, 220, 220)"}
                         opacity={0.35}
                         animation={"fast"}
-                        pressStyle={{
-                            opacity: 1,
-                        }}
                     />
                     <View my={"$20"} px={"$20"}>
                         <Text

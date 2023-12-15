@@ -5,7 +5,7 @@ import {
     MaterialTabItem,
     Tabs,
 } from "react-native-collapsible-tab-view";
-import { ForYouTab } from "@src/components/screen-components/Programs/Tabs/ForYouTab";
+import { ForYouTab } from "@src/components/screen-components/Programs/Tabs/ForYouTab/ForYouTab";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Stack, styled, Text, View } from "tamagui";

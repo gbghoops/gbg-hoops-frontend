@@ -56,7 +56,7 @@ const appConfig = createTamagui({
     defaultTheme: "dark",
     fonts: {
         heading: createFont({
-            family: "acumin_pro_bold",
+            family: "acumin_pro_semibold",
             size: sizes.headings,
         }),
         body: createFont({
