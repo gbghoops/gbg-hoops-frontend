@@ -16,10 +16,9 @@ interface HeaderProps {
     showAvatar?: boolean;
 }
 
-export const Header = ({
+export const WorkoutHeader = ({
     onBackPressed,
     canGoBack = true,
-    showAvatar = false,
 }: HeaderProps) => {
     const { back, canGoBack: checkCanGoBack, replace } = useRouter();
     const { top } = useSafeAreaInsets();
@@ -71,35 +70,22 @@ export const Header = ({
                 ) : null}
             </View>
 
-            {/* Avatar */}
-            {showAvatar ? (
-                <View ml={"auto"}>
-                    <Avatar
-                        circular
-                        size={"$40"}
-                        animation={"medium"}
-                        onPress={() => {
-                            router.push("/settings");
-                        }}
-                        pressStyle={{
-                            opacity: 0.85,
-                            scale: 0.9,
-                        }}
-                    >
-                        <Avatar.Image src="http://placekitten123.com/200/300" />
-                        <Avatar.Fallback bc="$gold" ai="center" jc="center">
-                            <Text
-                                color="$black"
-                                fontFamily={"$body"}
-                                fontSize="$20"
-                                lineHeight={22}
-                            >
-                                AB
-                            </Text>
-                        </Avatar.Fallback>
-                    </Avatar>
+            {/* More */}
+            <View ml={"auto"}>
+                <View
+                    animation={"medium"}
+                    pressStyle={{
+                        opacity: 0.15,
+                        scale: 0.95,
+                    }}
+                >
+                    <Octicons
+                        name={"kebab-horizontal"}
+                        color={colors.gold}
+                        size={wn(24)}
+                    />
                 </View>
-            ) : null}
+            </View>
         </View>
     );
 };

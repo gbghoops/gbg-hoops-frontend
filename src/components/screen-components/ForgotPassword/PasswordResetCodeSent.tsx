@@ -8,7 +8,6 @@ import {
     ForgotPasswordState,
     ForgotPasswordStateProps,
 } from "@src/types/password-reset";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
 const PasswordResetCodeSent = ({
@@ -52,11 +51,11 @@ const PasswordResetCodeSent = ({
                 y: -10,
             }}
         >
-            <View mb={wn(15)}>
-                <Text fontFamily={"$heading"} fontSize={wn(24)}>
+            <View mb="$15">
+                <Text fontFamily={"$heading"} fontSize="$24">
                     Forgot Password
                 </Text>
-                <Text fontFamily={"$body"} fontSize={wn(16)} mt={wn(10)}>
+                <Text fontFamily={"$body"} fontSize="$16" mt="$10">
                     {`We've sent an email with a code to reset your password`}
                 </Text>
             </View>

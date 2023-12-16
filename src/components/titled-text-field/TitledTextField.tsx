@@ -68,15 +68,15 @@ export const TitledTextField = ({
         <View>
             <StyledInputContainer
                 animation={"medium"}
-                height={wn(60)}
+                height="$60"
                 errored={errorMessage.length > 0}
             >
                 <XStack justifyContent="space-between" alignItems="center">
                     <Text
                         fontFamily={"$body"}
-                        fontSize={wn(13)}
-                        mt={wn(10)}
-                        ml={wn(10)}
+                        fontSize="$14"
+                        mt="$10"
+                        ml="$10"
                         color={"$white"}
                     >
                         {title}
@@ -113,31 +113,31 @@ export const TitledTextField = ({
                 />
                 {/* Error Icon  */}
                 <View
-                    w={wn(30)}
-                    h={wn(30)}
+                    w="$30"
+                    h="$30"
                     justifyContent="center"
                     alignItems="center"
                     marginLeft={"auto"}
                     position="absolute"
-                    right={wn(10)}
+                    right="$10"
                     top={wn(12.5)}
                 >
                     {errorMessage.length > 0 ? (
                         <StyledImage
                             source={require("@assets/icon/error.png")}
-                            w={wn(20)}
-                            h={wn(20)}
+                            w="$20"
+                            h="$20"
                         />
                     ) : null}
                 </View>
             </StyledInputContainer>
             {/* Error Message container */}
-            <View mt={wn(5)}>
+            <View mt="$5">
                 {errorMessage ? (
                     <Text
                         fontFamily={"$body"}
                         color={"$error_primary"}
-                        fontSize={wn(14)}
+                        fontSize="$14"
                     >
                         {errorMessage}
                     </Text>

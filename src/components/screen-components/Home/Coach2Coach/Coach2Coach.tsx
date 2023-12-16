@@ -1,32 +1,29 @@
 import React, { useState } from "react";
 import Button from "@src/components/button/Button";
 import Link from "@src/components/link/Link";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Sheet, Text, View } from "tamagui";
+
 const Coach2Coach = () => {
     const [sheetOpen, setSheetOpen] = useState(false);
     return (
         <>
-            <View mt={wn(40)} mx={wn(20)}>
-                <View
-                    backgroundColor={"$surface_primary"}
-                    p={wn(20)}
-                    pb={wn(30)}
-                >
+            <View mt={"$40"} mx={"$20"}>
+                <View backgroundColor={"$surface_primary"} p={"$20"} pb="$30">
                     <Text
                         textTransform="uppercase"
                         textAlign="center"
-                        fontSize={wn(24)}
+                        fontSize="$24"
                         fontFamily={"$heading"}
-                        my={wn(10)}
+                        my="$10"
                     >
                         Coach2Coach
                     </Text>
                     <Text
                         textAlign="center"
-                        fontFamily={"$body"}
-                        fontSize={wn(16)}
-                        px={wn(20)}
+                        fontFamily="$body"
+                        fontSize="$16"
+                        lineHeight={20}
+                        px="$20"
                     >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
@@ -66,18 +63,15 @@ const Coach2Coach = () => {
                     backgroundColor={"$surface_primary"}
                 >
                     <Sheet.Handle
-                        mb={wn(10)}
-                        height={wn(4)}
-                        width={wn(80)}
+                        mb="$10"
+                        height={"$4"}
+                        width={"$80"}
                         mx="auto"
                         backgroundColor={"rgb(220, 220, 220)"}
                         opacity={0.35}
                         animation={"fast"}
-                        pressStyle={{
-                            opacity: 1,
-                        }}
                     />
-                    <View my={wn(20)} px={wn(20)}>
+                    <View my={"$20"} px={"$20"}>
                         <Text
                             fontFamily={"$heading"}
                             fontSize={"$24"}
@@ -87,21 +81,21 @@ const Coach2Coach = () => {
                             Book your coach2coach call
                         </Text>
                         <Text
-                            mt={wn(16)}
-                            fontFamily={"$body"}
-                            fontSize={wn(16)}
-                            lineHeight={wn(20)}
+                            mt="$16"
+                            fontFamily="$body"
+                            fontSize="$16"
+                            lineHeight={20}
                         >
                             {`Want one on one coaching? Have questions you want answered directly?\n\nSet up a $x half hour call with Coach Mike.`}
                         </Text>
-                        <View mt={wn(20)} fd="row">
-                            <Link onPress={() => {}}>Follow this link</Link>
-                            <Text fontFamily={"$body"} fontSize={wn(16)}>
+                        <View mt={"$20"} fd="row">
+                            <Link onPress={() => {}}>Follow this lnk</Link>
+                            <Text fontFamily={"$body"} fontSize="$16">
                                 {" "}
                                 to set up your call.
                             </Text>
                         </View>
-                        <View mt={wn(30)} mb={wn(10)} width={"100%"}>
+                        <View mt="$30" mb="$10" width={"100%"}>
                             <Button
                                 text="CANCEL"
                                 fullWidth

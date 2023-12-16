@@ -40,7 +40,7 @@ export default function HomePage() {
                                 position="absolute"
                                 height={"100%"}
                                 width={"100%"}
-                                px={wn(20)}
+                                px={"$20"}
                                 paddingTop={top + wn(20)}
                             >
                                 <View width={"100%"} fd="row" jc="flex-end">
@@ -65,19 +65,19 @@ export default function HomePage() {
                                             <Text
                                                 color="$black"
                                                 fontFamily={"$body"}
-                                                fontSize={wn(20)}
-                                                lineHeight={wn(22)}
+                                                fontSize={"$20"}
+                                                lineHeight={22}
                                             >
                                                 AB
                                             </Text>
                                         </Avatar.Fallback>
                                     </Avatar>
                                 </View>
-                                <View my={wn(30)}>
+                                <View my={"$30"}>
                                     <Text
                                         fontFamily={"$heading"}
-                                        fontSize={wn(40)}
-                                        lh={wn(44)}
+                                        fontSize={"$40"}
+                                        lh={44}
                                         textTransform="uppercase"
                                     >
                                         Welcome, Anna!
@@ -88,26 +88,26 @@ export default function HomePage() {
                         {/* Body */}
                         <View>
                             {/* Intro Banner */}
-                            <View px={wn(20)}>
+                            <View px={"$20"}>
                                 <HomeScreenBanner
                                     onPress={() => {
                                         router.push("/programs");
                                     }}
                                 >
-                                    <View f={1} p={wn(20)}>
+                                    <View f={1} p={"$20"}>
                                         <Text
+                                            lh={26}
                                             fontFamily={"$heading"}
-                                            fontSize={wn(24)}
-                                            lh={wn(26)}
+                                            fontSize={"$24"}
                                             textTransform="uppercase"
                                         >
                                             {`What's New`}
                                         </Text>
                                         <Text
                                             fontFamily={"$body"}
-                                            fontSize={wn(16)}
-                                            lh={wn(18)}
-                                            mt={wn(11)}
+                                            fontSize={"$16"}
+                                            lh={20}
+                                            mt={"$15"}
                                         >
                                             {`Welcome to the GBG Hoops app! Expolore out programs or create your own workout.`}
                                         </Text>
@@ -122,12 +122,12 @@ export default function HomePage() {
                                     fd={"row"}
                                     jc={"space-between"}
                                     ai={"center"}
-                                    mt={wn(40)}
-                                    px={wn(20)}
+                                    mt={"$40"}
+                                    px={"$20"}
                                 >
                                     <Text
                                         ff={"$heading"}
-                                        fontSize={wn(24)}
+                                        fontSize={"$24"}
                                         textTransform="uppercase"
                                     >
                                         Recommended For You
@@ -142,30 +142,30 @@ export default function HomePage() {
                                     </Link>
                                 </View>
                                 {/* Program Cards */}
-                                <View mt={wn(20)}>
+                                <View mt={"$20"}>
                                     <RenderRecommendedProgramCard />
                                 </View>
                             </View>
 
                             {/* Workout of th Day */}
-                            <View mt={wn(20)} px={wn(20)}>
+                            <View mt={"$20"} px={"$20"}>
                                 {/* Heading */}
                                 <View
                                     fd={"row"}
                                     jc={"space-between"}
                                     ai={"center"}
-                                    mt={wn(30)}
+                                    mt={"$30"}
                                 >
                                     <Text
                                         ff={"$heading"}
-                                        fontSize={wn(24)}
+                                        fontSize={"$24"}
                                         textTransform="uppercase"
                                     >
                                         Workout of the day
                                     </Text>
                                 </View>
 
-                                <View mt={wn(20)}>
+                                <View mt={"$24"}>
                                     <WorkoutOfTheDayCard
                                         onPress={() => {}}
                                         programDuration="60 min"

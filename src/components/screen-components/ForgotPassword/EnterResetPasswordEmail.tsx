@@ -6,7 +6,6 @@ import {
     ForgotPasswordState,
     ForgotPasswordStateProps,
 } from "@src/types/password-reset";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import * as EmailValidator from "email-validator";
 import { Text, View } from "tamagui";
 
@@ -52,14 +51,14 @@ const EnterResetPasswordEmail = ({
             }}
         >
             <View>
-                <Text fontFamily={"$heading"} fontSize={wn(24)}>
+                <Text fontFamily={"$heading"} fontSize="$24">
                     Forgot Password
                 </Text>
-                <Text fontFamily={"$body"} fontSize={wn(16)} mt={wn(10)}>
+                <Text fontFamily={"$body"} fontSize="$16" mt="$10">
                     Enter your email below to reset your password.
                 </Text>
             </View>
-            <View mt={wn(16)}>
+            <View mt="$16">
                 <TitledTextField
                     title={"Email Address"}
                     type={FieldType.EMAIL}

@@ -2,18 +2,16 @@ import { ImageURISource } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
 import { Text, View } from "tamagui";
 
-interface WorkoutOfTheDayCardProps {
+interface NewestProgramCardProps {
     onPress: () => void;
     title: string;
-    programDuration: string;
     programImage: ImageURISource;
 }
-const WorkoutOfTheDayCard = ({
+const NewestProgramCard = ({
     onPress,
     title,
-    programDuration,
     programImage,
-}: WorkoutOfTheDayCardProps) => {
+}: NewestProgramCardProps) => {
     return (
         <View
             onPress={onPress}
@@ -39,12 +37,9 @@ const WorkoutOfTheDayCard = ({
                 <Text fontFamily={"$heading"} fontSize="$20" color={"$gold"}>
                     {title}
                 </Text>
-                <Text fontFamily={"$heading"} fontSize="$20">
-                    {programDuration}
-                </Text>
             </View>
         </View>
     );
 };
 
-export default WorkoutOfTheDayCard;
+export default NewestProgramCard;

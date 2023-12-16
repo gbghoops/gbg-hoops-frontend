@@ -34,6 +34,10 @@ export const StyledButton = styled(View, {
                 backgroundColor: "$surface_primary",
                 borderWidth: 1,
                 borderColor: "$gold",
+                pressStyle: {
+                    backgroundColor: "$transparent",
+                    opacity: 0.5,
+                },
             },
         },
         isDisabled: {
@@ -42,6 +46,9 @@ export const StyledButton = styled(View, {
                 disabled: true,
             },
         },
+    },
+    pressStyle: {
+        backgroundColor: "#98781B",
     },
 });
 

@@ -1,3 +1,5 @@
+import { StyleSheet } from "react-native";
+import { Header } from "@src/components/stack-header/StackHeader";
 import { CommunityIcon } from "@src/components/tab-bar/tab-icons/CommunityIcon";
 import { HomeIcon } from "@src/components/tab-bar/tab-icons/HomeIcon";
 import { MoreIcon } from "@src/components/tab-bar/tab-icons/MoreIcon";
@@ -13,9 +15,7 @@ export default function TabLayout() {
 const ScreenTabs = () => {
     return (
         <Tabs
-            screenOptions={{
-                headerShown: false,
-            }}
+            sceneContainerStyle={styles.tabBar}
             tabBar={(props) => <TabBar {...props} />}
         >
             <Tabs.Screen
@@ -40,6 +40,7 @@ const ScreenTabs = () => {
                     href: "/programs",
                     tabBarLabel: "Programs",
                     title: "Programs",
+                    header: () => <Header showAvatar canGoBack={false} />,
                     tabBarIcon: ({ focused }) => {
                         return (
                             <ProgramsIcon
@@ -55,6 +56,7 @@ const ScreenTabs = () => {
                     href: "/community",
                     tabBarLabel: "Community",
                     title: "Community",
+                    header: () => <Header showAvatar canGoBack={false} />,
                     tabBarIcon: ({ focused }) => {
                         return (
                             <CommunityIcon
@@ -70,6 +72,7 @@ const ScreenTabs = () => {
                     href: "/more",
                     tabBarLabel: "More",
                     title: "More",
+                    header: () => <Header showAvatar canGoBack={false} />,
                     tabBarIcon: ({ focused }) => {
                         return (
                             <MoreIcon
@@ -82,3 +85,9 @@ const ScreenTabs = () => {
         </Tabs>
     );
 };
+
+const styles = StyleSheet.create({
+    tabBar: {
+        backgroundColor: colors.surface_background,
+    },
+});

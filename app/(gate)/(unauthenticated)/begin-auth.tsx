@@ -3,7 +3,6 @@ import { Dimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
 import { StyledImage } from "@src/components/styled-components";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Stack as NavigationStack } from "expo-router";
@@ -30,19 +29,19 @@ const BeginAuth = () => {
                     alignContent="center"
                 >
                     <View
-                        w={wn(400)}
-                        h={wn(400)}
+                        w="$400"
+                        h="$400"
                         justifyContent="center"
                         ai="center"
                         marginHorizontal="auto"
-                        marginTop={wn(30)}
+                        marginTop="$30"
                     >
                         <StyledImage
                             source={require("@assets/gbg-hoops-logo.png")}
                         />
                     </View>
                 </YStack>
-                <View mt="auto" mb={wn(30)}>
+                <View mt="auto" mb="$30">
                     <Button
                         text="Let's Go!"
                         fullWidth

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ImageURISource } from "react-native";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { AVPlaybackSource, ResizeMode, Video } from "expo-av";
+import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
 export interface RecommendedProgramCardProps {
@@ -18,6 +18,8 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
     const { poster, video, programTitle, isLastItem, isVisible } = props;
     const programVideo = useRef<Video>(null);
 
+    const router = useRouter();
+
     useEffect(() => {
         if (isVisible) {
             programVideo.current?.playAsync();
@@ -27,16 +29,21 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
     }, [isVisible]);
     return (
         <View
-            pl={wn(20)}
-            pr={isLastItem ? wn(20) : null}
+            pl="$20"
+            pr={isLastItem ? "$20" : null}
             animation={"medium"}
             pressStyle={{
                 opacity: 0.85,
                 scale: 0.995,
             }}
+            onPress={() => {
+                router.push(
+                    "/program/workout-details/basketball-strength-level-1",
+                );
+            }}
         >
             {/* Image */}
-            <View width={wn(220)} height={wn(220)} position="relative">
+            <View width="$220" height="$220" position="relative">
                 <View f={1}>
                     <Video
                         ref={programVideo}
@@ -56,8 +63,8 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                     />
                 </View>
             </View>
-            <View mt={wn(10)}>
-                <Text color={"$gold"} fontFamily={"$heading"} fontSize={wn(16)}>
+            <View mt="$10">
+                <Text color={"$gold"} fontFamily={"$heading"} fontSize="$16">
                     {programTitle}
                 </Text>
             </View>
