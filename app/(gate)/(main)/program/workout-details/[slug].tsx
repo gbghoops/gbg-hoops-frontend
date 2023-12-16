@@ -11,6 +11,7 @@ import exerciseData from "@src/components/screen-components/Programs/WorkoutDeta
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { useRouter } from "expo-router";
 import { ScrollView, Text, View } from "tamagui";
 
 // Icon sizes:
@@ -20,6 +21,7 @@ const exerciseInfoIconSize = wn(20);
 export default function WorkoutDetails() {
     const [exerciseSheetOpen, setExerciseSheetOpen] = useState(false);
 
+    const router = useRouter();
     const { bottom } = useSafeAreaInsets();
 
     return (
@@ -174,7 +176,13 @@ export default function WorkoutDetails() {
                 px={"$20"}
                 width={"100%"}
             >
-                <Button text="Workout Now" fullWidth />
+                <Button
+                    text="Workout Now"
+                    onPress={() => {
+                        router.push("/workout/1");
+                    }}
+                    fullWidth
+                />
             </View>
         </View>
     );
