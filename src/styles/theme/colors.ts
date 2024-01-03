@@ -9,6 +9,7 @@ export const base = {
     grey_accent: "#A4A4A4",
     black: "#000000",
     transparent: "rgba(0, 0, 0, 0)",
+    transclucent_dark_80: "rgba(0, 0, 0, 0.8)",
     error_red: "#FF6948",
 };
 export const colors = {

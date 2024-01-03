@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
-import { Dimensions } from "react-native";
+import ReadyScreen from "@src/components/screen-components/Workout/ReadyScreen";
+import RotateDeviceModal from "@src/components/screen-components/Workout/RotateDeviceModal";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { Stack } from "expo-router";
-import { Text, View } from "tamagui";
+import { AnimatePresence, Text, View } from "tamagui";
 
 export default function WorkoutScreen() {
     const [showReadyScreen, setShowReadyScreen] = useState(true);
+    const [showRotateScreen, setShowRotateScreen] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
             setShowReadyScreen(false);
+            setShowRotateScreen(true);
         }, 3000);
     }, []);
 
+    useEffect(() => {
+        if (showRotateScreen) {
+            setTimeout(() => {
+                setShowRotateScreen(false);
+            }, 3000);
+        }
+    }, [showRotateScreen]);
     return (
         <View
             f={1}
@@ -26,31 +36,16 @@ export default function WorkoutScreen() {
                     header: () => <WorkoutHeader />,
                 }}
             />
-            {showReadyScreen ? <ReadyScreen /> : null}
+            <AnimatePresence>
+                {showReadyScreen ? <ReadyScreen key={"ready-screen"} /> : null}
+                {showRotateScreen ? (
+                    <RotateDeviceModal
+                        key={"rotate-device-screen"}
+                        isVisible={showRotateScreen}
+                    />
+                ) : null}
+            </AnimatePresence>
             <Text>Workout Screen</Text>
         </View>
     );
 }
-
-const ReadyScreen = () => {
-    const { width, height } = Dimensions.get("window");
-
-    return (
-        <View
-            f={1}
-            top={0}
-            left={0}
-            jc="center"
-            ai="center"
-            width={width}
-            height={"100%"}
-            position="absolute"
-            bg="$surface_background"
-            zIndex={1000}
-            borderWidth={1}
-            borderColor="red"
-        >
-            <Text>Ready Screen</Text>
-        </View>
-    );
-};

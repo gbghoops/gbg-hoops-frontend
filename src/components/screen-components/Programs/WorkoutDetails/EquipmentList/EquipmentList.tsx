@@ -75,7 +75,7 @@ const EquipmentItem = ({
     const imageDimensions = wn(50);
 
     return (
-        <View pr={!isLastItem ? "$12" : 0}>
+        <View pr={!isLastItem ? "$12" : "0%"}>
             <View>
                 <View fd="row" ai="center" width={"$120"} height={"$120"}>
                     <StyledImage
