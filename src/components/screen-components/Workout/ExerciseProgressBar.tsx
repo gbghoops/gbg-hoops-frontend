@@ -9,7 +9,6 @@ interface ExerciseProgressBarProps {
 }
 
 const ExerciseProgressBar = ({
-    type,
     duration,
     currentProgress,
 }: ExerciseProgressBarProps) => {

@@ -5,7 +5,6 @@ import {
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
-import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
@@ -201,13 +200,16 @@ const ExerciseSlide = ({
                         }
                         animation={"medium"}
                         pressStyle={{
-                            opacity: 0.95,
+                            opacity: 0.85,
                             scale: 0.98,
                         }}
-                        onPress={onPrevPressed}
                     >
                         {currentIndex > 0 ? (
-                            <XStack mt="auto" alignItems="center">
+                            <XStack
+                                mt="auto"
+                                alignItems="center"
+                                onPress={onPrevPressed}
+                            >
                                 <View width={"$12"} height={"$12"} mr="$5">
                                     <StyledImage
                                         source={require("@assets/icon/arrow_back.png")}
@@ -274,7 +276,7 @@ const ExerciseSlide = ({
                     <XStack
                         animation={"medium"}
                         pressStyle={{
-                            opacity: 0.95,
+                            opacity: 0.85,
                             scale: 0.98,
                         }}
                         onPress={onNextPressed}

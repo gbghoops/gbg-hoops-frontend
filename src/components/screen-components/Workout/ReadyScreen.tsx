@@ -1,11 +1,9 @@
-import { Dimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
 const ReadyScreen = () => {
     const { top } = useSafeAreaInsets();
-    const { width } = Dimensions.get("window");
 
     const innerMargin = -(top + wn(60));
     return (
