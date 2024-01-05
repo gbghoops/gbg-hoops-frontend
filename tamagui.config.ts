@@ -44,6 +44,12 @@ const animations = createAnimations({
         damping: 20,
         stiffness: 60,
     },
+    slider: {
+        type: "spring",
+        mass: 1,
+        damping: 60,
+        stiffness: 255,
+    },
 });
 
 const appConfig = createTamagui({
@@ -56,10 +62,43 @@ const appConfig = createTamagui({
     defaultTheme: "dark",
     fonts: {
         heading: createFont({
-            family: "acumin_pro_semibold",
+            family: "acumin_pro_bold",
             size: sizes.headings,
         }),
         body: createFont({
+            family: "acumin_pro_regular",
+            size: sizes.p,
+            lineHeight: {
+                small: 8,
+                medium: 12,
+                large: 16,
+                true: 12,
+            },
+            color: tokens.color,
+        }),
+        acuminProBold: createFont({
+            family: "acumin_pro_bold",
+            size: sizes.p,
+            lineHeight: {
+                small: 8,
+                medium: 12,
+                large: 16,
+                true: 12,
+            },
+            color: tokens.color,
+        }),
+        acuminProSemibold: createFont({
+            family: "acumin_pro_semibold",
+            size: sizes.p,
+            lineHeight: {
+                small: 8,
+                medium: 12,
+                large: 16,
+                true: 12,
+            },
+            color: tokens.color,
+        }),
+        acuminProRegular: createFont({
             family: "acumin_pro_regular",
             size: sizes.p,
             lineHeight: {
