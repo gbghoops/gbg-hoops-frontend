@@ -1,21 +1,16 @@
+import { useState } from "react";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { View as MView } from "moti";
 import { Text, View } from "tamagui";
-interface ExerciseProgressBarProps {
-    type: "time" | "stretch-n-hold" | "reps";
-    duration: number;
-    currentProgress: number;
-}
 
-const ExerciseProgressBar = ({
-    duration,
-    currentProgress,
-}: ExerciseProgressBarProps) => {
-    let minutes = Math.floor(currentProgress / 60);
-    let extraSeconds = currentProgress % 60;
-    minutes = minutes < 10 ? 0 + minutes : minutes;
-    extraSeconds = extraSeconds < 10 ? 0 + extraSeconds : extraSeconds;
+interface Props {
+    reps: number;
+    onRepsCompleted?: () => void;
+}
+const RepProgress = ({ reps, onRepsCompleted }: Props) => {
+    const [currentRep, setCurrentRep] = useState(reps);
+    const progress = Math.floor((currentRep / reps) * 100);
 
     return (
         <View
@@ -37,16 +32,19 @@ const ExerciseProgressBar = ({
                 flexDirection="row"
             >
                 <Text fontFamily={"$heading"} fontSize={"$40"}>
-                    {minutes}:{extraSeconds}
+                    {currentRep}
                 </Text>
                 <Text fontFamily={"$heading"} ml={wn(5)} fontSize={"$20"}>
-                    Seconds
+                    reps remaining
                 </Text>
             </View>
             <MView
                 key={"stack-progress-bar"}
+                from={{
+                    width: "0%",
+                }}
                 animate={{
-                    width: `${(currentProgress / duration) * 100}%`,
+                    width: `${progress}%`,
                 }}
                 transition={{
                     type: "spring",
@@ -57,9 +55,11 @@ const ExerciseProgressBar = ({
                 style={{
                     backgroundColor: colors.gold,
                     height: "100%",
+                    width: "100%",
                 }}
             />
         </View>
     );
 };
-export default ExerciseProgressBar;
+
+export default RepProgress;

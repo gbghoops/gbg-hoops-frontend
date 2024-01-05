@@ -9,7 +9,8 @@ import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
-import ExerciseProgressBar from "./ExerciseProgressBar";
+import ExerciseRepProgressBar from "./ExerciseRepProgressBar";
+import ExerciseTimerProgressBar from "./ExerciseTimerProgressBar";
 import SlideIndicators from "./SlideIndicators";
 
 interface ExerciseSlideProps {
@@ -32,7 +33,15 @@ const ExerciseSlide = ({
     onPrevPressed,
 }: ExerciseSlideProps) => {
     const { width } = Dimensions.get("window");
+    const totalExerciseDuration =
+        exercise.type === "exercise"
+            ? exercise.time ?? 0
+            : exercise.restDuration ?? 0;
+
     const [exercisePlaying, setExercisePlaying] = useState(false);
+    const [queueExercisePlaying, setQueueExercisePlaying] = useState(false);
+    const [exerciseReadyCount, setExerciseReadyCount] = useState(3);
+    const [exerciseCompleted, setExerciseCompleted] = useState(false);
 
     const isNextSlide = currentIndex === currentSlidePositions[0] + 1;
     const isPrevSlide =
@@ -46,6 +55,51 @@ const ExerciseSlide = ({
             setExercisePlaying(false);
         }
     }, [isVisible]);
+
+    // Reset exercise completed state whenever playing state changes..
+    useEffect(() => {
+        if (!exercisePlaying) {
+            return;
+        }
+
+        setExerciseCompleted(false);
+    }, [exercisePlaying]);
+
+    useEffect(() => {
+        if (exercisePlaying || !queueExercisePlaying) {
+            setExercisePlaying(false);
+            setExerciseReadyCount(3);
+
+            return;
+        }
+
+        const timer = setInterval(() => {
+            setExerciseReadyCount((count) => (count <= 0 ? 0 : count - 1));
+        }, 1000);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, [queueExercisePlaying]);
+
+    useEffect(() => {
+        if (exerciseReadyCount === 0) {
+            return setExercisePlaying(true);
+        }
+
+        return;
+    }, [exerciseReadyCount]);
+
+    useEffect(() => {
+        if (!exerciseCompleted) {
+            return;
+        }
+
+        setExercisePlaying(false);
+        setQueueExercisePlaying(false);
+
+        return;
+    }, [exerciseCompleted]);
 
     return (
         <View key={exercise.block_id} px="$20" width={width} f={1}>
@@ -98,6 +152,7 @@ const ExerciseSlide = ({
                     height={wn(230)}
                     position="relative"
                     animation={"slider"}
+                    opacity={isNextSlide ? 0.5 : isPrevSlide ? 0.5 : 1}
                     transform={
                         isNextSlide
                             ? [{ translateX: -wn(30) }]
@@ -117,7 +172,7 @@ const ExerciseSlide = ({
                         justifyContent="center"
                         alignItems="center"
                         onPress={() => {
-                            setExercisePlaying(!exercisePlaying);
+                            setQueueExercisePlaying(!queueExercisePlaying);
                         }}
                     >
                         {/* Mask */}
@@ -132,7 +187,24 @@ const ExerciseSlide = ({
                             opacity={exercisePlaying ? 0 : 0.5}
                         />
 
-                        {!exercisePlaying ? (
+                        {queueExercisePlaying ? (
+                            exerciseReadyCount ? (
+                                <View jc="center" ai="center">
+                                    <Text
+                                        fontFamily={"$heading"}
+                                        fontSize={"$24"}
+                                    >
+                                        Ready?
+                                    </Text>
+                                    <Text
+                                        fontFamily={"$heading"}
+                                        fontSize={"$40"}
+                                    >
+                                        {exerciseReadyCount}
+                                    </Text>
+                                </View>
+                            ) : null
+                        ) : !exercisePlaying ? (
                             <Text
                                 textTransform="uppercase"
                                 fontFamily={"$heading"}
@@ -183,11 +255,28 @@ const ExerciseSlide = ({
                 </YStack>
             ) : null}
             <View mt="$15">
-                <ExerciseProgressBar
-                    type="time"
-                    duration={60}
-                    currentProgress={10}
-                />
+                {exercise.type === "exercise" ? (
+                    exercise.setsType === "time" ? (
+                        <ExerciseTimerProgressBar
+                            duration={totalExerciseDuration}
+                            isPlaying={exercisePlaying}
+                            onTimerCompleted={() => {
+                                setExerciseCompleted(true);
+
+                                return;
+                            }}
+                        />
+                    ) : exercise.setsType === "reps" ? (
+                        <ExerciseRepProgressBar
+                            reps={exercise.reps ?? 0}
+                            onRepsCompleted={() => {
+                                setExerciseCompleted(true);
+
+                                return;
+                            }}
+                        />
+                    ) : null
+                ) : null}
             </View>
 
             <YStack mt="auto" py={"$10"}>
@@ -208,7 +297,12 @@ const ExerciseSlide = ({
                             <XStack
                                 mt="auto"
                                 alignItems="center"
-                                onPress={onPrevPressed}
+                                onPress={() => {
+                                    setExercisePlaying(false);
+                                    setQueueExercisePlaying(false);
+
+                                    onPrevPressed && onPrevPressed();
+                                }}
                             >
                                 <View width={"$12"} height={"$12"} mr="$5">
                                     <StyledImage
@@ -242,7 +336,7 @@ const ExerciseSlide = ({
                                 scale: 0.98,
                             }}
                             onPress={() => {
-                                setExercisePlaying(!exercisePlaying);
+                                setQueueExercisePlaying(!queueExercisePlaying);
                             }}
                         >
                             <View
@@ -251,7 +345,7 @@ const ExerciseSlide = ({
                                 justifyContent="center"
                                 alignItems="center"
                             >
-                                {exercisePlaying ? (
+                                {exercisePlaying || queueExercisePlaying ? (
                                     <StyledImage
                                         source={require("@assets/icon/pause.png")}
                                         style={{
@@ -279,7 +373,12 @@ const ExerciseSlide = ({
                             opacity: 0.85,
                             scale: 0.98,
                         }}
-                        onPress={onNextPressed}
+                        onPress={() => {
+                            setExercisePlaying(false);
+                            setQueueExercisePlaying(false);
+
+                            onNextPressed && onNextPressed();
+                        }}
                     >
                         <View
                             width={"$80"}
