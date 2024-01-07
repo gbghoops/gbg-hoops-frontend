@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
 import { StyledImage } from "@src/components/styled-components";
@@ -80,14 +80,18 @@ const BackgroundVideo = () => {
                 isLooping
                 resizeMode={ResizeMode.COVER}
                 source={require("@assets/video/gbg-hoops-reel.mp4")}
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 0,
-                }}
+                style={styles.VideoBackgroundVideo}
             />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    VideoBackgroundVideo: {
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+    },
+});
 
 export default BeginAuth;

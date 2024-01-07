@@ -21,7 +21,7 @@ const ProgressIndicator = ({
                     <View
                         f={1}
                         key={index}
-                        pr={index + 1 !== totalDays ? `$10` : "0"}
+                        pr={index + 1 !== totalDays ? `$10` : "0%"}
                     >
                         <View
                             height={"$5"}
