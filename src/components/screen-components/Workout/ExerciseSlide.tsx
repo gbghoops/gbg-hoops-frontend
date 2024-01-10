@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import {
     Exercise,
@@ -19,6 +19,7 @@ interface ExerciseSlideProps {
     index: number;
     totalSlides: number;
     currentSlidePositions: number[];
+
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
 }
@@ -32,7 +33,6 @@ const ExerciseSlide = ({
     onNextPressed,
     onPrevPressed,
 }: ExerciseSlideProps) => {
-    const { width } = Dimensions.get("window");
     const totalExerciseDuration =
         exercise.type === "exercise"
             ? exercise.time ?? 0
@@ -42,6 +42,7 @@ const ExerciseSlide = ({
     const [queueExercisePlaying, setQueueExercisePlaying] = useState(false);
     const [exerciseReadyCount, setExerciseReadyCount] = useState(3);
     const [exerciseCompleted, setExerciseCompleted] = useState(false);
+    const [windowSize, setWindowSize] = useState(Dimensions.get("window"));
 
     const isNextSlide = currentIndex === currentSlidePositions[0] + 1;
     const isPrevSlide =
@@ -49,6 +50,17 @@ const ExerciseSlide = ({
         currentSlidePositions[currentSlidePositions.length - 1] - 1;
 
     const isVisible = currentSlidePositions.includes(currentIndex);
+
+    useLayoutEffect(() => {
+        const subscription = Dimensions.addEventListener(
+            "change",
+            ({ window }) => {
+                return setWindowSize(window);
+            },
+        );
+
+        return () => subscription.remove();
+    }, []);
 
     useEffect(() => {
         if (!isVisible) {
@@ -101,9 +113,18 @@ const ExerciseSlide = ({
         return;
     }, [exerciseCompleted]);
 
+    const isLandScape = windowSize.width > windowSize.height;
+
     return (
-        <View key={exercise.block_id} px="$20" width={width} f={1}>
-            <YStack>
+        <View
+            key={exercise.block_id}
+            px="$20"
+            flex={1}
+            width={"100%"}
+            borderWidth={1}
+            borderColor="green"
+        >
+            <YStack f={1}>
                 {/* Exercise Header */}
                 <XStack jc="space-between" ai={"center"}>
                     <View>
@@ -135,307 +156,341 @@ const ExerciseSlide = ({
                         ) : null}
                     </View>
                 </XStack>
-                <Stack mt="$10" height={"$52"} jc="center">
+                <Stack mt="$10" jc="center">
                     <Text
                         fontFamily={"$heading"}
                         fontSize={"$24"}
                         textOverflow="ellipsis"
+                        numberOfLines={1}
                     >
                         {exercise.type === "rest"
                             ? `Rest`
                             : exercise.exerciseName}
                     </Text>
                 </Stack>
-                {/* Video Container */}
-                <View
-                    mt="$10"
-                    height={wn(230)}
-                    position="relative"
-                    animation={"slider"}
-                    opacity={isNextSlide ? 0.5 : isPrevSlide ? 0.5 : 1}
-                    transform={
-                        isNextSlide
-                            ? [{ translateX: -wn(30) }]
-                            : isPrevSlide
-                              ? [{ translateX: wn(30) }]
-                              : [{ translateX: 0 }]
-                    }
-                >
-                    {/* Controls Mask */}
-                    <View
-                        position="absolute"
-                        top={0}
-                        left={0}
-                        width={"100%"}
-                        height={"100%"}
-                        zIndex={1}
-                        justifyContent="center"
-                        alignItems="center"
-                        onPress={() => {
-                            setQueueExercisePlaying(!queueExercisePlaying);
-                        }}
-                    >
-                        {/* Mask */}
+                {/* COLUMN WRAPPER, Detects Screen orientation. */}
+                <View f={1} fd={isLandScape ? "row" : "column"}>
+                    {/* Col 1 */}
+                    <View f={isLandScape ? 1 : 0}>
+                        {/* Video Container */}
                         <View
-                            position="absolute"
-                            top={0}
-                            left={0}
-                            width={"100%"}
-                            height={"100%"}
-                            backgroundColor={"$surface_primary"}
-                            animation={"medium"}
-                            opacity={exercisePlaying ? 0 : 0.5}
-                        />
+                            mt="$10"
+                            height={230}
+                            position="relative"
+                            animation={"slider"}
+                            opacity={1}
+                        >
+                            {/* Controls Mask */}
+                            <View
+                                position="absolute"
+                                top={0}
+                                left={0}
+                                width={"100%"}
+                                height={"100%"}
+                                zIndex={1}
+                                justifyContent="center"
+                                alignItems="center"
+                                onPress={() => {
+                                    setQueueExercisePlaying(
+                                        !queueExercisePlaying,
+                                    );
+                                }}
+                            >
+                                {/* Mask */}
+                                <View
+                                    position="absolute"
+                                    top={0}
+                                    left={0}
+                                    width={"100%"}
+                                    height={"100%"}
+                                    backgroundColor={"$surface_primary"}
+                                    animation={"medium"}
+                                    opacity={exercisePlaying ? 0 : 0.5}
+                                />
 
-                        {queueExercisePlaying ? (
-                            exerciseReadyCount ? (
-                                <View jc="center" ai="center">
+                                {queueExercisePlaying ? (
+                                    exerciseReadyCount ? (
+                                        <View jc="center" ai="center">
+                                            <Text
+                                                fontFamily={"$heading"}
+                                                fontSize={"$24"}
+                                            >
+                                                Ready?
+                                            </Text>
+                                            <Text
+                                                fontFamily={"$heading"}
+                                                fontSize={"$40"}
+                                            >
+                                                {exerciseReadyCount}
+                                            </Text>
+                                        </View>
+                                    ) : null
+                                ) : !exercisePlaying ? (
                                     <Text
+                                        textTransform="uppercase"
                                         fontFamily={"$heading"}
+                                        color={"$white"}
                                         fontSize={"$24"}
                                     >
-                                        Ready?
+                                        Tap or press play to start
                                     </Text>
-                                    <Text
-                                        fontFamily={"$heading"}
-                                        fontSize={"$40"}
-                                    >
-                                        {exerciseReadyCount}
-                                    </Text>
-                                </View>
-                            ) : null
-                        ) : !exercisePlaying ? (
-                            <Text
-                                textTransform="uppercase"
-                                fontFamily={"$heading"}
-                                color={"$white"}
-                                fontSize={"$24"}
-                            >
-                                Tap or press play to start
-                            </Text>
-                        ) : null}
+                                ) : null}
+                            </View>
+                            <Video
+                                shouldPlay={exercisePlaying}
+                                isLooping
+                                resizeMode={ResizeMode.COVER}
+                                source={require("@assets/programs/videos/db-rdl-stretch.mp4")}
+                                style={styles.ExerciseVideo}
+                            />
+                        </View>
                     </View>
-                    <Video
-                        shouldPlay={exercisePlaying}
-                        isLooping
-                        resizeMode={ResizeMode.COVER}
-                        source={require("@assets/programs/videos/db-rdl-stretch.mp4")}
-                        style={styles.ExerciseVideo}
-                    />
+
+                    {/* Col 2 */}
+                    <View f={1}>
+                        {/* Details */}
+                        <YStack mt="$20">
+                            <XStack>
+                                <InstructionVideoButton />
+                                <View ml={"$10"}>
+                                    <SoundButton />
+                                </View>
+                            </XStack>
+                        </YStack>
+                        {exercise.type === "exercise" ? (
+                            <YStack mt="$10" py="$10">
+                                <View>
+                                    <SetsCounter
+                                        totalSetCount={exercise.setsCount}
+                                        totalRepsCount={exercise.reps ?? 0}
+                                        subBlockTitle={
+                                            exercise.subBlockTitle ?? ""
+                                        }
+                                    />
+                                </View>
+                                {exercise.setsType === "reps" ? (
+                                    <View mt={"$20"}>
+                                        <AdjustWeight
+                                            onPress={() => {}}
+                                            currentWeight={5}
+                                            weightUnit="lbs"
+                                        />
+                                    </View>
+                                ) : null}
+                            </YStack>
+                        ) : null}
+                        <View mt="$15">
+                            {exercise.type === "exercise" ? (
+                                exercise.setsType === "time" ? (
+                                    <ExerciseTimerProgressBar
+                                        duration={totalExerciseDuration}
+                                        isPlaying={exercisePlaying}
+                                        onTimerCompleted={() => {
+                                            setExerciseCompleted(true);
+
+                                            return;
+                                        }}
+                                    />
+                                ) : exercise.setsType === "reps" ? (
+                                    <ExerciseRepProgressBar
+                                        reps={exercise.reps ?? 0}
+                                        onRepsCompleted={() => {
+                                            setExerciseCompleted(true);
+
+                                            return;
+                                        }}
+                                    />
+                                ) : null
+                            ) : null}
+                        </View>
+
+                        <YStack mt="auto" py={"$10"}>
+                            {/* Controls */}
+                            <XStack justifyContent="space-between" mb={"$16"}>
+                                {/* Prev */}
+                                <View
+                                    width={
+                                        nextExercise?.type === "exercise"
+                                            ? "$125"
+                                            : "$80"
+                                    }
+                                    animation={"medium"}
+                                    pressStyle={{
+                                        opacity: 0.85,
+                                        scale: 0.98,
+                                    }}
+                                >
+                                    {currentIndex > 0 ? (
+                                        <XStack
+                                            mt="auto"
+                                            alignItems="center"
+                                            onPress={() => {
+                                                setExercisePlaying(false);
+                                                setQueueExercisePlaying(false);
+
+                                                onPrevPressed &&
+                                                    onPrevPressed();
+                                            }}
+                                        >
+                                            <View
+                                                width={"$12"}
+                                                height={"$12"}
+                                                mr="$5"
+                                            >
+                                                <StyledImage
+                                                    source={require("@assets/icon/arrow_back.png")}
+                                                    style={
+                                                        styles.indicatorIcons
+                                                    }
+                                                />
+                                            </View>
+                                            <Text
+                                                fontSize={"$16"}
+                                                fontFamily={"$acuminProRegular"}
+                                                color="$text_accent"
+                                                mt={2}
+                                            >
+                                                Back
+                                            </Text>
+                                        </XStack>
+                                    ) : null}
+                                </View>
+                                {/* Play / Pause */}
+                                <View alignSelf="center" ml="auto" mr="auto">
+                                    <View
+                                        width={"$56"}
+                                        height={"$56"}
+                                        borderRadius={100}
+                                        backgroundColor={"$gold"}
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        animation={"medium"}
+                                        pressStyle={{
+                                            opacity: 0.9,
+                                            scale: 0.98,
+                                        }}
+                                        onPress={() => {
+                                            setQueueExercisePlaying(
+                                                !queueExercisePlaying,
+                                            );
+                                        }}
+                                    >
+                                        <View
+                                            width="$36"
+                                            height="$36"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                        >
+                                            {exercisePlaying ||
+                                            queueExercisePlaying ? (
+                                                <StyledImage
+                                                    source={require("@assets/icon/pause.png")}
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <StyledImage
+                                                    source={require("@assets/icon/play.png")}
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                    }}
+                                                />
+                                            )}
+                                        </View>
+                                    </View>
+                                </View>
+
+                                {/* Next */}
+                                <XStack
+                                    animation={"medium"}
+                                    pressStyle={{
+                                        opacity: 0.85,
+                                        scale: 0.98,
+                                    }}
+                                    onPress={() => {
+                                        setExercisePlaying(false);
+                                        setQueueExercisePlaying(false);
+
+                                        onNextPressed && onNextPressed();
+                                    }}
+                                >
+                                    <View
+                                        width={"$80"}
+                                        alignContent="flex-end"
+                                        justifyContent="flex-end"
+                                        alignSelf="flex-end"
+                                    >
+                                        <Text
+                                            textAlign="right"
+                                            fontFamily={"$acuminProSemibold"}
+                                            fontSize={"$14"}
+                                            textOverflow="ellipsis"
+                                            numberOfLines={3}
+                                        >
+                                            {!nextExercise
+                                                ? "End of Workout"
+                                                : nextExercise.type ===
+                                                    "exercise"
+                                                  ? nextExercise.exerciseName
+                                                  : "Rest"}
+                                        </Text>
+                                        {/* Indicator */}
+                                        <XStack alignItems="center" ml="auto">
+                                            <Text
+                                                fontSize={"$16"}
+                                                fontFamily={"$acuminProRegular"}
+                                                color="$text_accent"
+                                                mt={2}
+                                            >
+                                                {!nextExercise
+                                                    ? "Complete"
+                                                    : "Next"}
+                                            </Text>
+                                            <View
+                                                width={"$12"}
+                                                height={"$12"}
+                                                ml="$5"
+                                            >
+                                                <StyledImage
+                                                    source={require("@assets/icon/arrow_forward.png")}
+                                                    style={
+                                                        styles.indicatorIcons
+                                                    }
+                                                />
+                                            </View>
+                                        </XStack>
+                                    </View>
+                                    {/* Thumbnail Holder */}
+                                    {nextExercise?.type === "exercise" ? (
+                                        <View
+                                            w={"$40"}
+                                            h={"$54"}
+                                            ml={"$5"}
+                                            mt="auto"
+                                        >
+                                            <StyledImage
+                                                source={require("@assets/programs/next-exercise-thumbnail.png")}
+                                                style={styles.tumbnail}
+                                            />
+                                        </View>
+                                    ) : null}
+                                </XStack>
+                            </XStack>
+                            {/* Indicators */}
+                            <View>
+                                <SlideIndicators
+                                    totalSlides={totalSlides}
+                                    currentSlideIndex={currentIndex}
+                                />
+                            </View>
+                        </YStack>
+                    </View>
                 </View>
             </YStack>
             {/* ---------------------------- */}
-            {/* Details */}
-            <YStack mt="$20">
-                <XStack>
-                    <InstructionVideoButton />
-                    <View ml={"$10"}>
-                        <SoundButton />
-                    </View>
-                </XStack>
-            </YStack>
-            {exercise.type === "exercise" ? (
-                <YStack mt="$10" py="$10">
-                    <View>
-                        <SetsCounter
-                            totalSetCount={exercise.setsCount}
-                            totalRepsCount={exercise.reps ?? 0}
-                            subBlockTitle={exercise.subBlockTitle ?? ""}
-                        />
-                    </View>
-                    {exercise.setsType === "reps" ? (
-                        <View mt={"$20"}>
-                            <AdjustWeight
-                                onPress={() => {}}
-                                currentWeight={5}
-                                weightUnit="lbs"
-                            />
-                        </View>
-                    ) : null}
-                </YStack>
-            ) : null}
-            <View mt="$15">
-                {exercise.type === "exercise" ? (
-                    exercise.setsType === "time" ? (
-                        <ExerciseTimerProgressBar
-                            duration={totalExerciseDuration}
-                            isPlaying={exercisePlaying}
-                            onTimerCompleted={() => {
-                                setExerciseCompleted(true);
-
-                                return;
-                            }}
-                        />
-                    ) : exercise.setsType === "reps" ? (
-                        <ExerciseRepProgressBar
-                            reps={exercise.reps ?? 0}
-                            onRepsCompleted={() => {
-                                setExerciseCompleted(true);
-
-                                return;
-                            }}
-                        />
-                    ) : null
-                ) : null}
-            </View>
-
-            <YStack mt="auto" py={"$10"}>
-                {/* Controls */}
-                <XStack justifyContent="space-between" mb={"$16"}>
-                    {/* Prev */}
-                    <View
-                        width={
-                            nextExercise?.type === "exercise" ? "$125" : "$80"
-                        }
-                        animation={"medium"}
-                        pressStyle={{
-                            opacity: 0.85,
-                            scale: 0.98,
-                        }}
-                    >
-                        {currentIndex > 0 ? (
-                            <XStack
-                                mt="auto"
-                                alignItems="center"
-                                onPress={() => {
-                                    setExercisePlaying(false);
-                                    setQueueExercisePlaying(false);
-
-                                    onPrevPressed && onPrevPressed();
-                                }}
-                            >
-                                <View width={"$12"} height={"$12"} mr="$5">
-                                    <StyledImage
-                                        source={require("@assets/icon/arrow_back.png")}
-                                        style={styles.indicatorIcons}
-                                    />
-                                </View>
-                                <Text
-                                    fontSize={"$16"}
-                                    fontFamily={"$acuminProRegular"}
-                                    color="$text_accent"
-                                    mt={2}
-                                >
-                                    Back
-                                </Text>
-                            </XStack>
-                        ) : null}
-                    </View>
-                    {/* Play / Pause */}
-                    <View alignSelf="center" ml="auto" mr="auto">
-                        <View
-                            width={"$56"}
-                            height={"$56"}
-                            borderRadius={100}
-                            backgroundColor={"$gold"}
-                            justifyContent="center"
-                            alignItems="center"
-                            animation={"medium"}
-                            pressStyle={{
-                                opacity: 0.9,
-                                scale: 0.98,
-                            }}
-                            onPress={() => {
-                                setQueueExercisePlaying(!queueExercisePlaying);
-                            }}
-                        >
-                            <View
-                                width="$36"
-                                height="$36"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                {exercisePlaying || queueExercisePlaying ? (
-                                    <StyledImage
-                                        source={require("@assets/icon/pause.png")}
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                        }}
-                                    />
-                                ) : (
-                                    <StyledImage
-                                        source={require("@assets/icon/play.png")}
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                        }}
-                                    />
-                                )}
-                            </View>
-                        </View>
-                    </View>
-
-                    {/* Next */}
-                    <XStack
-                        animation={"medium"}
-                        pressStyle={{
-                            opacity: 0.85,
-                            scale: 0.98,
-                        }}
-                        onPress={() => {
-                            setExercisePlaying(false);
-                            setQueueExercisePlaying(false);
-
-                            onNextPressed && onNextPressed();
-                        }}
-                    >
-                        <View
-                            width={"$80"}
-                            alignContent="flex-end"
-                            justifyContent="flex-end"
-                            alignSelf="flex-end"
-                        >
-                            <Text
-                                textAlign="right"
-                                fontFamily={"$acuminProSemibold"}
-                                fontSize={"$14"}
-                                textOverflow="ellipsis"
-                                numberOfLines={3}
-                            >
-                                {!nextExercise
-                                    ? "End of Workout"
-                                    : nextExercise.type === "exercise"
-                                      ? nextExercise.exerciseName
-                                      : "Rest"}
-                            </Text>
-                            {/* Indicator */}
-                            <XStack alignItems="center" ml="auto">
-                                <Text
-                                    fontSize={"$16"}
-                                    fontFamily={"$acuminProRegular"}
-                                    color="$text_accent"
-                                    mt={2}
-                                >
-                                    {!nextExercise ? "Complete" : "Next"}
-                                </Text>
-                                <View width={"$12"} height={"$12"} ml="$5">
-                                    <StyledImage
-                                        source={require("@assets/icon/arrow_forward.png")}
-                                        style={styles.indicatorIcons}
-                                    />
-                                </View>
-                            </XStack>
-                        </View>
-                        {/* Thumbnail Holder */}
-                        {nextExercise?.type === "exercise" ? (
-                            <View w={"$40"} h={"$54"} ml={"$5"} mt="auto">
-                                <StyledImage
-                                    source={require("@assets/programs/next-exercise-thumbnail.png")}
-                                    style={styles.tumbnail}
-                                />
-                            </View>
-                        ) : null}
-                    </XStack>
-                </XStack>
-                {/* Indicators */}
-                <View>
-                    <SlideIndicators
-                        totalSlides={totalSlides}
-                        currentSlideIndex={currentIndex}
-                    />
-                </View>
-            </YStack>
         </View>
     );
 };

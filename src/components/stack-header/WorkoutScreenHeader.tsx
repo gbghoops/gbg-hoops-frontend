@@ -21,7 +21,7 @@ export const WorkoutHeader = ({
     canGoBack = true,
 }: HeaderProps) => {
     const { back, canGoBack: checkCanGoBack, replace } = useRouter();
-    const { top } = useSafeAreaInsets();
+
     const router = useRouter();
 
     const canRouterGoBack = checkCanGoBack();
@@ -35,9 +35,8 @@ export const WorkoutHeader = ({
             ac="center"
             ai={"center"}
             justifyContent="space-between"
-            height={wn(60) + top}
+            height={60}
             fd={"row"}
-            paddingTop={top}
             paddingHorizontal={"$20"}
             backgroundColor={"$surface_background"}
         >
