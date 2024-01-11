@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { colors } from "@src/styles/theme/colors";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import {
+    heightNormalized as hn,
+    widthNormalized as wn,
+} from "@src/utils/normalize-dimensions";
 import { View as MView } from "moti";
 import { Text, View } from "tamagui";
 
 interface Props {
     reps: number;
+    isLandscape: boolean;
     onRepsCompleted?: () => void;
 }
-const RepProgress = ({ reps, onRepsCompleted }: Props) => {
+const RepProgress = ({ reps, onRepsCompleted, isLandscape = false }: Props) => {
     const [currentRep, setCurrentRep] = useState(reps);
     const progress = Math.floor((currentRep / reps) * 100);
 
     return (
         <View
             width={"100%"}
-            height={"$60"}
+            height={isLandscape ? hn(40) : "$60"}
             backgroundColor={"$surface_primary"}
             overflow="hidden"
             position="relative"
@@ -30,6 +34,7 @@ const RepProgress = ({ reps, onRepsCompleted }: Props) => {
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="row"
+                mt={"$2"}
             >
                 <Text fontFamily={"$heading"} fontSize={"$40"}>
                     {currentRep}

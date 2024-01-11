@@ -31,7 +31,7 @@ export default function WorkoutScreen() {
         0,
     ]);
 
-    const slideRef = useRef<FlashList<Exercise | RestBlock>>(null);
+    const slideRef = useRef<PagerView>(null);
 
     useEffect(() => {
         setTimeout(() => {
@@ -85,7 +85,11 @@ export default function WorkoutScreen() {
             </AnimatePresence>
             {/* Main */}
             <Stack f={1} width={"100%"}>
-                <PagerView style={{ flex: 1 }}>
+                <PagerView
+                    style={{ flex: 1 }}
+                    scrollEnabled={false}
+                    ref={slideRef}
+                >
                     {flattenedExerciseData.map((item, index) => (
                         <ExerciseSlide
                             key={index}
@@ -96,10 +100,7 @@ export default function WorkoutScreen() {
                             totalSlides={flattenedExerciseData.length}
                             onPrevPressed={() => {
                                 setCurrentSlidePosition([index - 1]);
-                                slideRef.current?.scrollToIndex({
-                                    index: index - 1,
-                                    animated: true,
-                                });
+                                slideRef.current?.setPage(index - 1);
                             }}
                             onNextPressed={() => {
                                 const isLastSlide =
@@ -109,12 +110,8 @@ export default function WorkoutScreen() {
                                 if (isLastSlide) {
                                     return;
                                 }
-
                                 setCurrentSlidePosition([index + 1]);
-                                slideRef.current?.scrollToIndex({
-                                    index: index + 1,
-                                    animated: true,
-                                });
+                                slideRef.current?.setPage(index + 1);
                             }}
                         />
                     ))}

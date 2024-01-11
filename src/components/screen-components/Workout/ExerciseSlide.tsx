@@ -5,7 +5,11 @@ import {
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
-import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import {
+    heightNormalized,
+    heightNormalized as hn,
+    widthNormalized as wn,
+} from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
@@ -43,11 +47,6 @@ const ExerciseSlide = ({
     const [exerciseReadyCount, setExerciseReadyCount] = useState(3);
     const [exerciseCompleted, setExerciseCompleted] = useState(false);
     const [windowSize, setWindowSize] = useState(Dimensions.get("window"));
-
-    const isNextSlide = currentIndex === currentSlidePositions[0] + 1;
-    const isPrevSlide =
-        currentIndex ===
-        currentSlidePositions[currentSlidePositions.length - 1] - 1;
 
     const isVisible = currentSlidePositions.includes(currentIndex);
 
@@ -118,11 +117,10 @@ const ExerciseSlide = ({
     return (
         <View
             key={exercise.block_id}
-            px="$20"
+            pl="$20"
+            pr={isLandScape ? "0%" : "$20"}
             flex={1}
             width={"100%"}
-            borderWidth={1}
-            borderColor="green"
         >
             <YStack f={1}>
                 {/* Exercise Header */}
@@ -156,7 +154,7 @@ const ExerciseSlide = ({
                         ) : null}
                     </View>
                 </XStack>
-                <Stack mt="$10" jc="center">
+                <Stack mt="$10" jc="center" mb="$5">
                     <Text
                         fontFamily={"$heading"}
                         fontSize={"$24"}
@@ -174,8 +172,8 @@ const ExerciseSlide = ({
                     <View f={isLandScape ? 1 : 0}>
                         {/* Video Container */}
                         <View
-                            mt="$10"
-                            height={230}
+                            mt={isLandScape ? "0%" : "$10"}
+                            height={isLandScape ? "100%" : 230}
                             position="relative"
                             animation={"slider"}
                             opacity={1}
@@ -247,9 +245,9 @@ const ExerciseSlide = ({
                     </View>
 
                     {/* Col 2 */}
-                    <View f={1}>
+                    <View f={1} pl={isLandScape ? "$15" : undefined}>
                         {/* Details */}
-                        <YStack mt="$20">
+                        <YStack mt={isLandScape ? "0%" : "$20"}>
                             <XStack>
                                 <InstructionVideoButton />
                                 <View ml={"$10"}>
@@ -258,9 +256,17 @@ const ExerciseSlide = ({
                             </XStack>
                         </YStack>
                         {exercise.type === "exercise" ? (
-                            <YStack mt="$10" py="$10">
-                                <View>
+                            <Stack
+                                mt={isLandScape ? "$5" : "$10"}
+                                py="$10"
+                                flexDirection={isLandScape ? "row" : "column"}
+                            >
+                                <View
+                                    f={isLandScape ? 1 : undefined}
+                                    pr={isLandScape ? "$4" : "0%"}
+                                >
                                     <SetsCounter
+                                        isLandScape={isLandScape}
                                         totalSetCount={exercise.setsCount}
                                         totalRepsCount={exercise.reps ?? 0}
                                         subBlockTitle={
@@ -269,7 +275,11 @@ const ExerciseSlide = ({
                                     />
                                 </View>
                                 {exercise.setsType === "reps" ? (
-                                    <View mt={"$20"}>
+                                    <View
+                                        f={isLandScape ? 1 : undefined}
+                                        mt={isLandScape ? "0%" : "$20"}
+                                        pl={isLandScape ? "$4" : "0%"}
+                                    >
                                         <AdjustWeight
                                             onPress={() => {}}
                                             currentWeight={5}
@@ -277,14 +287,15 @@ const ExerciseSlide = ({
                                         />
                                     </View>
                                 ) : null}
-                            </YStack>
+                            </Stack>
                         ) : null}
-                        <View mt="$15">
+                        <View mt={isLandScape ? "$5" : "$15"}>
                             {exercise.type === "exercise" ? (
                                 exercise.setsType === "time" ? (
                                     <ExerciseTimerProgressBar
                                         duration={totalExerciseDuration}
                                         isPlaying={exercisePlaying}
+                                        isLandscape={isLandScape}
                                         onTimerCompleted={() => {
                                             setExerciseCompleted(true);
 
@@ -294,6 +305,7 @@ const ExerciseSlide = ({
                                 ) : exercise.setsType === "reps" ? (
                                     <ExerciseRepProgressBar
                                         reps={exercise.reps ?? 0}
+                                        isLandscape={isLandScape}
                                         onRepsCompleted={() => {
                                             setExerciseCompleted(true);
 
@@ -499,20 +511,22 @@ interface SetsCounterProps {
     totalSetCount: number;
     totalRepsCount: number;
     subBlockTitle?: string;
+    isLandScape?: boolean;
 }
 const SetsCounter = ({
     totalRepsCount,
     totalSetCount,
     subBlockTitle,
+    isLandScape = false,
 }: SetsCounterProps) => {
     return (
         <View
             fd="row"
-            px="$16"
+            px={isLandScape ? "$8" : "$16"}
             py="$8"
             jc="space-between"
             ai="center"
-            h={"$40"}
+            h={isLandScape ? hn(40) : "$40"}
             backgroundColor={"$surface_primary"}
         >
             <View f={1} flexDirection="row">

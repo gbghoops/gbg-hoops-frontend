@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { colors } from "@src/styles/theme/colors";
+import { heightNormalized as hn } from "@src/utils/normalize-dimensions";
 import { View as MView } from "moti";
 import { Text, View } from "tamagui";
 interface ExerciseProgressBarProps {
     duration: number;
     isPlaying: boolean;
+    isLandscape: boolean;
     onTimerCompleted?: () => void;
 }
 
@@ -12,6 +14,7 @@ const ExerciseProgressBar = ({
     duration,
     isPlaying,
     onTimerCompleted,
+    isLandscape = false,
 }: ExerciseProgressBarProps) => {
     const [time, setTime] = useState<{ minutes: string; seconds: string }>({
         minutes: "00",
@@ -77,7 +80,7 @@ const ExerciseProgressBar = ({
     return (
         <View
             width={"100%"}
-            height={"$60"}
+            height={isLandscape ? hn(40) : "$60"}
             backgroundColor={"$surface_primary"}
             overflow="hidden"
             position="relative"
@@ -93,7 +96,14 @@ const ExerciseProgressBar = ({
                 alignItems="center"
                 flexDirection="row"
             >
-                <Text fontFamily={"$heading"} fontSize={"$40"}>
+                <Text
+                    fontFamily={"$heading"}
+                    fontSize={"$40"}
+                    borderWidth={1}
+                    borderColor="red"
+                    display="flex"
+                    mt={"$2"}
+                >
                     {time.minutes}:{time.seconds}
                 </Text>
                 {/* <Text fontFamily={"$heading"} ml={wn(5)} fontSize={"$20"}>

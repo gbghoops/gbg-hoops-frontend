@@ -43,6 +43,12 @@
                         "deploymentTarget": "13.0"
                     }
                 }
+            ],
+            [
+                "expo-screen-orientation",
+                {
+                    "initialOrientation": "DEFAULT"
+                }
             ]
         ]
     }

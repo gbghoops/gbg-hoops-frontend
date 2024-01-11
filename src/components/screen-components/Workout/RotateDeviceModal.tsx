@@ -7,7 +7,16 @@ interface RotateDeviceModalProps {
 }
 const RotateDeviceModal = ({ isVisible }: RotateDeviceModalProps) => {
     return (
-        <Modal transparent={true} animationType="fade" visible={isVisible}>
+        <Modal
+            transparent={true}
+            animationType="fade"
+            visible={isVisible}
+            supportedOrientations={[
+                "portrait",
+                "landscape-left",
+                "landscape-right",
+            ]}
+        >
             <View
                 f={1}
                 left={0}
