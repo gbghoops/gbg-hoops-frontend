@@ -6,11 +6,12 @@ import DemoExerciseData, {
     ExerciseData,
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
+import ConfirmWorkoutExit from "@src/components/screen-components/Workout/ConfirmWorkoutExit/ConfirmWorkoutExit";
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide";
 import ReadyScreen from "@src/components/screen-components/Workout/ReadyScreen";
 import RotateDeviceModal from "@src/components/screen-components/Workout/RotateDeviceModal";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
-import { Stack as RouterStack } from "expo-router";
+import { Stack as RouterStack, useRouter } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { AnimatePresence, Stack } from "tamagui";
 
@@ -30,8 +31,12 @@ export default function WorkoutScreen() {
     const [currentSlidePosition, setCurrentSlidePosition] = useState<number[]>([
         0,
     ]);
+    const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
+    const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
 
     const slideRef = useRef<PagerView>(null);
+
+    const router = useRouter();
 
     useEffect(() => {
         setTimeout(() => {
@@ -61,6 +66,12 @@ export default function WorkoutScreen() {
         }
     }, [showRotateScreen]);
 
+    useEffect(() => {
+        if (workoutExitConfirmed) {
+            router.canGoBack() ? router.back() : router.replace("/home");
+        }
+    }, [workoutExitConfirmed]);
+
     const flattenedExerciseData = flattenExerciseData(DemoExerciseData);
     return (
         <Stack
@@ -72,7 +83,13 @@ export default function WorkoutScreen() {
         >
             <RouterStack.Screen
                 options={{
-                    header: () => <WorkoutHeader />,
+                    header: () => (
+                        <WorkoutHeader
+                            onBackPressed={() => {
+                                setShowWorkoutExitConfirm(true);
+                            }}
+                        />
+                    ),
                 }}
             />
             <AnimatePresence>
@@ -117,6 +134,15 @@ export default function WorkoutScreen() {
                     ))}
                 </PagerView>
             </Stack>
+            <ConfirmWorkoutExit
+                confirmExit={(state) => {
+                    setWorkoutExitConfirmed(state);
+                }}
+                open={showWorkoutExitConfirm}
+                onOpenStateChange={(isOpen) => {
+                    setShowWorkoutExitConfirm(isOpen);
+                }}
+            />
         </Stack>
     );
 }
