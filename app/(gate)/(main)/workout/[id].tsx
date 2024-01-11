@@ -31,6 +31,7 @@ export default function WorkoutScreen() {
     const [currentSlidePosition, setCurrentSlidePosition] = useState<number[]>([
         0,
     ]);
+    // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
 

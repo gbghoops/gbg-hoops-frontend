@@ -62,23 +62,16 @@ const ConfirmWorkoutExit = ({
                         textTransform="uppercase"
                         textAlign="left"
                     >
-                        Book your coach2coach call
+                        Are you sure you want to quit?
                     </Text>
                     <Text
                         mt="$16"
-                        fontFamily="$body"
-                        fontSize="$16"
-                        lineHeight={20}
+                        fontFamily="$heading"
+                        fontSize="$20"
+                        lineHeight={28}
                     >
-                        {`Want one on one coaching? Have questions you want answered directly?\n\nSet up a $x half hour call with Coach Mike.`}
+                        {`You don’t really want to quit… \nAll of the shots you don’t take are misses!`}
                     </Text>
-                    <View mt={"$20"} fd="row">
-                        <Link onPress={() => {}}>Follow this lnk</Link>
-                        <Text fontFamily={"$body"} fontSize="$16">
-                            {" "}
-                            to set up your call.
-                        </Text>
-                    </View>
                     <View mt="$30" mb="$10" width={"100%"}>
                         <Button
                             text="NO, RETURN TO WORKOUT"
@@ -89,7 +82,7 @@ const ConfirmWorkoutExit = ({
                             }}
                         />
                     </View>
-                    <View mt="$30" mb="$10" width={"100%"}>
+                    <View mt="$10" mb="$10" width={"100%"}>
                         <Button
                             text="YES, QUIT"
                             fullWidth
