@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthProvider from "@src/context/auth-context";
 import { colors } from "@src/styles/theme/colors";
+import { Audio } from "expo-av";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -30,6 +31,7 @@ const MainLayout = () => {
 
     useEffect(() => {
         changeScreenOrientation();
+        Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
     }, []);
 
     useEffect(() => {

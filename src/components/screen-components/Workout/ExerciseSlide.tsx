@@ -5,12 +5,8 @@ import {
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
-import {
-    heightNormalized,
-    heightNormalized as hn,
-    widthNormalized as wn,
-} from "@src/utils/normalize-dimensions";
-import { ResizeMode, Video } from "expo-av";
+import { heightNormalized as hn } from "@src/utils/normalize-dimensions";
+import { Audio, ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
 import ExerciseRepProgressBar from "./ExerciseRepProgressBar";
@@ -130,7 +126,7 @@ const ExerciseSlide = ({
                             Single Leg Stability: Hip Hinge
                         </Text>
                     </View>
-                    <View>
+                    <View pr={isLandScape ? "$15" : "0%"}>
                         {/* Parent block title tag. */}
                         {exercise.type === "exercise" &&
                         exercise.parentBlockTitle ? (
@@ -202,7 +198,7 @@ const ExerciseSlide = ({
                                     width={"100%"}
                                     height={"100%"}
                                     backgroundColor={"$surface_primary"}
-                                    animation={"medium"}
+                                    animation={"fast"}
                                     opacity={exercisePlaying ? 0 : 0.5}
                                 />
 
@@ -245,7 +241,7 @@ const ExerciseSlide = ({
                     </View>
 
                     {/* Col 2 */}
-                    <View f={1} pl={isLandScape ? "$15" : undefined}>
+                    <View f={1} px={isLandScape ? "$15" : undefined}>
                         {/* Details */}
                         <YStack mt={isLandScape ? "0%" : "$20"}>
                             <XStack>
@@ -263,7 +259,12 @@ const ExerciseSlide = ({
                             >
                                 <View
                                     f={isLandScape ? 1 : undefined}
-                                    pr={isLandScape ? "$4" : "0%"}
+                                    pr={
+                                        isLandScape &&
+                                        exercise.setsType === "reps"
+                                            ? "$4"
+                                            : "0%"
+                                    }
                                 >
                                     <SetsCounter
                                         isLandScape={isLandScape}
@@ -326,10 +327,10 @@ const ExerciseSlide = ({
                                             ? "$125"
                                             : "$80"
                                     }
-                                    animation={"medium"}
+                                    animation={"fast"}
                                     pressStyle={{
-                                        opacity: 0.85,
-                                        scale: 0.98,
+                                        opacity: 0.55,
+                                        scale: 0.94,
                                     }}
                                 >
                                     {currentIndex > 0 ? (
@@ -376,9 +377,9 @@ const ExerciseSlide = ({
                                         backgroundColor={"$gold"}
                                         justifyContent="center"
                                         alignItems="center"
-                                        animation={"medium"}
+                                        animation={"fast"}
                                         pressStyle={{
-                                            opacity: 0.9,
+                                            opacity: 0.65,
                                             scale: 0.98,
                                         }}
                                         onPress={() => {
@@ -417,10 +418,10 @@ const ExerciseSlide = ({
 
                                 {/* Next */}
                                 <XStack
-                                    animation={"medium"}
+                                    animation={"fast"}
                                     pressStyle={{
-                                        opacity: 0.85,
-                                        scale: 0.98,
+                                        opacity: 0.55,
+                                        scale: 0.94,
                                     }}
                                     onPress={() => {
                                         setExercisePlaying(false);
@@ -596,7 +597,7 @@ const AdjustWeight = ({
             py="$8"
             jc="space-between"
             ai="center"
-            animation={"medium"}
+            animation={"fast"}
             flexDirection="row"
             pressStyle={{
                 opacity: 0.95,
@@ -632,7 +633,7 @@ const SoundButton = () => {
             jc="center"
             ai={"center"}
             p={"$10"}
-            animation={"medium"}
+            animation={"fast"}
             pressStyle={{
                 opacity: 0.95,
                 scale: 0.98,
@@ -659,7 +660,7 @@ const InstructionVideoButton = () => {
             p={"$10"}
             jc="center"
             ai={"center"}
-            animation={"medium"}
+            animation={"fast"}
             pressStyle={{
                 opacity: 0.95,
                 scale: 0.98,
