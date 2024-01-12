@@ -6,7 +6,7 @@ import {
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
 import { heightNormalized as hn } from "@src/utils/normalize-dimensions";
-import { Audio, ResizeMode, Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
 import ExerciseRepProgressBar from "./ExerciseRepProgressBar";
@@ -332,19 +332,17 @@ const ExerciseSlide = ({
                                         opacity: 0.55,
                                         scale: 0.94,
                                     }}
+                                    onPress={() => {
+                                        setExercisePlaying(false);
+                                        setQueueExercisePlaying(false);
+
+                                        currentIndex > 0 &&
+                                            onPrevPressed &&
+                                            onPrevPressed();
+                                    }}
                                 >
                                     {currentIndex > 0 ? (
-                                        <XStack
-                                            mt="auto"
-                                            alignItems="center"
-                                            onPress={() => {
-                                                setExercisePlaying(false);
-                                                setQueueExercisePlaying(false);
-
-                                                onPrevPressed &&
-                                                    onPrevPressed();
-                                            }}
-                                        >
+                                        <XStack mt="auto" alignItems="center">
                                             <View
                                                 width={"$12"}
                                                 height={"$12"}

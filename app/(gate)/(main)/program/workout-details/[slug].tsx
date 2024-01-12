@@ -179,7 +179,7 @@ export default function WorkoutDetails() {
                 <Button
                     text="Workout Now"
                     onPress={() => {
-                        router.push("/workout/1");
+                        return router.replace("/workout/1");
                     }}
                     fullWidth
                 />
