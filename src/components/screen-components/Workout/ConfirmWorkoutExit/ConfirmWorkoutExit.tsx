@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Button from "@src/components/button/Button";
-import Link from "@src/components/link/Link";
 import { Sheet, Text, View } from "tamagui";
 
 interface ConfirmWorkoutExitProps {

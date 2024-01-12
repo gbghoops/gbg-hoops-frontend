@@ -9,6 +9,7 @@ import { heightNormalized as hn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
+import AdjustWeightSheet from "./AdjustWeightSheet/AdjustWeightSheet";
 import ExerciseRepProgressBar from "./ExerciseRepProgressBar";
 import ExerciseTimerProgressBar from "./ExerciseTimerProgressBar";
 import SlideIndicators from "./SlideIndicators";
@@ -19,7 +20,6 @@ interface ExerciseSlideProps {
     index: number;
     totalSlides: number;
     currentSlidePositions: number[];
-
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
 }
@@ -43,6 +43,8 @@ const ExerciseSlide = ({
     const [exerciseReadyCount, setExerciseReadyCount] = useState(3);
     const [exerciseCompleted, setExerciseCompleted] = useState(false);
     const [windowSize, setWindowSize] = useState(Dimensions.get("window"));
+    const [currentWeight, setCurrentWeight] = useState(5);
+    const [showWeightAdjust, setShowWeightAdjust] = useState(false);
 
     const isVisible = currentSlidePositions.includes(currentIndex);
 
@@ -282,8 +284,12 @@ const ExerciseSlide = ({
                                         pl={isLandScape ? "$4" : "0%"}
                                     >
                                         <AdjustWeight
-                                            onPress={() => {}}
-                                            currentWeight={5}
+                                            onPress={() => {
+                                                setShowWeightAdjust(
+                                                    !showWeightAdjust,
+                                                );
+                                            }}
+                                            currentWeight={currentWeight}
                                             weightUnit="lbs"
                                         />
                                     </View>
@@ -501,6 +507,16 @@ const ExerciseSlide = ({
                     </View>
                 </View>
             </YStack>
+            <AdjustWeightSheet
+                open={showWeightAdjust}
+                currentWeight={currentWeight}
+                onOpenStateChange={(open) => {
+                    setShowWeightAdjust(open);
+                }}
+                onWeightChange={(weight) => {
+                    setCurrentWeight(weight);
+                }}
+            />
             {/* ---------------------------- */}
         </View>
     );
