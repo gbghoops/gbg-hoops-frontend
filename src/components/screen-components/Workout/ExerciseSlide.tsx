@@ -45,6 +45,7 @@ const ExerciseSlide = ({
     const [windowSize, setWindowSize] = useState(Dimensions.get("window"));
     const [currentWeight, setCurrentWeight] = useState(5);
     const [showWeightAdjust, setShowWeightAdjust] = useState(false);
+    const [isVideoMuted, setIsVideoMuted] = useState(false);
 
     const isVisible = currentSlidePositions.includes(currentIndex);
 
@@ -238,6 +239,7 @@ const ExerciseSlide = ({
                                 resizeMode={ResizeMode.COVER}
                                 source={require("@assets/programs/videos/db-rdl-stretch.mp4")}
                                 style={styles.ExerciseVideo}
+                                isMuted={isVideoMuted}
                             />
                         </View>
                     </View>
@@ -249,7 +251,12 @@ const ExerciseSlide = ({
                             <XStack>
                                 <InstructionVideoButton />
                                 <View ml={"$10"}>
-                                    <SoundButton />
+                                    <SoundButton
+                                        isMuted={isVideoMuted}
+                                        onMuteStateChange={(state) => {
+                                            setIsVideoMuted(state);
+                                        }}
+                                    />
                                 </View>
                             </XStack>
                         </YStack>
@@ -639,7 +646,11 @@ const AdjustWeight = ({
     );
 };
 
-const SoundButton = () => {
+interface SoundButtonProps {
+    isMuted?: boolean;
+    onMuteStateChange?: (isMuted: boolean) => void;
+}
+const SoundButton = ({ isMuted, onMuteStateChange }: SoundButtonProps) => {
     return (
         <View
             borderWidth={1}
@@ -652,15 +663,28 @@ const SoundButton = () => {
                 opacity: 0.95,
                 scale: 0.98,
             }}
+            onPress={() => {
+                onMuteStateChange && onMuteStateChange(!isMuted);
+            }}
         >
             <View width={"$24"} height={"$24"}>
-                <StyledImage
-                    source={require("@assets/icon/sound.png")}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                />
+                {isMuted ? (
+                    <StyledImage
+                        source={require("@assets/icon/sound-off.png")}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                        }}
+                    />
+                ) : (
+                    <StyledImage
+                        source={require("@assets/icon/sound.png")}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                        }}
+                    />
+                )}
             </View>
         </View>
     );
