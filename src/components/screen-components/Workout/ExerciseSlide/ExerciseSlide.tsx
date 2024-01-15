@@ -1,18 +1,23 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Modal, StyleSheet } from "react-native";
 import {
     Exercise,
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
-import { heightNormalized as hn } from "@src/utils/normalize-dimensions";
-import { ResizeMode, Video } from "expo-av";
+import { AVPlaybackSource, ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
-import AdjustWeightSheet from "./AdjustWeightSheet/AdjustWeightSheet";
-import ExerciseRepProgressBar from "./ExerciseRepProgressBar";
-import ExerciseTimerProgressBar from "./ExerciseTimerProgressBar";
-import SlideIndicators from "./SlideIndicators";
+import AdjustWeightSheet from "../AdjustWeightSheet/AdjustWeightSheet";
+
+import AdjustWeight from "./components/AdjustWeight";
+import ExerciseRepProgressBar from "./components/ExerciseRepProgressBar";
+import ExerciseTimerProgressBar from "./components/ExerciseTimerProgressBar";
+import FullscreenVideoModal from "./components/FullscreenVideoModal";
+import InstructionVideoButton from "./components/InstructionVideoButton";
+import SetsCounter from "./components/SetsCounter";
+import SlideIndicators from "./components/SlideIndicators";
+import SoundButton from "./components/SoundButton";
 
 interface ExerciseSlideProps {
     exercise: Exercise | RestBlock;
@@ -46,6 +51,7 @@ const ExerciseSlide = ({
     const [currentWeight, setCurrentWeight] = useState(5);
     const [showWeightAdjust, setShowWeightAdjust] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
+    const [showFullscreenVideo, setShowFullscreenVideo] = useState(false);
 
     const isVisible = currentSlidePositions.includes(currentIndex);
 
@@ -249,7 +255,13 @@ const ExerciseSlide = ({
                         {/* Details */}
                         <YStack mt={isLandScape ? "0%" : "$20"}>
                             <XStack>
-                                <InstructionVideoButton />
+                                <View>
+                                    <InstructionVideoButton
+                                        onPress={() => {
+                                            setShowFullscreenVideo(true);
+                                        }}
+                                    />
+                                </View>
                                 <View ml={"$10"}>
                                     <SoundButton
                                         isMuted={isVideoMuted}
@@ -514,6 +526,13 @@ const ExerciseSlide = ({
                     </View>
                 </View>
             </YStack>
+            <FullscreenVideoModal
+                open={showFullscreenVideo}
+                videoSource={require("@assets/programs/videos/db-rdl-stretch.mp4")}
+                onClose={() => {
+                    setShowFullscreenVideo(false);
+                }}
+            />
             <AdjustWeightSheet
                 open={showWeightAdjust}
                 currentWeight={currentWeight}
@@ -525,202 +544,6 @@ const ExerciseSlide = ({
                 }}
             />
             {/* ---------------------------- */}
-        </View>
-    );
-};
-
-interface SetsCounterProps {
-    totalSetCount: number;
-    totalRepsCount: number;
-    subBlockTitle?: string;
-    isLandScape?: boolean;
-}
-const SetsCounter = ({
-    totalRepsCount,
-    totalSetCount,
-    subBlockTitle,
-    isLandScape = false,
-}: SetsCounterProps) => {
-    return (
-        <View
-            fd="row"
-            px={isLandScape ? "$8" : "$16"}
-            py="$8"
-            jc="space-between"
-            ai="center"
-            h={isLandScape ? hn(40) : "$40"}
-            backgroundColor={"$surface_primary"}
-        >
-            <View f={1} flexDirection="row">
-                <View px="$10">
-                    <Text
-                        fontFamily={"$heading"}
-                        fontSize={"$20"}
-                    >{`${totalSetCount} Set${
-                        totalSetCount > 1 ? "s" : ""
-                    }`}</Text>
-                </View>
-                {totalRepsCount ? (
-                    <View
-                        borderLeftWidth={0.5}
-                        px={"$10"}
-                        borderLeftColor={"$border_primary"}
-                    >
-                        <Text
-                            fontFamily={"$heading"}
-                            fontSize={"$20"}
-                        >{`${totalRepsCount} Rep${
-                            totalSetCount > 1 ? "s" : ""
-                        }`}</Text>
-                    </View>
-                ) : null}
-            </View>
-            <View>
-                {/* Parent block title tag. */}
-                {subBlockTitle ? (
-                    <View
-                        width="auto"
-                        backgroundColor="$gold"
-                        ai="center"
-                        justifyContent="center"
-                        p={"$4"}
-                        pt={"$5"}
-                    >
-                        <Text
-                            fontFamily={"$acuminProBold"}
-                            textTransform="uppercase"
-                            color="$text_secondary"
-                            fontSize={"$12"}
-                        >
-                            Superset
-                        </Text>
-                    </View>
-                ) : null}
-            </View>
-        </View>
-    );
-};
-
-interface AdjustWeightProps {
-    currentWeight: number;
-    weightUnit: "kg" | "lbs";
-    onPress: () => void;
-}
-const AdjustWeight = ({
-    onPress,
-    weightUnit = "lbs",
-    currentWeight = 5,
-}: AdjustWeightProps) => {
-    return (
-        <View
-            fd="row"
-            px="$16"
-            py="$8"
-            jc="space-between"
-            ai="center"
-            animation={"fast"}
-            flexDirection="row"
-            pressStyle={{
-                opacity: 0.95,
-                scale: 0.98,
-            }}
-            onPress={onPress}
-            backgroundColor={"$surface_primary"}
-        >
-            <View>
-                <Text
-                    fontFamily={"$heading"}
-                    fontSize={"$20"}
-                >{`${currentWeight} ${weightUnit}`}</Text>
-            </View>
-            <View width={"$24"} height={"$24"}>
-                <StyledImage
-                    source={require("@assets/icon/edit.png")}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                />
-            </View>
-        </View>
-    );
-};
-
-interface SoundButtonProps {
-    isMuted?: boolean;
-    onMuteStateChange?: (isMuted: boolean) => void;
-}
-const SoundButton = ({ isMuted, onMuteStateChange }: SoundButtonProps) => {
-    return (
-        <View
-            borderWidth={1}
-            borderColor="$gold"
-            jc="center"
-            ai={"center"}
-            p={"$10"}
-            animation={"fast"}
-            pressStyle={{
-                opacity: 0.95,
-                scale: 0.98,
-            }}
-            onPress={() => {
-                onMuteStateChange && onMuteStateChange(!isMuted);
-            }}
-        >
-            <View width={"$24"} height={"$24"}>
-                {isMuted ? (
-                    <StyledImage
-                        source={require("@assets/icon/sound-off.png")}
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                        }}
-                    />
-                ) : (
-                    <StyledImage
-                        source={require("@assets/icon/sound.png")}
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                        }}
-                    />
-                )}
-            </View>
-        </View>
-    );
-};
-const InstructionVideoButton = () => {
-    return (
-        <View
-            fd="row"
-            borderWidth={1}
-            borderColor="$gold"
-            p={"$10"}
-            jc="center"
-            ai={"center"}
-            animation={"fast"}
-            pressStyle={{
-                opacity: 0.95,
-                scale: 0.98,
-            }}
-        >
-            <View width={"$24"} height={"$24"}>
-                <StyledImage
-                    source={require("@assets/icon/whistle.png")}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                />
-            </View>
-            <Text
-                textTransform="uppercase"
-                fontFamily={"$heading"}
-                fontSize={"$16"}
-                ml="$10"
-            >
-                See Instructional Video
-            </Text>
         </View>
     );
 };

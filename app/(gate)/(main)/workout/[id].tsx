@@ -6,9 +6,9 @@ import DemoExerciseData, {
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import ConfirmWorkoutExit from "@src/components/screen-components/Workout/ConfirmWorkoutExit/ConfirmWorkoutExit";
-import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide";
-import ReadyScreen from "@src/components/screen-components/Workout/ReadyScreen";
-import RotateDeviceModal from "@src/components/screen-components/Workout/RotateDeviceModal";
+import ReadyScreen from "@src/components/screen-components/Workout/ExerciseSlide/components/ReadyScreen";
+import RotateDeviceModal from "@src/components/screen-components/Workout/ExerciseSlide/components/RotateDeviceModal";
+import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { Stack as RouterStack, useRouter } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";

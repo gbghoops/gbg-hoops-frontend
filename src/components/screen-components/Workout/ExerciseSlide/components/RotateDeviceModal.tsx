@@ -1,5 +1,5 @@
 import { Modal } from "react-native";
-import { StyledImage } from "@src/components/styled-components";
+import { StyledImage, styles } from "@src/components/styled-components";
 import { Text, View } from "tamagui";
 
 interface RotateDeviceModalProps {
@@ -40,10 +40,7 @@ const RotateDeviceModal = ({ isVisible }: RotateDeviceModalProps) => {
                     <View width={"$60"} height={"$60"} mt={"$20"}>
                         <StyledImage
                             source={require("@assets/icon/rotate-device.gif")}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                            }}
+                            style={styles.styledImage}
                         />
                     </View>
                 </View>
