@@ -106,6 +106,8 @@ export default function WorkoutScreen() {
                     style={{ flex: 1 }}
                     scrollEnabled={false}
                     ref={slideRef}
+                    initialPage={0}
+                    offscreenPageLimit={1}
                 >
                     {flattenedExerciseData.map((item, index) => (
                         <ExerciseSlide

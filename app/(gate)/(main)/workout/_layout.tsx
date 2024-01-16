@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Edge, SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "@src/styles/theme/colors";
 import { Stack } from "expo-router";
@@ -8,7 +8,7 @@ export default function Layout() {
     const [orientation, setOrientation] =
         useState<ScreenOrientation.Orientation>();
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const sub = ScreenOrientation.addOrientationChangeListener((event) => {
             setOrientation(event.orientationInfo.orientation);
         });

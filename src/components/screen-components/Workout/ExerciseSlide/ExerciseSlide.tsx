@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React from "react";
 import { Dimensions, Modal, StyleSheet } from "react-native";
 import {
     Exercise,
@@ -52,6 +53,8 @@ const ExerciseSlide = ({
     const [showWeightAdjust, setShowWeightAdjust] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
     const [showFullscreenVideo, setShowFullscreenVideo] = useState(false);
+    const VideoRef = useRef<Video>(null);
+    const [videoLoaded, setVideoLoaded] = useState(false);
 
     const isVisible = currentSlidePositions.includes(currentIndex);
 
@@ -80,6 +83,15 @@ const ExerciseSlide = ({
 
         setExerciseCompleted(false);
     }, [exercisePlaying]);
+
+    useEffect(() => {
+        if (showFullscreenVideo) {
+            setExercisePlaying(false);
+            setQueueExercisePlaying(false);
+        }
+
+        return;
+    }, [showFullscreenVideo]);
 
     useEffect(() => {
         if (exercisePlaying || !queueExercisePlaying) {
@@ -240,12 +252,16 @@ const ExerciseSlide = ({
                                 ) : null}
                             </View>
                             <Video
+                                ref={VideoRef}
                                 shouldPlay={exercisePlaying}
                                 isLooping
                                 resizeMode={ResizeMode.COVER}
                                 source={require("@assets/programs/videos/db-rdl-stretch.mp4")}
                                 style={styles.ExerciseVideo}
                                 isMuted={isVideoMuted}
+                                onLoad={() => {
+                                    setVideoLoaded(true);
+                                }}
                             />
                         </View>
                     </View>
@@ -258,7 +274,11 @@ const ExerciseSlide = ({
                                 <View>
                                     <InstructionVideoButton
                                         onPress={() => {
-                                            setShowFullscreenVideo(true);
+                                            setExercisePlaying(false);
+                                            setQueueExercisePlaying(false);
+
+                                            videoLoaded &&
+                                                VideoRef.current?.presentFullscreenPlayer();
                                         }}
                                     />
                                 </View>
@@ -526,13 +546,14 @@ const ExerciseSlide = ({
                     </View>
                 </View>
             </YStack>
-            <FullscreenVideoModal
+            {/* <FullscreenVideoModal
                 open={showFullscreenVideo}
                 videoSource={require("@assets/programs/videos/db-rdl-stretch.mp4")}
+                isLandScape={isLandScape}
                 onClose={() => {
                     setShowFullscreenVideo(false);
                 }}
-            />
+            /> */}
             <AdjustWeightSheet
                 open={showWeightAdjust}
                 currentWeight={currentWeight}
@@ -564,4 +585,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ExerciseSlide;
+export default React.memo(ExerciseSlide);
