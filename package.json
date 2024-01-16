@@ -54,7 +54,6 @@
         "react-native-svg": "^14.1.0",
         "react-native-url-polyfill": "^2.0.0",
         "react-native-user-avatar": "^1.0.8",
-        "react-navigation-heavy-screen": "^1.2.1",
         "tamagui": "^1.74.11"
     },
     "devDependencies": {

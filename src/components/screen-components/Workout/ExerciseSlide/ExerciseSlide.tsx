@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import React from "react";
-import { Dimensions, Modal, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import {
     Exercise,
     RestBlock,
 } from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
-import { AVPlaybackSource, ResizeMode, Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
 import AdjustWeightSheet from "../AdjustWeightSheet/AdjustWeightSheet";

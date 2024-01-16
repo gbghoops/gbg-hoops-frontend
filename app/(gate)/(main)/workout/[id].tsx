@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
-import { OptimizedHeavyScreen } from "react-navigation-heavy-screen";
 import DemoExerciseData, {
     Exercise,
     ExerciseData,
