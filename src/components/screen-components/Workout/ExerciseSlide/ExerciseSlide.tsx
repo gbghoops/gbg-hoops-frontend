@@ -260,7 +260,7 @@ const ExerciseSlide = ({
                                 ref={VideoRef}
                                 shouldPlay={exercisePlaying}
                                 isLooping
-                                resizeMode={ResizeMode.COVER}
+                                resizeMode={ResizeMode.CONTAIN}
                                 source={require("@assets/programs/videos/db-rdl-stretch.mp4")}
                                 style={styles.ExerciseVideo}
                                 isMuted={isVideoMuted}
