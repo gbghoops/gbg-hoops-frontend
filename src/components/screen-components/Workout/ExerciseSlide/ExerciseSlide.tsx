@@ -59,11 +59,6 @@ const ExerciseSlide = ({
 
     const isActiveSlide = indexIsActive(currentSlidePosition, currentIndex);
 
-    console.log("Current slide position: ", currentSlidePosition);
-    console.log("Current index: ", currentIndex);
-
-    console.log("Is active slide: ", isActiveSlide);
-
     useLayoutEffect(() => {
         const subscription = Dimensions.addEventListener(
             "change",

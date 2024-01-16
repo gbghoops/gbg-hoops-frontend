@@ -1,63 +1,61 @@
 {
-  "expo": {
-    "name": "GBG Hoops",
-    "slug": "gbg-hoops-frontend",
-    "scheme": "com.app.gbghoops",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#353535"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": false,
-      "bundleIdentifier": "com.app.gbg-hoops"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.app.gbghoops"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "2bfbc5a4-9cc5-42f4-9bcf-3d264e312160"
-      }
-    },
-    "owner": "gbg-hoops",
-    "plugins": [
-      "expo-router",
-      "expo-build-properties",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "deploymentTarget": "13.0"
-          }
+    "expo": {
+        "name": "GBG Hoops",
+        "slug": "gbg-hoops-frontend",
+        "scheme": "com.app.gbghoops",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "cover",
+            "backgroundColor": "#353535"
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": false,
+            "bundleIdentifier": "com.app.gbg-hoops"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.app.gbghoops"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "2bfbc5a4-9cc5-42f4-9bcf-3d264e312160"
+            }
+        },
+        "owner": "gbg-hoops",
+        "plugins": [
+            "expo-router",
+            "expo-build-properties",
+            [
+                "expo-build-properties",
+                {
+                    "ios": {
+                        "deploymentTarget": "13.0"
+                    }
+                }
+            ],
+            [
+                "expo-screen-orientation",
+                {
+                    "initialOrientation": "DEFAULT"
+                }
+            ]
+        ],
+        "runtimeVersion": {
+            "policy": "appVersion"
+        },
+        "updates": {
+            "url": "https://u.expo.dev/2bfbc5a4-9cc5-42f4-9bcf-3d264e312160"
         }
-      ],
-      [
-        "expo-screen-orientation",
-        {
-          "initialOrientation": "DEFAULT"
-        }
-      ]
-    ],
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/2bfbc5a4-9cc5-42f4-9bcf-3d264e312160"
     }
-  }
 }

@@ -66,7 +66,6 @@ export default function HomePage() {
                                                 color="$black"
                                                 fontFamily={"$body"}
                                                 fontSize={"$20"}
-                                                lineHeight={22}
                                             >
                                                 AB
                                             </Text>
@@ -77,7 +76,6 @@ export default function HomePage() {
                                     <Text
                                         fontFamily={"$heading"}
                                         fontSize={"$40"}
-                                        lh={44}
                                         textTransform="uppercase"
                                     >
                                         Welcome, Anna!

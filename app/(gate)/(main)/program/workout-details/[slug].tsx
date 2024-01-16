@@ -172,7 +172,7 @@ export default function WorkoutDetails() {
             <View
                 position="absolute"
                 zIndex={10}
-                bottom={bottom + 20}
+                bottom={bottom ? bottom + wn(20) : wn(50)}
                 px={"$20"}
                 width={"100%"}
             >

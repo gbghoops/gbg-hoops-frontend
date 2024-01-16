@@ -40,7 +40,7 @@ export default function WorkoutScreen() {
         setTimeout(() => {
             setShowReadyScreen(false);
             setShowRotateScreen(true);
-        }, 1500);
+        }, 1000);
     }, []);
 
     useEffect(() => {
