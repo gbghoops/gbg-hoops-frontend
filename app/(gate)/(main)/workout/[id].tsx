@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
+import { OptimizedHeavyScreen } from "react-navigation-heavy-screen";
 import DemoExerciseData, {
     Exercise,
     ExerciseData,
@@ -88,6 +89,7 @@ export default function WorkoutScreen() {
                             }}
                         />
                     ),
+                    gestureEnabled: false,
                 }}
             />
             <AnimatePresence>
@@ -156,19 +158,18 @@ export default function WorkoutScreen() {
                                 ))}
                             </PagerView>
                         </Stack>
+                        <ConfirmWorkoutExit
+                            confirmExit={(state) => {
+                                setWorkoutExitConfirmed(state);
+                            }}
+                            open={showWorkoutExitConfirm}
+                            onOpenStateChange={(isOpen) => {
+                                setShowWorkoutExitConfirm(isOpen);
+                            }}
+                        />
                     </>
                 )}
             </AnimatePresence>
-
-            <ConfirmWorkoutExit
-                confirmExit={(state) => {
-                    setWorkoutExitConfirmed(state);
-                }}
-                open={showWorkoutExitConfirm}
-                onOpenStateChange={(isOpen) => {
-                    setShowWorkoutExitConfirm(isOpen);
-                }}
-            />
         </Stack>
     );
 }

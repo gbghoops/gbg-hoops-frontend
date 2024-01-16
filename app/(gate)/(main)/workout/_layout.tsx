@@ -40,6 +40,7 @@ export default function Layout() {
             <Stack
                 screenOptions={{
                     header: () => null,
+                    gestureEnabled: false,
                     contentStyle: {
                         backgroundColor: colors.surface_background,
                     },
