@@ -144,6 +144,7 @@ const ExerciseSlide = ({
             flex={1}
             width={"100%"}
         >
+            <Text>Test</Text>
             <YStack f={1}>
                 {/* Exercise Header */}
                 <XStack jc="space-between" ai={"center"}>

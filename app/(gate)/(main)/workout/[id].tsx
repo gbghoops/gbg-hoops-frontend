@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
+import { useIsFocused } from "@react-navigation/native";
 import DemoExerciseData, {
     Exercise,
     ExerciseData,
@@ -31,6 +32,7 @@ export default function WorkoutScreen() {
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
+    const isFocused = useIsFocused();
 
     const slideRef = useRef<PagerView>(null);
 
@@ -109,52 +111,53 @@ export default function WorkoutScreen() {
                                 initialPage={0}
                                 offscreenPageLimit={1}
                             >
-                                {flattenedExerciseData.map((item, index) => (
-                                    <ExerciseSlide
-                                        key={index}
-                                        index={index}
-                                        exercise={item}
-                                        nextExercise={
-                                            flattenedExerciseData[index + 1]
-                                        }
-                                        currentSlidePosition={
-                                            currentSlidePosition
-                                        }
-                                        totalSlides={
-                                            flattenedExerciseData.length
-                                        }
-                                        onPrevPressed={() => {
-                                            if (index === 0) {
-                                                return;
+                                {isFocused &&
+                                    flattenedExerciseData.map((item, index) => (
+                                        <ExerciseSlide
+                                            key={index}
+                                            index={index}
+                                            exercise={item}
+                                            nextExercise={
+                                                flattenedExerciseData[index + 1]
                                             }
-
-                                            setCurrentSlidePosition(
-                                                currentSlidePosition - 1,
-                                            );
-
-                                            slideRef.current?.setPage(
-                                                index - 1,
-                                            );
-                                        }}
-                                        onNextPressed={() => {
-                                            const isLastSlide =
-                                                index + 1 ===
-                                                flattenedExerciseData.length;
-
-                                            // todo: add logic to handle last slide.
-                                            if (isLastSlide) {
-                                                return;
+                                            currentSlidePosition={
+                                                currentSlidePosition
                                             }
-                                            setCurrentSlidePosition(
-                                                currentSlidePosition + 1,
-                                            );
+                                            totalSlides={
+                                                flattenedExerciseData.length
+                                            }
+                                            onPrevPressed={() => {
+                                                if (index === 0) {
+                                                    return;
+                                                }
 
-                                            slideRef.current?.setPage(
-                                                index + 1,
-                                            );
-                                        }}
-                                    />
-                                ))}
+                                                setCurrentSlidePosition(
+                                                    currentSlidePosition - 1,
+                                                );
+
+                                                slideRef.current?.setPage(
+                                                    index - 1,
+                                                );
+                                            }}
+                                            onNextPressed={() => {
+                                                const isLastSlide =
+                                                    index + 1 ===
+                                                    flattenedExerciseData.length;
+
+                                                // todo: add logic to handle last slide.
+                                                if (isLastSlide) {
+                                                    return;
+                                                }
+                                                setCurrentSlidePosition(
+                                                    currentSlidePosition + 1,
+                                                );
+
+                                                slideRef.current?.setPage(
+                                                    index + 1,
+                                                );
+                                            }}
+                                        />
+                                    ))}
                             </PagerView>
                         </Stack>
                         <ConfirmWorkoutExit
