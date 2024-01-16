@@ -14,7 +14,6 @@ import AdjustWeightSheet from "../AdjustWeightSheet/AdjustWeightSheet";
 import AdjustWeight from "./components/AdjustWeight";
 import ExerciseRepProgressBar from "./components/ExerciseRepProgressBar";
 import ExerciseTimerProgressBar from "./components/ExerciseTimerProgressBar";
-import FullscreenVideoModal from "./components/FullscreenVideoModal";
 import InstructionVideoButton from "./components/InstructionVideoButton";
 import SetsCounter from "./components/SetsCounter";
 import SlideIndicators from "./components/SlideIndicators";
@@ -25,16 +24,18 @@ interface ExerciseSlideProps {
     nextExercise: Exercise | RestBlock;
     index: number;
     totalSlides: number;
-    currentSlidePositions: number[];
+    currentSlidePosition: number;
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
 }
 
+// Okay, gotta be smart about this component. It's size could really affect the performance of
+// Literally the most important function of the entire app...
 const ExerciseSlide = ({
     exercise,
     nextExercise,
     index: currentIndex,
-    currentSlidePositions,
+    currentSlidePosition,
     totalSlides,
     onNextPressed,
     onPrevPressed,
@@ -56,7 +57,12 @@ const ExerciseSlide = ({
     const VideoRef = useRef<Video>(null);
     const [videoLoaded, setVideoLoaded] = useState(false);
 
-    const isVisible = currentSlidePositions.includes(currentIndex);
+    const isActiveSlide = indexIsActive(currentSlidePosition, currentIndex);
+
+    console.log("Current slide position: ", currentSlidePosition);
+    console.log("Current index: ", currentIndex);
+
+    console.log("Is active slide: ", isActiveSlide);
 
     useLayoutEffect(() => {
         const subscription = Dimensions.addEventListener(
@@ -70,10 +76,10 @@ const ExerciseSlide = ({
     }, []);
 
     useEffect(() => {
-        if (!isVisible) {
+        if (!isActiveSlide) {
             setExercisePlaying(false);
         }
-    }, [isVisible]);
+    }, [isActiveSlide]);
 
     // Reset exercise completed state whenever playing state changes..
     useEffect(() => {
@@ -130,6 +136,10 @@ const ExerciseSlide = ({
     }, [exerciseCompleted]);
 
     const isLandScape = windowSize.width > windowSize.height;
+
+    if (!isActiveSlide) {
+        return <View key={currentIndex}></View>;
+    }
 
     return (
         <View
@@ -568,6 +578,14 @@ const ExerciseSlide = ({
         </View>
     );
 };
+
+export function indexIsActive(currentIndex: number, myIndex: number) {
+    return (
+        currentIndex == myIndex ||
+        currentIndex - 1 == myIndex ||
+        currentIndex + 1 == myIndex
+    );
+}
 
 const styles = StyleSheet.create({
     ExerciseVideo: {

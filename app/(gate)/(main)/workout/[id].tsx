@@ -27,9 +27,7 @@ async function unlockScreenOrientation() {
 export default function WorkoutScreen() {
     const [showReadyScreen, setShowReadyScreen] = useState(true);
     const [showRotateScreen, setShowRotateScreen] = useState(false);
-    const [currentSlidePosition, setCurrentSlidePosition] = useState<number[]>([
-        0,
-    ]);
+    const [currentSlidePosition, setCurrentSlidePosition] = useState<number>(0);
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
@@ -42,7 +40,7 @@ export default function WorkoutScreen() {
         setTimeout(() => {
             setShowReadyScreen(false);
             setShowRotateScreen(true);
-        }, 3000);
+        }, 1500);
     }, []);
 
     useEffect(() => {
@@ -93,49 +91,75 @@ export default function WorkoutScreen() {
                 }}
             />
             <AnimatePresence>
-                {showReadyScreen ? <ReadyScreen key={"ready-screen"} /> : null}
-
-                <RotateDeviceModal
-                    key={"rotate-device-screen"}
-                    isVisible={showRotateScreen}
-                />
-            </AnimatePresence>
-            {/* Main */}
-            <Stack f={1} width={"100%"}>
-                <PagerView
-                    style={{ flex: 1 }}
-                    scrollEnabled={false}
-                    ref={slideRef}
-                    initialPage={0}
-                    offscreenPageLimit={1}
-                >
-                    {flattenedExerciseData.map((item, index) => (
-                        <ExerciseSlide
-                            key={index}
-                            index={index}
-                            exercise={item}
-                            nextExercise={flattenedExerciseData[index + 1]}
-                            currentSlidePositions={currentSlidePosition}
-                            totalSlides={flattenedExerciseData.length}
-                            onPrevPressed={() => {
-                                setCurrentSlidePosition([index - 1]);
-                                slideRef.current?.setPage(index - 1);
-                            }}
-                            onNextPressed={() => {
-                                const isLastSlide =
-                                    index + 1 === flattenedExerciseData.length;
-
-                                // todo: add logic to handle last slide.
-                                if (isLastSlide) {
-                                    return;
-                                }
-                                setCurrentSlidePosition([index + 1]);
-                                slideRef.current?.setPage(index + 1);
-                            }}
+                {showReadyScreen ? (
+                    <ReadyScreen key={"ready-screen"} />
+                ) : (
+                    <>
+                        {/* Main */}
+                        <RotateDeviceModal
+                            key={"rotate-device-screen"}
+                            isVisible={showRotateScreen}
                         />
-                    ))}
-                </PagerView>
-            </Stack>
+                        <Stack f={1} width={"100%"}>
+                            <PagerView
+                                style={{ flex: 1 }}
+                                scrollEnabled={false}
+                                ref={slideRef}
+                                initialPage={0}
+                                offscreenPageLimit={1}
+                            >
+                                {flattenedExerciseData.map((item, index) => (
+                                    <ExerciseSlide
+                                        key={index}
+                                        index={index}
+                                        exercise={item}
+                                        nextExercise={
+                                            flattenedExerciseData[index + 1]
+                                        }
+                                        currentSlidePosition={
+                                            currentSlidePosition
+                                        }
+                                        totalSlides={
+                                            flattenedExerciseData.length
+                                        }
+                                        onPrevPressed={() => {
+                                            if (index === 0) {
+                                                return;
+                                            }
+
+                                            setCurrentSlidePosition(
+                                                currentSlidePosition - 1,
+                                            );
+
+                                            slideRef.current?.setPage(
+                                                index - 1,
+                                            );
+                                        }}
+                                        onNextPressed={() => {
+                                            const isLastSlide =
+                                                index + 1 ===
+                                                flattenedExerciseData.length;
+
+                                            // todo: add logic to handle last slide.
+                                            if (isLastSlide) {
+                                                return;
+                                            }
+                                            setCurrentSlidePosition(
+                                                currentSlidePosition + 1,
+                                            );
+
+                                            slideRef.current?.setPage(
+                                                index + 1,
+                                            );
+                                        }}
+                                    />
+                                ))}
+                            </PagerView>
+                        </Stack>
+                    </>
+                )}
+            </AnimatePresence>
+
             <ConfirmWorkoutExit
                 confirmExit={(state) => {
                     setWorkoutExitConfirmed(state);

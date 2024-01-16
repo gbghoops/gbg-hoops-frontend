@@ -84,6 +84,7 @@ const ExerciseProgressBar = ({
             backgroundColor={"$surface_primary"}
             overflow="hidden"
             position="relative"
+            collapsable={false}
         >
             <View
                 position="absolute"
@@ -99,8 +100,6 @@ const ExerciseProgressBar = ({
                 <Text
                     fontFamily={"$heading"}
                     fontSize={"$40"}
-                    borderWidth={1}
-                    borderColor="red"
                     display="flex"
                     mt={"$2"}
                 >
