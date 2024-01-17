@@ -11,6 +11,8 @@ import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import { TamaguiProvider } from "tamagui";
 
+import "@tamagui/core/reset.css";
+
 import TamaguiConfig from "@/tamagui.config";
 
 const MainLayout = () => {

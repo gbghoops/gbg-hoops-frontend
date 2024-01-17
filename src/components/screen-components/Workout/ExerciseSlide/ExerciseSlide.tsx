@@ -53,7 +53,7 @@ const ExerciseSlide = ({
     const [currentWeight, setCurrentWeight] = useState(5);
     const [showWeightAdjust, setShowWeightAdjust] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
-    const [showFullscreenVideo, setShowFullscreenVideo] = useState(false);
+
     const VideoRef = useRef<Video>(null);
     const [videoLoaded, setVideoLoaded] = useState(false);
 
@@ -84,15 +84,6 @@ const ExerciseSlide = ({
 
         setExerciseCompleted(false);
     }, [exercisePlaying]);
-
-    useEffect(() => {
-        if (showFullscreenVideo) {
-            setExercisePlaying(false);
-            setQueueExercisePlaying(false);
-        }
-
-        return;
-    }, [showFullscreenVideo]);
 
     useEffect(() => {
         if (exercisePlaying || !queueExercisePlaying) {

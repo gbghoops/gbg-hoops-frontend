@@ -1,17 +1,17 @@
 {
-	"baseUrl": "./",
-	"extends": "expo/tsconfig.base",
-	"strict": true,
-	"allowSyntheticDefaultImports": true,
-	"experimentalDecorators": true,
-	"strictPropertyInitialization": false,
-	"typeRoots": ["./src/types"],
-	"compilerOptions": {
-		"strict": true,
-		"paths": {
-			"@assets/*": ["./assets/*"],
-			"@src/*": ["./src/*"],
-			"@/*": ["./*"]
-		}
-	}
+    "baseUrl": "./",
+    "extends": "expo/tsconfig.base",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "typeRoots": ["./src/types"],
+    "compilerOptions": {
+        "strict": true,
+        "paths": {
+            "@assets/*": ["./assets/*"],
+            "@src/*": ["./src/*"],
+            "@/*": ["./*"]
+        }
+    }
 }
