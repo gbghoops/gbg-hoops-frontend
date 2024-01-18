@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { FlashList } from "@shopify/flash-list";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 
-import { RecommendedPrograms } from "./recommended-programs";
 import RecommendedProgramCard from "./RecommendedProgramCard";
 
 const RenderRecommendedProgramCard = () => {
     const [visibleIndicies, setVisibleIndicies] = useState<number[]>([]);
+    const { programs } = usePrograms();
+
+    if (!programs || !programs.length) {
+        return null;
+    }
 
     return (
         <FlashList
-            data={RecommendedPrograms}
+            data={programs}
             extraData={{ visibleIndicies }}
             horizontal
-            estimatedItemSize={220}
+            estimatedItemSize={wn(220)}
             onViewableItemsChanged={({ viewableItems }) => {
                 const visibleIndicies = viewableItems.map(
                     ({ index, isViewable }) => (isViewable ? index : null),
@@ -28,8 +34,11 @@ const RenderRecommendedProgramCard = () => {
                 <RecommendedProgramCard
                     isVisible={visibleIndicies.includes(index)}
                     renderIndex={index}
-                    isLastItem={index === RecommendedPrograms.length - 1}
-                    {...item}
+                    isLastItem={index === programs.length - 1}
+                    video={item.teaser}
+                    programTitle={item.name}
+                    slug={item.slug}
+                    id={index}
                 />
             )}
         />

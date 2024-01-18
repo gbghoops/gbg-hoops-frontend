@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthProvider from "@src/context/auth-context";
+import ProgramsProvider from "@src/context/ProgramsContext/programs-context";
 import { colors } from "@src/styles/theme/colors";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Audio } from "expo-av";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
@@ -19,6 +21,8 @@ const MainLayout = () => {
     SplashScreen.preventAutoHideAsync();
 
     SystemUI.setBackgroundColorAsync(colors.surface_background);
+
+    const queryClient = new QueryClient();
 
     async function changeScreenOrientation() {
         await ScreenOrientation.lockAsync(
@@ -45,14 +49,18 @@ const MainLayout = () => {
     return (
         <TamaguiProvider config={TamaguiConfig}>
             <AuthProvider>
-                <SafeAreaProvider>
-                    {loaded ? (
-                        <>
-                            <StatusBar style="light" />
-                            <Slot />
-                        </>
-                    ) : null}
-                </SafeAreaProvider>
+                <QueryClientProvider client={queryClient}>
+                    <ProgramsProvider>
+                        <SafeAreaProvider>
+                            {loaded ? (
+                                <>
+                                    <StatusBar style="light" />
+                                    <Slot />
+                                </>
+                            ) : null}
+                        </SafeAreaProvider>
+                    </ProgramsProvider>
+                </QueryClientProvider>
             </AuthProvider>
         </TamaguiProvider>
     );

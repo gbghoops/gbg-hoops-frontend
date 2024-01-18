@@ -1,4 +1,8 @@
-interface ProgramSummary {}
+interface ProgramSummary {
+    name: string;
+    thumbnail: string;
+    sets: number;
+}
 
 interface ProgramExerciseFields {
     fields: {
@@ -75,15 +79,16 @@ interface ProgramWeek {
     day_five: ProgramDay;
 }
 
-interface Program {
+export interface Program {
     name: string;
+    slug: string;
     description: string;
     weeks: ProgramWeek[];
     plan: string;
     teaser: string;
 }
 
-interface IProgramsContext {
+export interface IProgramsContext {
     programs: Program[];
-    getPrograms: () => Promise<void>;
+    programsFetching: boolean;
 }

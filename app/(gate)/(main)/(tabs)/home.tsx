@@ -7,7 +7,6 @@ import Coach2Coach from "@src/components/screen-components/Home/Coach2Coach/Coac
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import ReferAFriend from "@src/components/screen-components/Home/ReferAFriend/ReferAFriend";
 import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
-import { defaultSizes as sizes } from "@src/styles/theme/sizes";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { Avatar, ScrollView, Stack, Text, View } from "tamagui";
@@ -142,7 +141,7 @@ export default function HomePage() {
                                     </Link>
                                 </View>
                                 {/* Program Cards */}
-                                <View mt={"$20"}>
+                                <View mt={"$20"} height={wn(220)}>
                                     <RenderRecommendedProgramCard />
                                 </View>
                             </View>
