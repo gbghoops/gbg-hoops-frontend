@@ -4,7 +4,7 @@ interface ProgramSummary {
     sets: number;
 }
 
-interface ProgramActivity {
+export interface ProgramActivity {
     name: string;
     type: "timer" | "tempo" | "mobility";
     sets: number;
@@ -24,7 +24,7 @@ interface ProgramActivity {
     meta_mobility: string[];
     metaLowerbodyGoals: string[];
 }
-interface ProgramExerciseFields {
+export interface ProgramExerciseFields {
     fields: {
         name: string;
         type: "timer" | "tempo" | "mobility";
@@ -79,14 +79,19 @@ interface ProgramExerciseFields {
     };
 }
 
-interface ProgramExercise {
+export type WorkoutPhases = "warmup" | "athleticism" | "recovery";
+
+export type WorkoutExecutionMode = "circuit" | "superset";
+
+export interface ProgramExercise {
     title: string;
-    type: "circuit";
+    type: WorkoutExecutionMode;
+    phase: WorkoutPhases;
     exercises: ProgramExerciseFields[];
     activities: ProgramActivity[];
 }
 
-interface ProgramDay {
+export interface ProgramDay {
     summary: ProgramSummary;
     exercises: ProgramExercise[];
 }
@@ -94,11 +99,16 @@ interface ProgramDay {
 export interface ProgramWeek {
     name: string;
     slug: string;
-    day_one: ProgramDay;
-    day_two: ProgramDay;
-    day_three: ProgramDay;
-    day_four: ProgramDay;
-    day_five: ProgramDay;
+    day_1: ProgramDay;
+    day_2: ProgramDay;
+    day_3: ProgramDay;
+    day_4: ProgramDay;
+    day_5: ProgramDay;
+    day_1_memo: string;
+    day_2_memo: string;
+    day_3_memo: string;
+    day_4_memo: string;
+    day_5_memo: string;
 }
 
 export interface Program {

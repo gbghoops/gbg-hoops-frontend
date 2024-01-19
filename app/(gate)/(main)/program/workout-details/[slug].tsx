@@ -7,7 +7,6 @@ import AddExerciseSheet from "@src/components/screen-components/Programs/Workout
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
-import exerciseData from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { ProgramWeek } from "@src/context/ProgramsContext/types";
@@ -38,9 +37,7 @@ export default function WorkoutDetails() {
 
     const weekData = currentProgram?.weeks[activeWeek - 1];
 
-    const dayData = getDay({ week: weekData, day: activeDay });
-
-    console.log(dayData.exercises[0].activities);
+    const dayData = getDayInfo({ week: weekData, day: activeDay });
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -82,7 +79,7 @@ export default function WorkoutDetails() {
                         mt="$30"
                         textTransform="uppercase"
                     >
-                        Single Leg Stability: Hip Hinge
+                        {dayData.dayData.exercises[0].title}
                     </Text>
                 </View>
 
@@ -133,7 +130,12 @@ export default function WorkoutDetails() {
 
                 {/* Exercise List */}
                 <View mx={"$20"}>
-                    <RenderExerciseList exerciseData={exerciseData} />
+                    <View>
+                        <Text fontFamily={"$body"} fontSize={"$14"} mt={"$20"}>
+                            {dayData.dayMemo}
+                        </Text>
+                    </View>
+                    <RenderExerciseList exerciseData={dayData.dayData} />
                 </View>
 
                 <View mt="$40" mx="$20">
@@ -222,19 +224,19 @@ interface GetDayArgs {
     week: ProgramWeek;
     day: number;
 }
-const getDay = ({ week, day }: GetDayArgs) => {
+const getDayInfo = ({ week, day }: GetDayArgs) => {
     switch (day) {
         case 1:
-            return week["day_one"];
+            return { dayData: week["day_1"], dayMemo: week["day_1_memo"] };
         case 2:
-            return week["day_two"];
+            return { dayData: week["day_2"], dayMemo: week["day_2_memo"] };
         case 3:
-            return week["day_three"];
+            return { dayData: week["day_3"], dayMemo: week["day_3_memo"] };
         case 4:
-            return week["day_four"];
+            return { dayData: week["day_4"], dayMemo: week["day_4_memo"] };
         case 5:
-            return week["day_five"];
+            return { dayData: week["day_5"], dayMemo: week["day_5_memo"] };
         default:
-            return week["day_one"];
+            return { dayData: week["day_1"], dayMemo: week["day_1_memo"] };
     }
 };
