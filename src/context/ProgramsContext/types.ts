@@ -6,7 +6,7 @@ interface ProgramSummary {
 
 export interface ProgramActivity {
     name: string;
-    type: "timer" | "tempo" | "mobility";
+    type?: "timer" | "tempo" | "mobility";
     sets: number;
     reps?: number;
     seconds_hold: number;

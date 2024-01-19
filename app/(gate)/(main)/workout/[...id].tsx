@@ -116,6 +116,8 @@ export default function WorkoutScreen() {
         [],
     );
 
+    const restBlocks = dayActivities.find((d) => !d.type);
+
     const flattenedExerciseData = flattenExerciseData(DemoExerciseData);
     return (
         <Stack
