@@ -11,10 +11,23 @@ import ReadyScreen from "@src/components/screen-components/Workout/ExerciseSlide
 import RotateDeviceModal from "@src/components/screen-components/Workout/ExerciseSlide/components/RotateDeviceModal";
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
-import { Stack as RouterStack, useRouter } from "expo-router";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import {
+    ProgramActivity,
+    WorkoutPhases,
+} from "@src/context/ProgramsContext/types";
+import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
+import {
+    Stack as RouterStack,
+    useLocalSearchParams,
+    useRouter,
+} from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { AnimatePresence, Stack } from "tamagui";
 
+interface ActivityWithPhase extends ProgramActivity {
+    phase: WorkoutPhases;
+}
 async function lockScreenOrientation() {
     await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT_UP,
@@ -32,7 +45,10 @@ export default function WorkoutScreen() {
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
+    const { programs } = usePrograms();
     const isFocused = useIsFocused();
+
+    const { id } = useLocalSearchParams();
 
     const slideRef = useRef<PagerView>(null);
 
@@ -71,6 +87,34 @@ export default function WorkoutScreen() {
             router.canGoBack() ? router.back() : router.replace("/home");
         }
     }, [workoutExitConfirmed]);
+
+    if (!id || id.length === 0) {
+        return null;
+    }
+
+    const programSlug = id[0];
+    const activeWeek = Number(id[1]);
+    const activeDay = Number(id[2]);
+
+    const currentProgram = programs.find(
+        (program) => program.slug === programSlug,
+    );
+
+    if (!currentProgram || !activeWeek || !activeDay) {
+        return null;
+    }
+
+    const weekData = currentProgram?.weeks[activeWeek - 1];
+
+    const { dayData } = getProgramDayInfo({ week: weekData, day: activeDay });
+
+    const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
+        (acc, exercise) =>
+            exercise.activities
+                .map((activity) => ({ ...activity, phase: exercise.phase }))
+                .concat(acc),
+        [],
+    );
 
     const flattenedExerciseData = flattenExerciseData(DemoExerciseData);
     return (
