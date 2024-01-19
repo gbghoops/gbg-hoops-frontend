@@ -4,6 +4,26 @@ interface ProgramSummary {
     sets: number;
 }
 
+interface ProgramActivity {
+    name: string;
+    type: "timer" | "tempo" | "mobility";
+    sets: number;
+    reps?: number;
+    seconds_hold: number;
+    seconds_up?: number;
+    seconds_down?: number;
+    seconds_release?: number;
+    video: string;
+    instructional_video: string;
+    thumbnail: string;
+    meta_workout_template: string[];
+    meta_type: string[];
+    meta_environment: string[];
+    metaEquipment: string[];
+    meta_pain: string[];
+    meta_mobility: string[];
+    metaLowerbodyGoals: string[];
+}
 interface ProgramExerciseFields {
     fields: {
         name: string;
@@ -63,6 +83,7 @@ interface ProgramExercise {
     title: string;
     type: "circuit";
     exercises: ProgramExerciseFields[];
+    activities: ProgramActivity[];
 }
 
 interface ProgramDay {
@@ -70,8 +91,9 @@ interface ProgramDay {
     exercises: ProgramExercise[];
 }
 
-interface ProgramWeek {
+export interface ProgramWeek {
     name: string;
+    slug: string;
     day_one: ProgramDay;
     day_two: ProgramDay;
     day_three: ProgramDay;

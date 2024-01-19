@@ -27,10 +27,18 @@ const fetchPrograms = async () => {
             return [];
         }
 
-        const slugifiedPrograms = programs.map((program) => ({
-            ...program,
-            slug: slugify(program.name, { lower: true }),
-        }));
+        const slugifiedPrograms = programs.map((program) => {
+            const slugifiedWeeks = program.weeks.map((week) => ({
+                ...week,
+                slug: slugify(week.name, { lower: true }),
+            }));
+
+            return {
+                ...program,
+                weeks: slugifiedWeeks,
+                slug: slugify(program.name, { lower: true }),
+            };
+        });
 
         return slugifiedPrograms;
     } catch (error) {
@@ -43,10 +51,6 @@ export default function ProgramsProvider({ children }: PropsWithChildren) {
         queryKey: ["programs"],
         queryFn: fetchPrograms,
     });
-
-    useEffect(() => {
-        console.log("data", data);
-    }, [data]);
 
     return (
         <ProgramsContext.Provider

@@ -9,9 +9,11 @@ import ExerciseHeaderButton from "@src/components/screen-components/Programs/Wor
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
 import exerciseData from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { ProgramWeek } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, Text, View } from "tamagui";
 
 // Icon sizes:
@@ -23,6 +25,22 @@ export default function WorkoutDetails() {
 
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
+    const { slug } = useLocalSearchParams();
+    const { programs } = usePrograms();
+    const activeWeek = 1;
+    const activeDay = 1;
+
+    const currentProgram = programs.find((program) => program.slug === slug);
+
+    if (!currentProgram) {
+        return null;
+    }
+
+    const weekData = currentProgram?.weeks[activeWeek - 1];
+
+    const dayData = getDay({ week: weekData, day: activeDay });
+
+    console.log(dayData.exercises[0].activities);
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -199,3 +217,24 @@ const styles = ({ contentContainer: { bottom } }: stylesProps) =>
             paddingBottom: bottom + wn(120),
         },
     });
+
+interface GetDayArgs {
+    week: ProgramWeek;
+    day: number;
+}
+const getDay = ({ week, day }: GetDayArgs) => {
+    switch (day) {
+        case 1:
+            return week["day_one"];
+        case 2:
+            return week["day_two"];
+        case 3:
+            return week["day_three"];
+        case 4:
+            return week["day_four"];
+        case 5:
+            return week["day_five"];
+        default:
+            return week["day_one"];
+    }
+};
