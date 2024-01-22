@@ -124,3 +124,7 @@ export interface IProgramsContext {
     programs: Program[];
     programsFetching: boolean;
 }
+
+export interface ActivityWithPhase extends ProgramActivity {
+    phase: WorkoutPhases;
+}

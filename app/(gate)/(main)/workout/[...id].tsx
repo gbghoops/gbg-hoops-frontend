@@ -1,21 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 import { useIsFocused } from "@react-navigation/native";
-import DemoExerciseData, {
-    Exercise,
-    ExerciseData,
-    RestBlock,
-} from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import ConfirmWorkoutExit from "@src/components/screen-components/Workout/ConfirmWorkoutExit/ConfirmWorkoutExit";
 import ReadyScreen from "@src/components/screen-components/Workout/ExerciseSlide/components/ReadyScreen";
 import RotateDeviceModal from "@src/components/screen-components/Workout/ExerciseSlide/components/RotateDeviceModal";
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import {
-    ProgramActivity,
-    WorkoutPhases,
-} from "@src/context/ProgramsContext/types";
+import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
     Stack as RouterStack,
@@ -25,9 +17,6 @@ import {
 import * as ScreenOrientation from "expo-screen-orientation";
 import { AnimatePresence, Stack } from "tamagui";
 
-interface ActivityWithPhase extends ProgramActivity {
-    phase: WorkoutPhases;
-}
 async function lockScreenOrientation() {
     await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT_UP,
@@ -116,9 +105,8 @@ export default function WorkoutScreen() {
         [],
     );
 
-    const restBlocks = dayActivities.find((d) => !d.type);
+    const flattenedActivities = flattenActivitiesBySet(dayActivities);
 
-    const flattenedExerciseData = flattenExerciseData(DemoExerciseData);
     return (
         <Stack
             f={1}
@@ -158,19 +146,22 @@ export default function WorkoutScreen() {
                                 offscreenPageLimit={1}
                             >
                                 {isFocused &&
-                                    flattenedExerciseData.map((item, index) => (
+                                    flattenedActivities.map((item, index) => (
                                         <ExerciseSlide
                                             key={index}
                                             index={index}
                                             exercise={item}
+                                            dayTitle={
+                                                dayData.exercises[0].title
+                                            }
                                             nextExercise={
-                                                flattenedExerciseData[index + 1]
+                                                flattenedActivities[index + 1]
                                             }
                                             currentSlidePosition={
                                                 currentSlidePosition
                                             }
                                             totalSlides={
-                                                flattenedExerciseData.length
+                                                flattenedActivities.length
                                             }
                                             onPrevPressed={() => {
                                                 if (index === 0) {
@@ -188,7 +179,7 @@ export default function WorkoutScreen() {
                                             onNextPressed={() => {
                                                 const isLastSlide =
                                                     index + 1 ===
-                                                    flattenedExerciseData.length;
+                                                    flattenedActivities.length;
 
                                                 // todo: add logic to handle last slide.
                                                 if (isLastSlide) {
@@ -222,18 +213,18 @@ export default function WorkoutScreen() {
     );
 }
 
-const flattenExerciseData = (
-    data: ExerciseData[],
-): (Exercise | RestBlock)[] => {
-    const exerciseData = data.map((exerciseData) => {
-        return exerciseData.subBlock.map((subBlock) => {
-            return subBlock.exercises.map((exercise) => {
-                return exercise;
-            });
-        });
-    });
+const flattenActivitiesBySet = (activities: ActivityWithPhase[]) => {
+    const res = activities.reduce<ActivityWithPhase[]>((acc, item) => {
+        if (item.sets > 1) {
+            const sets = Array.from({ length: item.sets }, (_, index) => ({
+                ...item,
+                name: `${item.name} - Set ${index + 1}`,
+                sets: 1,
+            }));
+            return acc.concat(sets);
+        }
+        return acc.concat(item);
+    }, []);
 
-    const flattenedExerciseData = exerciseData.flat(2);
-
-    return flattenedExerciseData;
+    return res;
 };

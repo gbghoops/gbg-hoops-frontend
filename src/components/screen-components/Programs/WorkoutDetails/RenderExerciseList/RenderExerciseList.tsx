@@ -75,9 +75,12 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
             {exercisesBlocks.map((exerciseBlock, index) => (
                 <View key={index} mt="$10">
                     {/* Title */}
-                    <Text fontFamily="$heading" fontSize={"$20"} my="$10">
-                        {getPhaseTitle(exerciseBlock.phase)}
-                    </Text>
+                    {getPhaseTitle(exerciseBlock.phase) ? (
+                        <Text fontFamily="$heading" fontSize={"$20"} my="$10">
+                            {getPhaseTitle(exerciseBlock.phase)}
+                        </Text>
+                    ) : null}
+
                     <View mt="$5">
                         {getSubBlockTitle(
                             exerciseBlock.type,
@@ -165,26 +168,6 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
             ))}
         </View>
     );
-};
-
-const groupDayExercises = (dayData: ProgramExercise[]) => {
-    const warmupBlock = dayData.filter(
-        (exercise) => exercise.phase === "warmup",
-    );
-
-    const athleticismBlock = dayData.filter(
-        (exercise) => exercise.phase === "athleticism",
-    );
-
-    const recoveryBlock = dayData.filter(
-        (exercise) => exercise.phase === "recovery",
-    );
-
-    return {
-        warmup: warmupBlock,
-        athleticism: athleticismBlock,
-        recovery: recoveryBlock,
-    };
 };
 
 const styles = StyleSheet.create({

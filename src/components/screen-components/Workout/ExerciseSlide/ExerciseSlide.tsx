@@ -1,12 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import {
-    Exercise,
-    RestBlock,
-} from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import { StyledImage } from "@src/components/styled-components";
+import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
 import { ResizeMode, Video } from "expo-av";
+import slugify from "slugify";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
 import AdjustWeightSheet from "../AdjustWeightSheet/AdjustWeightSheet";
@@ -20,10 +18,11 @@ import SlideIndicators from "./components/SlideIndicators";
 import SoundButton from "./components/SoundButton";
 
 interface ExerciseSlideProps {
-    exercise: Exercise | RestBlock;
-    nextExercise: Exercise | RestBlock;
+    exercise: ActivityWithPhase;
+    nextExercise: ActivityWithPhase;
     index: number;
     totalSlides: number;
+    dayTitle: string;
     currentSlidePosition: number;
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
@@ -37,13 +36,12 @@ const ExerciseSlide = ({
     index: currentIndex,
     currentSlidePosition,
     totalSlides,
+    dayTitle,
     onNextPressed,
     onPrevPressed,
 }: ExerciseSlideProps) => {
     const totalExerciseDuration =
-        exercise.type === "exercise"
-            ? exercise.time ?? 0
-            : exercise.restDuration ?? 0;
+        exercise.type === "timer" ? exercise.seconds_hold : 0;
 
     const [exercisePlaying, setExercisePlaying] = useState(false);
     const [queueExercisePlaying, setQueueExercisePlaying] = useState(false);
@@ -127,27 +125,29 @@ const ExerciseSlide = ({
         return <View key={currentIndex}></View>;
     }
 
+    const slugified_name = slugify(`${exercise.name}-${currentIndex}`, {
+        lower: true,
+    });
+
     return (
         <View
-            key={exercise.block_id}
+            key={slugified_name}
             pl="$20"
             pr={isLandScape ? "0%" : "$20"}
             flex={1}
             width={"100%"}
         >
-            <Text>Test</Text>
             <YStack f={1}>
                 {/* Exercise Header */}
                 <XStack jc="space-between" ai={"center"}>
                     <View>
                         <Text fontSize={"$16"} fontFamily={"$body"}>
-                            Single Leg Stability: Hip Hinge
+                            {dayTitle}
                         </Text>
                     </View>
                     <View pr={isLandScape ? "$15" : "0%"}>
                         {/* Parent block title tag. */}
-                        {exercise.type === "exercise" &&
-                        exercise.parentBlockTitle ? (
+                        {exercise.phase ? (
                             <View
                                 width="auto"
                                 backgroundColor="$gold_hot"
@@ -162,7 +162,7 @@ const ExerciseSlide = ({
                                     color="$text_secondary"
                                     fontSize={"$12"}
                                 >
-                                    {exercise.parentBlockTitle}
+                                    {exercise.phase}
                                 </Text>
                             </View>
                         ) : null}
@@ -175,9 +175,7 @@ const ExerciseSlide = ({
                         textOverflow="ellipsis"
                         numberOfLines={1}
                     >
-                        {exercise.type === "rest"
-                            ? `Rest`
-                            : exercise.exerciseName}
+                        {!exercise.type ? `Rest` : exercise.name}
                     </Text>
                 </Stack>
                 {/* COLUMN WRAPPER, Detects Screen orientation. */}
@@ -253,7 +251,9 @@ const ExerciseSlide = ({
                                 shouldPlay={exercisePlaying}
                                 isLooping
                                 resizeMode={ResizeMode.CONTAIN}
-                                source={require("@assets/programs/videos/db-rdl-stretch.mp4")}
+                                source={{
+                                    uri: `https:${exercise.video}`,
+                                }}
                                 style={styles.ExerciseVideo}
                                 isMuted={isVideoMuted}
                                 onLoad={() => {
@@ -289,7 +289,7 @@ const ExerciseSlide = ({
                                 </View>
                             </XStack>
                         </YStack>
-                        {exercise.type === "exercise" ? (
+                        {exercise.type ? (
                             <Stack
                                 mt={isLandScape ? "$5" : "$10"}
                                 py="$10"
@@ -298,22 +298,19 @@ const ExerciseSlide = ({
                                 <View
                                     f={isLandScape ? 1 : undefined}
                                     pr={
-                                        isLandScape &&
-                                        exercise.setsType === "reps"
+                                        isLandScape && exercise.type === "tempo"
                                             ? "$4"
                                             : "0%"
                                     }
                                 >
                                     <SetsCounter
                                         isLandScape={isLandScape}
-                                        totalSetCount={exercise.setsCount}
+                                        totalSetCount={exercise.sets ?? 0}
                                         totalRepsCount={exercise.reps ?? 0}
-                                        subBlockTitle={
-                                            exercise.subBlockTitle ?? ""
-                                        }
+                                        subBlockTitle={exercise.phase ?? ""}
                                     />
                                 </View>
-                                {exercise.setsType === "reps" ? (
+                                {exercise.type === "tempo" ? (
                                     <View
                                         f={isLandScape ? 1 : undefined}
                                         mt={isLandScape ? "0%" : "$20"}
@@ -332,9 +329,11 @@ const ExerciseSlide = ({
                                 ) : null}
                             </Stack>
                         ) : null}
+
+                        {/* TIMERS */}
                         <View mt={isLandScape ? "$5" : "$15"}>
-                            {exercise.type === "exercise" ? (
-                                exercise.setsType === "time" ? (
+                            {exercise.type ? (
+                                exercise.type === "timer" ? (
                                     <ExerciseTimerProgressBar
                                         duration={totalExerciseDuration}
                                         isPlaying={exercisePlaying}
@@ -345,7 +344,7 @@ const ExerciseSlide = ({
                                             return;
                                         }}
                                     />
-                                ) : exercise.setsType === "reps" ? (
+                                ) : exercise.type === "tempo" ? (
                                     <ExerciseRepProgressBar
                                         reps={exercise.reps ?? 0}
                                         isLandscape={isLandScape}
@@ -364,11 +363,7 @@ const ExerciseSlide = ({
                             <XStack justifyContent="space-between" mb={"$16"}>
                                 {/* Prev */}
                                 <View
-                                    width={
-                                        nextExercise?.type === "exercise"
-                                            ? "$125"
-                                            : "$80"
-                                    }
+                                    width={nextExercise?.type ? "$125" : "$80"}
                                     animation={"fast"}
                                     pressStyle={{
                                         opacity: 0.55,
@@ -485,9 +480,8 @@ const ExerciseSlide = ({
                                         >
                                             {!nextExercise
                                                 ? "End of Workout"
-                                                : nextExercise.type ===
-                                                    "exercise"
-                                                  ? nextExercise.exerciseName
+                                                : nextExercise.type
+                                                  ? nextExercise.name
                                                   : "Rest"}
                                         </Text>
                                         {/* Indicator */}
@@ -517,7 +511,7 @@ const ExerciseSlide = ({
                                         </XStack>
                                     </View>
                                     {/* Thumbnail Holder */}
-                                    {nextExercise?.type === "exercise" ? (
+                                    {nextExercise?.type ? (
                                         <View
                                             w={"$40"}
                                             h={"$54"}

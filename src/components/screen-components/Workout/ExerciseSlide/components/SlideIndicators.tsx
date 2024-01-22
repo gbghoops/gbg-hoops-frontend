@@ -14,7 +14,7 @@ const SlideIndicators = ({
                 <View
                     f={1}
                     key={_index}
-                    pr={_index + 1 !== totalSlides ? `$10` : "0%"}
+                    pr={_index + 1 !== totalSlides ? `$4` : "0%"}
                 >
                     <View
                         height={"$5"}
