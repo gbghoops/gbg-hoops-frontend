@@ -123,6 +123,8 @@ export interface Program {
 
 export interface IProgramsContext {
     programs: Program[];
+    activeDay: number;
+    activeWeek: number;
     programsFetching: boolean;
 }
 

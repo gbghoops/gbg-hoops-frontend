@@ -25,9 +25,7 @@ export default function WorkoutDetails() {
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
     const { slug } = useLocalSearchParams();
-    const { programs } = usePrograms();
-    const activeWeek = 1;
-    const activeDay = 1;
+    const { programs, activeDay, activeWeek } = usePrograms();
 
     const currentProgram = programs.find((program) => program.slug === slug);
 
