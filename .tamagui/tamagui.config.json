@@ -21326,6 +21326,8 @@
           "140": 0,
           "200": 0,
           "220": 0,
+          "240": 0,
+          "260": 0,
           "280": 0,
           "400": 0,
           "small": 0,
@@ -21425,6 +21427,8 @@
           "140": 0,
           "200": 0,
           "220": 0,
+          "240": 0,
+          "260": 0,
           "280": 0,
           "400": 0,
           "small": 10,
@@ -21521,6 +21525,8 @@
           "140": 8,
           "200": 8,
           "220": 8,
+          "240": 8,
+          "260": 8,
           "280": 8,
           "400": 8,
           "small": 8,
@@ -22127,6 +22133,20 @@
             "variable": ""
           },
           "220": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "240": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "260": {
             "isVar": true,
             "key": "$gold",
             "name": "color-1",
@@ -22483,6 +22503,8 @@
           "140": 0,
           "200": 0,
           "220": 0,
+          "240": 0,
+          "260": 0,
           "280": 0,
           "400": 0,
           "small": 10,
@@ -22579,6 +22601,8 @@
           "140": 8,
           "200": 8,
           "220": 8,
+          "240": 8,
+          "260": 8,
           "280": 8,
           "400": 8,
           "small": 8,
@@ -23185,6 +23209,20 @@
             "variable": ""
           },
           "220": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "240": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "260": {
             "isVar": true,
             "key": "$gold",
             "name": "color-1",
@@ -23541,6 +23579,8 @@
           "140": 0,
           "200": 0,
           "220": 0,
+          "240": 0,
+          "260": 0,
           "280": 0,
           "400": 0,
           "small": 10,
@@ -23637,6 +23677,8 @@
           "140": 8,
           "200": 8,
           "220": 8,
+          "240": 8,
+          "260": 8,
           "280": 8,
           "400": 8,
           "small": 8,
@@ -24243,6 +24285,20 @@
             "variable": ""
           },
           "220": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "240": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "260": {
             "isVar": true,
             "key": "$gold",
             "name": "color-1",
@@ -24599,6 +24655,8 @@
           "140": 0,
           "200": 0,
           "220": 0,
+          "240": 0,
+          "260": 0,
           "280": 0,
           "400": 0,
           "small": 10,
@@ -24695,6 +24753,8 @@
           "140": 8,
           "200": 8,
           "220": 8,
+          "240": 8,
+          "260": 8,
           "280": 8,
           "400": 8,
           "small": 8,
@@ -25301,6 +25361,20 @@
             "variable": ""
           },
           "220": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "240": {
+            "isVar": true,
+            "key": "$gold",
+            "name": "color-1",
+            "val": "#FDBF0B",
+            "variable": ""
+          },
+          "260": {
             "isVar": true,
             "key": "$gold",
             "name": "color-1",
@@ -26467,59 +26541,73 @@
           "val": 0,
           "variable": ""
         },
+        "240": {
+          "isVar": true,
+          "key": "$240",
+          "name": "size-87",
+          "val": 0,
+          "variable": ""
+        },
+        "260": {
+          "isVar": true,
+          "key": "$260",
+          "name": "size-88",
+          "val": 0,
+          "variable": ""
+        },
         "280": {
           "isVar": true,
           "key": "$280",
-          "name": "size-87",
+          "name": "size-89",
           "val": 0,
           "variable": ""
         },
         "400": {
           "isVar": true,
           "key": "$400",
-          "name": "size-88",
+          "name": "size-90",
           "val": 0,
           "variable": ""
         },
         "small": {
           "isVar": true,
           "key": "$small",
-          "name": "size-89",
+          "name": "size-91",
           "val": 10,
           "variable": ""
         },
         "medium": {
           "isVar": true,
           "key": "$medium",
-          "name": "size-90",
+          "name": "size-92",
           "val": 14,
           "variable": ""
         },
         "large": {
           "isVar": true,
           "key": "$large",
-          "name": "size-91",
+          "name": "size-93",
           "val": 18,
           "variable": ""
         },
         "true": {
           "isVar": true,
           "key": "$true",
-          "name": "size-92",
+          "name": "size-94",
           "val": 14,
           "variable": ""
         },
         "spacing20": {
           "isVar": true,
           "key": "$spacing20",
-          "name": "size-93",
+          "name": "size-95",
           "val": 0,
           "variable": ""
         },
         ".5": {
           "isVar": true,
           "key": "$.5",
-          "name": "size-94",
+          "name": "size-96",
           "val": 0.5,
           "variable": ""
         }
@@ -27127,59 +27215,73 @@
           "val": 0,
           "variable": ""
         },
+        "240": {
+          "isVar": true,
+          "key": "$240",
+          "name": "space-87",
+          "val": 0,
+          "variable": ""
+        },
+        "260": {
+          "isVar": true,
+          "key": "$260",
+          "name": "space-88",
+          "val": 0,
+          "variable": ""
+        },
         "280": {
           "isVar": true,
           "key": "$280",
-          "name": "space-87",
+          "name": "space-89",
           "val": 0,
           "variable": ""
         },
         "400": {
           "isVar": true,
           "key": "$400",
-          "name": "space-88",
+          "name": "space-90",
           "val": 0,
           "variable": ""
         },
         "small": {
           "isVar": true,
           "key": "$small",
-          "name": "space-89",
+          "name": "space-91",
           "val": 10,
           "variable": ""
         },
         "medium": {
           "isVar": true,
           "key": "$medium",
-          "name": "space-90",
+          "name": "space-92",
           "val": 14,
           "variable": ""
         },
         "large": {
           "isVar": true,
           "key": "$large",
-          "name": "space-91",
+          "name": "space-93",
           "val": 18,
           "variable": ""
         },
         "true": {
           "isVar": true,
           "key": "$true",
-          "name": "space-92",
+          "name": "space-94",
           "val": 14,
           "variable": ""
         },
         "spacing20": {
           "isVar": true,
           "key": "$spacing20",
-          "name": "space-93",
+          "name": "space-95",
           "val": 0,
           "variable": ""
         },
         ".5": {
           "isVar": true,
           "key": "$.5",
-          "name": "space-94",
+          "name": "space-96",
           "val": 0.5,
           "variable": ""
         }
@@ -27787,59 +27889,73 @@
           "val": 0,
           "variable": ""
         },
+        "240": {
+          "isVar": true,
+          "key": "$240",
+          "name": "radius-87",
+          "val": 0,
+          "variable": ""
+        },
+        "260": {
+          "isVar": true,
+          "key": "$260",
+          "name": "radius-88",
+          "val": 0,
+          "variable": ""
+        },
         "280": {
           "isVar": true,
           "key": "$280",
-          "name": "radius-87",
+          "name": "radius-89",
           "val": 0,
           "variable": ""
         },
         "400": {
           "isVar": true,
           "key": "$400",
-          "name": "radius-88",
+          "name": "radius-90",
           "val": 0,
           "variable": ""
         },
         "small": {
           "isVar": true,
           "key": "$small",
-          "name": "radius-89",
+          "name": "radius-91",
           "val": 10,
           "variable": ""
         },
         "medium": {
           "isVar": true,
           "key": "$medium",
-          "name": "radius-90",
+          "name": "radius-92",
           "val": 14,
           "variable": ""
         },
         "large": {
           "isVar": true,
           "key": "$large",
-          "name": "radius-91",
+          "name": "radius-93",
           "val": 18,
           "variable": ""
         },
         "true": {
           "isVar": true,
           "key": "$true",
-          "name": "radius-92",
+          "name": "radius-94",
           "val": 14,
           "variable": ""
         },
         "spacing20": {
           "isVar": true,
           "key": "$spacing20",
-          "name": "radius-93",
+          "name": "radius-95",
           "val": 0,
           "variable": ""
         },
         ".5": {
           "isVar": true,
           "key": "$.5",
-          "name": "radius-94",
+          "name": "radius-96",
           "val": 0.5,
           "variable": ""
         }
@@ -28871,59 +28987,73 @@
         "val": 0,
         "variable": ""
       },
+      "$size.240": {
+        "isVar": true,
+        "key": "$240",
+        "name": "size-87",
+        "val": 0,
+        "variable": ""
+      },
+      "$size.260": {
+        "isVar": true,
+        "key": "$260",
+        "name": "size-88",
+        "val": 0,
+        "variable": ""
+      },
       "$size.280": {
         "isVar": true,
         "key": "$280",
-        "name": "size-87",
+        "name": "size-89",
         "val": 0,
         "variable": ""
       },
       "$size.400": {
         "isVar": true,
         "key": "$400",
-        "name": "size-88",
+        "name": "size-90",
         "val": 0,
         "variable": ""
       },
       "$size.small": {
         "isVar": true,
         "key": "$small",
-        "name": "size-89",
+        "name": "size-91",
         "val": 10,
         "variable": ""
       },
       "$size.medium": {
         "isVar": true,
         "key": "$medium",
-        "name": "size-90",
+        "name": "size-92",
         "val": 14,
         "variable": ""
       },
       "$size.large": {
         "isVar": true,
         "key": "$large",
-        "name": "size-91",
+        "name": "size-93",
         "val": 18,
         "variable": ""
       },
       "$size.true": {
         "isVar": true,
         "key": "$true",
-        "name": "size-92",
+        "name": "size-94",
         "val": 14,
         "variable": ""
       },
       "$size.spacing20": {
         "isVar": true,
         "key": "$spacing20",
-        "name": "size-93",
+        "name": "size-95",
         "val": 0,
         "variable": ""
       },
       "$size..5": {
         "isVar": true,
         "key": "$.5",
-        "name": "size-94",
+        "name": "size-96",
         "val": 0.5,
         "variable": ""
       },
@@ -29529,59 +29659,73 @@
         "val": 0,
         "variable": ""
       },
+      "$space.240": {
+        "isVar": true,
+        "key": "$240",
+        "name": "space-87",
+        "val": 0,
+        "variable": ""
+      },
+      "$space.260": {
+        "isVar": true,
+        "key": "$260",
+        "name": "space-88",
+        "val": 0,
+        "variable": ""
+      },
       "$space.280": {
         "isVar": true,
         "key": "$280",
-        "name": "space-87",
+        "name": "space-89",
         "val": 0,
         "variable": ""
       },
       "$space.400": {
         "isVar": true,
         "key": "$400",
-        "name": "space-88",
+        "name": "space-90",
         "val": 0,
         "variable": ""
       },
       "$space.small": {
         "isVar": true,
         "key": "$small",
-        "name": "space-89",
+        "name": "space-91",
         "val": 10,
         "variable": ""
       },
       "$space.medium": {
         "isVar": true,
         "key": "$medium",
-        "name": "space-90",
+        "name": "space-92",
         "val": 14,
         "variable": ""
       },
       "$space.large": {
         "isVar": true,
         "key": "$large",
-        "name": "space-91",
+        "name": "space-93",
         "val": 18,
         "variable": ""
       },
       "$space.true": {
         "isVar": true,
         "key": "$true",
-        "name": "space-92",
+        "name": "space-94",
         "val": 14,
         "variable": ""
       },
       "$space.spacing20": {
         "isVar": true,
         "key": "$spacing20",
-        "name": "space-93",
+        "name": "space-95",
         "val": 0,
         "variable": ""
       },
       "$space..5": {
         "isVar": true,
         "key": "$.5",
-        "name": "space-94",
+        "name": "space-96",
         "val": 0.5,
         "variable": ""
       },
@@ -30187,59 +30331,73 @@
         "val": 0,
         "variable": ""
       },
+      "$radius.240": {
+        "isVar": true,
+        "key": "$240",
+        "name": "radius-87",
+        "val": 0,
+        "variable": ""
+      },
+      "$radius.260": {
+        "isVar": true,
+        "key": "$260",
+        "name": "radius-88",
+        "val": 0,
+        "variable": ""
+      },
       "$radius.280": {
         "isVar": true,
         "key": "$280",
-        "name": "radius-87",
+        "name": "radius-89",
         "val": 0,
         "variable": ""
       },
       "$radius.400": {
         "isVar": true,
         "key": "$400",
-        "name": "radius-88",
+        "name": "radius-90",
         "val": 0,
         "variable": ""
       },
       "$radius.small": {
         "isVar": true,
         "key": "$small",
-        "name": "radius-89",
+        "name": "radius-91",
         "val": 10,
         "variable": ""
       },
       "$radius.medium": {
         "isVar": true,
         "key": "$medium",
-        "name": "radius-90",
+        "name": "radius-92",
         "val": 14,
         "variable": ""
       },
       "$radius.large": {
         "isVar": true,
         "key": "$large",
-        "name": "radius-91",
+        "name": "radius-93",
         "val": 18,
         "variable": ""
       },
       "$radius.true": {
         "isVar": true,
         "key": "$true",
-        "name": "radius-92",
+        "name": "radius-94",
         "val": 14,
         "variable": ""
       },
       "$radius.spacing20": {
         "isVar": true,
         "key": "$spacing20",
-        "name": "radius-93",
+        "name": "radius-95",
         "val": 0,
         "variable": ""
       },
       "$radius..5": {
         "isVar": true,
         "key": "$.5",
-        "name": "radius-94",
+        "name": "radius-96",
         "val": 0.5,
         "variable": ""
       },

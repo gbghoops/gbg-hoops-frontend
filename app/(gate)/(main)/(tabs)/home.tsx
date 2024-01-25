@@ -141,7 +141,7 @@ export default function HomePage() {
                                     </Link>
                                 </View>
                                 {/* Program Cards */}
-                                <View mt={"$20"}>
+                                <View mt={"$20"} minHeight={"$240"}>
                                     <RenderRecommendedProgramCard />
                                 </View>
                             </View>

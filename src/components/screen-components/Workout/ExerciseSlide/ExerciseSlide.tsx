@@ -310,7 +310,8 @@ const ExerciseSlide = ({
                                         subBlockTitle={exercise.phase ?? ""}
                                     />
                                 </View>
-                                {exercise.type === "tempo" ? (
+                                {exercise.type === "tempo" &&
+                                exercise.include_weights ? (
                                     <View
                                         f={isLandScape ? 1 : undefined}
                                         mt={isLandScape ? "0%" : "$20"}
@@ -346,15 +347,23 @@ const ExerciseSlide = ({
                                     />
                                 ) : exercise.type === "tempo" ? (
                                     <ExerciseRepProgressBar
-                                        reps={exercise.reps ?? 0}
+                                        isPlaying={exercisePlaying}
+                                        reps={4 ?? 0}
                                         isLandscape={isLandScape}
+                                        seconds_up={exercise.seconds_up ?? 1}
+                                        seconds_down={
+                                            exercise.seconds_down ?? 1
+                                        }
+                                        seconds_hold={
+                                            exercise.seconds_hold ?? 1
+                                        }
                                         onRepsCompleted={() => {
                                             setExerciseCompleted(true);
 
                                             return;
                                         }}
                                     />
-                                ) : null
+                                ) : exercise.type === "mobility" ? null : null
                             ) : null}
                         </View>
 

@@ -8,6 +8,7 @@ export interface ProgramActivity {
     name: string;
     type?: "timer" | "tempo" | "mobility";
     sets: number;
+    include_weights?: boolean;
     reps?: number;
     seconds_hold: number;
     seconds_up?: number;
