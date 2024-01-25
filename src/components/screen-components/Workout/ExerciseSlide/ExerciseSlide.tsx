@@ -10,6 +10,7 @@ import { Stack, Text, View, XStack, YStack } from "tamagui";
 import AdjustWeightSheet from "../AdjustWeightSheet/AdjustWeightSheet";
 
 import AdjustWeight from "./components/AdjustWeight";
+import ExerciseMobilityProgressBar from "./components/ExerciseMobilityProgressBar";
 import ExerciseRepProgressBar from "./components/ExerciseRepProgressBar";
 import ExerciseTimerProgressBar from "./components/ExerciseTimerProgressBar";
 import InstructionVideoButton from "./components/InstructionVideoButton";
@@ -251,6 +252,9 @@ const ExerciseSlide = ({
                                 shouldPlay={exercisePlaying}
                                 isLooping
                                 resizeMode={ResizeMode.CONTAIN}
+                                positionMillis={
+                                    exerciseCompleted ? 0 : undefined
+                                }
                                 source={{
                                     uri: `https:${exercise.video}`,
                                 }}
@@ -348,7 +352,7 @@ const ExerciseSlide = ({
                                 ) : exercise.type === "tempo" ? (
                                     <ExerciseRepProgressBar
                                         isPlaying={exercisePlaying}
-                                        reps={4 ?? 0}
+                                        reps={exercise.reps ?? 0}
                                         isLandscape={isLandScape}
                                         seconds_up={exercise.seconds_up ?? 1}
                                         seconds_down={
@@ -363,7 +367,22 @@ const ExerciseSlide = ({
                                             return;
                                         }}
                                     />
-                                ) : exercise.type === "mobility" ? null : null
+                                ) : exercise.type === "mobility" ? (
+                                    <ExerciseMobilityProgressBar
+                                        seconds_hold={
+                                            exercise.seconds_hold ?? 1
+                                        }
+                                        seconds_release={
+                                            exercise.seconds_release ?? 1
+                                        }
+                                        isPlaying={exercisePlaying}
+                                        onTimerCompleted={() => {
+                                            setExerciseCompleted(true);
+                                            return;
+                                        }}
+                                        isLandscape={isLandScape}
+                                    />
+                                ) : null
                             ) : null}
                         </View>
 
