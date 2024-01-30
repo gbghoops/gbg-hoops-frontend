@@ -69,7 +69,9 @@ const ConfirmWorkoutExit = ({
                         textTransform="uppercase"
                         textAlign="left"
                     >
-                        {messageHeading ?? DEFAULT_MESSAGE_HEADING}
+                        {messageHeading.length
+                            ? messageHeading
+                            : DEFAULT_MESSAGE_HEADING}
                     </Text>
                     <Text
                         mt="$16"
@@ -77,7 +79,7 @@ const ConfirmWorkoutExit = ({
                         fontSize="$20"
                         lineHeight={28}
                     >
-                        {message ?? DEFAULT_MESSAGE}
+                        {message.length ? message : DEFAULT_MESSAGE}
                     </Text>
                     <View mt="$30" mb="$10" width={"100%"}>
                         <Button
