@@ -25,8 +25,10 @@ interface ExerciseSlideProps {
     totalSlides: number;
     dayTitle: string;
     currentSlidePosition: number;
+    onExerciseCompleted: (index: number) => void;
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
+    onCompleteWorkout: () => void;
 }
 
 // Okay, gotta be smart about this component. It's size could really affect the performance of
@@ -38,6 +40,8 @@ const ExerciseSlide = ({
     currentSlidePosition,
     totalSlides,
     dayTitle,
+    onExerciseCompleted,
+    onCompleteWorkout,
     onNextPressed,
     onPrevPressed,
 }: ExerciseSlideProps) => {
@@ -123,8 +127,7 @@ const ExerciseSlide = ({
 
         setExercisePlaying(false);
         setQueueExercisePlaying(false);
-
-        return;
+        return onExerciseCompleted && onExerciseCompleted(currentIndex);
     }, [exerciseCompleted]);
 
     const isLandScape = windowSize.width > windowSize.height;
@@ -438,58 +441,61 @@ const ExerciseSlide = ({
                                             );
                                         }}
                                     />
-                                    <View
-                                        mt={isLandScape ? "$10" : "$20"}
-                                        p={isLandScape ? "$10" : "$20"}
-                                        backgroundColor={"$surface_primary"}
-                                        justifyContent={
-                                            isLandScape
-                                                ? "flex-start"
-                                                : "center"
-                                        }
-                                        alignItems="center"
-                                        flexDirection={
-                                            isLandScape ? "row" : "column"
-                                        }
-                                    >
-                                        <View w={"$90"} h={"$90"} mt="auto">
-                                            <StyledImage
-                                                source={{
-                                                    uri: `https:${nextExercise.thumbnail}`,
-                                                }}
-                                                style={styles.tumbnail}
-                                                resizeMode="cover"
-                                            />
-                                        </View>
+                                    {nextExercise ? (
                                         <View
-                                            mt={isLandScape ? "0%" : "$10"}
-                                            ml={isLandScape ? "$10" : "0%"}
+                                            mt={isLandScape ? "$10" : "$20"}
+                                            p={isLandScape ? "$10" : "$20"}
+                                            backgroundColor={"$surface_primary"}
                                             justifyContent={
                                                 isLandScape
                                                     ? "flex-start"
                                                     : "center"
                                             }
-                                            alignItems={
-                                                isLandScape
-                                                    ? "flex-start"
-                                                    : "center"
+                                            alignItems="center"
+                                            flexDirection={
+                                                isLandScape ? "row" : "column"
                                             }
                                         >
-                                            <Text
-                                                fontFamily={"$heading"}
-                                                fontSize={"$20"}
+                                            <View w={"$90"} h={"$90"} mt="auto">
+                                                <StyledImage
+                                                    source={{
+                                                        uri: `https:${nextExercise?.thumbnail}`,
+                                                    }}
+                                                    style={styles.tumbnail}
+                                                    resizeMode="cover"
+                                                />
+                                            </View>
+                                            <View
+                                                mt={isLandScape ? "0%" : "$10"}
+                                                ml={isLandScape ? "$10" : "0%"}
+                                                justifyContent={
+                                                    isLandScape
+                                                        ? "flex-start"
+                                                        : "center"
+                                                }
+                                                alignItems={
+                                                    isLandScape
+                                                        ? "flex-start"
+                                                        : "center"
+                                                }
                                             >
-                                                Get Ready for the Next Exercise
-                                            </Text>
-                                            <Text
-                                                fontFamily={"$heading"}
-                                                fontSize={"$14"}
-                                                mt={"$5"}
-                                            >
-                                                {`(${nextExercise.name})`}
-                                            </Text>
+                                                <Text
+                                                    fontFamily={"$heading"}
+                                                    fontSize={"$20"}
+                                                >
+                                                    Get Ready for the Next
+                                                    Exercise
+                                                </Text>
+                                                <Text
+                                                    fontFamily={"$heading"}
+                                                    fontSize={"$14"}
+                                                    mt={"$5"}
+                                                >
+                                                    {`(${nextExercise?.name})`}
+                                                </Text>
+                                            </View>
                                         </View>
-                                    </View>
+                                    ) : null}
                                 </View>
                             )}
                         </View>
@@ -601,8 +607,14 @@ const ExerciseSlide = ({
                                     onPress={() => {
                                         setExercisePlaying(false);
                                         setQueueExercisePlaying(false);
+                                        if (!nextExercise) {
+                                            return (
+                                                onCompleteWorkout &&
+                                                onCompleteWorkout()
+                                            );
+                                        }
 
-                                        onNextPressed && onNextPressed();
+                                        return onNextPressed && onNextPressed();
                                     }}
                                 >
                                     <View
@@ -660,7 +672,7 @@ const ExerciseSlide = ({
                                         >
                                             <StyledImage
                                                 source={{
-                                                    uri: `https:${nextExercise.thumbnail}`,
+                                                    uri: `https:${nextExercise?.thumbnail}`,
                                                 }}
                                                 style={styles.tumbnail}
                                                 resizeMode="cover"

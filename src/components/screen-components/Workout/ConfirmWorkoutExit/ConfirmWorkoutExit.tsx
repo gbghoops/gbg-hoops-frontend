@@ -4,13 +4,21 @@ import { Sheet, Text, View } from "tamagui";
 
 interface ConfirmWorkoutExitProps {
     open: boolean;
+    messageHeading?: string;
+    message?: string;
     onOpenStateChange: (isOpen: boolean) => void;
     confirmExit: (state: boolean) => void;
 }
+
+const DEFAULT_MESSAGE_HEADING = "Are you sure you want to quit?";
+const DEFAULT_MESSAGE = `You don’t really want to quit… \nAll of the shots you don’t take are misses!`;
+
 const ConfirmWorkoutExit = ({
     onOpenStateChange,
     open,
     confirmExit,
+    messageHeading = DEFAULT_MESSAGE_HEADING,
+    message = DEFAULT_MESSAGE,
 }: ConfirmWorkoutExitProps) => {
     const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -61,7 +69,7 @@ const ConfirmWorkoutExit = ({
                         textTransform="uppercase"
                         textAlign="left"
                     >
-                        Are you sure you want to quit?
+                        {messageHeading ?? DEFAULT_MESSAGE_HEADING}
                     </Text>
                     <Text
                         mt="$16"
@@ -69,7 +77,7 @@ const ConfirmWorkoutExit = ({
                         fontSize="$20"
                         lineHeight={28}
                     >
-                        {`You don’t really want to quit… \nAll of the shots you don’t take are misses!`}
+                        {message ?? DEFAULT_MESSAGE}
                     </Text>
                     <View mt="$30" mb="$10" width={"100%"}>
                         <Button

@@ -34,6 +34,11 @@ export default function WorkoutScreen() {
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
+    const [completedExercises, setCompletedExercises] = useState<number[]>([]);
+
+    const [confirmExitHeading, setConfirmExitHeading] = useState<string>("");
+    const [confirmExitMessage, setConfirmExitMessage] = useState<string>("");
+
     const { programs } = usePrograms();
     const isFocused = useIsFocused();
 
@@ -73,6 +78,8 @@ export default function WorkoutScreen() {
 
     useEffect(() => {
         if (workoutExitConfirmed) {
+            setConfirmExitHeading("");
+            setConfirmExitMessage("");
             router.canGoBack() ? router.back() : router.replace("/home");
         }
     }, [workoutExitConfirmed]);
@@ -106,6 +113,27 @@ export default function WorkoutScreen() {
     );
 
     const flattenedActivities = flattenActivitiesBySet(dayActivities);
+    const activeExercises = flattenedActivities.filter((a) => a.type);
+
+    const onExerciseComplete = (index: number) => {
+        return setCompletedExercises((prev) => {
+            const completedSet = new Set([...prev, index]);
+            return Array.from(completedSet);
+        });
+    };
+
+    const onWorkoutComplete = () => {
+        if (completedExercises.length < activeExercises.length) {
+            setConfirmExitHeading("Workout Incomplete");
+            setConfirmExitMessage(
+                `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
+            );
+
+            return setShowWorkoutExitConfirm(true);
+        }
+
+        return router.push("/programs");
+    };
 
     return (
         <Stack
@@ -163,6 +191,12 @@ export default function WorkoutScreen() {
                                             totalSlides={
                                                 flattenedActivities.length
                                             }
+                                            onExerciseCompleted={
+                                                onExerciseComplete
+                                            }
+                                            onCompleteWorkout={
+                                                onWorkoutComplete
+                                            }
                                             onPrevPressed={() => {
                                                 if (index === 0) {
                                                     return;
@@ -201,8 +235,15 @@ export default function WorkoutScreen() {
                             confirmExit={(state) => {
                                 setWorkoutExitConfirmed(state);
                             }}
+                            messageHeading={confirmExitHeading}
+                            message={confirmExitMessage}
                             open={showWorkoutExitConfirm}
                             onOpenStateChange={(isOpen) => {
+                                if (!isOpen) {
+                                    setConfirmExitHeading("");
+                                    setConfirmExitMessage("");
+                                }
+
                                 setShowWorkoutExitConfirm(isOpen);
                             }}
                         />

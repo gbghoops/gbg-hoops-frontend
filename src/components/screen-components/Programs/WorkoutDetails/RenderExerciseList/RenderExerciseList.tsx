@@ -3,7 +3,6 @@ import { StyledImage } from "@src/components/styled-components";
 import {
     ProgramActivity,
     ProgramDay,
-    ProgramExercise,
     ProgramExerciseFields,
     WorkoutExecutionMode,
     WorkoutPhases,
