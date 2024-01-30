@@ -17,7 +17,7 @@ module.exports = function (api) {
                         "./src/styles/theme/sizes.js",
                     ],
                     logTimings: true,
-                    disableExtraction: process.env.NODE_ENV === "development",
+                    disableExtraction: true,
                 },
             ],
             [
