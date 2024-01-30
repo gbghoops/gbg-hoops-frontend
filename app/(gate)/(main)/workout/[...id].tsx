@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 import { useIsFocused } from "@react-navigation/native";
-import DemoExerciseData, {
-    Exercise,
-    ExerciseData,
-    RestBlock,
-} from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import ConfirmWorkoutExit from "@src/components/screen-components/Workout/ConfirmWorkoutExit/ConfirmWorkoutExit";
 import ReadyScreen from "@src/components/screen-components/Workout/ExerciseSlide/components/ReadyScreen";
 import RotateDeviceModal from "@src/components/screen-components/Workout/ExerciseSlide/components/RotateDeviceModal";
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
-import { Stack as RouterStack, useRouter } from "expo-router";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
+import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
+import {
+    Stack as RouterStack,
+    useLocalSearchParams,
+    useRouter,
+} from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { AnimatePresence, Stack } from "tamagui";
 
@@ -32,7 +34,15 @@ export default function WorkoutScreen() {
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
+    const [completedExercises, setCompletedExercises] = useState<number[]>([]);
+
+    const [confirmExitHeading, setConfirmExitHeading] = useState<string>("");
+    const [confirmExitMessage, setConfirmExitMessage] = useState<string>("");
+
+    const { programs } = usePrograms();
     const isFocused = useIsFocused();
+
+    const { id } = useLocalSearchParams();
 
     const slideRef = useRef<PagerView>(null);
 
@@ -68,11 +78,63 @@ export default function WorkoutScreen() {
 
     useEffect(() => {
         if (workoutExitConfirmed) {
+            setConfirmExitHeading("");
+            setConfirmExitMessage("");
             router.canGoBack() ? router.back() : router.replace("/home");
         }
     }, [workoutExitConfirmed]);
 
-    const flattenedExerciseData = flattenExerciseData(DemoExerciseData);
+    if (!id || id.length === 0) {
+        return null;
+    }
+
+    const programSlug = id[0];
+    const activeWeek = Number(id[1]);
+    const activeDay = Number(id[2]);
+
+    const currentProgram = programs.find(
+        (program) => program.slug === programSlug,
+    );
+
+    if (!currentProgram || !activeWeek || !activeDay) {
+        return null;
+    }
+
+    const weekData = currentProgram?.weeks[activeWeek - 1];
+
+    const { dayData } = getProgramDayInfo({ week: weekData, day: activeDay });
+
+    const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
+        (acc, exercise) =>
+            exercise.activities
+                .map((activity) => ({ ...activity, phase: exercise.phase }))
+                .concat(acc),
+        [],
+    );
+
+    const flattenedActivities = flattenActivitiesBySet(dayActivities);
+    const activeExercises = flattenedActivities.filter((a) => a.type);
+
+    const onExerciseComplete = (index: number) => {
+        return setCompletedExercises((prev) => {
+            const completedSet = new Set([...prev, index]);
+            return Array.from(completedSet);
+        });
+    };
+
+    const onWorkoutComplete = () => {
+        if (completedExercises.length < activeExercises.length) {
+            setConfirmExitHeading("Workout Incomplete");
+            setConfirmExitMessage(
+                `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
+            );
+
+            return setShowWorkoutExitConfirm(true);
+        }
+
+        return router.push("/programs");
+    };
+
     return (
         <Stack
             f={1}
@@ -112,19 +174,28 @@ export default function WorkoutScreen() {
                                 offscreenPageLimit={1}
                             >
                                 {isFocused &&
-                                    flattenedExerciseData.map((item, index) => (
+                                    flattenedActivities.map((item, index) => (
                                         <ExerciseSlide
                                             key={index}
                                             index={index}
                                             exercise={item}
+                                            dayTitle={
+                                                dayData.exercises[0].title
+                                            }
                                             nextExercise={
-                                                flattenedExerciseData[index + 1]
+                                                flattenedActivities[index + 1]
                                             }
                                             currentSlidePosition={
                                                 currentSlidePosition
                                             }
                                             totalSlides={
-                                                flattenedExerciseData.length
+                                                flattenedActivities.length
+                                            }
+                                            onExerciseCompleted={
+                                                onExerciseComplete
+                                            }
+                                            onCompleteWorkout={
+                                                onWorkoutComplete
                                             }
                                             onPrevPressed={() => {
                                                 if (index === 0) {
@@ -142,7 +213,7 @@ export default function WorkoutScreen() {
                                             onNextPressed={() => {
                                                 const isLastSlide =
                                                     index + 1 ===
-                                                    flattenedExerciseData.length;
+                                                    flattenedActivities.length;
 
                                                 // todo: add logic to handle last slide.
                                                 if (isLastSlide) {
@@ -164,8 +235,15 @@ export default function WorkoutScreen() {
                             confirmExit={(state) => {
                                 setWorkoutExitConfirmed(state);
                             }}
+                            messageHeading={confirmExitHeading}
+                            message={confirmExitMessage}
                             open={showWorkoutExitConfirm}
                             onOpenStateChange={(isOpen) => {
+                                if (!isOpen) {
+                                    setConfirmExitHeading("");
+                                    setConfirmExitMessage("");
+                                }
+
                                 setShowWorkoutExitConfirm(isOpen);
                             }}
                         />
@@ -176,18 +254,18 @@ export default function WorkoutScreen() {
     );
 }
 
-const flattenExerciseData = (
-    data: ExerciseData[],
-): (Exercise | RestBlock)[] => {
-    const exerciseData = data.map((exerciseData) => {
-        return exerciseData.subBlock.map((subBlock) => {
-            return subBlock.exercises.map((exercise) => {
-                return exercise;
-            });
-        });
-    });
+const flattenActivitiesBySet = (activities: ActivityWithPhase[]) => {
+    const res = activities.reduce<ActivityWithPhase[]>((acc, item) => {
+        if (item.sets > 1) {
+            const sets = Array.from({ length: item.sets }, (_, index) => ({
+                ...item,
+                name: `${item.name} - Set ${index + 1}`,
+                sets: 1,
+            }));
+            return acc.concat(sets);
+        }
+        return acc.concat(item);
+    }, []);
 
-    const flattenedExerciseData = exerciseData.flat(2);
-
-    return flattenedExerciseData;
+    return res;
 };

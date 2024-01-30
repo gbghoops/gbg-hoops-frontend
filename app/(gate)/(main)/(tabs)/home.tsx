@@ -14,6 +14,7 @@ import { Avatar, ScrollView, Stack, Text, View } from "tamagui";
 export default function HomePage() {
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
+
     return (
         <Stack
             f={1}
@@ -140,7 +141,7 @@ export default function HomePage() {
                                     </Link>
                                 </View>
                                 {/* Program Cards */}
-                                <View mt={"$20"}>
+                                <View mt={"$20"} minHeight={"$240"}>
                                     <RenderRecommendedProgramCard />
                                 </View>
                             </View>

@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import { StyledImage } from "@src/components/styled-components";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
@@ -19,6 +21,15 @@ export const ForYouTab = () => {
     const { bottom } = useSafeAreaInsets();
 
     const router = useRouter();
+    const { programs, activeDay, activeWeek } = usePrograms();
+
+    if (!programs) return null;
+
+    const activeProgram = programs[0];
+
+    const weekData = activeProgram?.weeks[activeWeek - 1];
+
+    const dayData = getProgramDayInfo({ week: weekData, day: activeDay });
 
     return (
         <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
@@ -27,12 +38,12 @@ export const ForYouTab = () => {
                 <View px={"$20"} mt={"$20"}>
                     <CurrentProgramCard
                         coverImage={require("@assets/programs/basketball-strength-level-1.png")}
-                        currentDay={1}
-                        workoutTitle="Basketball Strength"
-                        programTitle="EDD Mobility"
+                        currentDay={activeDay}
+                        workoutTitle={dayData?.dayData?.exercises[0].title}
+                        programTitle={activeProgram.name}
                         onPress={() => {
                             router.push(
-                                "/program/workout-details/basketball-strength-level-1",
+                                `/program/workout-details/${activeProgram.slug}`,
                             );
                         }}
                     />
@@ -70,11 +81,7 @@ export const ForYouTab = () => {
                             Newest Program
                         </Text>
                     </View>
-                    <NewestProgramCard
-                        onPress={() => {}}
-                        programImage={require("@assets/programs/eod-mobility-program-screen.png")}
-                        title="EDD Stability"
-                    />
+                    <NewestProgramCard onPress={() => {}} />
                 </View>
 
                 {/* Refresh Routine */}

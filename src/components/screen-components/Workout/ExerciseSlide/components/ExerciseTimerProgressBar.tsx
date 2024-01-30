@@ -11,7 +11,7 @@ interface ExerciseProgressBarProps {
 }
 
 const ExerciseProgressBar = ({
-    duration,
+    duration: _duration,
     isPlaying,
     onTimerCompleted,
     isLandscape = false,
@@ -21,10 +21,14 @@ const ExerciseProgressBar = ({
         seconds: "00",
     });
 
+    const duration = _duration * 1000;
+
     const [timerCompleted, setTimerCompleted] = useState(false);
 
     const [currentExerciseDuration, setCurrentExerciseDuration] =
         useState(duration);
+
+    const [progressWidth, setProgressWidth] = useState(0);
 
     useEffect(() => {
         if (!isPlaying || timerCompleted) {
@@ -33,9 +37,9 @@ const ExerciseProgressBar = ({
 
         const timer = setInterval(() => {
             setCurrentExerciseDuration((duration) =>
-                duration <= 0 ? 0 : duration - 1,
+                duration <= 0 ? 0 : duration - 100,
             );
-        }, 500);
+        }, 100);
 
         return () => {
             clearInterval(timer);
@@ -66,16 +70,19 @@ const ExerciseProgressBar = ({
             setTimerCompleted(true);
         }
 
-        let minutes = Math.floor(currentExerciseDuration / 60);
-        let extraSeconds = currentExerciseDuration % 60;
+        let minutes = Math.floor((currentExerciseDuration / (1000 * 60)) % 60);
+        let extraSeconds = (currentExerciseDuration / 1000) % 60;
         minutes = minutes < 10 ? 0 + minutes : minutes;
         extraSeconds = extraSeconds < 10 ? 0 + extraSeconds : extraSeconds;
 
         setTime({
-            minutes: formatTimeUnit(minutes),
-            seconds: formatTimeUnit(extraSeconds),
+            minutes: formatTimeUnit(Math.floor(minutes)),
+            seconds: formatTimeUnit(Math.floor(extraSeconds)),
         });
     }, [currentExerciseDuration]);
+
+    const currentProgress = (currentExerciseDuration / duration) * 100;
+    const maxProgress = 100;
 
     return (
         <View
@@ -111,20 +118,22 @@ const ExerciseProgressBar = ({
             </View>
             <MView
                 key={"stack-progress-bar"}
+                onLayout={(evt) => {
+                    const { width } = evt.nativeEvent.layout;
+                    setProgressWidth(width);
+                }}
                 from={{
-                    width: "0%",
+                    translateX: -progressWidth,
                 }}
                 animate={{
-                    width: `${
-                        (currentExerciseDuration
-                            ? currentExerciseDuration / duration
-                            : 0) * 100
-                    }%`,
+                    translateX:
+                        -progressWidth +
+                        (progressWidth * currentProgress) / maxProgress,
                 }}
                 transition={{
                     type: "spring",
-                    mass: 2,
-                    damping: 24,
+                    mass: 1,
+                    damping: 35,
                     stiffness: 186,
                 }}
                 style={{

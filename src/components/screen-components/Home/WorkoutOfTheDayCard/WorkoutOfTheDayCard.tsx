@@ -1,19 +1,32 @@
-import { ImageURISource } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { Text, View } from "tamagui";
 
 interface WorkoutOfTheDayCardProps {
     onPress: () => void;
-    title: string;
-    programDuration: string;
-    programImage: ImageURISource;
 }
-const WorkoutOfTheDayCard = ({
-    onPress,
-    title,
-    programDuration,
-    programImage,
-}: WorkoutOfTheDayCardProps) => {
+const WorkoutOfTheDayCard = ({ onPress }: WorkoutOfTheDayCardProps) => {
+    const { programs } = usePrograms();
+
+    // TODO: Add proper logic to get the workout of the day.
+    const workoutOfTheDayProgram = programs[programs.length - 1];
+
+    if (!workoutOfTheDayProgram) return null;
+
+    const getNewestProgramImage = () => {
+        // Use first exercise image:
+        const firstWeek = workoutOfTheDayProgram.weeks[0];
+        const firstExercise = getProgramDayInfo({
+            week: firstWeek,
+            day: 1,
+        })?.dayData?.exercises[0];
+
+        return firstExercise?.activities[2].thumbnail;
+    };
+
+    const programImage = getNewestProgramImage();
+
     return (
         <View
             onPress={onPress}
@@ -26,7 +39,7 @@ const WorkoutOfTheDayCard = ({
             {/* Image */}
             <View width={"100%"} height="$200">
                 <StyledImage
-                    source={programImage}
+                    source={{ uri: `https:${programImage}` }}
                     resizeMode={"cover"}
                     style={{
                         width: "100%",
@@ -37,10 +50,7 @@ const WorkoutOfTheDayCard = ({
             {/* Title */}
             <View jc={"space-between"} fd={"row"} ai={"center"} mt="$15">
                 <Text fontFamily={"$heading"} fontSize="$20" color={"$gold"}>
-                    {title}
-                </Text>
-                <Text fontFamily={"$heading"} fontSize="$20">
-                    {programDuration}
+                    {workoutOfTheDayProgram.name}
                 </Text>
             </View>
         </View>

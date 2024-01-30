@@ -1,16 +1,16 @@
 import { createAnimations } from "@tamagui/animations-react-native";
+import { createFont, createTamagui, createTokens } from "@tamagui/core";
 import { createMedia } from "@tamagui/react-native-media-driver";
 import { shorthands } from "@tamagui/shorthands";
-import { createFont, createTamagui, createTokens } from "tamagui";
 
 import { colors } from "@/src/styles/theme/colors";
-import { sizes } from "@/src/styles/theme/sizes";
+import { defaultSpacing, sizes } from "@/src/styles/theme/sizes";
 
 const tokens = createTokens({
     color: colors,
-    space: sizes.spacing,
-    size: sizes.default,
-    radius: sizes.spacing,
+    size: { ...sizes.default },
+    space: { ...sizes.default },
+    radius: sizes.default,
     zIndex: {
         0: 0,
         1: 1,

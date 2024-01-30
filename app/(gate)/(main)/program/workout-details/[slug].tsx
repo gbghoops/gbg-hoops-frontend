@@ -7,11 +7,12 @@ import AddExerciseSheet from "@src/components/screen-components/Programs/Workout
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
-import exerciseData from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/exercise-data";
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, Text, View } from "tamagui";
 
 // Icon sizes:
@@ -23,6 +24,18 @@ export default function WorkoutDetails() {
 
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
+    const { slug } = useLocalSearchParams();
+    const { programs, activeDay, activeWeek } = usePrograms();
+
+    const currentProgram = programs.find((program) => program.slug === slug);
+
+    if (!currentProgram) {
+        return null;
+    }
+
+    const weekData = currentProgram?.weeks[activeWeek - 1];
+
+    const dayData = getProgramDayInfo({ week: weekData, day: activeDay });
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -64,7 +77,7 @@ export default function WorkoutDetails() {
                         mt="$30"
                         textTransform="uppercase"
                     >
-                        Single Leg Stability: Hip Hinge
+                        {dayData.dayData.exercises[0].title}
                     </Text>
                 </View>
 
@@ -115,7 +128,12 @@ export default function WorkoutDetails() {
 
                 {/* Exercise List */}
                 <View mx={"$20"}>
-                    <RenderExerciseList exerciseData={exerciseData} />
+                    <View>
+                        <Text fontFamily={"$body"} fontSize={"$14"} mt={"$20"}>
+                            {dayData.dayMemo}
+                        </Text>
+                    </View>
+                    <RenderExerciseList exerciseData={dayData.dayData} />
                 </View>
 
                 <View mt="$40" mx="$20">
@@ -179,7 +197,9 @@ export default function WorkoutDetails() {
                 <Button
                     text="Workout Now"
                     onPress={() => {
-                        return router.replace("/workout/1");
+                        return router.replace(
+                            `/workout/${slug}/${activeWeek}/${activeDay}`,
+                        );
                     }}
                     fullWidth
                 />

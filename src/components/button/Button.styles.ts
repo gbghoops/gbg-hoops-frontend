@@ -4,7 +4,7 @@ export const StyledButton = styled(View, {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "$gold",
-    padding: 16,
+    padding: "$10",
     flex: 0,
     height: 48,
     alignSelf: "flex-start",

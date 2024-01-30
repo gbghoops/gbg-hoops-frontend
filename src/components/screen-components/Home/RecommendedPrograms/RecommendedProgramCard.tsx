@@ -1,21 +1,22 @@
 import { useEffect, useRef } from "react";
-import { ImageURISource } from "react-native";
-import { AVPlaybackSource, ResizeMode, Video } from "expo-av";
+import { StyleSheet } from "react-native";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
 export interface RecommendedProgramCardProps {
     id: number;
     renderIndex?: number;
-    poster: ImageURISource;
-    video: AVPlaybackSource;
+    slug: string;
+    video: string;
     programTitle: string;
     isVisible?: boolean;
     isLastItem?: boolean;
 }
 
 const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
-    const { poster, video, programTitle, isLastItem, isVisible } = props;
+    const { video, programTitle, isLastItem, isVisible, slug } = props;
     const programVideo = useRef<Video>(null);
 
     const router = useRouter();
@@ -27,6 +28,7 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
             programVideo.current?.stopAsync();
         }
     }, [isVisible]);
+
     return (
         <View
             pl="$20"
@@ -37,31 +39,29 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                 scale: 0.995,
             }}
             onPress={() => {
-                router.push(
-                    "/program/workout-details/basketball-strength-level-1",
-                );
+                router.push(`/program/workout-details/${slug}`);
             }}
         >
-            {/* Image */}
-            <View width="$220" height="$220" position="relative">
-                <View f={1}>
-                    <Video
-                        ref={programVideo}
-                        isMuted
-                        source={video}
-                        usePoster={true}
-                        posterSource={poster}
-                        posterStyle={{
-                            width: "100%",
-                            height: "100%",
-                        }}
-                        resizeMode={ResizeMode.COVER}
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                        }}
-                    />
-                </View>
+            {/* Video */}
+            <View position="relative" width={wn(220)} height={wn(220)}>
+                <View
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    zIndex={0}
+                    width={"100%"}
+                    height={"100%"}
+                    backgroundColor={"$surface_primary"}
+                />
+                <Video
+                    ref={programVideo}
+                    isMuted
+                    source={{
+                        uri: `https:${video}`,
+                    }}
+                    resizeMode={ResizeMode.COVER}
+                    style={styles.VideoBackground}
+                />
             </View>
             <View mt="$10">
                 <Text color={"$gold"} fontFamily={"$heading"} fontSize="$16">
@@ -71,5 +71,12 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    VideoBackground: {
+        width: "100%",
+        height: "100%",
+    },
+});
 
 export default RecommendedProgramCard;

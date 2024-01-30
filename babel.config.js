@@ -7,14 +7,19 @@ module.exports = function (api) {
             "transform-inline-environment-variables",
             "expo-router/babel",
             // NOTE: this is optional, you don't *need* the compiler
-            // [
-            // 	"@tamagui/babel-plugin",
-            // 	{
-            // 		components: ["tamagui"],
-            // 		config: "./tamagui.config.ts",
-            // 		logTimings: true,
-            // 	},
-            // ],
+            [
+                "@tamagui/babel-plugin",
+                {
+                    components: ["tamagui"],
+                    config: "./tamagui.config.ts",
+                    importsWhitelist: [
+                        "./src/styles/theme/colors.js",
+                        "./src/styles/theme/sizes.js",
+                    ],
+                    logTimings: true,
+                    disableExtraction: true,
+                },
+            ],
             [
                 "module-resolver",
                 {
