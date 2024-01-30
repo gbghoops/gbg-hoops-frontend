@@ -81,11 +81,7 @@ export const ForYouTab = () => {
                             Newest Program
                         </Text>
                     </View>
-                    <NewestProgramCard
-                        onPress={() => {}}
-                        programImage={require("@assets/programs/eod-mobility-program-screen.png")}
-                        title="EDD Stability"
-                    />
+                    <NewestProgramCard onPress={() => {}} />
                 </View>
 
                 {/* Refresh Routine */}
