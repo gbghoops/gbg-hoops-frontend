@@ -13,9 +13,11 @@ const RenderRecommendedProgramCard = () => {
         return null;
     }
 
+    const recommendedPrograms = programs.slice(0, 5);
+
     return (
         <FlashList
-            data={programs}
+            data={recommendedPrograms}
             extraData={{ visibleIndicies }}
             horizontal
             estimatedItemSize={wn(220)}

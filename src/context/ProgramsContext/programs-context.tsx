@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useEffect } from "react";
+import { createContext, PropsWithChildren, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import slugify from "slugify";
 
