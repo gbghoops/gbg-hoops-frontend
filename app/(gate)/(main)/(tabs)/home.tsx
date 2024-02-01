@@ -165,12 +165,7 @@ export default function HomePage() {
                                 </View>
 
                                 <View mt={"$24"}>
-                                    <WorkoutOfTheDayCard
-                                        onPress={() => {}}
-                                        programDuration="60 min"
-                                        title="EDD Stability"
-                                        programImage={require("@assets/programs/eod-mobility-program-screen.png")}
-                                    />
+                                    <WorkoutOfTheDayCard onPress={() => {}} />
                                 </View>
                             </View>
 
