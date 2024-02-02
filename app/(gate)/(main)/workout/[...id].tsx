@@ -168,7 +168,7 @@ export default function WorkoutScreen() {
                         <Stack f={1} width={"100%"}>
                             <PagerView
                                 style={{ flex: 1 }}
-                                scrollEnabled={false}
+                                scrollEnabled={true}
                                 ref={slideRef}
                                 initialPage={0}
                                 offscreenPageLimit={1}

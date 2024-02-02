@@ -39,7 +39,7 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                 scale: 0.995,
             }}
             onPress={() => {
-                router.push(`/program/workout-details/${slug}`);
+                router.push(`/program/program-details/${slug}`);
             }}
         >
             {/* Video */}

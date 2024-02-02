@@ -52,7 +52,7 @@ const ExerciseSlide = ({
 
     const [exercisePlaying, setExercisePlaying] = useState(false);
     const [queueExercisePlaying, setQueueExercisePlaying] = useState(false);
-    const [exerciseReadyCount, setExerciseReadyCount] = useState(3);
+    const [exerciseReadyCount, setExerciseReadyCount] = useState(1);
     const [exerciseCompleted, setExerciseCompleted] = useState(false);
     const [windowSize, setWindowSize] = useState(Dimensions.get("window"));
     const [currentWeight, setCurrentWeight] = useState(5);
@@ -98,7 +98,7 @@ const ExerciseSlide = ({
     useEffect(() => {
         if (exercisePlaying || !queueExercisePlaying) {
             setExercisePlaying(false);
-            setExerciseReadyCount(isRestSlide ? 0 : 3);
+            setExerciseReadyCount(isRestSlide ? 0 : 1);
 
             return;
         }
