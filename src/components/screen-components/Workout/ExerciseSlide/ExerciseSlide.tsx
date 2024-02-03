@@ -50,6 +50,8 @@ const ExerciseSlide = ({
 
     const isRestSlide = !exercise.type;
 
+    const isCurrentSlide = currentSlidePosition === currentIndex;
+
     const [exercisePlaying, setExercisePlaying] = useState(false);
     const [queueExercisePlaying, setQueueExercisePlaying] = useState(false);
     const [exerciseReadyCount, setExerciseReadyCount] = useState(1);
@@ -63,6 +65,7 @@ const ExerciseSlide = ({
     const VideoRef = useRef<Video>(null);
     const [videoLoaded, setVideoLoaded] = useState(false);
 
+    // This is very important. We need to load only a few ExerciseSlides at a time to save device memory.
     const isActiveSlide = indexIsActive(currentSlidePosition, currentIndex);
 
     useLayoutEffect(() => {
@@ -79,6 +82,13 @@ const ExerciseSlide = ({
 
         return () => subscription.remove();
     }, []);
+
+    useEffect(() => {
+        if (!isRestSlide) {
+            setExercisePlaying(false);
+            setQueueExercisePlaying(false);
+        }
+    }, [isCurrentSlide]);
 
     useEffect(() => {
         if (!isActiveSlide) {

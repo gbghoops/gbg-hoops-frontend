@@ -172,6 +172,15 @@ export default function WorkoutScreen() {
                                 ref={slideRef}
                                 initialPage={0}
                                 offscreenPageLimit={1}
+                                onPageScroll={(e) => {
+                                    console.log(
+                                        "Scroll Position: ",
+                                        e.nativeEvent.position,
+                                    );
+                                    setCurrentSlidePosition(
+                                        e.nativeEvent.position,
+                                    );
+                                }}
                             >
                                 {isFocused &&
                                     flattenedActivities.map((item, index) => (

@@ -66,7 +66,7 @@ export default function WorkoutDetails() {
                     </View>
                 </View>
                 <View px={"$20"}>
-                    <ProgressIndicator totalDays={5} currentDay={1} />
+                    <ProgressIndicator totalDays={5} currentDay={activeDay} />
                 </View>
                 {/* Workout title. */}
                 <View>

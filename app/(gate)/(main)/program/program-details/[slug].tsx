@@ -6,22 +6,24 @@ import {
     MaterialIcons,
     Octicons,
 } from "@expo/vector-icons";
+import Button from "@src/components/button/Button";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { Program } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, Text, View } from "tamagui";
 
 export default function ProgramDetails() {
     const { slug } = useLocalSearchParams();
     const { bottom } = useSafeAreaInsets();
-    const { programs } = usePrograms();
+    const { programs, activeDay, activeWeek } = usePrograms();
     const [teaserVideoPlaying, setTeaserVideoPlaying] = useState(false);
     const VideoRef = useRef<Video>(null);
 
     const currentProgram = programs.find((program) => program.slug === slug);
+    const router = useRouter();
 
     if (!currentProgram) {
         return null;
@@ -31,9 +33,17 @@ export default function ProgramDetails() {
         getProgramSummary(currentProgram);
 
     return (
-        <View f={1} bc={"$surface_background"} pt={"$20"} px={"$20"}>
+        <View
+            f={1}
+            position="relative"
+            bc={"$surface_background"}
+            pt={"$20"}
+            px={"$20"}
+        >
             <ScrollView
                 f={1}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={
                     contentContainerStyles({ bottom: bottom + wn(120) })
                         .contentContainerStyle
@@ -215,7 +225,26 @@ export default function ProgramDetails() {
                         </View>
                     </View>
                 </View>
+
+                {/* Workout now button */}
             </ScrollView>
+            <View
+                position="absolute"
+                zIndex={10}
+                bottom={bottom ? bottom + wn(20) : wn(50)}
+                mx={"$20"}
+                width={"100%"}
+            >
+                <Button
+                    text="Add Program"
+                    onPress={() => {
+                        return router.replace(
+                            `/program/workout-details/${slug}`,
+                        );
+                    }}
+                    fullWidth
+                />
+            </View>
         </View>
     );
 }
