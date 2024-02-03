@@ -168,10 +168,19 @@ export default function WorkoutScreen() {
                         <Stack f={1} width={"100%"}>
                             <PagerView
                                 style={{ flex: 1 }}
-                                scrollEnabled={false}
+                                scrollEnabled={true}
                                 ref={slideRef}
                                 initialPage={0}
                                 offscreenPageLimit={1}
+                                onPageScroll={(e) => {
+                                    console.log(
+                                        "Scroll Position: ",
+                                        e.nativeEvent.position,
+                                    );
+                                    setCurrentSlidePosition(
+                                        e.nativeEvent.position,
+                                    );
+                                }}
                             >
                                 {isFocused &&
                                     flattenedActivities.map((item, index) => (
