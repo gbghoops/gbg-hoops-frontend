@@ -24,8 +24,16 @@ export default function WorkoutDetails() {
 
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
-    const { slug } = useLocalSearchParams();
+    const { id } = useLocalSearchParams();
     const { programs, activeDay, activeWeek } = usePrograms();
+
+    if (!id) {
+        return null;
+    }
+
+    const slug = id[0];
+    const _activeWeek = id[1] ? Number(id[1]) : activeWeek;
+    const _activeDay = id[2] ? Number(id[2]) : activeDay;
 
     const currentProgram = programs.find((program) => program.slug === slug);
 
@@ -33,9 +41,12 @@ export default function WorkoutDetails() {
         return null;
     }
 
-    const weekData = currentProgram?.weeks[activeWeek - 1];
+    const weekData = currentProgram?.weeks[_activeWeek - 1];
 
-    const dayData = getProgramDayInfo({ week: weekData, day: activeDay });
+    const dayData = getProgramDayInfo({
+        week: weekData,
+        day: _activeDay,
+    });
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -66,7 +77,13 @@ export default function WorkoutDetails() {
                     </View>
                 </View>
                 <View px={"$20"}>
-                    <ProgressIndicator totalDays={5} currentDay={activeDay} />
+                    {!id[2] || !id[1] ? (
+                        <ProgressIndicator
+                            totalDays={5}
+                            currentDay={_activeDay}
+                            currentWeek={_activeWeek}
+                        />
+                    ) : null}
                 </View>
                 {/* Workout title. */}
                 <View>

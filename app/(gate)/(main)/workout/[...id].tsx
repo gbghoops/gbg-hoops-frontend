@@ -173,10 +173,6 @@ export default function WorkoutScreen() {
                                 initialPage={0}
                                 offscreenPageLimit={1}
                                 onPageScroll={(e) => {
-                                    console.log(
-                                        "Scroll Position: ",
-                                        e.nativeEvent.position,
-                                    );
                                     setCurrentSlidePosition(
                                         e.nativeEvent.position,
                                     );
