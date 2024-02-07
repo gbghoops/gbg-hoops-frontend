@@ -3,7 +3,7 @@ import { StyledImage } from "@src/components/styled-components";
 import {
     ProgramActivity,
     ProgramDay,
-    ProgramExerciseFields,
+    ProgramSummary,
     WorkoutExecutionMode,
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
@@ -19,6 +19,33 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
     }
 
     const exercisesBlocks = exerciseData.exercises;
+    const exerciseSummary = exerciseData.summary;
+
+    console.log("Exercise Summary", exerciseSummary);
+
+    const getExerciseBlocksByPhases = (exerciseSummary: ProgramSummary[]) => {
+        // Group exercises by phase
+        const groupedExercises: {
+            [key: string]: ProgramSummary[];
+        } = {
+            warmup: [],
+            athleticism: [],
+            recovery: [],
+        };
+
+        exerciseSummary.forEach((exercise) => {
+            groupedExercises[exercise.phase].push(exercise);
+        });
+
+        return Object.keys(groupedExercises).map((phase) => {
+            return {
+                phase: phase as WorkoutPhases,
+                activities: groupedExercises[phase],
+            };
+        });
+    };
+
+    const phases = getExerciseBlocksByPhases(exerciseSummary);
 
     const getPhaseTitle = (phase: WorkoutPhases) => {
         switch (phase) {
@@ -53,35 +80,38 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
         }
     };
 
-    const getExerciseTypeScheme = (
-        exercise: ProgramExerciseFields["fields"],
-    ) => {
+    const getExerciseTypeScheme = (exercise: ProgramSummary) => {
         switch (exercise.type) {
             case "timer":
-                return `${exercise.seconds_hold ?? 0} seconds`;
+                return `${exercise.seconds ?? 0} seconds`;
             case "tempo":
                 return `${exercise.reps ?? 0} reps`;
             case "mobility":
-                return `${
-                    (exercise.seconds_hold ?? 0) +
-                    (exercise.seconds_release ?? 0)
-                } seconds`;
+                return `${exercise.seconds ?? 0} seconds`;
+
+            default:
+                return `${exercise.seconds ? `${exercise.seconds} seconds` : `${exercise.reps} reps`}`;
         }
     };
 
     return (
         <View mt="$20">
-            {exercisesBlocks.map((exerciseBlock, index) => (
+            {phases.map((phase, index) => (
                 <View key={index} mt="$10">
                     {/* Title */}
-                    {getPhaseTitle(exerciseBlock.phase) ? (
-                        <Text fontFamily="$heading" fontSize={"$20"} my="$10">
-                            {getPhaseTitle(exerciseBlock.phase)}
+                    {phase.activities.length ? (
+                        <Text
+                            fontFamily="$heading"
+                            fontSize={"$20"}
+                            my="$10"
+                            textTransform="capitalize"
+                        >
+                            {phase.phase}
                         </Text>
                     ) : null}
 
                     <View mt="$5">
-                        {getSubBlockTitle(
+                        {/* {getSubBlockTitle(
                             exerciseBlock.type,
                             exerciseBlock.activities,
                         ) ? (
@@ -95,11 +125,11 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                                     exerciseBlock.activities,
                                 )}
                             </Text>
-                        ) : null}
+                        ) : null} */}
 
-                        {exerciseBlock.exercises
-                            .filter((e) => e.fields.type)
-                            .map(({ fields: exercise }, index) => (
+                        {phase.activities
+                            .filter((e) => e.type)
+                            .map((exercise, index) => (
                                 <View key={index}>
                                     <View
                                         fd="row"
@@ -112,7 +142,7 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                                         <View width={"$100"} height={"$100"}>
                                             <StyledImage
                                                 source={{
-                                                    uri: `http:${exercise.thumbnail?.fields.file.url}`,
+                                                    uri: `http:${exercise.thumbnail}`,
                                                 }}
                                                 style={styles.exerciseImage}
                                             />

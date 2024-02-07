@@ -1,12 +1,22 @@
-interface ProgramSummary {
+type exerciseType = "timer" | "tempo" | "mobility";
+
+export type WorkoutPhases = "warmup" | "athleticism" | "recovery";
+
+export type WorkoutExecutionMode = "circuit" | "superset";
+
+export interface ProgramSummary {
     name: string;
     thumbnail: string;
+    reps?: number;
+    phase: WorkoutPhases;
+    type: exerciseType;
+    seconds: number;
     sets: number;
 }
 
 export interface ProgramActivity {
     name: string;
-    type?: "timer" | "tempo" | "mobility";
+    type?: exerciseType;
     sets: number;
     include_weights?: boolean;
     reps?: number;
@@ -28,7 +38,7 @@ export interface ProgramActivity {
 export interface ProgramExerciseFields {
     fields: {
         name: string;
-        type: "timer" | "tempo" | "mobility";
+        type: exerciseType;
         sets: number;
         reps?: number;
         seconds_hold: number;
@@ -80,10 +90,6 @@ export interface ProgramExerciseFields {
     };
 }
 
-export type WorkoutPhases = "warmup" | "athleticism" | "recovery";
-
-export type WorkoutExecutionMode = "circuit" | "superset";
-
 export interface ProgramExercise {
     title: string;
     type: WorkoutExecutionMode;
@@ -93,7 +99,7 @@ export interface ProgramExercise {
 }
 
 export interface ProgramDay {
-    summary: ProgramSummary;
+    summary: ProgramSummary[];
     exercises: ProgramExercise[];
 }
 

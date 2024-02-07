@@ -146,7 +146,7 @@ export default function WorkoutDetails() {
                 {/* Exercise List */}
                 <View mx={"$20"}>
                     <View>
-                        <Text fontFamily={"$body"} fontSize={"$14"} mt={"$20"}>
+                        <Text fontFamily={"$body"} fontSize={"$18"} mt={"$20"}>
                             {dayData.dayMemo}
                         </Text>
                     </View>
