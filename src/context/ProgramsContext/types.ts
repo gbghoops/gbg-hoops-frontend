@@ -9,7 +9,8 @@ export interface ProgramSummary {
     thumbnail: string;
     reps?: number;
     phase: WorkoutPhases;
-    type: exerciseType;
+    timer_type: exerciseType;
+    group_type: WorkoutExecutionMode;
     seconds: number;
     sets: number;
 }

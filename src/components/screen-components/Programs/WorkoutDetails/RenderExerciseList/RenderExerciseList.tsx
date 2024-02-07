@@ -1,10 +1,8 @@
 import { StyleSheet } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
 import {
-    ProgramActivity,
     ProgramDay,
     ProgramSummary,
-    WorkoutExecutionMode,
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
 import { Text, View } from "tamagui";
@@ -20,8 +18,6 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
 
     const exercisesBlocks = exerciseData.exercises;
     const exerciseSummary = exerciseData.summary;
-
-    console.log("Exercise Summary", exerciseSummary);
 
     const getExerciseBlocksByPhases = (exerciseSummary: ProgramSummary[]) => {
         // Group exercises by phase
@@ -47,41 +43,8 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
 
     const phases = getExerciseBlocksByPhases(exerciseSummary);
 
-    const getPhaseTitle = (phase: WorkoutPhases) => {
-        switch (phase) {
-            case "warmup":
-                return "Warmup";
-            case "athleticism":
-                return "Athleticism";
-            case "recovery":
-                return "Recovery";
-            default:
-                return "";
-        }
-    };
-
-    const getSubBlockTitle = (
-        exerciseType: WorkoutExecutionMode,
-        activities: ProgramActivity[],
-    ) => {
-        switch (exerciseType) {
-            case "circuit":
-                return "";
-            case "superset":
-                if (activities.length === 2) {
-                    return "Superset";
-                }
-                if (activities.length === 3) {
-                    return "Triset";
-                }
-                return "Giant set";
-            default:
-                return "";
-        }
-    };
-
     const getExerciseTypeScheme = (exercise: ProgramSummary) => {
-        switch (exercise.type) {
+        switch (exercise.timer_type) {
             case "timer":
                 return `${exercise.seconds ?? 0} seconds`;
             case "tempo":
@@ -90,7 +53,11 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                 return `${exercise.seconds ?? 0} seconds`;
 
             default:
-                return `${exercise.seconds ? `${exercise.seconds} seconds` : `${exercise.reps} reps`}`;
+                return `${
+                    exercise.seconds
+                        ? `${exercise.seconds} seconds`
+                        : `${exercise.reps} reps`
+                }`;
         }
     };
 
@@ -128,7 +95,7 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                         ) : null} */}
 
                         {phase.activities
-                            .filter((e) => e.type)
+                            .filter((e) => e.timer_type)
                             .map((exercise, index) => (
                                 <View key={index}>
                                     <View
