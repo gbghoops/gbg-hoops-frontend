@@ -7,6 +7,7 @@ import {
 } from "react";
 import { faker } from "@faker-js/faker";
 import LargeSecureStore from "@src/utils/large-secure-store";
+import { signIn, signOut } from "aws-amplify/auth";
 import * as EmailValidator from "email-validator";
 
 interface User {
@@ -58,11 +59,16 @@ export default function AuthProvider({ children }: PropsWithChildren) {
             : false;
 
         if (isEmailValid && password === MOCK_PASSWORD) {
-            const userId = faker.string.uuid();
+            const { isSignedIn, nextStep } = await signIn({
+                username: email,
+                password,
+            });
 
-            await setUserData(email, userId);
-
-            updateUserData();
+            if (isSignedIn) {
+                updateUserData();
+            } else if (nextStep) {
+                throw new Error(`Sign in failed: ${nextStep}`);
+            }
         } else {
             throw new Error("Invalid credentials");
         }
