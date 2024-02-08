@@ -5,7 +5,6 @@ import {
     useEffect,
     useState,
 } from "react";
-import { faker } from "@faker-js/faker";
 import LargeSecureStore from "@src/utils/large-secure-store";
 import { signIn, signOut } from "aws-amplify/auth";
 import * as EmailValidator from "email-validator";
