@@ -16,7 +16,6 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
         return null;
     }
 
-    const exercisesBlocks = exerciseData.exercises;
     const exerciseSummary = exerciseData.summary;
 
     const getExerciseBlocksByPhases = (exerciseSummary: ProgramSummary[]) => {

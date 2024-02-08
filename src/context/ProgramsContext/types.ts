@@ -106,7 +106,6 @@ export interface ProgramDay {
 
 export interface ProgramWeek {
     name: string;
-    slug: string;
     day_1: ProgramDay;
     day_2: ProgramDay;
     day_3: ProgramDay;
