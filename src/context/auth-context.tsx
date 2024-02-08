@@ -5,8 +5,8 @@ import {
     useEffect,
     useState,
 } from "react";
-import LargeSecureStore from "@src/utils/large-secure-store";
-import { signIn, signOut } from "aws-amplify/auth";
+import { Amplify } from "aws-amplify";
+import { fetchUserAttributes, signIn, signOut } from "aws-amplify/auth";
 import * as EmailValidator from "email-validator";
 
 interface User {
@@ -16,40 +16,43 @@ interface User {
 
 interface IAuthContext {
     user: User | null;
+    loading: boolean;
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
 
+Amplify.configure({
+    Auth: {
+        Cognito: {
+            userPoolId: process.env.COGNITO_USERPOOL_ID!,
+            userPoolClientId: process.env.COGNITO_USERPOOL_CLIENT_ID!,
+        },
+    },
+});
+
 const AuthContext = createContext<IAuthContext | null>(null);
 
-const MOCK_PASSWORD = "gbg1234";
-
 export default function AuthProvider({ children }: PropsWithChildren) {
+    const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null);
 
-    const secureStore = new LargeSecureStore();
-
-    const updateUserData = async () => {
-        const email = await secureStore.getItem("USER_EMAIL");
-        const userId = await secureStore.getItem("USER_ID");
-
-        if (!email || !userId) {
-            return;
+    const fetchUser = async () => {
+        try {
+            const user = await fetchUserAttributes();
+            if (user) {
+                setUser({
+                    id: user.sub!,
+                    email: user.email!,
+                });
+            }
+        } catch (e) {
+            console.log(e);
         }
-
-        setUser({
-            email,
-            id: userId,
-        });
-    };
-
-    const setUserData = async (email: string, id: string) => {
-        await secureStore.setItem("USER_EMAIL", email);
-        await secureStore.setItem("USER_ID", id);
+        setLoading(false);
     };
 
     useEffect(() => {
-        updateUserData();
+        fetchUser();
     }, []);
 
     async function login(email: string, password: string) {
@@ -57,33 +60,29 @@ export default function AuthProvider({ children }: PropsWithChildren) {
             ? EmailValidator.validate(email)
             : false;
 
-        if (isEmailValid && password === MOCK_PASSWORD) {
-            const { isSignedIn, nextStep } = await signIn({
-                username: email,
-                password,
-            });
-
-            if (isSignedIn) {
-                updateUserData();
-            } else if (nextStep) {
-                throw new Error(`Sign in failed: ${nextStep}`);
-            }
-        } else {
-            throw new Error("Invalid credentials");
+        if (!isEmailValid) {
+            throw new Error("Invalid email");
         }
 
-        return;
+        const { isSignedIn, nextStep } = await signIn({
+            username: email,
+            password,
+        });
+
+        if (isSignedIn) {
+            fetchUser();
+        } else if (nextStep) {
+            throw new Error(`Sign in failed: ${nextStep}`);
+        }
     }
 
     async function logout() {
-        await secureStore.removeItem("USER_EMAIL");
-        await secureStore.removeItem("USER_ID");
-
+        await signOut();
         setUser(null);
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
