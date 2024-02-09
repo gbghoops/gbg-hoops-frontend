@@ -107,12 +107,17 @@ export default function WorkoutScreen() {
     const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
         (acc, exercise) =>
             exercise.activities
-                .map((activity) => ({ ...activity, phase: exercise.phase }))
+                .map((activity) => ({
+                    ...activity,
+                    phase: exercise.phase,
+                    execution_mode: exercise.type,
+                }))
                 .concat(acc),
         [],
     );
 
-    const flattenedActivities = flattenActivitiesBySet(dayActivities);
+    const flattenedActivities =
+        flattenActivitiesBySetsAndLaterality(dayActivities);
     const activeExercises = flattenedActivities.filter((a) => a.type);
 
     const onExerciseComplete = (index: number) => {
@@ -259,14 +264,29 @@ export default function WorkoutScreen() {
     );
 }
 
-const flattenActivitiesBySet = (activities: ActivityWithPhase[]) => {
-    const res = activities.reduce<ActivityWithPhase[]>((acc, item) => {
+const flattenActivitiesBySetsAndLaterality = (
+    activities: ActivityWithPhase[],
+) => {
+    const bySet = activities.reduce<ActivityWithPhase[]>((acc, item) => {
         if (item.sets > 1) {
             const sets = Array.from({ length: item.sets }, (_, index) => ({
                 ...item,
                 name: `${item.name} - Set ${index + 1}`,
                 sets: 1,
             }));
+            return acc.concat(sets);
+        }
+        return acc.concat(item);
+    }, []);
+
+    const res = bySet.reduce<ActivityWithPhase[]>((acc, item) => {
+        if (item.uni_lateral) {
+            const sets = ["left", "right"].map((side) => ({
+                ...item,
+                name: `${item.name} - ${side} side`,
+                uni_lateral: false,
+            }));
+
             return acc.concat(sets);
         }
         return acc.concat(item);

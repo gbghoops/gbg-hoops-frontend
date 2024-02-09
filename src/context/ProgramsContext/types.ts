@@ -20,6 +20,7 @@ export interface ProgramActivity {
     type?: exerciseType;
     sets: number;
     include_weights?: boolean;
+    uni_lateral?: boolean;
     reps?: number;
     seconds_hold: number;
     seconds_up?: number;
@@ -136,6 +137,7 @@ export interface IProgramsContext {
 
 export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
+    execution_mode: WorkoutExecutionMode;
 }
 export interface ProgramWeekWithSlug extends ProgramWeek {
     slug: string;
