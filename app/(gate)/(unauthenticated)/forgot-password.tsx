@@ -30,7 +30,7 @@ export default function ForgotPassword() {
         });
     };
 
-    const RenderPasswordResetState = useMemo(() => {
+    const RenderPasswordResetState = () => {
         switch (passwordResetState) {
             case ForgotPasswordState.FORGOT_PASSWORD:
                 return (
@@ -64,7 +64,7 @@ export default function ForgotPassword() {
             default:
                 return null;
         }
-    }, [passwordResetState, email, code, password]);
+    };
 
     return (
         <View f={1} px={wn(20)} pb={bottom + wn(20)} onPress={Keyboard.dismiss}>
