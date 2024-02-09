@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { fetchAuthSession } from "aws-amplify/auth";
 import slugify from "slugify";
 
 import { IProgramsContext, Program } from "./types";
@@ -8,10 +9,14 @@ export const ProgramsContext = createContext<IProgramsContext | null>(null);
 
 const fetchPrograms = async () => {
     try {
+        const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
         const response = await fetch(
             "https://85xdaz4vjb.execute-api.us-east-1.amazonaws.com/production/content",
             {
                 method: "GET",
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
             },
         );
 

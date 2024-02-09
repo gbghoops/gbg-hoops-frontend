@@ -13,15 +13,17 @@ import { Text, View } from "tamagui";
 
 const EnterNewPassword = ({
     changePasswordResetState,
+    password,
+    setPassword,
+    onPasswordChange,
 }: ForgotPasswordStateProps) => {
-    const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isPasswordErrored, setIsPasswordErrored] = useState(false);
 
     const router = useRouter();
     const [passwordResetLoading, setPasswordResetLoading] = useState(false);
 
-    const simulatePasswordReset = async () => {
+    const handlePasswordReset = async () => {
         setPasswordResetLoading(true);
 
         const isPasswordValid = password === confirmPassword;
@@ -29,20 +31,24 @@ const EnterNewPassword = ({
         if (!isPasswordValid) {
             setIsPasswordErrored(true);
 
-            setPasswordResetLoading(false);
             return;
         }
 
-        setTimeout(() => {
-            setPasswordResetLoading(false);
+        try {
+            await onPasswordChange!();
             changePasswordResetState(ForgotPasswordState.FORGOT_PASSWORD);
 
             router.push("/login");
-        }, 1000);
+        } catch (err) {
+            // TODO: Swap with branded error handling
+            alert(`Something went wrong: ${(err as Error).message}`);
+        }
+
+        setPasswordResetLoading(false);
     };
 
     const passwordResetDisabled =
-        !password.length || !confirmPassword.length || passwordResetLoading;
+        !password!.length || !confirmPassword.length || passwordResetLoading;
 
     return (
         <View
@@ -75,7 +81,7 @@ const EnterNewPassword = ({
                         isPasswordErrored ? "Passwords do not match." : ""
                     }
                     handleChange={(value) => {
-                        setPassword(value);
+                        setPassword!(value);
                         setIsPasswordErrored(false);
                     }}
                     handleFocus={() => setIsPasswordErrored(false)}
@@ -99,7 +105,7 @@ const EnterNewPassword = ({
                     fullWidth
                     loading={passwordResetLoading}
                     isDisabled={passwordResetDisabled}
-                    onPress={simulatePasswordReset}
+                    onPress={handlePasswordReset}
                 />
             </View>
         </View>

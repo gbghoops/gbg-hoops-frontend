@@ -11,30 +11,35 @@ import { Text, View } from "tamagui";
 
 const EnterResetPasswordEmail = ({
     changePasswordResetState,
+    email,
+    setEmail,
+    onResetPassword,
 }: ForgotPasswordStateProps) => {
-    const [email, setEmail] = useState("");
     const [emailErrored, setEmailErrored] = useState(false);
     const [passwordResetLoading, setPasswordResetLoading] = useState(false);
 
-    const simulatePasswordReset = async () => {
+    const handlePasswordReset = async () => {
         setPasswordResetLoading(true);
 
-        const isEmailValid = email.length && EmailValidator.validate(email);
+        const isEmailValid = email!.length && EmailValidator.validate(email!);
 
         if (!isEmailValid) {
             setEmailErrored(true);
-
-            setPasswordResetLoading(false);
             return;
         }
 
-        setTimeout(() => {
-            setPasswordResetLoading(false);
+        try {
+            await onResetPassword!();
             changePasswordResetState(ForgotPasswordState.CODE_SENT);
-        }, 1000);
+        } catch (err) {
+            // TODO: Swap with branded error handling
+            alert(`Something went wrong: ${(err as Error).message}`);
+        }
+
+        setPasswordResetLoading(false);
     };
 
-    const passwordResetDisabled = !email.length || passwordResetLoading;
+    const passwordResetDisabled = !email!.length || passwordResetLoading;
 
     return (
         <View
@@ -67,7 +72,7 @@ const EnterResetPasswordEmail = ({
                         emailErrored ? "please enter a valid email address" : ""
                     }
                     handleChange={(value) => {
-                        setEmail(value);
+                        setEmail!(value);
                         setEmailErrored(false);
                     }}
                     handleFocus={() => setEmailErrored(false)}
@@ -79,7 +84,7 @@ const EnterResetPasswordEmail = ({
                     fullWidth
                     loading={passwordResetLoading}
                     isDisabled={passwordResetDisabled}
-                    onPress={simulatePasswordReset}
+                    onPress={handlePasswordReset}
                 />
             </View>
         </View>
