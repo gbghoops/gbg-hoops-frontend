@@ -3,10 +3,12 @@ import { Text, View } from "tamagui";
 interface ProgressIndicatorProps {
     totalDays: number;
     currentDay: number;
+    currentWeek: number;
 }
 const ProgressIndicator = ({
     totalDays,
     currentDay,
+    currentWeek,
 }: ProgressIndicatorProps) => {
     return (
         <View p="$20" backgroundColor="$surface_primary">
@@ -14,7 +16,7 @@ const ProgressIndicator = ({
                 ff="$heading"
                 fontSize={"$24"}
                 mb={"$15"}
-            >{`Week ${currentDay}`}</Text>
+            >{`Week ${currentWeek}`}</Text>
             {/* Progress Rows */}
             <View fd="row">
                 {Array.from({ length: totalDays }).map((_, index) => (

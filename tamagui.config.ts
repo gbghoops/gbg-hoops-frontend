@@ -50,6 +50,10 @@ const animations = createAnimations({
         damping: 60,
         stiffness: 255,
     },
+    "100ms": {
+        type: "timing",
+        duration: 100,
+    },
 });
 
 const appConfig = createTamagui({

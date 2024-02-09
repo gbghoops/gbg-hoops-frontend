@@ -1,13 +1,12 @@
 import { StyledImage } from "@src/components/styled-components";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
+import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
-interface WorkoutOfTheDayCardProps {
-    onPress: () => void;
-}
-const WorkoutOfTheDayCard = ({ onPress }: WorkoutOfTheDayCardProps) => {
+const WorkoutOfTheDayCard = () => {
     const { programs } = usePrograms();
+    const { push } = useRouter();
 
     // TODO: Add proper logic to get the workout of the day.
     const workoutOfTheDayProgram = programs[programs.length - 1];
@@ -29,7 +28,11 @@ const WorkoutOfTheDayCard = ({ onPress }: WorkoutOfTheDayCardProps) => {
 
     return (
         <View
-            onPress={onPress}
+            onPress={() => {
+                push(
+                    `/program/workout-details/${workoutOfTheDayProgram.slug}/1/1`,
+                );
+            }}
             animation="medium"
             pressStyle={{
                 opacity: 0.85,

@@ -358,7 +358,9 @@ const ExerciseSlide = ({
                                         isLandScape={isLandScape}
                                         totalSetCount={exercise.sets ?? 0}
                                         totalRepsCount={exercise.reps ?? 0}
-                                        subBlockTitle={exercise.phase ?? ""}
+                                        subBlockTitle={
+                                            exercise.execution_mode ?? ""
+                                        }
                                     />
                                 </View>
                                 {exercise.type === "tempo" &&

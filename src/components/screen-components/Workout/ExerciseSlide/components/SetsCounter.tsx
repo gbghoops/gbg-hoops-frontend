@@ -63,7 +63,7 @@ const SetsCounter = ({
                             color="$text_secondary"
                             fontSize={"$12"}
                         >
-                            Superset
+                            {subBlockTitle}
                         </Text>
                     </View>
                 ) : null}
