@@ -137,3 +137,6 @@ export interface IProgramsContext {
 export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
 }
+export interface ProgramWeekWithSlug extends ProgramWeek {
+    slug: string;
+}

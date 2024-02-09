@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { View as RNView } from "react-native";
-import Animated from "react-native-reanimated";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { ProgramDay, ProgramWeek } from "@src/context/ProgramsContext/types";
+import { ProgramWeekWithSlug } from "@src/context/ProgramsContext/types";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams } from "expo-router";
 import slugify from "slugify";
@@ -16,13 +14,11 @@ import {
     Tabs,
     TabsTabProps,
     Text,
-    View,
     YStack,
 } from "tamagui";
 
-interface ProgramWeekWithSlug extends ProgramWeek {
-    slug: string;
-}
+import WeeklyActivitiesBreakdown from "./WeeklyActivitiesBreakdown";
+
 export const WorkoutBreakdownTabs = () => {
     const { programs } = usePrograms();
     const { slug } = useLocalSearchParams();
@@ -54,6 +50,7 @@ export const WorkoutBreakdownTabs = () => {
     const setActiveIndicator = (activeAt: TabLayout) =>
         setTabState({ ...tabState, prevActiveAt: tabState.activeAt, activeAt });
     const { activeAt, intentAt, prevActiveAt, currentTab } = tabState;
+    const [accordionStates, setAccordionStates] = useState<boolean[]>([]);
 
     const currentProgram = programs.find((program) => program.slug === slug);
 
@@ -118,15 +115,16 @@ export const WorkoutBreakdownTabs = () => {
 
     const weekData = getDaysData(currentTab);
 
+    const areAccordionsClosed = accordionStates.every((state) => !state);
+
     return (
         <Tabs
             value={currentTab}
             onValueChange={setCurrentTab}
             orientation="horizontal"
-            height={150}
             flexDirection="column"
-            activationMode="manual"
             padding={0}
+            height={areAccordionsClosed ? wn(400) : "auto"}
         >
             <YStack>
                 <AnimatePresence>
@@ -152,7 +150,7 @@ export const WorkoutBreakdownTabs = () => {
                 </AnimatePresence>
                 <Tabs.List
                     disablePassBorderRadius
-                    paddingBottom="$1.5"
+                    paddingBottom="$2"
                     backgroundColor="transparent"
                     height={50}
                     borderBottomWidth={1}
@@ -193,16 +191,16 @@ export const WorkoutBreakdownTabs = () => {
                     opacity={1}
                     flex={1}
                 >
-                    <Tabs.Content
-                        value={currentTab}
-                        forceMount
-                        flex={1}
-                        justifyContent="center"
-                    >
+                    <Tabs.Content value={currentTab} forceMount flexGrow={1}>
                         <H5 textAlign="center" fontSize={"$20"}>
                             {weekData ? (
-                                <WeekylActivitiesBreakdown
+                                <WeeklyActivitiesBreakdown
                                     weekData={weekData}
+                                    onDaysAccordionOpenStateChange={(
+                                        states,
+                                    ) => {
+                                        setAccordionStates(states);
+                                    }}
                                 />
                             ) : null}
                         </H5>
@@ -212,47 +210,6 @@ export const WorkoutBreakdownTabs = () => {
         </Tabs>
     );
 };
-
-interface WeekylActivitiesBreakdownProps {
-    weekData: ProgramWeekWithSlug | null;
-}
-const WeekylActivitiesBreakdown = ({
-    weekData,
-}: WeekylActivitiesBreakdownProps) => {
-    if (!weekData) return null;
-
-    const possibleDays = ["day_1", "day_2", "day_3", "day_4", "day_5"];
-
-    // get week days data from the weekData
-    const getDaysData = (week: ProgramWeekWithSlug) => {
-        // get the day keys from the week data
-        const dayKeys = Object.keys(week).filter((key) =>
-            possibleDays.includes(key),
-        );
-
-        // get the day data from the week datas
-        const daysData = dayKeys.map((dayKey) => {
-            // @ts-ignore
-            return week[dayKey] as ProgramDay;
-        });
-
-        return daysData;
-    };
-
-    const daysData = getDaysData(weekData);
-
-    return (
-        <YStack>
-            {daysData.map((day, index) => (
-                <View key={day.exercises[0].title}>
-                    <Text>{day.exercises[0].title}</Text>
-                </View>
-            ))}
-        </YStack>
-    );
-};
-
-const DaysAccordion = () => {};
 
 const TabsRovingIndicator = ({
     active,

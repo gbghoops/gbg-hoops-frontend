@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
 import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
@@ -7,8 +8,7 @@ import WorkoutBreakdownHeader from "@src/components/screen-components/Programs/P
 import { WorkoutBreakdownTabs } from "@src/components/screen-components/Programs/ProgramDetails/WorkoutBreakdownTabs";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ScrollView, TabsContentProps, View } from "tamagui";
-import { Tabs } from "tamagui";
+import { View } from "tamagui";
 
 export default function ProgramDetails() {
     const router = useRouter();
@@ -16,22 +16,36 @@ export default function ProgramDetails() {
     const [showLegendSheet, setShowLegendSheet] = useState(false);
     const { slug } = useLocalSearchParams();
 
+    const scrollViewRef = useRef<ScrollView>(null);
+
     return (
-        <View f={1} position="relative" bc={"$surface_background"} pt={"$20"}>
+        <View
+            flex={1}
+            position="relative"
+            bc={"$surface_background"}
+            pt={"$20"}
+        >
             {/* Workout Breakdown */}
-            <View>
+            <View flexGrow={1} h={"100%"}>
                 {/* Header */}
 
                 <ScrollView
-                    contentContainerStyle={
-                        contentContainerStyles({ bottom }).contentContainerStyle
-                    }
+                    ref={scrollViewRef}
+                    nestedScrollEnabled
+                    showsVerticalScrollIndicator={false}
+                    maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
+                    contentContainerStyle={[
+                        contentContainerStyles({ bottom })
+                            .contentContainerStyle,
+                    ]}
                 >
-                    <WorkoutBreakdownHeader
-                        onInfoPress={() => setShowLegendSheet(true)}
-                    />
-                    <View>
-                        <WorkoutBreakdownTabs />
+                    <View flexGrow={1}>
+                        <WorkoutBreakdownHeader
+                            onInfoPress={() => setShowLegendSheet(true)}
+                        />
+                        <View flexGrow={1}>
+                            <WorkoutBreakdownTabs />
+                        </View>
                     </View>
                 </ScrollView>
             </View>
@@ -40,7 +54,7 @@ export default function ProgramDetails() {
                 position="absolute"
                 zIndex={10}
                 bottom={bottom ? bottom + wn(20) : wn(50)}
-                mx={"$20"}
+                px={"$20"}
                 width={"100%"}
             >
                 <Button
@@ -69,6 +83,5 @@ const contentContainerStyles = ({ bottom }: stylesProps) =>
     StyleSheet.create({
         contentContainerStyle: {
             paddingBottom: bottom + wn(120),
-            flexGrow: 1,
         },
     });

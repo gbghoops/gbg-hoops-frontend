@@ -150,7 +150,9 @@ export default function WorkoutDetails() {
                             {dayData.dayMemo}
                         </Text>
                     </View>
-                    <RenderExerciseList exerciseData={dayData.dayData} />
+                    <View mt={"$20"}>
+                        <RenderExerciseList exerciseData={dayData.dayData} />
+                    </View>
                 </View>
 
                 <View mt="$40" mx="$20">

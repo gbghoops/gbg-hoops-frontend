@@ -61,7 +61,7 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
     };
 
     return (
-        <View mt="$20">
+        <View>
             {phases.map((phase, index) => (
                 <View key={index} mt="$10">
                     {/* Title */}
