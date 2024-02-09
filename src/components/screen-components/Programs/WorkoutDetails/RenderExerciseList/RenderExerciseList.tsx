@@ -105,7 +105,11 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                                         borderColor="$border_primary"
                                         py="$10"
                                     >
-                                        <View width={"$100"} height={"$100"}>
+                                        <View
+                                            width={"$100"}
+                                            height={"$100"}
+                                            backgroundColor={"$surface_primary"}
+                                        >
                                             <StyledImage
                                                 source={{
                                                     uri: `http:${exercise.thumbnail}`,

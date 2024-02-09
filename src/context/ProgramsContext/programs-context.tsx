@@ -57,7 +57,7 @@ export default function ProgramsProvider({ children }: PropsWithChildren) {
             value={{
                 programs: data && !error ? data : [],
                 programsFetching: isLoading,
-                activeDay: 3,
+                activeDay: 1,
                 activeWeek: 1,
             }}
         >

@@ -12,7 +12,7 @@ const RenderRecommendedProgramCard = () => {
     const { programs } = usePrograms();
 
     if (!programs || !programs.length) {
-        return null;
+        return <RecommendedProgramsLoadingSkeleton />;
     }
 
     const recommendedPrograms = programs.slice(0, 5);
