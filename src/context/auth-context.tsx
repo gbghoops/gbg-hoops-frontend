@@ -46,7 +46,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
                 });
             }
         } catch (e) {
-            console.log(e);
+            // No user is signed in
         }
         setLoading(false);
     };
