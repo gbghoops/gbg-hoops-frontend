@@ -6,4 +6,13 @@ export enum ForgotPasswordState {
 
 export interface ForgotPasswordStateProps {
     changePasswordResetState: (state: ForgotPasswordState) => void;
+    email?: string;
+    setEmail?: (email: string) => void;
+    code?: string;
+    setCode?: (code: string) => void;
+    password?: string;
+    setPassword?: (password: string) => void;
+
+    onResetPassword?: () => Promise<void>;
+    onPasswordChange?: () => Promise<void>;
 }

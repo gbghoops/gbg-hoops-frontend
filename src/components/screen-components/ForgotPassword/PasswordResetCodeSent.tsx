@@ -12,15 +12,16 @@ import { Text, View } from "tamagui";
 
 const PasswordResetCodeSent = ({
     changePasswordResetState,
+    code,
+    setCode,
 }: ForgotPasswordStateProps) => {
     const [passwordResetLoading, setPasswordResetLoading] = useState(false);
     const [resetCodeErrored, setResetCodeErrored] = useState(false);
-    const [resetCode, setResetCode] = useState("");
 
     const simulatePasswordResetCode = async () => {
         setPasswordResetLoading(true);
 
-        const isResetCodeValid = resetCode.length === 6;
+        const isResetCodeValid = code!.length === 6;
 
         if (!isResetCodeValid) {
             setResetCodeErrored(true);
@@ -35,7 +36,7 @@ const PasswordResetCodeSent = ({
         }, 1000);
     };
 
-    const passwordResetDisabled = !resetCode.length || passwordResetLoading;
+    const passwordResetDisabled = !code!.length || passwordResetLoading;
 
     return (
         <View
@@ -64,10 +65,10 @@ const PasswordResetCodeSent = ({
                 title={"Enter Code"}
                 type={FieldType.NUMERIC}
                 placeholder={"Code"}
-                value={resetCode}
+                value={code}
                 errorMessage={resetCodeErrored ? "Invalid Code" : ""}
                 handleChange={(value) => {
-                    setResetCode(value);
+                    setCode!(value);
 
                     setResetCodeErrored(false);
                 }}

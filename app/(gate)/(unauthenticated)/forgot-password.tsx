@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Keyboard } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -7,39 +7,57 @@ import EnterResetPasswordEmail from "@src/components/screen-components/ForgotPas
 import PasswordResetCodeSent from "@src/components/screen-components/ForgotPassword/PasswordResetCodeSent";
 import { ForgotPasswordState } from "@src/types/password-reset";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { confirmResetPassword, resetPassword } from "aws-amplify/auth";
 import { AnimatePresence, View } from "tamagui";
 
 export default function ForgotPassword() {
+    const [email, setEmail] = useState<string>("");
+    const [code, setCode] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [passwordResetState, setPasswordResetState] =
         useState<ForgotPasswordState>(ForgotPasswordState.FORGOT_PASSWORD);
     const { bottom } = useSafeAreaInsets();
 
-    const RenderPasswordResetState = ({
-        passwordResetState,
-        changePasswordResetState,
-    }: {
-        passwordResetState: ForgotPasswordState;
-        changePasswordResetState: (state: ForgotPasswordState) => void;
-    }) => {
+    const handleResetPassword = async () => {
+        await resetPassword({ username: email });
+    };
+
+    const handlePasswordChange = async () => {
+        await confirmResetPassword({
+            username: email,
+            newPassword: password,
+            confirmationCode: code,
+        });
+    };
+
+    const RenderPasswordResetState = () => {
         switch (passwordResetState) {
             case ForgotPasswordState.FORGOT_PASSWORD:
                 return (
                     <EnterResetPasswordEmail
-                        changePasswordResetState={changePasswordResetState}
+                        changePasswordResetState={setPasswordResetState}
+                        email={email}
+                        setEmail={setEmail}
+                        onResetPassword={handleResetPassword}
                     />
                 );
 
             case ForgotPasswordState.CODE_SENT:
                 return (
                     <PasswordResetCodeSent
-                        changePasswordResetState={changePasswordResetState}
+                        changePasswordResetState={setPasswordResetState}
+                        code={code}
+                        setCode={setCode}
                     />
                 );
 
             case ForgotPasswordState.RESET_PASSWORD:
                 return (
                     <EnterNewPassword
-                        changePasswordResetState={changePasswordResetState}
+                        changePasswordResetState={setPasswordResetState}
+                        password={password}
+                        setPassword={setPassword}
+                        onPasswordChange={handlePasswordChange}
                     />
                 );
 
@@ -53,12 +71,7 @@ export default function ForgotPassword() {
             {/* Forgot Password content */}
             <KeyboardAwareScrollView>
                 <AnimatePresence>
-                    <RenderPasswordResetState
-                        changePasswordResetState={(state) =>
-                            setPasswordResetState(state)
-                        }
-                        passwordResetState={passwordResetState}
-                    />
+                    <>{RenderPasswordResetState}</>
                 </AnimatePresence>
             </KeyboardAwareScrollView>
         </View>
