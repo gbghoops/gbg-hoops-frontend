@@ -40,6 +40,7 @@ const EnterNewPassword = ({
 
             router.push("/login");
         } catch (err) {
+            // TODO: Swap with branded error handling
             alert(`Something went wrong: ${(err as Error).message}`);
         }
 

@@ -32,6 +32,7 @@ const EnterResetPasswordEmail = ({
             await onResetPassword!();
             changePasswordResetState(ForgotPasswordState.CODE_SENT);
         } catch (err) {
+            // TODO: Swap with branded error handling
             alert(`Something went wrong: ${(err as Error).message}`);
         }
 
