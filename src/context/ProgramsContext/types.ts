@@ -1,14 +1,26 @@
-interface ProgramSummary {
+type exerciseType = "timer" | "tempo" | "mobility";
+
+export type WorkoutPhases = "warmup" | "athleticism" | "recovery";
+
+export type WorkoutExecutionMode = "circuit" | "superset";
+
+export interface ProgramSummary {
     name: string;
     thumbnail: string;
+    reps?: number;
+    phase: WorkoutPhases;
+    timer_type: exerciseType;
+    group_type: WorkoutExecutionMode;
+    seconds: number;
     sets: number;
 }
 
 export interface ProgramActivity {
     name: string;
-    type?: "timer" | "tempo" | "mobility";
+    type?: exerciseType;
     sets: number;
     include_weights?: boolean;
+    uni_lateral?: boolean;
     reps?: number;
     seconds_hold: number;
     seconds_up?: number;
@@ -28,7 +40,7 @@ export interface ProgramActivity {
 export interface ProgramExerciseFields {
     fields: {
         name: string;
-        type: "timer" | "tempo" | "mobility";
+        type: exerciseType;
         sets: number;
         reps?: number;
         seconds_hold: number;
@@ -80,10 +92,6 @@ export interface ProgramExerciseFields {
     };
 }
 
-export type WorkoutPhases = "warmup" | "athleticism" | "recovery";
-
-export type WorkoutExecutionMode = "circuit" | "superset";
-
 export interface ProgramExercise {
     title: string;
     type: WorkoutExecutionMode;
@@ -93,13 +101,12 @@ export interface ProgramExercise {
 }
 
 export interface ProgramDay {
-    summary: ProgramSummary;
+    summary: ProgramSummary[];
     exercises: ProgramExercise[];
 }
 
 export interface ProgramWeek {
     name: string;
-    slug: string;
     day_1: ProgramDay;
     day_2: ProgramDay;
     day_3: ProgramDay;
@@ -130,4 +137,8 @@ export interface IProgramsContext {
 
 export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
+    execution_mode: WorkoutExecutionMode;
+}
+export interface ProgramWeekWithSlug extends ProgramWeek {
+    slug: string;
 }

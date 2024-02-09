@@ -1,10 +1,8 @@
 import { StyleSheet } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
 import {
-    ProgramActivity,
     ProgramDay,
-    ProgramExerciseFields,
-    WorkoutExecutionMode,
+    ProgramSummary,
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
 import { Text, View } from "tamagui";
@@ -18,70 +16,68 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
         return null;
     }
 
-    const exercisesBlocks = exerciseData.exercises;
+    const exerciseSummary = exerciseData.summary;
 
-    const getPhaseTitle = (phase: WorkoutPhases) => {
-        switch (phase) {
-            case "warmup":
-                return "Warmup";
-            case "athleticism":
-                return "Athleticism";
-            case "recovery":
-                return "Recovery";
-            default:
-                return "";
-        }
+    const getExerciseBlocksByPhases = (exerciseSummary: ProgramSummary[]) => {
+        // Group exercises by phase
+        const groupedExercises: {
+            [key: string]: ProgramSummary[];
+        } = {
+            warmup: [],
+            athleticism: [],
+            recovery: [],
+        };
+
+        exerciseSummary.forEach((exercise) => {
+            groupedExercises[exercise.phase].push(exercise);
+        });
+
+        return Object.keys(groupedExercises).map((phase) => {
+            return {
+                phase: phase as WorkoutPhases,
+                activities: groupedExercises[phase],
+            };
+        });
     };
 
-    const getSubBlockTitle = (
-        exerciseType: WorkoutExecutionMode,
-        activities: ProgramActivity[],
-    ) => {
-        switch (exerciseType) {
-            case "circuit":
-                return "";
-            case "superset":
-                if (activities.length === 2) {
-                    return "Superset";
-                }
-                if (activities.length === 3) {
-                    return "Triset";
-                }
-                return "Giant set";
-            default:
-                return "";
-        }
-    };
+    const phases = getExerciseBlocksByPhases(exerciseSummary);
 
-    const getExerciseTypeScheme = (
-        exercise: ProgramExerciseFields["fields"],
-    ) => {
-        switch (exercise.type) {
+    const getExerciseTypeScheme = (exercise: ProgramSummary) => {
+        switch (exercise.timer_type) {
             case "timer":
-                return `${exercise.seconds_hold ?? 0} seconds`;
+                return `${exercise.seconds ?? 0} seconds`;
             case "tempo":
                 return `${exercise.reps ?? 0} reps`;
             case "mobility":
+                return `${exercise.seconds ?? 0} seconds`;
+
+            default:
                 return `${
-                    (exercise.seconds_hold ?? 0) +
-                    (exercise.seconds_release ?? 0)
-                } seconds`;
+                    exercise.seconds
+                        ? `${exercise.seconds} seconds`
+                        : `${exercise.reps} reps`
+                }`;
         }
     };
 
     return (
-        <View mt="$20">
-            {exercisesBlocks.map((exerciseBlock, index) => (
+        <View>
+            {phases.map((phase, index) => (
                 <View key={index} mt="$10">
                     {/* Title */}
-                    {getPhaseTitle(exerciseBlock.phase) ? (
-                        <Text fontFamily="$heading" fontSize={"$20"} my="$10">
-                            {getPhaseTitle(exerciseBlock.phase)}
+                    {phase.activities.length ? (
+                        <Text
+                            fontFamily="$heading"
+                            fontSize={"$20"}
+                            my="$10"
+                            textTransform="capitalize"
+                        >
+                            {phase.phase}
                         </Text>
                     ) : null}
 
                     <View mt="$5">
-                        {getSubBlockTitle(
+                        {/* {getSubBlockTitle(
                             exerciseBlock.type,
                             exerciseBlock.activities,
                         ) ? (
@@ -95,11 +91,11 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                                     exerciseBlock.activities,
                                 )}
                             </Text>
-                        ) : null}
+                        ) : null} */}
 
-                        {exerciseBlock.exercises
-                            .filter((e) => e.fields.type)
-                            .map(({ fields: exercise }, index) => (
+                        {phase.activities
+                            .filter((e) => e.timer_type)
+                            .map((exercise, index) => (
                                 <View key={index}>
                                     <View
                                         fd="row"
@@ -112,7 +108,7 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                                         <View width={"$100"} height={"$100"}>
                                             <StyledImage
                                                 source={{
-                                                    uri: `http:${exercise.thumbnail?.fields.file.url}`,
+                                                    uri: `http:${exercise.thumbnail}`,
                                                 }}
                                                 style={styles.exerciseImage}
                                             />

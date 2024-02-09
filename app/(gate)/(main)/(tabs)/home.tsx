@@ -165,7 +165,7 @@ export default function HomePage() {
                                 </View>
 
                                 <View mt={"$24"}>
-                                    <WorkoutOfTheDayCard onPress={() => {}} />
+                                    <WorkoutOfTheDayCard />
                                 </View>
                             </View>
 

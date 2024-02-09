@@ -25670,6 +25670,10 @@
           "mass": 1,
           "damping": 60,
           "stiffness": 255
+        },
+        "100ms": {
+          "type": "timing",
+          "duration": 100
         }
       },
       "View": "Component",

@@ -81,7 +81,7 @@ export const ForYouTab = () => {
                             Newest Program
                         </Text>
                     </View>
-                    <NewestProgramCard onPress={() => {}} />
+                    <NewestProgramCard />
                 </View>
 
                 {/* Refresh Routine */}
