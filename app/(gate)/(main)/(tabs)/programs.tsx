@@ -5,6 +5,8 @@ import {
     MaterialTabItem,
     Tabs,
 } from "react-native-collapsible-tab-view";
+import Button from "@src/components/button/Button";
+import { AllProgramsTab } from "@src/components/screen-components/Programs/Tabs/AllProgramsTab";
 import { ForYouTab } from "@src/components/screen-components/Programs/Tabs/ForYouTab/ForYouTab";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -55,11 +57,7 @@ const ProgramTabs = () => {
 
             {/* All Programs */}
             <Tabs.Tab name="All">
-                <Tabs.ScrollView>
-                    <View f={1} jc={"center"} ai={"center"}>
-                        <Text>Tab 1</Text>
-                    </View>
-                </Tabs.ScrollView>
+                <AllProgramsTab />
             </Tabs.Tab>
 
             <Tabs.Tab name="Favorites">

@@ -126,6 +126,7 @@ export interface Program {
     weeks: ProgramWeek[];
     plan: string;
     teaser: string;
+    contentful_id: string;
 }
 
 export interface IProgramsContext {
