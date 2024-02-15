@@ -14,8 +14,6 @@ const fetchUser = async () => {
             },
         });
 
-        console.log("Response: ", response);
-
         if (!response.ok) {
             throw new Error("Error fetching user data");
         }
@@ -42,8 +40,6 @@ export default function UserProvider({ children }: PropsWithChildren) {
         queryKey: ["user"],
         queryFn: fetchUser,
     });
-
-    console.log("User Data: ", data);
 
     return (
         <UserContext.Provider
