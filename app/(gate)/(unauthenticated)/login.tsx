@@ -83,6 +83,8 @@ export default function Page() {
 
     const loginDisabled = !email.length || !password.length || loginLoading;
 
+    const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
+
     return (
         <CustomSafeAreaView>
             <NavigationStack.Screen
@@ -230,7 +232,7 @@ export default function Page() {
                         <View flexDirection="row" jc="center" mt={wn(5)}>
                             <Link
                                 onPress={() => {
-                                    Linking.openURL("https://gbghoops.com");
+                                    Linking.openURL(websiteUrl);
                                 }}
                             >{`Visit our website`}</Link>
                             <Text fontSize={wn(16)}> </Text>
