@@ -8,17 +8,16 @@ import { IProgramsContext, Program } from "./types";
 export const ProgramsContext = createContext<IProgramsContext | null>(null);
 
 const fetchPrograms = async () => {
+    const backend_url = process.env.EXPO_PUBLIC_BACKEND_URL ?? "";
+
     try {
         const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
-        const response = await fetch(
-            "https://85xdaz4vjb.execute-api.us-east-1.amazonaws.com/production/content",
-            {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${idToken}`,
-                },
+        const response = await fetch(backend_url, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${idToken}`,
             },
-        );
+        });
 
         if (!response.ok) {
             throw new Error("Error fetching programs");

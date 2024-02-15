@@ -8,7 +8,9 @@
             "distribution": "internal",
             "env": {
                 "COGNITO_USERPOOL_ID": "us-east-1_rpChytoEj",
-                "COGNITO_USERPOOL_CLIENT_ID": "37afhf27qetoja5u77knm566d9"
+                "COGNITO_USERPOOL_CLIENT_ID": "37afhf27qetoja5u77knm566d9",
+                "EXPO_PUBLIC_SIGNUP_URL": "https://gbg-hoops-login-development.vercel.app/",
+                "EXPO_PUBLIC_BACKEND_URL": "https://po6x5wbwyk.execute-api.us-east-1.amazonaws.com/dev/content"
             }
         },
         "development-simulator": {
@@ -19,15 +21,19 @@
             },
             "env": {
                 "COGNITO_USERPOOL_ID": "us-east-1_rpChytoEj",
-                "COGNITO_USERPOOL_CLIENT_ID": "37afhf27qetoja5u77knm566d9"
+                "COGNITO_USERPOOL_CLIENT_ID": "37afhf27qetoja5u77knm566d9",
+                "EXPO_PUBLIC_SIGNUP_URL": "https://gbg-hoops-login-development.vercel.app/",
+                "EXPO_PUBLIC_BACKEND_URL": "https://po6x5wbwyk.execute-api.us-east-1.amazonaws.com/dev/content"
             }
         },
         "preview": {
             "distribution": "internal",
             "channel": "preview",
             "env": {
-                "COGNITO_USERPOOL_ID": "us-east-1_rpChytoEj",
-                "COGNITO_USERPOOL_CLIENT_ID": "37afhf27qetoja5u77knm566d9"
+                "COGNITO_USERPOOL_ID": "us-east-1_cYoGfuSVA",
+                "COGNITO_USERPOOL_CLIENT_ID": "69ogr9qq800mb9lmrpk823kghh",
+                "EXPO_PUBLIC_SIGNUP_URL": "https://gbg-hoops-login.vercel.app/",
+                "EXPO_PUBLIC_BACKEND_URL": "https://85xdaz4vjb.execute-api.us-east-1.amazonaws.com/production/content"
             }
         },
         "production": {}
