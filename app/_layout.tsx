@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthProvider from "@src/context/auth-context";
 import ProgramsProvider from "@src/context/ProgramsContext/programs-context";
-import UserProvider from "@src/context/user-context";
+import UserProvider from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Audio } from "expo-av";
