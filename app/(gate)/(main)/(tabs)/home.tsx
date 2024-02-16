@@ -7,16 +7,26 @@ import Coach2Coach from "@src/components/screen-components/Home/Coach2Coach/Coac
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import ReferAFriend from "@src/components/screen-components/Home/ReferAFriend/ReferAFriend";
 import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
-import { useUser } from "@src/context/user-context";
+import { useUser } from "@src/context/UserContext/user-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { Avatar, ScrollView, Stack, Text, View } from "tamagui";
+
+const deriveIinitials = (first_name: string, last_name: string) => {
+    return `${first_name[0]}${last_name[0]}`;
+};
 
 export default function HomePage() {
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
 
     const { user } = useUser();
+
+    if (!user) {
+        return null;
+    }
+
+    const initials = deriveIinitials(user.given_name, user.family_name);
 
     return (
         <Stack
@@ -71,7 +81,7 @@ export default function HomePage() {
                                                 fontFamily={"$body"}
                                                 fontSize={"$20"}
                                             >
-                                                AB
+                                                {initials}
                                             </Text>
                                         </Avatar.Fallback>
                                     </Avatar>
@@ -82,7 +92,7 @@ export default function HomePage() {
                                         fontSize={"$40"}
                                         textTransform="uppercase"
                                     >
-                                        Welcome, Anna!
+                                        {`Welcome, ${user.given_name}!`}
                                     </Text>
                                 </View>
                             </View>
