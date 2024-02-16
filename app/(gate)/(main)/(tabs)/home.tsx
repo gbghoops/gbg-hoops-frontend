@@ -22,11 +22,9 @@ export default function HomePage() {
 
     const { user } = useUser();
 
-    if (!user) {
-        return null;
-    }
-
-    const initials = deriveIinitials(user.given_name, user.family_name);
+    const initials = user
+        ? deriveIinitials(user.given_name, user.family_name)
+        : null;
 
     return (
         <Stack
@@ -92,7 +90,8 @@ export default function HomePage() {
                                         fontSize={"$40"}
                                         textTransform="uppercase"
                                     >
-                                        {`Welcome, ${user.given_name}!`}
+                                        Welcome
+                                        {user ? `, ${user.given_name}` : null}!
                                     </Text>
                                 </View>
                             </View>
