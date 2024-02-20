@@ -5,8 +5,6 @@ export const AssesmentWrapper = styled(YStack, {
     x: 0,
     opacity: 1,
     fullscreen: true,
-    borderWidth: 1,
-    borderColor: "red",
     variants: {
         // 1 = right, 0 = nowhere, -1 = left
         going: {
