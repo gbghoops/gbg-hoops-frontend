@@ -10,28 +10,25 @@ import { Text, View } from "tamagui";
 import RenderExerciseList from "../WorkoutDetails/RenderExerciseList/RenderExerciseList";
 
 interface DaysAccordionProps {
+    index: number;
     day: ProgramDay;
     onAccordionOpenStateChange?: (isOpen: boolean) => void;
 }
 const DaysAccordion = ({
     day,
+    index,
     onAccordionOpenStateChange,
 }: DaysAccordionProps) => {
-    const [headerHeight, setHeaderHeight] = useState(wn(60));
     const [isOpen, setIsOpen] = useState(false);
     const title = day.exercises[0].title;
     const summary = day.summary;
     const exerciseCount = summary.length;
 
-    const titleSplit = title.split(" ");
-
-    const dayValue = titleSplit.slice(0, 2).join(" ");
-
-    const activityTitle = titleSplit.slice(2).join(" ");
-
     useEffect(() => {
         onAccordionOpenStateChange && onAccordionOpenStateChange(isOpen);
     }, [isOpen]);
+
+    const headerHeight = wn(80);
 
     return (
         <View py="$5" px="$5" height={isOpen ? "auto" : headerHeight}>
@@ -46,12 +43,7 @@ const DaysAccordion = ({
                 ]}
             >
                 {/* Header */}
-                <RNView
-                    style={styles.header}
-                    onLayout={(LayoutEvent) => {
-                        setHeaderHeight(LayoutEvent.nativeEvent.layout.height);
-                    }}
-                >
+                <RNView style={styles.header}>
                     <View
                         flexDirection="row"
                         ai="center"
@@ -66,16 +58,18 @@ const DaysAccordion = ({
                         }}
                         onPress={() => setIsOpen(!isOpen)}
                     >
-                        <View>
+                        <View maxWidth={"$200"}>
                             <Text fontSize={"$14"} fontFamily={"$body"}>
-                                {dayValue}
+                                {`Day ${index + 1}`}
                             </Text>
                             <Text
                                 fontSize={"$16"}
                                 fontFamily={"$heading"}
                                 mt="$10"
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
                             >
-                                {activityTitle}
+                                {title}
                             </Text>
                         </View>
 
@@ -120,14 +114,14 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         overflow: "hidden",
-        paddingBottom: wn(20),
         borderBottomColor: colors.border_primary,
         borderBottomWidth: 0.25,
         paddingHorizontal: wn(10),
-        paddingVertical: wn(5),
+        paddingVertical: wn(15),
     },
     header: {
         width: "100%",
+        // marginBottom: wn(10),
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between",
