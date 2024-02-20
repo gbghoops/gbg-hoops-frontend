@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useAuthState } from "@src/context/auth-context";
+import { User } from "@src/context/UserContext/types";
 import { Slot, useRouter } from "expo-router";
 
 export default function GatingLayout() {
@@ -8,6 +9,10 @@ export default function GatingLayout() {
 
     useEffect(() => {
         if (authState?.user) {
+            if (!checkIfAssesmentComplete(authState?.user)) {
+                return router.replace("/assesment");
+            }
+
             return router.replace("/home");
         }
 
@@ -16,3 +21,7 @@ export default function GatingLayout() {
 
     return <Slot />;
 }
+
+const checkIfAssesmentComplete = (user: User) => {
+    return !!(user.gender && user.hoop_level && user.performance_goal);
+};

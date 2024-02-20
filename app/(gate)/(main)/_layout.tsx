@@ -15,15 +15,7 @@ export default function Layout() {
                             backgroundColor: colors.surface_background,
                         },
                     }}
-                >
-                    <Stack.Screen
-                        name="settings"
-                        options={{
-                            header: () => <Header />,
-                            presentation: "modal",
-                        }}
-                    />
-                </Stack>
+                />
             </UserProvider>
         </ProgramsProvider>
     );

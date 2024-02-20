@@ -5,7 +5,6 @@ import {
     MaterialTabItem,
     Tabs,
 } from "react-native-collapsible-tab-view";
-import Button from "@src/components/button/Button";
 import { AllProgramsTab } from "@src/components/screen-components/Programs/Tabs/AllProgramsTab";
 import { ForYouTab } from "@src/components/screen-components/Programs/Tabs/ForYouTab/ForYouTab";
 import { colors } from "@src/styles/theme/colors";

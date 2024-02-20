@@ -9,10 +9,7 @@ import { Amplify } from "aws-amplify";
 import { fetchUserAttributes, signIn, signOut } from "aws-amplify/auth";
 import * as EmailValidator from "email-validator";
 
-interface User {
-    id: string;
-    email: string;
-}
+import { User } from "./UserContext/types";
 
 interface IAuthContext {
     user: User | null;
@@ -43,7 +40,8 @@ export default function AuthProvider({ children }: PropsWithChildren) {
                 setUser({
                     id: user.sub!,
                     email: user.email!,
-                });
+                    ...user,
+                } as unknown as User);
             }
         } catch (e) {
             // No user is signed in
