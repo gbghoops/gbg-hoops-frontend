@@ -1,7 +1,7 @@
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
-import { MultiSelectProps } from "./constants/environment-select-data";
+import { MultiSelectProps } from "./types";
 
 interface MultiSelectorProps {
     data: MultiSelectProps[];
@@ -48,7 +48,6 @@ interface OptionPillProps {
 }
 
 const OptionPill = ({
-    value,
     label,
     onPress,
     isSelected = false,
@@ -56,7 +55,8 @@ const OptionPill = ({
 }: OptionPillProps) => {
     return (
         <View
-            p={wn(4.5)}
+            pr={wn(9)}
+            pb={wn(9)}
             enterStyle={{
                 y: 10,
                 opacity: 0,

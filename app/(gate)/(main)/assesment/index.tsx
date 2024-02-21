@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
 import GenderSelectOptions from "@src/components/radio-select/constants/gender-select-options";
@@ -11,10 +11,12 @@ import AssesmentSlide2, {
     AssesmentSlide2OnChanageProps,
 } from "@src/components/screen-components/Assesment/Slides/AssesmentSlide2";
 import AssesmentSlide3 from "@src/components/screen-components/Assesment/Slides/AssesmentSlide3";
+import AssesmentSlide4 from "@src/components/screen-components/Assesment/Slides/AssesmentSlide4";
 import {
     EnvironmentsType,
     GenderType,
     HoopLevelType,
+    PainAreasType,
     PerformanceGoalType,
 } from "@src/context/UserContext/types";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -33,6 +35,7 @@ interface AssesmentState {
     selectedHoopLevel: HoopLevelType | undefined;
     selectedPerformanceGoal: PerformanceGoalType | undefined;
     environments: EnvironmentsType[] | undefined;
+    painAreas: PainAreasType[] | undefined;
 }
 
 const assesmentDefaultState: AssesmentState = {
@@ -40,6 +43,7 @@ const assesmentDefaultState: AssesmentState = {
     selectedHoopLevel: undefined,
     selectedPerformanceGoal: undefined,
     environments: undefined,
+    painAreas: undefined,
 };
 
 export default function AssesmentScreen() {
@@ -89,6 +93,13 @@ export default function AssesmentScreen() {
         }));
     };
 
+    const onSlide4ValuesChange = (painAreas: PainAreasType[]) => {
+        setAssesmentState((prev) => ({
+            ...prev,
+            painAreas: painAreas.length ? painAreas : undefined,
+        }));
+    };
+
     const NUM_PAGES = 4;
 
     const pageNext = () => {
@@ -118,6 +129,8 @@ export default function AssesmentScreen() {
             return false;
 
         if (page === 2 && !assesmentState.environments?.length) return false;
+
+        if (page === 3 && !assesmentState.painAreas?.length) return false;
 
         return true;
     }, [assesmentState, page]);
@@ -206,6 +219,15 @@ export default function AssesmentScreen() {
                                             assesmentState.environments ?? []
                                         }
                                     />
+
+                                    {/* Pain Areas */}
+                                    <AssesmentSlide4
+                                        isActiveSlide={page === 3}
+                                        onValuesChange={onSlide4ValuesChange}
+                                        selectedPainAreas={
+                                            assesmentState.painAreas ?? []
+                                        }
+                                    />
                                 </View>
                             </View>
                         </AssesmentWrapper>
@@ -214,7 +236,7 @@ export default function AssesmentScreen() {
             </XStack>
             <View w="100%" px="$20" pos="absolute" bottom={bottom + wn(20)}>
                 <Button
-                    text="Continue"
+                    text={page === 3 ? "Complete" : "Continue"}
                     fullWidth
                     onPress={() => {
                         canContinue && pageNext();

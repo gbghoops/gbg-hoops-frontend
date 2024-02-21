@@ -1,10 +1,7 @@
 import { EnvironmentsType } from "@src/context/UserContext/types";
 
-export interface MultiSelectProps {
-    id: number;
-    value: string;
-    label: string;
-}
+import { MultiSelectProps } from "../types";
+
 export interface EnvironmentSelectProps
     extends Omit<MultiSelectProps, "value"> {
     value: EnvironmentsType;

@@ -37,10 +37,10 @@ export default function AssesmentSlide3({
 
     return isActiveSlide ? (
         <View my="$20" mx="$20">
-            <Text fontFamily="$body" fontSize="$16" mb="$10">
+            <Text fontFamily="$heading" fontSize="$20" mb="$10">
                 What Environments do you normally play in?
             </Text>
-            <Text fontFamily="$body" fontSize="$16" mb="$10">
+            <Text fontFamily="$heading" fontSize="$20" mb="$10">
                 (Select all that apply)
             </Text>
             <View>
