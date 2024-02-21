@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
 import GenderSelectOptions from "@src/components/radio-select/constants/gender-select-options";
@@ -10,7 +10,9 @@ import AssesmentSlide1 from "@src/components/screen-components/Assesment/Slides/
 import AssesmentSlide2, {
     AssesmentSlide2OnChanageProps,
 } from "@src/components/screen-components/Assesment/Slides/AssesmentSlide2";
+import AssesmentSlide3 from "@src/components/screen-components/Assesment/Slides/AssesmentSlide3";
 import {
+    EnvironmentsType,
     GenderType,
     HoopLevelType,
     PerformanceGoalType,
@@ -30,12 +32,14 @@ interface AssesmentState {
     selectedGender: GenderType | undefined;
     selectedHoopLevel: HoopLevelType | undefined;
     selectedPerformanceGoal: PerformanceGoalType | undefined;
+    environments: EnvironmentsType[] | undefined;
 }
 
 const assesmentDefaultState: AssesmentState = {
     selectedGender: undefined,
     selectedHoopLevel: undefined,
     selectedPerformanceGoal: undefined,
+    environments: undefined,
 };
 
 export default function AssesmentScreen() {
@@ -78,6 +82,13 @@ export default function AssesmentScreen() {
         }));
     };
 
+    const onSlide3ValuesChange = (environments: EnvironmentsType[]) => {
+        setAssesmentState((prev) => ({
+            ...prev,
+            environments: environments.length ? environments : undefined,
+        }));
+    };
+
     const NUM_PAGES = 4;
 
     const pageNext = () => {
@@ -101,10 +112,12 @@ export default function AssesmentScreen() {
 
         if (
             page === 1 &&
-            !assesmentState.selectedHoopLevel &&
-            !assesmentState.selectedPerformanceGoal
+            (!assesmentState.selectedHoopLevel ||
+                !assesmentState.selectedPerformanceGoal)
         )
             return false;
+
+        if (page === 2 && !assesmentState.environments?.length) return false;
 
         return true;
     }, [assesmentState, page]);
@@ -184,6 +197,15 @@ export default function AssesmentScreen() {
                                             null
                                         }
                                     />
+
+                                    {/* Environments */}
+                                    <AssesmentSlide3
+                                        isActiveSlide={page === 2}
+                                        onValuesChange={onSlide3ValuesChange}
+                                        selectedEnvironments={
+                                            assesmentState.environments ?? []
+                                        }
+                                    />
                                 </View>
                             </View>
                         </AssesmentWrapper>
@@ -194,7 +216,9 @@ export default function AssesmentScreen() {
                 <Button
                     text="Continue"
                     fullWidth
-                    onPress={pageNext}
+                    onPress={() => {
+                        canContinue && pageNext();
+                    }}
                     isDisabled={!canContinue}
                 />
             </View>
