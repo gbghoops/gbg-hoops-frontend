@@ -1,6 +1,6 @@
 import { styled, YStack } from "tamagui";
 
-export const AssesmentWrapper = styled(YStack, {
+export const AssessmentWrapper = styled(YStack, {
     zIndex: 1,
     x: 0,
     opacity: 1,

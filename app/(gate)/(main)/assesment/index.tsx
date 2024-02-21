@@ -1,24 +1,13 @@
-import { useMemo, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
-import GenderSelectOptions from "@src/components/radio-select/constants/gender-select-options";
-import HoopLevelSelectOptions from "@src/components/radio-select/constants/hoop-level-select-options";
-import PerformanceGoalSelectOptions from "@src/components/radio-select/constants/performance-goals-options";
-import AssesmentHeader from "@src/components/screen-components/Assesment/AssesmentHeader";
-import { AssesmentWrapper } from "@src/components/screen-components/Assesment/AssesmentWrapper";
-import AssesmentSlide1 from "@src/components/screen-components/Assesment/Slides/AssesmentSlide1";
-import AssesmentSlide2, {
-    AssesmentSlide2OnChanageProps,
-} from "@src/components/screen-components/Assesment/Slides/AssesmentSlide2";
-import AssesmentSlide3 from "@src/components/screen-components/Assesment/Slides/AssesmentSlide3";
-import AssesmentSlide4 from "@src/components/screen-components/Assesment/Slides/AssesmentSlide4";
-import {
-    EnvironmentsType,
-    GenderType,
-    HoopLevelType,
-    PainAreasType,
-    PerformanceGoalType,
-} from "@src/context/UserContext/types";
+import AssessmentHeader from "@src/components/screen-components/Assessment/AssessmentHeader";
+import { AssessmentWrapper } from "@src/components/screen-components/Assessment/AssessmentWrapper";
+import AssessmentSlide1 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide1";
+import AssessmentSlide2 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide2";
+import AssessmentSlide3 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide3";
+import AssessmentSlide4 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide4";
+import useAssessmentPagingState from "@src/hooks/assessment/useAssessmentPagingState";
+import useAssessmentState from "@src/hooks/assessment/useAssessmentState";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Stack } from "expo-router";
 import {
@@ -30,117 +19,26 @@ import {
     YStack,
 } from "tamagui";
 
-interface AssesmentState {
-    selectedGender: GenderType | undefined;
-    selectedHoopLevel: HoopLevelType | undefined;
-    selectedPerformanceGoal: PerformanceGoalType | undefined;
-    environments: EnvironmentsType[] | undefined;
-    painAreas: PainAreasType[] | undefined;
-}
-
-const assesmentDefaultState: AssesmentState = {
-    selectedGender: undefined,
-    selectedHoopLevel: undefined,
-    selectedPerformanceGoal: undefined,
-    environments: undefined,
-    painAreas: undefined,
-};
-
-export default function AssesmentScreen() {
-    const [[page, going], setPage] = useState([0, 0]);
+export default function AssessmentScreen() {
     const { bottom } = useSafeAreaInsets();
 
-    const [assesmentState, setAssesmentState] = useState<AssesmentState>(
-        assesmentDefaultState,
-    );
+    const {
+        assessmentState,
+        onSlide1ValuesChange,
+        onSlide2ValuesChange,
+        onSlide3ValuesChange,
+        onSlide4ValuesChange,
+    } = useAssessmentState();
 
-    const onSlide1ValuesChange = (selectedGenderId: number) => {
-        const selectedGender = GenderSelectOptions.find(
-            (g) => g.id === selectedGenderId,
-        );
-
-        if (selectedGender) {
-            setAssesmentState((prev) => ({
-                ...prev,
-                selectedGender: selectedGender.gender,
-            }));
-        }
-    };
-
-    const onSlide2ValuesChange = ({
-        selectedHoopLevelId,
-        selectedPerformanceGoalId,
-    }: AssesmentSlide2OnChanageProps) => {
-        const selectedHoopLevel = HoopLevelSelectOptions.find(
-            (g) => g.id === selectedHoopLevelId,
-        );
-
-        const selectedPerformanceGoal = PerformanceGoalSelectOptions.find(
-            (g) => g.id === selectedPerformanceGoalId,
-        );
-
-        setAssesmentState((prev) => ({
-            ...prev,
-            selectedHoopLevel: selectedHoopLevel?.hoop_level,
-            selectedPerformanceGoal: selectedPerformanceGoal?.performance_goal,
-        }));
-    };
-
-    const onSlide3ValuesChange = (environments: EnvironmentsType[]) => {
-        setAssesmentState((prev) => ({
-            ...prev,
-            environments: environments.length ? environments : undefined,
-        }));
-    };
-
-    const onSlide4ValuesChange = (painAreas: PainAreasType[]) => {
-        setAssesmentState((prev) => ({
-            ...prev,
-            painAreas: painAreas.length ? painAreas : undefined,
-        }));
-    };
-
-    const NUM_PAGES = 4;
-
-    const pageNext = () => {
-        setPage((prev) => {
-            if (prev[0] === NUM_PAGES - 1) return prev;
-
-            return [prev[0] + 1, 1];
-        });
-    };
-
-    const pageBack = () => {
-        setPage((prev) => {
-            if (prev[0] === 0) return prev;
-
-            return [prev[0] - 1, -1];
-        });
-    };
-
-    const canContinue = useMemo(() => {
-        if (page === 0 && !assesmentState.selectedGender) return false;
-
-        if (
-            page === 1 &&
-            (!assesmentState.selectedHoopLevel ||
-                !assesmentState.selectedPerformanceGoal)
-        )
-            return false;
-
-        if (page === 2 && !assesmentState.environments?.length) return false;
-
-        if (page === 3 && !assesmentState.painAreas?.length) return false;
-
-        return true;
-    }, [assesmentState, page]);
+    const { canContinue, going, page, pageBack, pageNext } =
+        useAssessmentPagingState({ assessmentState });
 
     return (
         <YStack pos="relative">
             <Stack.Screen
                 options={{
                     header: () => (
-                        <AssesmentHeader onBackPressed={() => pageBack()} />
+                        <AssessmentHeader onBackPressed={() => pageBack()} />
                     ),
                 }}
             />
@@ -160,7 +58,7 @@ export default function AssesmentScreen() {
                     }}
                 >
                     <AnimatePresence initial={false} custom={{ going }}>
-                        <AssesmentWrapper
+                        <AssessmentWrapper
                             key={page}
                             going={going}
                             animation={"fast"}
@@ -188,49 +86,49 @@ export default function AssesmentScreen() {
                                 </View>
                                 <View>
                                     {/* Gender Select slide */}
-                                    <AssesmentSlide1
+                                    <AssessmentSlide1
                                         isActiveSlide={page === 0}
                                         onValuesChange={onSlide1ValuesChange}
                                         selectedGender={
-                                            assesmentState.selectedGender ??
+                                            assessmentState.selectedGender ??
                                             null
                                         }
                                     />
 
                                     {/* Hoop Level and Performance goals */}
-                                    <AssesmentSlide2
+                                    <AssessmentSlide2
                                         isActiveSlide={page === 1}
                                         onValuesChange={onSlide2ValuesChange}
                                         selectedHoopLevel={
-                                            assesmentState.selectedHoopLevel ??
+                                            assessmentState.selectedHoopLevel ??
                                             null
                                         }
                                         selectedPerformanceGoal={
-                                            assesmentState.selectedPerformanceGoal ??
+                                            assessmentState.selectedPerformanceGoal ??
                                             null
                                         }
                                     />
 
                                     {/* Environments */}
-                                    <AssesmentSlide3
+                                    <AssessmentSlide3
                                         isActiveSlide={page === 2}
                                         onValuesChange={onSlide3ValuesChange}
                                         selectedEnvironments={
-                                            assesmentState.environments ?? []
+                                            assessmentState.environments ?? []
                                         }
                                     />
 
                                     {/* Pain Areas */}
-                                    <AssesmentSlide4
+                                    <AssessmentSlide4
                                         isActiveSlide={page === 3}
                                         onValuesChange={onSlide4ValuesChange}
                                         selectedPainAreas={
-                                            assesmentState.painAreas ?? []
+                                            assessmentState.painAreas ?? []
                                         }
                                     />
                                 </View>
                             </View>
-                        </AssesmentWrapper>
+                        </AssessmentWrapper>
                     </AnimatePresence>
                 </ScrollView>
             </XStack>

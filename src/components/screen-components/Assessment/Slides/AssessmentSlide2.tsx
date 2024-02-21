@@ -8,23 +8,23 @@ import {
 } from "@src/context/UserContext/types";
 import { Text, View } from "tamagui";
 
-export interface AssesmentSlide2OnChanageProps {
+export interface AssessmentSlide2OnChanageProps {
     selectedHoopLevelId: number;
     selectedPerformanceGoalId: number;
 }
 
-interface AssesmentSlide1Props {
+interface AssessmentSlide1Props {
     isActiveSlide: boolean;
     selectedHoopLevel: HoopLevelType | null;
     selectedPerformanceGoal: PerformanceGoalType | null;
-    onValuesChange: (props: AssesmentSlide2OnChanageProps) => void;
+    onValuesChange: (props: AssessmentSlide2OnChanageProps) => void;
 }
 export default function AssesmentSlide1({
     isActiveSlide,
     selectedHoopLevel,
     selectedPerformanceGoal,
     onValuesChange,
-}: AssesmentSlide1Props) {
+}: AssessmentSlide1Props) {
     const [selectedHoopLevelId, setSelectedHooplevel] = useState<number>(0);
     const [selectedPerformanceGoalId, setSelectedPerformanceGoal] =
         useState<number>(0);
