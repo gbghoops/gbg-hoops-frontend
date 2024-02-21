@@ -29,18 +29,17 @@ export default function useAssessmentPagingState({
     };
 
     const canContinue = useMemo(() => {
-        if (page === 0 && !assessmentState.selectedGender) return false;
+        if (page === 0 && !assessmentState.gender) return false;
 
         if (
             page === 1 &&
-            (!assessmentState.selectedHoopLevel ||
-                !assessmentState.selectedPerformanceGoal)
+            (!assessmentState.hoop_level || !assessmentState.performance_goal)
         )
             return false;
 
         if (page === 2 && !assessmentState.environments?.length) return false;
 
-        if (page === 3 && !assessmentState.painAreas?.length) return false;
+        if (page === 3 && !assessmentState.pain_areas?.length) return false;
 
         return true;
     }, [assessmentState, page]);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GenderSelectOptions from "@src/components/radio-select/constants/gender-select-options";
 import HoopLevelSelectOptions from "@src/components/radio-select/constants/hoop-level-select-options";
 import PerformanceGoalSelectOptions from "@src/components/radio-select/constants/performance-goals-options";
@@ -10,27 +10,31 @@ import {
     PainAreasType,
     PerformanceGoalType,
 } from "@src/context/UserContext/types";
+import { fetchAuthSession } from "aws-amplify/auth";
+import * as Burnt from "burnt";
 
 export interface AssessmentState {
-    selectedGender: GenderType | undefined;
-    selectedHoopLevel: HoopLevelType | undefined;
-    selectedPerformanceGoal: PerformanceGoalType | undefined;
+    gender: GenderType | undefined;
+    hoop_level: HoopLevelType | undefined;
+    performance_goal: PerformanceGoalType | undefined;
     environments: EnvironmentsType[] | undefined;
-    painAreas: PainAreasType[] | undefined;
+    pain_areas: PainAreasType[] | undefined;
 }
 
 const assessmentDefaultState: AssessmentState = {
-    selectedGender: undefined,
-    selectedHoopLevel: undefined,
-    selectedPerformanceGoal: undefined,
+    gender: undefined,
+    hoop_level: undefined,
+    performance_goal: undefined,
     environments: undefined,
-    painAreas: undefined,
+    pain_areas: undefined,
 };
 
 export default function useAssessmentState() {
     const [assessmentState, setAssessmentState] = useState<AssessmentState>(
         assessmentDefaultState,
     );
+
+    const [submitLoading, setSubmitLoading] = useState(false);
 
     const onSlide1ValuesChange = (selectedGenderId: number) => {
         const selectedGender = GenderSelectOptions.find(
@@ -40,7 +44,7 @@ export default function useAssessmentState() {
         if (selectedGender) {
             setAssessmentState((prev) => ({
                 ...prev,
-                selectedGender: selectedGender.gender,
+                gender: selectedGender.gender,
             }));
         }
     };
@@ -59,8 +63,8 @@ export default function useAssessmentState() {
 
         setAssessmentState((prev) => ({
             ...prev,
-            selectedHoopLevel: selectedHoopLevel?.hoop_level,
-            selectedPerformanceGoal: selectedPerformanceGoal?.performance_goal,
+            hoop_level: selectedHoopLevel?.hoop_level,
+            performance_goal: selectedPerformanceGoal?.performance_goal,
         }));
     };
 
@@ -74,9 +78,63 @@ export default function useAssessmentState() {
     const onSlide4ValuesChange = (painAreas: PainAreasType[]) => {
         setAssessmentState((prev) => ({
             ...prev,
-            painAreas: painAreas.length ? painAreas : undefined,
+            pain_areas: painAreas.length ? painAreas : undefined,
         }));
     };
+
+    const isAssessmentComplete = () => {
+        return (
+            assessmentState.gender &&
+            assessmentState.hoop_level &&
+            assessmentState.performance_goal &&
+            assessmentState.environments &&
+            assessmentState.pain_areas
+        );
+    };
+
+    const onSubmitAssessment = async () => {
+        const assessmentComplete = isAssessmentComplete();
+
+        if (!assessmentComplete) {
+            throw new Error("Assessment is not complete");
+        }
+
+        try {
+            setSubmitLoading(true);
+            const idToken = (
+                await fetchAuthSession()
+            ).tokens?.idToken?.toString();
+
+            const response = await fetch(
+                `${process.env.EXPO_PUBLIC_BACKEND_URL}/users/intro`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify(assessmentState),
+                },
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to submit assessment");
+            }
+
+            return true;
+        } catch (error) {
+            Burnt.toast({
+                title: "Failed to submit assessment, please try again",
+                preset: "error",
+            });
+            throw new Error("Failed to submit assessment");
+        } finally {
+            setSubmitLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        console.log("Assessment State", assessmentState);
+    }, [assessmentState]);
 
     return {
         assessmentState,
@@ -84,5 +142,7 @@ export default function useAssessmentState() {
         onSlide2ValuesChange,
         onSlide3ValuesChange,
         onSlide4ValuesChange,
+        onSubmitAssessment,
+        submitLoading,
     };
 }

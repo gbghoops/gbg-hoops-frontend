@@ -9,7 +9,7 @@ import AssessmentSlide4 from "@src/components/screen-components/Assessment/Slide
 import useAssessmentPagingState from "@src/hooks/assessment/useAssessmentPagingState";
 import useAssessmentState from "@src/hooks/assessment/useAssessmentState";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import {
     AnimatePresence,
     ScrollView,
@@ -21,6 +21,7 @@ import {
 
 export default function AssessmentScreen() {
     const { bottom } = useSafeAreaInsets();
+    const router = useRouter();
 
     const {
         assessmentState,
@@ -28,10 +29,31 @@ export default function AssessmentScreen() {
         onSlide2ValuesChange,
         onSlide3ValuesChange,
         onSlide4ValuesChange,
+        onSubmitAssessment,
+        submitLoading,
     } = useAssessmentState();
 
     const { canContinue, going, page, pageBack, pageNext } =
         useAssessmentPagingState({ assessmentState });
+
+    const performAssessmentNextAction = async () => {
+        if (submitLoading) return;
+
+        if (page === 3) {
+            try {
+                const res = await onSubmitAssessment();
+
+                if (res) {
+                    console.log("Assessment submitted successfully");
+                    return router.replace("/home");
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        } else {
+            canContinue && pageNext();
+        }
+    };
 
     return (
         <YStack pos="relative">
@@ -90,8 +112,7 @@ export default function AssessmentScreen() {
                                         isActiveSlide={page === 0}
                                         onValuesChange={onSlide1ValuesChange}
                                         selectedGender={
-                                            assessmentState.selectedGender ??
-                                            null
+                                            assessmentState.gender ?? null
                                         }
                                     />
 
@@ -100,11 +121,10 @@ export default function AssessmentScreen() {
                                         isActiveSlide={page === 1}
                                         onValuesChange={onSlide2ValuesChange}
                                         selectedHoopLevel={
-                                            assessmentState.selectedHoopLevel ??
-                                            null
+                                            assessmentState.hoop_level ?? null
                                         }
                                         selectedPerformanceGoal={
-                                            assessmentState.selectedPerformanceGoal ??
+                                            assessmentState.performance_goal ??
                                             null
                                         }
                                     />
@@ -123,7 +143,7 @@ export default function AssessmentScreen() {
                                         isActiveSlide={page === 3}
                                         onValuesChange={onSlide4ValuesChange}
                                         selectedPainAreas={
-                                            assessmentState.painAreas ?? []
+                                            assessmentState.pain_areas ?? []
                                         }
                                     />
                                 </View>
@@ -136,9 +156,8 @@ export default function AssessmentScreen() {
                 <Button
                     text={page === 3 ? "Complete" : "Continue"}
                     fullWidth
-                    onPress={() => {
-                        canContinue && pageNext();
-                    }}
+                    loading={submitLoading}
+                    onPress={performAssessmentNextAction}
                     isDisabled={!canContinue}
                 />
             </View>
