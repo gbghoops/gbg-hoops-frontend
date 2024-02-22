@@ -9,7 +9,7 @@ const fetchUser = async () => {
 
     try {
         const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
-        const response = await fetch(`${backend_url}users/me`, {
+        const response = await fetch(`${backend_url}/users/me`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${idToken}`,

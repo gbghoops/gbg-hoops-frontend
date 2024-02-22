@@ -1,14 +1,18 @@
-type PerformanceGoalType =
+export type PerformanceGoalType =
     | "durability"
     | "performance"
     | "preparation"
     | "mover";
 
-type GenderType = "male" | "female" | "not_specified";
+export type GenderType = "male" | "female" | "not_specified";
 
-type HoopLevelType = "youth" | "high_school" | "pickup_legend";
+export type HoopLevelType =
+    | "youth"
+    | "high_school"
+    | "pickup_legend"
+    | "college";
 
-type EnvironmentsType =
+export type EnvironmentsType =
     | "court"
     | "weight_room"
     | "outside_field"
@@ -17,7 +21,7 @@ type EnvironmentsType =
     | "pool"
     | "hill";
 
-type PainAreasType =
+export type PainAreasType =
     | "ankle"
     | "knee"
     | "hip"

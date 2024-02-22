@@ -124,7 +124,7 @@ export const WorkoutBreakdownTabs = () => {
             orientation="horizontal"
             flexDirection="column"
             padding={0}
-            height={areAccordionsClosed ? wn(400) : "auto"}
+            height={areAccordionsClosed ? wn(80 * 5 + 50) : "auto"}
         >
             <YStack>
                 <AnimatePresence>

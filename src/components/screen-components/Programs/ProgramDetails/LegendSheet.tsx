@@ -52,7 +52,7 @@ const LegendSheet = ({ sheetOpen, setSheetOpen }: LegendSheetProps) => {
                     >
                         LEGEND
                     </Text>
-                    <View mt="$30" mb="$10" width={"100%"}>
+                    <View mt="$30" width={"100%"}>
                         <ScrollView style={styles.scrollView}>
                             {legendData.map((item, index) => {
                                 return (

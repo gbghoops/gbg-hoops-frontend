@@ -43,8 +43,9 @@ const WeeklyActivitiesBreakdown = ({
 
     return (
         <View>
-            {daysData.map((day) => (
+            {daysData.map((day, i) => (
                 <DaysAccordion
+                    index={i}
                     day={day}
                     key={day.exercises[0].title}
                     onAccordionOpenStateChange={(state) => {

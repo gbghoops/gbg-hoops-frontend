@@ -12,7 +12,7 @@ const fetchPrograms = async () => {
 
     try {
         const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
-        const response = await fetch(`${backend_url}content`, {
+        const response = await fetch(`${backend_url}/content`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${idToken}`,
