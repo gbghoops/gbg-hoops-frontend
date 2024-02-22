@@ -44,7 +44,6 @@ export default function AssessmentScreen() {
                 const res = await onSubmitAssessment();
 
                 if (res) {
-                    console.log("Assessment submitted successfully");
                     return router.replace("/home");
                 }
             } catch (e) {

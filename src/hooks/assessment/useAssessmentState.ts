@@ -133,10 +133,6 @@ export default function useAssessmentState() {
         }
     };
 
-    useEffect(() => {
-        console.log("Assessment State", assessmentState);
-    }, [assessmentState]);
-
     return {
         assessmentState,
         onSlide1ValuesChange,
