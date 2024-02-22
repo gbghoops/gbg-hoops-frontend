@@ -111,6 +111,7 @@ export default function useAssessmentState() {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${idToken}`,
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify(assessmentState),
                 },
