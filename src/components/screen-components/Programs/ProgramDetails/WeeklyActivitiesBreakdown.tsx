@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { ProgramWeekWithSlug } from "@src/context/ProgramsContext/types";
+import {
+    possibleDays,
+    ProgramWeekWithSlug,
+} from "@src/context/ProgramsContext/types";
 import { View } from "tamagui";
 
 import DaysAccordion from "./DaysAccordion";
@@ -16,8 +19,6 @@ const WeeklyActivitiesBreakdown = ({
     if (!weekData) return null;
 
     const [accordionStates, setAccordionStates] = useState<boolean[]>([]);
-
-    const possibleDays = ["day_1", "day_2", "day_3", "day_4", "day_5"];
 
     // get week days data from the weekData
     const getDaysData = (week: ProgramWeekWithSlug) => {
@@ -47,7 +48,7 @@ const WeeklyActivitiesBreakdown = ({
                 <DaysAccordion
                     index={i}
                     day={day}
-                    key={day.exercises[0].title}
+                    key={day.exercises[0]?.title ?? i}
                     onAccordionOpenStateChange={(state) => {
                         setAccordionStates((prev) => {
                             const newState = [...prev];

@@ -223,7 +223,7 @@ export default function Page() {
                     <View mt={wn(20)}>
                         <Text
                             color="$surface_foreground"
-                            fontSize={wn(16)}
+                            fontSize={"$22"}
                             textAlign="center"
                             fontFamily={"$body"}
                         >
@@ -231,12 +231,13 @@ export default function Page() {
                         </Text>
                         <View flexDirection="row" jc="center" mt={wn(5)}>
                             <Link
+                                fontSize={wn(22)}
                                 onPress={() => {
                                     Linking.openURL(websiteUrl);
                                 }}
                             >{`Visit our website`}</Link>
-                            <Text fontSize={wn(16)}> </Text>
-                            <Text fontSize={wn(16)} fontFamily={"$body"}>
+                            <Text fontSize={"$22"}> </Text>
+                            <Text fontSize={"$22"} fontFamily={"$body"}>
                                 to create one
                             </Text>
                         </View>

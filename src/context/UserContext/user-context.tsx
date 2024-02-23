@@ -9,6 +9,8 @@ const fetchUser = async () => {
 
     try {
         const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
+
+        // console.log("idToken", idToken);
         const response = await fetch(`${backend_url}/users/me`, {
             method: "GET",
             headers: {

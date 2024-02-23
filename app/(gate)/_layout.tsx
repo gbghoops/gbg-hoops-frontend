@@ -25,6 +25,5 @@ export default function GatingLayout() {
 }
 
 const checkIfAssesmentComplete = (user: User) => {
-    console.log("User data: ", user);
     return !!(user.gender && user.hoop_level && user.performance_goal);
 };

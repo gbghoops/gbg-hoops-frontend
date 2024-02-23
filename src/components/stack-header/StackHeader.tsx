@@ -3,7 +3,9 @@ import { Octicons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
-import { Avatar, Text, View } from "tamagui";
+import { View } from "tamagui";
+
+import Avatar from "../avatar/Avatar";
 
 interface ProgressState {
     progress: number;
@@ -23,7 +25,6 @@ export const Header = ({
 }: HeaderProps) => {
     const { back, canGoBack: checkCanGoBack, replace } = useRouter();
     const { top } = useSafeAreaInsets();
-    const router = useRouter();
 
     const canRouterGoBack = checkCanGoBack();
 
@@ -74,30 +75,7 @@ export const Header = ({
             {/* Avatar */}
             {showAvatar ? (
                 <View ml={"auto"}>
-                    <Avatar
-                        circular
-                        size={"$40"}
-                        animation={"medium"}
-                        onPress={() => {
-                            router.push("/settings");
-                        }}
-                        pressStyle={{
-                            opacity: 0.85,
-                            scale: 0.9,
-                        }}
-                    >
-                        <Avatar.Image src="http://placekitten123.com/200/300" />
-                        <Avatar.Fallback bc="$gold" ai="center" jc="center">
-                            <Text
-                                color="$black"
-                                fontFamily={"$body"}
-                                fontSize="$20"
-                                lineHeight={22}
-                            >
-                                AB
-                            </Text>
-                        </Avatar.Fallback>
-                    </Avatar>
+                    <Avatar />
                 </View>
             ) : null}
         </View>
