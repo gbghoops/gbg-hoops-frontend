@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import {
     MaterialCommunityIcons,
@@ -9,7 +9,13 @@ import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { possibleDays, Program } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { ResizeMode, Video } from "expo-av";
+import {
+    Audio,
+    InterruptionModeAndroid,
+    InterruptionModeIOS,
+    ResizeMode,
+    Video,
+} from "expo-av";
 import { useLocalSearchParams } from "expo-router";
 import { Text, View } from "tamagui";
 
@@ -29,6 +35,24 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
     if (!currentProgram) {
         return null;
     }
+
+    useEffect(() => {
+        if (teaserVideoPlaying) {
+            Audio.setAudioModeAsync({
+                interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+                interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+            });
+        }
+    }, [teaserVideoPlaying]);
+
+    useEffect(() => {
+        return () => {
+            Audio.setAudioModeAsync({
+                interruptionModeIOS: InterruptionModeIOS.MixWithOthers,
+                interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+            });
+        };
+    }, []);
 
     const { weeks, days, levels, workout_Duration } =
         getProgramSummary(currentProgram);

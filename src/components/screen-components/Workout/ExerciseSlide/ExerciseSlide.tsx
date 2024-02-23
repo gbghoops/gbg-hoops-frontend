@@ -3,7 +3,13 @@ import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
 import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
-import { ResizeMode, Video } from "expo-av";
+import {
+    Audio,
+    InterruptionModeAndroid,
+    InterruptionModeIOS,
+    ResizeMode,
+    Video,
+} from "expo-av";
 import slugify from "slugify";
 import { Stack, Text, View, XStack, YStack } from "tamagui";
 
@@ -99,9 +105,16 @@ const ExerciseSlide = ({
     // Reset exercise completed state whenever playing state changes..
     useEffect(() => {
         if (!exercisePlaying) {
+            Audio.setAudioModeAsync({
+                interruptionModeIOS: InterruptionModeIOS.MixWithOthers,
+            });
             return;
         }
 
+        Audio.setAudioModeAsync({
+            interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+            interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+        });
         setExerciseCompleted(false);
     }, [exercisePlaying]);
 
