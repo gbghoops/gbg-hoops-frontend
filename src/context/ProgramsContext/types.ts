@@ -1,6 +1,11 @@
 type exerciseType = "timer" | "tempo" | "mobility";
 
-export type WorkoutPhases = "warmup" | "athleticism" | "recovery";
+export type WorkoutPhases =
+    | "warmup"
+    | "athleticism"
+    | "recovery"
+    | "3d_strength"
+    | "force";
 
 export type WorkoutExecutionMode = "circuit" | "superset";
 
@@ -105,20 +110,6 @@ export interface ProgramDay {
     exercises: ProgramExercise[];
 }
 
-export interface ProgramWeek {
-    name: string;
-    day_1: ProgramDay;
-    day_2: ProgramDay;
-    day_3: ProgramDay;
-    day_4: ProgramDay;
-    day_5: ProgramDay;
-    day_1_memo: string;
-    day_2_memo: string;
-    day_3_memo: string;
-    day_4_memo: string;
-    day_5_memo: string;
-}
-
 export interface Program {
     name: string;
     slug: string;
@@ -140,6 +131,59 @@ export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
     execution_mode: WorkoutExecutionMode;
 }
+
+export type PossibleDays =
+    | "day_1"
+    | "day_2"
+    | "day_3"
+    | "day_4"
+    | "day_5"
+    | "day_6"
+    | "day_7";
+
+export type PossibleDaysMemo =
+    | "day_1_memo"
+    | "day_2_memo"
+    | "day_3_memo"
+    | "day_4_memo"
+    | "day_5_memo"
+    | "day_6_memo"
+    | "day_7_memo";
+
+export const possibleDays = [
+    "day_1",
+    "day_2",
+    "day_3",
+    "day_4",
+    "day_5",
+    "day_6",
+    "day_7",
+];
+
+interface MappedDays {
+    day_1: ProgramDay;
+    day_2: ProgramDay;
+    day_3: ProgramDay;
+    day_4: ProgramDay;
+    day_5: ProgramDay;
+    day_6: ProgramDay;
+    day_7: ProgramDay;
+}
+
+interface MappedDaysMemo {
+    day_1_memo: string;
+    day_2_memo: string;
+    day_3_memo: string;
+    day_4_memo: string;
+    day_5_memo: string;
+    day_6_memo: string;
+    day_7_memo: string;
+}
+
+export interface ProgramWeek extends MappedDays, MappedDaysMemo {
+    name: string;
+}
+
 export interface ProgramWeekWithSlug extends ProgramWeek {
     slug: string;
 }

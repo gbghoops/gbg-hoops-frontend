@@ -158,7 +158,7 @@ export const WorkoutBreakdownTabs = () => {
                     borderRadius={0}
                 >
                     <ScrollView horizontal pagingEnabled>
-                        {slugifiedWeeks.map((week) => (
+                        {slugifiedWeeks.map((week, index) => (
                             <Tabs.Tab
                                 key={week.slug}
                                 padding="$5"
@@ -171,7 +171,7 @@ export const WorkoutBreakdownTabs = () => {
                                 onInteraction={handleOnInteraction}
                             >
                                 <Text fontFamily={"$heading"} fontSize={"$14"}>
-                                    {week.name}
+                                    {`Week ${index + 1}`}
                                 </Text>
                             </Tabs.Tab>
                         ))}

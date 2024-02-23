@@ -20,7 +20,7 @@ const DaysAccordion = ({
     onAccordionOpenStateChange,
 }: DaysAccordionProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const title = day.exercises[0].title;
+    const title = day.exercises[0]?.title;
     const summary = day.summary;
     const exerciseCount = summary.length;
 

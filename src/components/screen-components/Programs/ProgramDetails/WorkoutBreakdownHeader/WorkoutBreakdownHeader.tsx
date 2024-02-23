@@ -6,7 +6,7 @@ import {
     Octicons,
 } from "@expo/vector-icons";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { Program } from "@src/context/ProgramsContext/types";
+import { possibleDays, Program } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
@@ -232,7 +232,6 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
     );
 };
 
-const possibleDays = ["day_1", "day_2", "day_3", "day_4", "day_5"];
 const getProgramSummary = (program: Program) => {
     const weeks = program.weeks.length;
 

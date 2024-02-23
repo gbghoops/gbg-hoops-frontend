@@ -1,5 +1,6 @@
 import { ImageBackground, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Avatar from "@src/components/avatar/Avatar";
 import HomeScreenBanner from "@src/components/home-screen-banner/HomeScreenBanner";
 import Link from "@src/components/link/Link";
 import BackgroundVideo from "@src/components/screen-components/Home/BackgroundVideo/BackgroundVideo";
@@ -10,7 +11,7 @@ import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutO
 import { useUser } from "@src/context/UserContext/user-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
-import { Avatar, ScrollView, Stack, Text, View } from "tamagui";
+import { ScrollView, Stack, Text, View } from "tamagui";
 
 const deriveIinitials = (first_name: string, last_name: string) => {
     return `${first_name[0]}${last_name[0]}`;
@@ -56,33 +57,7 @@ export default function HomePage() {
                                 paddingTop={top + wn(20)}
                             >
                                 <View width={"100%"} fd="row" jc="flex-end">
-                                    <Avatar
-                                        circular
-                                        size={"$40"}
-                                        animation={"medium"}
-                                        onPress={() => {
-                                            router.push("/settings");
-                                        }}
-                                        pressStyle={{
-                                            opacity: 0.85,
-                                            scale: 0.9,
-                                        }}
-                                    >
-                                        <Avatar.Image src="http://placekitten123.com/200/300" />
-                                        <Avatar.Fallback
-                                            bc="$gold"
-                                            ai="center"
-                                            jc="center"
-                                        >
-                                            <Text
-                                                color="$black"
-                                                fontFamily={"$body"}
-                                                fontSize={"$20"}
-                                            >
-                                                {initials}
-                                            </Text>
-                                        </Avatar.Fallback>
-                                    </Avatar>
+                                    <Avatar />
                                 </View>
                                 <View my={"$30"}>
                                     <Text
