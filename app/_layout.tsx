@@ -4,7 +4,7 @@ import AuthProvider from "@src/context/auth-context";
 import UserProvider from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Audio } from "expo-av";
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -37,7 +37,11 @@ const MainLayout = () => {
 
     useEffect(() => {
         changeScreenOrientation();
-        Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+        Audio.setAudioModeAsync({
+            playsInSilentModeIOS: true,
+            interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+            interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+        });
     }, []);
 
     useEffect(() => {
