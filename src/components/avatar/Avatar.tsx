@@ -1,4 +1,4 @@
-import { useUser } from "@src/context/UserContext/user-context";
+import { useAuthState } from "@src/context/auth-context";
 import { useRouter } from "expo-router";
 import { Avatar as TAvatar, Text } from "tamagui";
 
@@ -8,8 +8,10 @@ interface AvatarProps {
 }
 
 export default function Avatar({ size, onPress }: AvatarProps) {
-    const { user } = useUser();
+    const authState = useAuthState();
     const router = useRouter();
+
+    const user = authState?.user;
 
     const initials = user
         ? deriveIinitials(user.given_name, user.family_name)

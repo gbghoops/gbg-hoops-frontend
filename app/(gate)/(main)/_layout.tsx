@@ -1,4 +1,3 @@
-import { Header } from "@src/components/stack-header/StackHeader";
 import ProgramsProvider from "@src/context/ProgramsContext/programs-context";
 import UserProvider from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";

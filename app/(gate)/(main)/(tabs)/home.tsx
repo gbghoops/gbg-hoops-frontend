@@ -8,24 +8,17 @@ import Coach2Coach from "@src/components/screen-components/Home/Coach2Coach/Coac
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import ReferAFriend from "@src/components/screen-components/Home/ReferAFriend/ReferAFriend";
 import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
-import { useUser } from "@src/context/UserContext/user-context";
+import { useAuthState } from "@src/context/auth-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { ScrollView, Stack, Text, View } from "tamagui";
 
-const deriveIinitials = (first_name: string, last_name: string) => {
-    return `${first_name[0]}${last_name[0]}`;
-};
-
 export default function HomePage() {
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
+    const authState = useAuthState();
 
-    const { user } = useUser();
-
-    const initials = user
-        ? deriveIinitials(user.given_name, user.family_name)
-        : null;
+    const user = authState?.user;
 
     return (
         <Stack
