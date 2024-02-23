@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthProvider from "@src/context/auth-context";
+import UserProvider from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Audio } from "expo-av";
@@ -49,14 +50,16 @@ const MainLayout = () => {
         <TamaguiProvider config={TamaguiConfig}>
             <AuthProvider>
                 <QueryClientProvider client={queryClient}>
-                    <SafeAreaProvider>
-                        {loaded ? (
-                            <>
-                                <StatusBar style="light" />
-                                <Slot />
-                            </>
-                        ) : null}
-                    </SafeAreaProvider>
+                    <UserProvider>
+                        <SafeAreaProvider>
+                            {loaded ? (
+                                <>
+                                    <StatusBar style="light" />
+                                    <Slot />
+                                </>
+                            ) : null}
+                        </SafeAreaProvider>
+                    </UserProvider>
                 </QueryClientProvider>
             </AuthProvider>
         </TamaguiProvider>
