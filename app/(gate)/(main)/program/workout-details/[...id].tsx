@@ -9,6 +9,11 @@ import ExerciseHeaderButton from "@src/components/screen-components/Programs/Wor
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import {
+    EquipmentData,
+    ProgramDay,
+    ProgramExercise,
+} from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -47,6 +52,8 @@ export default function WorkoutDetails() {
         week: weekData,
         day: _activeDay,
     });
+
+    const equipments = getEquipmentFromDayData(dayData.dayData);
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -104,7 +111,7 @@ export default function WorkoutDetails() {
                         Equipment Needed
                     </Text>
                 </View>
-                <EquipmentList />
+                <EquipmentList equipments={equipments} />
 
                 <View px="$20">
                     {/* Exercises Header */}
@@ -226,6 +233,36 @@ export default function WorkoutDetails() {
         </View>
     );
 }
+
+const getEquipmentFromDayData = (dayData: ProgramDay) => {
+    // get unique equipments from dayData > daydata.exercises > activities > equipment
+
+    const equipments = dayData.exercises
+        .reduce((acc: EquipmentData[][], exercise) => {
+            const equipments = exercise.activities
+                .map((activity) => activity.equipment)
+                .filter((equipment) => equipment);
+            return [...acc, ...equipments];
+        }, [])
+        .flat() as EquipmentData[];
+
+    const uniqueEquipments = equipments.reduce(
+        (acc: EquipmentData[], equipment) => {
+            if (
+                acc.find(
+                    (accEquipment) =>
+                        accEquipment.contentful_id === equipment.contentful_id,
+                )
+            ) {
+                return acc;
+            }
+            return [...acc, equipment];
+        },
+        [],
+    );
+
+    return uniqueEquipments;
+};
 
 interface stylesProps {
     contentContainer: {
