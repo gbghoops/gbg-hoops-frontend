@@ -20,6 +20,12 @@ export interface ProgramSummary {
     sets: number;
 }
 
+export interface EquipmentData {
+    name: string;
+    thumbnail: string;
+    contentful_id: string;
+}
+
 export interface ProgramActivity {
     name: string;
     type?: exerciseType;
@@ -34,6 +40,7 @@ export interface ProgramActivity {
     video: string;
     instructional_video: string;
     thumbnail: string;
+    equipment: EquipmentData[];
     meta_workout_template: string[];
     meta_type: string[];
     meta_environment: string[];
