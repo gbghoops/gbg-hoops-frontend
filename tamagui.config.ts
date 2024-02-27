@@ -33,6 +33,12 @@ const animations = createAnimations({
         mass: 1.2,
         stiffness: 250,
     },
+    faster: {
+        type: "spring",
+        damping: 20,
+        mass: 1,
+        stiffness: 450,
+    },
     medium: {
         type: "spring",
         damping: 10,
@@ -53,6 +59,14 @@ const animations = createAnimations({
     "100ms": {
         type: "timing",
         duration: 100,
+    },
+    "200ms": {
+        type: "timing",
+        duration: 200,
+    },
+    "250ms": {
+        type: "timing",
+        duration: 250,
     },
 });
 
