@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GenderSelectOptions from "@src/components/radio-select/constants/gender-select-options";
 import HoopLevelSelectOptions from "@src/components/radio-select/constants/hoop-level-select-options";
 import PerformanceGoalSelectOptions from "@src/components/radio-select/constants/performance-goals-options";
