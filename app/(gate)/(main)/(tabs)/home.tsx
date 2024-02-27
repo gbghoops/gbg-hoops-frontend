@@ -128,23 +128,7 @@ export default function HomePage() {
 
                             {/* Workout of th Day */}
                             <View mt={"$20"} px={"$20"}>
-                                {/* Heading */}
-                                <View
-                                    fd={"row"}
-                                    jc={"space-between"}
-                                    ai={"center"}
-                                    mt={"$30"}
-                                >
-                                    <Text
-                                        ff={"$heading"}
-                                        fontSize={"$24"}
-                                        textTransform="uppercase"
-                                    >
-                                        Workout of the day
-                                    </Text>
-                                </View>
-
-                                <View mt={"$24"}>
+                                <View>
                                     <WorkoutOfTheDayCard />
                                 </View>
                             </View>
