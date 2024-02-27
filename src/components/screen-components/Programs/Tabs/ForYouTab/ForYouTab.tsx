@@ -27,27 +27,35 @@ export const ForYouTab = () => {
 
     const activeProgram = programs[0];
 
-    const weekData = activeProgram?.weeks[activeWeek - 1];
+    const isActiveProgramLocked = activeProgram && "is_locked" in activeProgram;
 
-    const dayData = getProgramDayInfo({ week: weekData, day: activeDay });
+    const weekData = !isActiveProgramLocked
+        ? activeProgram?.weeks[activeWeek - 1]
+        : null;
+
+    const dayData = weekData
+        ? getProgramDayInfo({ week: weekData, day: activeDay })
+        : null;
 
     return (
         <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
             <ForYouTabWrapper bottom={bottom}>
                 {/* My Program */}
-                <View px={"$20"} mt={"$20"}>
-                    <CurrentProgramCard
-                        coverImage={require("@assets/programs/basketball-strength-level-1.png")}
-                        currentDay={activeDay}
-                        workoutTitle={dayData?.dayData?.exercises[0].title}
-                        programTitle={activeProgram.name}
-                        onPress={() => {
-                            router.push(
-                                `/program/workout-details/${activeProgram.slug}`,
-                            );
-                        }}
-                    />
-                </View>
+                {dayData ? (
+                    <View px={"$20"} mt={"$20"}>
+                        <CurrentProgramCard
+                            coverImage={require("@assets/programs/basketball-strength-level-1.png")}
+                            currentDay={activeDay}
+                            workoutTitle={dayData?.dayData?.exercises[0].title}
+                            programTitle={activeProgram.name}
+                            onPress={() => {
+                                router.push(
+                                    `/program/workout-details/${activeProgram.slug}`,
+                                );
+                            }}
+                        />
+                    </View>
+                ) : null}
 
                 <BuildYoutWorkoutCards />
 
@@ -71,16 +79,6 @@ export const ForYouTab = () => {
 
                 {/* Newest Program */}
                 <View pt={"$30"} px={"$20"}>
-                    {/* Heading */}
-                    <View fd={"row"} ai={"center"} pb={"$10"}>
-                        <Text
-                            ff={"$heading"}
-                            fontSize={"$24"}
-                            textTransform="uppercase"
-                        >
-                            Newest Program
-                        </Text>
-                    </View>
                     <NewestProgramCard />
                 </View>
 

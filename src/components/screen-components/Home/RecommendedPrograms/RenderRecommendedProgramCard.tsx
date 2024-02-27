@@ -44,6 +44,7 @@ const RenderRecommendedProgramCard = () => {
                     programTitle={item.name}
                     slug={item.slug}
                     id={index}
+                    is_locked={"is_locked" in item}
                 />
             )}
         />

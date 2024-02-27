@@ -2,6 +2,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
 import AssessmentHeader from "@src/components/screen-components/Assessment/AssessmentHeader";
 import { AssessmentWrapper } from "@src/components/screen-components/Assessment/AssessmentWrapper";
+import ConfirmAssessmentExit from "@src/components/screen-components/Assessment/ConfirmAssessmentComplete";
 import AssessmentSlide1 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide1";
 import AssessmentSlide2 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide2";
 import AssessmentSlide3 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide3";
@@ -23,6 +24,8 @@ export default function AssessmentScreen() {
     const { bottom } = useSafeAreaInsets();
     const router = useRouter();
 
+    const { canGoBack, back, replace } = router;
+
     const {
         assessmentState,
         onSlide1ValuesChange,
@@ -33,8 +36,17 @@ export default function AssessmentScreen() {
         submitLoading,
     } = useAssessmentState();
 
-    const { canContinue, going, page, pageBack, pageNext } =
-        useAssessmentPagingState({ assessmentState });
+    const {
+        canContinue,
+        going,
+        page,
+        pageBack,
+        pageNext,
+        showAssessmentExitModal,
+        setShowAssessmentExitModal,
+    } = useAssessmentPagingState({ assessmentState });
+
+    console.log("SHow exit modal", showAssessmentExitModal);
 
     const performAssessmentNextAction = async () => {
         if (submitLoading) return;
@@ -160,6 +172,18 @@ export default function AssessmentScreen() {
                     isDisabled={!canContinue}
                 />
             </View>
+
+            <ConfirmAssessmentExit
+                confirmExit={(state) => {
+                    if (state) {
+                        return canGoBack() ? back() : replace("/home");
+                    }
+                }}
+                open={showAssessmentExitModal}
+                onOpenStateChange={(state) => {
+                    setShowAssessmentExitModal(state);
+                }}
+            />
         </YStack>
     );
 }

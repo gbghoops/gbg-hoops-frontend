@@ -10,6 +10,7 @@ export const base = {
     black: "#000000",
     transparent: "rgba(0, 0, 0, 0)",
     transclucent_dark_80: "rgba(0, 0, 0, 0.8)",
+    surface_primary_transparent: "rgba(53, 53, 53, 0.5)",
     error_red: "#FF6948",
 };
 export const colors = {

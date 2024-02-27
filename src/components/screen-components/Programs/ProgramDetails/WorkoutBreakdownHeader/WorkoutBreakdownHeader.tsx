@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import {
     MaterialCommunityIcons,
     MaterialIcons,
     Octicons,
 } from "@expo/vector-icons";
+import Link from "@src/components/link/Link";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { possibleDays, Program } from "@src/context/ProgramsContext/types";
+import {
+    LockedProgram,
+    possibleDays,
+    Program,
+} from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import {
@@ -32,6 +37,8 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
 
     const currentProgram = programs.find((program) => program.slug === slug);
 
+    const isProgramLocked = currentProgram && "is_locked" in currentProgram;
+
     if (!currentProgram) {
         return null;
     }
@@ -54,8 +61,9 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
         };
     }, []);
 
-    const { weeks, days, levels, workout_Duration } =
-        getProgramSummary(currentProgram);
+    const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
+
+    const programSummary = getProgramSummary(currentProgram);
 
     return (
         <View backgroundColor={"$surface_background"} pointerEvents="box-none">
@@ -150,6 +158,7 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                     {currentProgram?.description}
                 </Text>
             </View>
+
             <View mt={"$15"} px={"$20"} pointerEvents="none">
                 <View
                     backgroundColor={"$surface_primary"}
@@ -158,105 +167,188 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                     flexWrap="wrap"
                 >
                     {/* Weeks */}
-                    <View px={"$15"} py={"$10"} w="50%" fd="row" ai="center">
-                        <View mr={"$10"}>
-                            <Octicons
-                                name="calendar"
-                                color={colors.surface_accent}
-                                size={wn(20)}
-                            />
-                        </View>
-                        <Text
-                            fontSize={"$16"}
-                            fontFamily={"$acuminProSemibold"}
-                            mt="$2"
-                        >{`${weeks} Week${weeks > 1 ? "s" : ""}`}</Text>
-                    </View>
-                    {/* Days */}
-                    <View px={"$15"} py={"$10"} w="50%" fd="row" ai="center">
-                        <View mr={"$10"}>
-                            <MaterialCommunityIcons
-                                name="calendar-month-outline"
-                                color={colors.surface_accent}
-                                size={wn(25)}
-                            />
-                        </View>
-                        <Text
-                            fontSize={"$16"}
-                            mt="$2"
-                            fontFamily={"$acuminProSemibold"}
-                        >{`${days} Day${days > 1 ? "s" : ""} a week`}</Text>
-                    </View>
-                    {/* Levels */}
-                    <View px={"$15"} py={"$10"} w="50%" fd="row" ai="center">
-                        <View mr={"$10"}>
-                            <MaterialIcons
-                                name="bar-chart"
-                                color={colors.surface_accent}
-                                size={wn(25)}
-                            />
-                        </View>
-                        <Text
-                            fontSize={"$16"}
-                            mt="$2"
-                            fontFamily={"$acuminProSemibold"}
-                        >{`${levels}`}</Text>
-                    </View>
-                    {/* Workout Duration */}
-                    <View px={"$15"} py={"$10"} w="50%" fd="row" ai="center">
-                        <View mr={"$10"}>
-                            <Octicons
-                                name="clock"
-                                color={colors.surface_accent}
-                                size={wn(22)}
-                            />
-                        </View>
-                        <Text
-                            fontSize={"$16"}
-                            mt="$2"
-                            fontFamily={"$acuminProSemibold"}
-                        >{`${workout_Duration} minute workouts`}</Text>
-                    </View>
+                    {programSummary ? (
+                        <>
+                            <View
+                                px={"$15"}
+                                py={"$10"}
+                                w="50%"
+                                fd="row"
+                                ai="center"
+                            >
+                                <View mr={"$10"}>
+                                    <Octicons
+                                        name="calendar"
+                                        color={colors.surface_accent}
+                                        size={wn(20)}
+                                    />
+                                </View>
+                                <Text
+                                    fontSize={"$16"}
+                                    fontFamily={"$acuminProSemibold"}
+                                    mt="$2"
+                                >{`${programSummary.weeks} Week${programSummary.weeks > 1 ? "s" : ""}`}</Text>
+                            </View>
+                            {/* Days */}
+                            <View
+                                px={"$15"}
+                                py={"$10"}
+                                w="50%"
+                                fd="row"
+                                ai="center"
+                            >
+                                <View mr={"$10"}>
+                                    <MaterialCommunityIcons
+                                        name="calendar-month-outline"
+                                        color={colors.surface_accent}
+                                        size={wn(25)}
+                                    />
+                                </View>
+                                <Text
+                                    fontSize={"$16"}
+                                    mt="$2"
+                                    fontFamily={"$acuminProSemibold"}
+                                >{`${programSummary.days} Day${programSummary.days > 1 ? "s" : ""} a week`}</Text>
+                            </View>
+                            {/* Levels */}
+                            <View
+                                px={"$15"}
+                                py={"$10"}
+                                w="50%"
+                                fd="row"
+                                ai="center"
+                            >
+                                <View mr={"$10"}>
+                                    <MaterialIcons
+                                        name="bar-chart"
+                                        color={colors.surface_accent}
+                                        size={wn(25)}
+                                    />
+                                </View>
+                                <Text
+                                    fontSize={"$16"}
+                                    mt="$2"
+                                    fontFamily={"$acuminProSemibold"}
+                                >{`${programSummary.levels}`}</Text>
+                            </View>
+                            {/* Workout Duration */}
+                            <View
+                                px={"$15"}
+                                py={"$10"}
+                                w="50%"
+                                fd="row"
+                                ai="center"
+                            >
+                                <View mr={"$10"}>
+                                    <Octicons
+                                        name="clock"
+                                        color={colors.surface_accent}
+                                        size={wn(22)}
+                                    />
+                                </View>
+                                <Text
+                                    fontSize={"$16"}
+                                    mt="$2"
+                                    fontFamily={"$acuminProSemibold"}
+                                >{`${programSummary.workout_Duration} minute workouts`}</Text>
+                            </View>
+                        </>
+                    ) : null}
                 </View>
             </View>
-            <View
-                flexDirection="row"
-                ai="center"
-                backgroundColor={"$surface_background"}
-                py={"$15"}
-                px={"$20"}
-            >
-                <Text
-                    fontSize={"$24"}
-                    fontFamily={"$heading"}
-                    mt={wn(2)}
-                    pointerEvents="none"
-                >
-                    Workout Breakdown
-                </Text>
-
+            {!isProgramLocked ? (
                 <View
-                    ml="$10"
-                    onPress={onInfoPress}
-                    pointerEvents="box-none"
-                    pressStyle={{
-                        opacity: 0.75,
-                        scale: 0.9,
-                    }}
+                    flexDirection="row"
+                    ai="center"
+                    backgroundColor={"$surface_background"}
+                    py={"$15"}
+                    px={"$20"}
                 >
-                    <Octicons
-                        name="info"
-                        size={wn(20)}
-                        color={colors.gold}
+                    <Text
+                        fontSize={"$24"}
+                        fontFamily={"$heading"}
+                        mt={wn(2)}
+                        pointerEvents="none"
+                    >
+                        Workout Breakdown
+                    </Text>
+
+                    <View
+                        ml="$10"
                         onPress={onInfoPress}
-                    />
+                        pointerEvents="box-none"
+                        pressStyle={{
+                            opacity: 0.75,
+                            scale: 0.9,
+                        }}
+                    >
+                        <Octicons
+                            name="info"
+                            size={wn(20)}
+                            color={colors.gold}
+                            onPress={onInfoPress}
+                        />
+                    </View>
                 </View>
-            </View>
+            ) : (
+                <View m="$20">
+                    <View
+                        flexDirection="row"
+                        ai="center"
+                        backgroundColor={"$surface_primary"}
+                        py={"$15"}
+                        px={"$30"}
+                    >
+                        <View jc="center" ai="center">
+                            <Octicons
+                                name="upload"
+                                size={wn(25)}
+                                color={colors.text_accent}
+                            />
+                        </View>
+                        <View ml="$20">
+                            <Text fontFamily="$acuminProBold" fontSize="$20">
+                                Ready to level up?
+                            </Text>
+                            <View>
+                                <View flexDirection="row" mt={wn(10)}>
+                                    <Text
+                                        color="$surface_foreground"
+                                        fontSize={"$18"}
+                                        fontFamily={"$body"}
+                                    >
+                                        {`Tap the `}
+                                    </Text>
+
+                                    <Link
+                                        fontSize={wn(16)}
+                                        onPress={() => {
+                                            Linking.openURL(websiteUrl);
+                                        }}
+                                    >{`link to our website `}</Link>
+                                    <Text fontSize={"$18"} fontFamily={"$body"}>
+                                        and hit the upgrade
+                                    </Text>
+                                </View>
+                                <View mt="$5">
+                                    <Text
+                                        color="$surface_foreground"
+                                        fontSize={"$18"}
+                                        fontFamily={"$body"}
+                                    >
+                                        {`button for the premium GBG experience.`}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            )}
         </View>
     );
 };
 
-const getProgramSummary = (program: Program) => {
+const getProgramSummary = (program: Program | LockedProgram) => {
     const weeks = program.weeks.length;
 
     const days = Object.keys(program.weeks[0]).filter((day) =>

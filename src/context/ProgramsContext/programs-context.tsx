@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 import slugify from "slugify";
 
-import { IProgramsContext, Program } from "./types";
+import { IProgramsContext, LockedProgram, Program } from "./types";
 
 export const ProgramsContext = createContext<IProgramsContext | null>(null);
 
@@ -25,13 +25,19 @@ const fetchPrograms = async () => {
 
         const data = await response.json();
 
-        const programs: Program[] = data.programs;
+        const _programs: Program[] = data.programs;
+        const _lockedPrograms: LockedProgram[] = data.lockedPrograms;
 
-        if (!programs.length) {
-            return [];
-        }
+        const programs = [..._programs, ..._lockedPrograms];
 
         const slugifiedPrograms = programs.map((program) => {
+            if ("is_locked" in program) {
+                return {
+                    ...program,
+                    slug: slugify(program.name, { lower: true }),
+                };
+            }
+
             const slugifiedWeeks = program.weeks.map((week) => ({
                 ...week,
                 slug: slugify(week.name, { lower: true }),
@@ -51,7 +57,7 @@ const fetchPrograms = async () => {
 };
 
 export default function ProgramsProvider({ children }: PropsWithChildren) {
-    const { data, isLoading, error } = useQuery<Program[]>({
+    const { data, isLoading, error } = useQuery<(Program | LockedProgram)[]>({
         queryKey: ["programs"],
         queryFn: fetchPrograms,
     });

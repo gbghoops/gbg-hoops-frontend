@@ -55,14 +55,16 @@ export const WorkoutBreakdownTabs = () => {
     const currentProgram = programs.find((program) => program.slug === slug);
 
     useEffect(() => {
-        if (!currentProgram) return;
+        if (!currentProgram || "is_locked" in currentProgram) return;
 
         const week1 = currentProgram?.weeks[0];
         const week1Slug = slugify(week1.name, { lower: true });
         setCurrentTab(week1Slug);
     }, [currentProgram]);
 
-    if (!currentProgram) return null;
+    const isProgramLocked = currentProgram && "is_locked" in currentProgram;
+
+    if (!currentProgram || isProgramLocked) return null;
 
     const weeks = currentProgram?.weeks;
 

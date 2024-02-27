@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
@@ -10,13 +11,21 @@ export interface RecommendedProgramCardProps {
     renderIndex?: number;
     slug: string;
     video: string;
+    is_locked: boolean;
     programTitle: string;
     isVisible?: boolean;
     isLastItem?: boolean;
 }
 
 const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
-    const { video, programTitle, isLastItem, isVisible, slug } = props;
+    const {
+        video,
+        programTitle,
+        isLastItem,
+        isVisible,
+        slug,
+        is_locked = false,
+    } = props;
     const programVideo = useRef<Video>(null);
 
     const router = useRouter();
@@ -44,15 +53,27 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
         >
             {/* Video */}
             <View position="relative" width={wn(220)} height={wn(220)}>
-                <View
-                    position="absolute"
-                    top={0}
-                    left={0}
-                    zIndex={0}
-                    width={"100%"}
-                    height={"100%"}
-                    backgroundColor={"$surface_primary"}
-                />
+                {is_locked ? (
+                    <View
+                        position="absolute"
+                        top={0}
+                        left={0}
+                        zIndex={1}
+                        jc="center"
+                        ai="center"
+                        width={"100%"}
+                        height={"100%"}
+                        backgroundColor={"$surface_primary_transparent"}
+                    >
+                        <View width="$24" height="$24">
+                            <MaterialCommunityIcons
+                                name="lock-outline"
+                                color="white"
+                                size={24}
+                            />
+                        </View>
+                    </View>
+                ) : null}
                 <Video
                     ref={programVideo}
                     isMuted

@@ -12,7 +12,7 @@ export default function GatingLayout() {
     useEffect(() => {
         if (authState?.user) {
             if (user && !checkIfAssesmentComplete(user)) {
-                return router.replace("/assesment");
+                return router.replace("/assessment");
             }
 
             return router.replace("/home");
