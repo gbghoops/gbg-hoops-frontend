@@ -79,16 +79,6 @@ export const ForYouTab = () => {
 
                 {/* Newest Program */}
                 <View pt={"$30"} px={"$20"}>
-                    {/* Heading */}
-                    <View fd={"row"} ai={"center"} pb={"$10"}>
-                        <Text
-                            ff={"$heading"}
-                            fontSize={"$24"}
-                            textTransform="uppercase"
-                        >
-                            Newest Program
-                        </Text>
-                    </View>
                     <NewestProgramCard />
                 </View>
 
