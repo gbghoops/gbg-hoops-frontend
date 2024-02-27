@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import {
     MaterialCommunityIcons,
     MaterialIcons,
     Octicons,
 } from "@expo/vector-icons";
+import Link from "@src/components/link/Link";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import {
     LockedProgram,
@@ -59,6 +60,8 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
             });
         };
     }, []);
+
+    const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
 
     const programSummary = getProgramSummary(currentProgram);
 
@@ -287,7 +290,60 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                         />
                     </View>
                 </View>
-            ) : null}
+            ) : (
+                <View m="$20">
+                    <View
+                        flexDirection="row"
+                        ai="center"
+                        backgroundColor={"$surface_primary"}
+                        py={"$15"}
+                        px={"$30"}
+                    >
+                        <View jc="center" ai="center">
+                            <Octicons
+                                name="upload"
+                                size={wn(25)}
+                                color={colors.text_accent}
+                            />
+                        </View>
+                        <View ml="$20">
+                            <Text fontFamily="$acuminProBold" fontSize="$20">
+                                Ready to level up?
+                            </Text>
+                            <View>
+                                <View flexDirection="row" mt={wn(10)}>
+                                    <Text
+                                        color="$surface_foreground"
+                                        fontSize={"$18"}
+                                        fontFamily={"$body"}
+                                    >
+                                        {`Tap the `}
+                                    </Text>
+
+                                    <Link
+                                        fontSize={wn(16)}
+                                        onPress={() => {
+                                            Linking.openURL(websiteUrl);
+                                        }}
+                                    >{`link to our website `}</Link>
+                                    <Text fontSize={"$18"} fontFamily={"$body"}>
+                                        and hit the upgrade
+                                    </Text>
+                                </View>
+                                <View mt="$5">
+                                    <Text
+                                        color="$surface_foreground"
+                                        fontSize={"$18"}
+                                        fontFamily={"$body"}
+                                    >
+                                        {`button for the premium GBG experience.`}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            )}
         </View>
     );
 };
