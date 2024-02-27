@@ -1,6 +1,7 @@
-import { StyledImage } from "@src/components/styled-components";
+import { useRef } from "react";
+import { StyleSheet } from "react-native";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
+import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
@@ -11,25 +12,18 @@ const NewestProgramCard = () => {
     // TODO: Add proper logic to get Newest program
     const newestProgram = programs[programs.length - 1];
 
+    const isProgramLocked = newestProgram && "is_locked" in newestProgram;
+
     if (!newestProgram) return null;
 
-    const getNewestProgramImage = () => {
-        // Use first exercise image:
-        const firstWeek = newestProgram.weeks[0];
-        const firstExercise = getProgramDayInfo({
-            week: firstWeek,
-            day: 1,
-        })?.dayData?.exercises[0];
+    const programVideo = useRef<Video>(null);
 
-        return firstExercise?.activities[0].thumbnail;
-    };
-
-    const programImage = getNewestProgramImage();
+    const video = newestProgram.teaser;
 
     return (
         <View
             onPress={() => {
-                push(`/program/workout-details/${newestProgram.slug}/1/1`);
+                push(`/program/program-details/${newestProgram.slug}`);
             }}
             animation="medium"
             pressStyle={{
@@ -38,14 +32,24 @@ const NewestProgramCard = () => {
             }}
         >
             {/* Image */}
-            <View width={"100%"} height="$200">
-                <StyledImage
-                    source={{ uri: `https:${programImage}` }}
-                    resizeMode={"cover"}
-                    style={{
-                        width: "100%",
-                        height: "100%",
+            <View position="relative" width={"100%"} height="$200">
+                <View
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    zIndex={0}
+                    width={"100%"}
+                    height={"100%"}
+                    backgroundColor={"$surface_primary"}
+                />
+                <Video
+                    ref={programVideo}
+                    isMuted
+                    source={{
+                        uri: `https:${video}`,
                     }}
+                    resizeMode={ResizeMode.COVER}
+                    style={styles.VideoBackground}
                 />
             </View>
             {/* Title */}
@@ -57,5 +61,12 @@ const NewestProgramCard = () => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    VideoBackground: {
+        width: "100%",
+        height: "100%",
+    },
+});
 
 export default NewestProgramCard;

@@ -13,13 +13,20 @@ const WorkoutOfTheDayCard = () => {
 
     if (!workoutOfTheDayProgram) return null;
 
+    const isProgramLocked = "is_locked" in workoutOfTheDayProgram;
+
     const getNewestProgramImage = () => {
         // Use first exercise image:
-        const firstWeek = workoutOfTheDayProgram.weeks[0];
-        const firstExercise = getProgramDayInfo({
-            week: firstWeek,
-            day: 1,
-        })?.dayData?.exercises[0];
+        const firstWeek = !isProgramLocked
+            ? workoutOfTheDayProgram.weeks[0]
+            : null;
+
+        const firstExercise = firstWeek
+            ? getProgramDayInfo({
+                  week: firstWeek,
+                  day: 1,
+              })?.dayData?.exercises[0]
+            : null;
 
         return firstExercise?.activities[2].thumbnail;
     };
@@ -34,6 +41,8 @@ const WorkoutOfTheDayCard = () => {
                 );
             }}
             animation="medium"
+            borderWidth={1}
+            borderColor="red"
             pressStyle={{
                 opacity: 0.85,
                 scale: 0.995,

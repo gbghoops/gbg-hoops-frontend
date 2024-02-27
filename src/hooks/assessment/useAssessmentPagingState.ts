@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useRouter } from "expo-router";
 
 import { AssessmentState } from "./useAssessmentState";
 
@@ -11,6 +12,8 @@ export default function useAssessmentPagingState({
     assessmentState,
 }: AssessmentPagingState) {
     const [[page, going], setPage] = useState([0, 0]);
+    const [showAssessmentExitModal, setShowAssessmentExitModal] =
+        useState(false);
 
     const pageNext = () => {
         setPage((prev) => {
@@ -22,7 +25,11 @@ export default function useAssessmentPagingState({
 
     const pageBack = () => {
         setPage((prev) => {
-            if (prev[0] === 0) return prev;
+            if (prev[0] === 0) {
+                console.log("Set exit modal");
+                setShowAssessmentExitModal(true);
+                return prev;
+            }
 
             return [prev[0] - 1, -1];
         });
@@ -50,5 +57,7 @@ export default function useAssessmentPagingState({
         pageNext,
         pageBack,
         canContinue,
+        showAssessmentExitModal,
+        setShowAssessmentExitModal,
     };
 }

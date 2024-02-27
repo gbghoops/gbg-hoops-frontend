@@ -127,8 +127,17 @@ export interface Program {
     contentful_id: string;
 }
 
+export interface LockedProgram {
+    id: string;
+    slug: string;
+    name: string;
+    description: string;
+    is_locked: boolean;
+    teaser: string;
+}
+
 export interface IProgramsContext {
-    programs: Program[];
+    programs: (Program | LockedProgram)[];
     activeDay: number;
     activeWeek: number;
     programsFetching: boolean;

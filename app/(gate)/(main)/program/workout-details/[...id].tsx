@@ -38,7 +38,9 @@ export default function WorkoutDetails() {
 
     const currentProgram = programs.find((program) => program.slug === slug);
 
-    if (!currentProgram) {
+    const isProgramLocked = currentProgram && "is_locked" in currentProgram;
+
+    if (!currentProgram || isProgramLocked) {
         return null;
     }
 

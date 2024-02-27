@@ -96,7 +96,9 @@ export default function WorkoutScreen() {
         (program) => program.slug === programSlug,
     );
 
-    if (!currentProgram || !activeWeek || !activeDay) {
+    const isProgramLocked = currentProgram && "is_locked" in currentProgram;
+
+    if (!currentProgram || isProgramLocked || !activeWeek || !activeDay) {
         return null;
     }
 

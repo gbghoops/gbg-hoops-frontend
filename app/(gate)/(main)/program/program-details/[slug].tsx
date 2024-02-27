@@ -6,17 +6,23 @@ import Button from "@src/components/button/Button";
 import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import WorkoutBreakdownHeader from "@src/components/screen-components/Programs/ProgramDetails/WorkoutBreakdownHeader/WorkoutBreakdownHeader";
 import { WorkoutBreakdownTabs } from "@src/components/screen-components/Programs/ProgramDetails/WorkoutBreakdownTabs";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "tamagui";
 
 export default function ProgramDetails() {
     const router = useRouter();
+    const { programs } = usePrograms();
     const { bottom } = useSafeAreaInsets();
     const [showLegendSheet, setShowLegendSheet] = useState(false);
     const { slug } = useLocalSearchParams();
 
     const scrollViewRef = useRef<ScrollView>(null);
+
+    const currentProgram = programs.find((program) => program.slug === slug);
+
+    const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
     return (
         <View
@@ -50,23 +56,26 @@ export default function ProgramDetails() {
                 </ScrollView>
             </View>
 
-            <View
-                position="absolute"
-                zIndex={10}
-                bottom={bottom ? bottom + wn(20) : wn(50)}
-                px={"$20"}
-                width={"100%"}
-            >
-                <Button
-                    text="Add Program"
-                    onPress={() => {
-                        return router.replace(
-                            `/program/workout-details/${slug}`,
-                        );
-                    }}
-                    fullWidth
-                />
-            </View>
+            {!isProgramLocked ? (
+                <View
+                    position="absolute"
+                    zIndex={10}
+                    bottom={bottom ? bottom + wn(20) : wn(50)}
+                    px={"$20"}
+                    width={"100%"}
+                >
+                    <Button
+                        text="Add Program"
+                        onPress={() => {
+                            return router.replace(
+                                `/program/workout-details/${slug}`,
+                            );
+                        }}
+                        fullWidth
+                    />
+                </View>
+            ) : null}
+
             <LegendSheet
                 sheetOpen={showLegendSheet}
                 setSheetOpen={setShowLegendSheet}
