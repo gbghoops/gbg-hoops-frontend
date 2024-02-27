@@ -127,6 +127,9 @@ export interface Program {
     contentful_id: string;
 }
 
+export interface LockedProgramWeek {
+    name: string;
+}
 export interface LockedProgram {
     id: string;
     slug: string;
@@ -134,6 +137,7 @@ export interface LockedProgram {
     description: string;
     is_locked: boolean;
     teaser: string;
+    weeks: LockedProgramWeek[];
 }
 
 export interface IProgramsContext {
@@ -186,6 +190,16 @@ interface MappedDays {
     day_7: ProgramDay;
 }
 
+interface LockedMappedDays {
+    day_1: any[];
+    day_2: any[];
+    day_3: any[];
+    day_4: any[];
+    day_5: any[];
+    day_6: any[];
+    day_7: any[];
+}
+
 interface MappedDaysMemo {
     day_1_memo: string;
     day_2_memo: string;
@@ -199,6 +213,8 @@ interface MappedDaysMemo {
 export interface ProgramWeek extends MappedDays, MappedDaysMemo {
     name: string;
 }
+
+export interface LockedProgramWeek extends MappedDaysMemo, LockedMappedDays {}
 
 export interface ProgramWeekWithSlug extends ProgramWeek {
     slug: string;

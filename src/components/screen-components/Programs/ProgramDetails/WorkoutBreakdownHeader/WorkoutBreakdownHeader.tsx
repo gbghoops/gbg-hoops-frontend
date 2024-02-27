@@ -6,7 +6,11 @@ import {
     Octicons,
 } from "@expo/vector-icons";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { possibleDays, Program } from "@src/context/ProgramsContext/types";
+import {
+    LockedProgram,
+    possibleDays,
+    Program,
+} from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import {
@@ -56,9 +60,7 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
         };
     }, []);
 
-    const programSummary = !isProgramLocked
-        ? getProgramSummary(currentProgram)
-        : null;
+    const programSummary = getProgramSummary(currentProgram);
 
     return (
         <View backgroundColor={"$surface_background"} pointerEvents="box-none">
@@ -290,7 +292,7 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
     );
 };
 
-const getProgramSummary = (program: Program) => {
+const getProgramSummary = (program: Program | LockedProgram) => {
     const weeks = program.weeks.length;
 
     const days = Object.keys(program.weeks[0]).filter((day) =>
