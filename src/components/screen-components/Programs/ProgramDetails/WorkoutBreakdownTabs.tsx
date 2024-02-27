@@ -186,7 +186,7 @@ export const WorkoutBreakdownTabs = () => {
             >
                 <AnimatedYStack
                     key={currentTab}
-                    animation="100ms"
+                    animation="250ms"
                     x={0}
                     opacity={1}
                     flex={1}
@@ -220,7 +220,7 @@ const TabsRovingIndicator = ({
             position="absolute"
             backgroundColor="$gold"
             opacity={0.7}
-            animation="medium"
+            animation="250ms"
             height={"$10"}
             zIndex={1}
             enterStyle={{
