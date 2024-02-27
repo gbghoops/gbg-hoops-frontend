@@ -9,11 +9,7 @@ import ExerciseHeaderButton from "@src/components/screen-components/Programs/Wor
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
 import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import {
-    EquipmentData,
-    ProgramDay,
-    ProgramExercise,
-} from "@src/context/ProgramsContext/types";
+import { EquipmentData, ProgramDay } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -239,6 +235,8 @@ const getEquipmentFromDayData = (dayData: ProgramDay) => {
 
     const equipments = dayData.exercises
         .reduce((acc: EquipmentData[][], exercise) => {
+            if (!exercise.activities || !exercise.activities.length) return acc;
+
             const equipments = exercise.activities
                 .map((activity) => activity.equipment)
                 .filter((equipment) => equipment);
