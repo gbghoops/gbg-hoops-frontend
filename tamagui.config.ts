@@ -4,7 +4,7 @@ import { createMedia } from "@tamagui/react-native-media-driver";
 import { shorthands } from "@tamagui/shorthands";
 
 import { colors } from "@/src/styles/theme/colors";
-import { defaultSpacing, sizes } from "@/src/styles/theme/sizes";
+import { sizes } from "@/src/styles/theme/sizes";
 
 const tokens = createTokens({
     color: colors,

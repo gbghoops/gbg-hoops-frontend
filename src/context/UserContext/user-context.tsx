@@ -34,7 +34,7 @@ const fetchUser = async () => {
 
 interface UserContextProps {
     user: User | null;
-    error: any;
+    error: Error | null;
     userDataLoading: boolean;
 }
 export const UserContext = createContext<UserContextProps | null>(null);
