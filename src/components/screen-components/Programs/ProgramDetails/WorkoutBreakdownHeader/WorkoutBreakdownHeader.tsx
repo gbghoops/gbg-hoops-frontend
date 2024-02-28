@@ -66,24 +66,13 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
     const programSummary = getProgramSummary(currentProgram);
 
     return (
-        <View backgroundColor={"$surface_background"} pointerEvents="box-none">
-            <View
-                fd="row"
-                jc="space-between"
-                ai="center"
-                px={"$20"}
-                pointerEvents="box-none"
-            >
-                <Text
-                    fontFamily={"$heading"}
-                    fontSize={"$34"}
-                    pointerEvents="box-none"
-                >
+        <View backgroundColor={"$surface_background"}>
+            <View fd="row" jc="space-between" ai="center" px={"$20"}>
+                <Text fontFamily={"$heading"} fontSize={"$34"}>
                     {currentProgram?.name}
                 </Text>
                 <View
                     animation="medium"
-                    pointerEvents="box-none"
                     pressStyle={{
                         opacity: 0.75,
                         scale: 0.9,
@@ -92,13 +81,12 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                     <Octicons name="heart" size={wn(30)} color={colors.gold} />
                 </View>
             </View>
-            <View mt="$20" px={"$20"} pointerEvents="box-none">
+            <View mt="$20" px={"$20"}>
                 <View
                     height={wn(230)}
                     position="relative"
                     animation={"slider"}
                     opacity={1}
-                    pointerEvents="box-none"
                 >
                     {/* Controls Mask */}
                     <View
@@ -107,10 +95,9 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                         left={0}
                         width={"100%"}
                         height={"100%"}
-                        zIndex={1}
+                        zIndex={2}
                         justifyContent="center"
                         alignItems="center"
-                        pointerEvents="box-none"
                         onPress={() => {
                             setTeaserVideoPlaying(!teaserVideoPlaying);
                         }}
@@ -124,7 +111,6 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                             height={"100%"}
                             backgroundColor={"$surface_primary"}
                             animation={"fast"}
-                            pointerEvents="box-none"
                             opacity={teaserVideoPlaying ? 0 : 0.5}
                         />
 
@@ -134,7 +120,6 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                                 fontFamily={"$heading"}
                                 color={"$white"}
                                 fontSize={"$24"}
-                                pointerEvents="box-none"
                             >
                                 Play Instructional Video
                             </Text>
@@ -145,7 +130,6 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                         shouldPlay={teaserVideoPlaying}
                         isLooping
                         resizeMode={ResizeMode.COVER}
-                        pointerEvents="box-none"
                         source={{
                             uri: `https:${currentProgram?.teaser}`,
                         }}
@@ -153,13 +137,13 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                     />
                 </View>
             </View>
-            <View mt="$15" px={"$20"} pointerEvents="none">
+            <View mt="$15" px={"$20"}>
                 <Text fontFamily={"$body"} fontSize={"$16"} lineHeight={wn(20)}>
                     {currentProgram?.description}
                 </Text>
             </View>
 
-            <View mt={"$15"} px={"$20"} pointerEvents="none">
+            <View mt={"$15"} px={"$20"}>
                 <View
                     backgroundColor={"$surface_primary"}
                     p={"$10"}
@@ -264,19 +248,13 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                     py={"$15"}
                     px={"$20"}
                 >
-                    <Text
-                        fontSize={"$24"}
-                        fontFamily={"$heading"}
-                        mt={wn(2)}
-                        pointerEvents="none"
-                    >
+                    <Text fontSize={"$24"} fontFamily={"$heading"} mt={wn(2)}>
                         Workout Breakdown
                     </Text>
 
                     <View
                         ml="$10"
                         onPress={onInfoPress}
-                        pointerEvents="box-none"
                         pressStyle={{
                             opacity: 0.75,
                             scale: 0.9,
