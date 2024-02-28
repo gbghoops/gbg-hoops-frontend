@@ -112,7 +112,7 @@ const DayActivityExerciseList = ({
                                         borderBottomWidth={
                                             activities.length === index + 1
                                                 ? 0
-                                                : 0.5
+                                                : 0.25
                                         }
                                         borderColor="$border_primary"
                                         py="$10"

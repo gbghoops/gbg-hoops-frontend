@@ -29,7 +29,7 @@ const DayActivityAccordion = ({
         onAccordionOpenStateChange && onAccordionOpenStateChange(isOpen);
     }, [isOpen]);
 
-    const headerHeight = wn(80);
+    const headerHeight = wn(75);
 
     return (
         <View
@@ -126,12 +126,9 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         borderBottomColor: colors.border_primary,
         borderBottomWidth: 0.25,
-
-        paddingVertical: wn(15),
     },
     header: {
         width: "100%",
-        // marginBottom: wn(10),
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between",
