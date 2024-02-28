@@ -2,9 +2,10 @@ import { useRef } from "react";
 import { StyleSheet } from "react-native";
 import { FlashList } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { Program } from "@src/context/ProgramsContext/types";
+import { LockedProgram, Program } from "@src/context/ProgramsContext/types";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
@@ -25,7 +26,9 @@ export const AllProgramsTab = () => {
                 paddingBottom: bottom + wn(100),
             }}
             showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => `${item.contentful_id}-${index}`}
+            keyExtractor={(item, index) =>
+                `${"is_locked" in item ? item.id : item.contentful_id}-${index}`
+            }
             ListHeaderComponent={() => (
                 <View fd="row" jc="flex-end" px={"$20"}>
                     <Button text={`Filter`} secondary_transparent />
@@ -42,12 +45,13 @@ export const AllProgramsTab = () => {
 };
 
 interface ProgramCard {
-    program: Program;
+    program: Program | LockedProgram;
 }
 const ProgramCard = ({ program }: ProgramCard) => {
     const { slug, name, teaser } = program;
     const router = useRouter();
     const programVideo = useRef<Video>(null);
+    const is_locked = "is_locked" in program;
     return (
         <View
             f={1}
@@ -64,15 +68,27 @@ const ProgramCard = ({ program }: ProgramCard) => {
         >
             {/* Video */}
             <View position="relative" width={"100%"} height={wn(220)}>
-                <View
-                    position="absolute"
-                    top={0}
-                    left={0}
-                    zIndex={0}
-                    width={"100%"}
-                    height={"100%"}
-                    backgroundColor={"$surface_primary"}
-                />
+                {is_locked ? (
+                    <View
+                        position="absolute"
+                        top={0}
+                        left={0}
+                        zIndex={1}
+                        jc="center"
+                        ai="center"
+                        width={"100%"}
+                        height={"100%"}
+                        backgroundColor={"$surface_primary_transparent"}
+                    >
+                        <View width="$24" height="$24">
+                            <MaterialCommunityIcons
+                                name="lock-outline"
+                                color="white"
+                                size={24}
+                            />
+                        </View>
+                    </View>
+                ) : null}
                 <Video
                     ref={programVideo}
                     isMuted
