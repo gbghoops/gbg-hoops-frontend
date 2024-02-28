@@ -8,11 +8,13 @@ import { View } from "tamagui";
 
 interface WeekylActivitiesBreakdownProps {
     weekData: ProgramWeekWithSlug | null;
+    removeHorizontalPadding?: boolean;
     onDaysAccordionOpenStateChange?: (states: boolean[]) => void;
 }
 
 const WeeklyActivitiesBreakdown = ({
     weekData,
+    removeHorizontalPadding = false,
     onDaysAccordionOpenStateChange,
 }: WeekylActivitiesBreakdownProps) => {
     if (!weekData) return null;
@@ -27,10 +29,13 @@ const WeeklyActivitiesBreakdown = ({
         );
 
         // get the day data from the week datas
-        const daysData = dayKeys.map((dayKey) => {
-            // @ts-ignore
-            return week[dayKey] as ProgramDay;
-        });
+        const daysData = dayKeys
+            .map((dayKey) => {
+                const dayTitle = `Day ${dayKey.split("_")[1]}`;
+                // @ts-ignore
+                return { ...week[dayKey], dayTitle } as ProgramDay;
+            })
+            .filter((day) => !!day && day.exercises?.length > 0);
 
         return daysData;
     };
@@ -48,6 +53,7 @@ const WeeklyActivitiesBreakdown = ({
                 <DayActivityAccordion
                     index={i}
                     day={day}
+                    removeHorizontalPadding={removeHorizontalPadding}
                     key={day.exercises[0]?.title ?? i}
                     onAccordionOpenStateChange={(state) => {
                         setAccordionStates((prev) => {

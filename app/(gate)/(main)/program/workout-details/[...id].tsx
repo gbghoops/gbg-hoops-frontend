@@ -3,18 +3,23 @@ import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
+import DayActivityExerciseList from "@src/components/day-activity-exercise-list/DayActivityExerciseList";
 import AddExerciseSheet from "@src/components/screen-components/Programs/WorkoutDetails/AddExerciseSheet/AddExerciseSheet";
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
-import RenderExerciseList from "@src/components/screen-components/Programs/WorkoutDetails/RenderExerciseList/RenderExerciseList";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { EquipmentData, ProgramDay } from "@src/context/ProgramsContext/types";
+import {
+    EquipmentData,
+    ProgramDay,
+    ProgramWeekWithSlug,
+} from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import slugify from "slugify";
 import { ScrollView, Text, View } from "tamagui";
 
 // Icon sizes:
@@ -47,12 +52,28 @@ export default function WorkoutDetails() {
 
     const weekData = currentProgram?.weeks[_activeWeek - 1];
 
+    const slugifiedWeekData = {
+        ...weekData,
+        slug: slugify(weekData.name, { lower: true }),
+    };
+
+    // TODO: Use progression Data to get upcoming and completed workouts.
+    const upcomingWorkouts: ProgramWeekWithSlug = {
+        ...slugifiedWeekData,
+        day_1: undefined,
+        day_1_memo: undefined,
+    };
+
     const dayData = getProgramDayInfo({
         week: weekData,
         day: _activeDay,
     });
 
-    const equipments = getEquipmentFromDayData(dayData.dayData);
+    if (!dayData.dayData) return null;
+
+    const equipments = dayData.dayData
+        ? getEquipmentFromDayData(dayData.dayData)
+        : [];
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -157,7 +178,9 @@ export default function WorkoutDetails() {
                         </Text>
                     </View>
                     <View mt={"$20"}>
-                        <RenderExerciseList exerciseData={dayData.dayData} />
+                        <DayActivityExerciseList
+                            exerciseData={dayData.dayData}
+                        />
                     </View>
                 </View>
 
@@ -169,17 +192,11 @@ export default function WorkoutDetails() {
                     >
                         Upcoming Workouts
                     </Text>
-                    <View
-                        mt="$20"
-                        borderWidth={0.5}
-                        borderColor="$border_primary"
-                        height={wn(160)}
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Text fontFamily={"$body"} fontSize={"$18"}>
-                            Upcoming workout goes in here...
-                        </Text>
+                    <View>
+                        <WeeklyActivitiesBreakdown
+                            removeHorizontalPadding={true}
+                            weekData={upcomingWorkouts}
+                        />
                     </View>
                 </View>
 

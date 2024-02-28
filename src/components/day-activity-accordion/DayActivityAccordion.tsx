@@ -11,11 +11,13 @@ import { Text, View } from "tamagui";
 interface DayActivityAccordionProps {
     index: number;
     day: ProgramDay;
+    removeHorizontalPadding?: boolean;
     onAccordionOpenStateChange?: (isOpen: boolean) => void;
 }
 const DayActivityAccordion = ({
     day,
     index,
+    removeHorizontalPadding = false,
     onAccordionOpenStateChange,
 }: DayActivityAccordionProps) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +32,11 @@ const DayActivityAccordion = ({
     const headerHeight = wn(80);
 
     return (
-        <View py="$5" px="$5" height={isOpen ? "auto" : headerHeight}>
+        <View
+            py="$5"
+            px={!removeHorizontalPadding ? "$5" : 0}
+            height={isOpen ? "auto" : headerHeight}
+        >
             <Animated.View
                 layout={LinearTransition.springify()
                     .mass(1)
@@ -49,7 +55,7 @@ const DayActivityAccordion = ({
                         jc="space-between"
                         width={"100%"}
                         paddingVertical={"$15"}
-                        paddingHorizontal={"$15"}
+                        paddingHorizontal={!removeHorizontalPadding ? "$15" : 0}
                         animation={"medium"}
                         pressStyle={{
                             opacity: 0.55,
@@ -59,7 +65,7 @@ const DayActivityAccordion = ({
                     >
                         <View maxWidth={"$200"}>
                             <Text fontSize={"$14"} fontFamily={"$body"}>
-                                {`Day ${index + 1}`}
+                                {day.dayTitle || `Day ${index + 1}`}
                             </Text>
                             <Text
                                 fontSize={"$16"}
@@ -101,7 +107,10 @@ const DayActivityAccordion = ({
                     </View>
                 </RNView>
                 {/* Content */}
-                <View minHeight={"$50"} px={"$20"}>
+                <View
+                    minHeight={"$50"}
+                    px={!removeHorizontalPadding ? "$20" : 0}
+                >
                     {isOpen ? (
                         <DayActivityExerciseList exerciseData={day} />
                     ) : null}
@@ -117,7 +126,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         borderBottomColor: colors.border_primary,
         borderBottomWidth: 0.25,
-        paddingHorizontal: wn(10),
+
         paddingVertical: wn(15),
     },
     header: {

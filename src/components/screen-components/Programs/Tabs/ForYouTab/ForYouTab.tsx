@@ -41,7 +41,7 @@ export const ForYouTab = () => {
         <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
             <ForYouTabWrapper bottom={bottom}>
                 {/* My Program */}
-                {dayData ? (
+                {dayData && dayData.dayData ? (
                     <View px={"$20"} mt={"$20"}>
                         <CurrentProgramCard
                             coverImage={require("@assets/programs/basketball-strength-level-1.png")}
