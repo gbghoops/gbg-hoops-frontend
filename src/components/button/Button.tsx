@@ -1,6 +1,4 @@
 import { ActivityIndicator, FlexAlignType } from "react-native";
-import usePressInteractionStates from "@src/hooks/usePressInteractionStates";
-import { MotiPressable } from "moti/interactions";
 import { View } from "tamagui";
 
 import { StyledButton, StyledText } from "./Button.styles";
@@ -29,24 +27,6 @@ export interface ButtonProps {
     isDisabled?: boolean;
 }
 
-// Moti Loading Animation
-const loadingAnimation = (loading: boolean) =>
-    loading && {
-        opacity: 1,
-        from: {
-            opacity: 0.5,
-        },
-        animate: {
-            opacity: 0.25,
-        },
-        transition: {
-            loop: true,
-            type: "spring" as const,
-            mass: 20,
-            damping: 10,
-        },
-    };
-
 export default function Button(props: ButtonProps) {
     const {
         loading = false,
@@ -62,15 +42,6 @@ export default function Button(props: ButtonProps) {
         onPress,
     } = props;
 
-    const { animateState, transitionStyle } = usePressInteractionStates({
-        scale: 0.9925,
-        duration: 200,
-    });
-
-    // We are wrapping the button component with a MotiPressable component
-    // So we can handle micro-interactions. The Tamagui View component isn't making
-    // Changes based on `pressStyle` after upgrading past `1.65.0`.
-    // This is a workaround for that issue.
     return (
         <StyledButton
             isDisabled={isDisabled || loading}

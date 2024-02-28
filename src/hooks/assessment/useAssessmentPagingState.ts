@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { useRouter } from "expo-router";
 
 import { AssessmentState } from "./useAssessmentState";
 

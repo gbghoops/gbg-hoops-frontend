@@ -3,11 +3,8 @@ import { Dimensions, Modal } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
-import {
-    heightNormalized as hn,
-    widthNormalized as wn,
-} from "@src/utils/normalize-dimensions";
-import { AVPlaybackSource, ResizeMode, Video } from "expo-av";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { AVPlaybackSource, Video } from "expo-av";
 import { View } from "tamagui";
 
 interface FullscreenVideoModalProps {

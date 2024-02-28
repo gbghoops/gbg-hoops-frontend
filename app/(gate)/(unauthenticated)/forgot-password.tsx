@@ -77,7 +77,3 @@ export default function ForgotPassword() {
         </View>
     );
 }
-
-// Sub Components
-
-// Sub Components

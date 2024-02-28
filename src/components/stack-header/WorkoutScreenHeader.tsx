@@ -1,9 +1,8 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
-import { Avatar, Text, View } from "tamagui";
+import { View } from "tamagui";
 
 interface ProgressState {
     progress: number;
@@ -21,8 +20,6 @@ export const WorkoutHeader = ({
     canGoBack = true,
 }: HeaderProps) => {
     const { back, canGoBack: checkCanGoBack, replace } = useRouter();
-
-    const router = useRouter();
 
     const canRouterGoBack = checkCanGoBack();
 
