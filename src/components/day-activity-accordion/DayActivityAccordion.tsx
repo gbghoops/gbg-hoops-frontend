@@ -11,12 +11,14 @@ import { Text, View } from "tamagui";
 interface DayActivityAccordionProps {
     index: number;
     day: ProgramDay;
+    showCompletedTag?: boolean;
     removeHorizontalPadding?: boolean;
     onAccordionOpenStateChange?: (isOpen: boolean) => void;
 }
 const DayActivityAccordion = ({
     day,
     index,
+    showCompletedTag = false,
     removeHorizontalPadding = false,
     onAccordionOpenStateChange,
 }: DayActivityAccordionProps) => {
@@ -63,7 +65,7 @@ const DayActivityAccordion = ({
                         }}
                         onPress={() => setIsOpen(!isOpen)}
                     >
-                        <View maxWidth={"$200"}>
+                        <View maxWidth={"$200"} h="100%">
                             <Text fontSize={"$14"} fontFamily={"$body"}>
                                 {day.dayTitle || `Day ${index + 1}`}
                             </Text>
@@ -78,29 +80,67 @@ const DayActivityAccordion = ({
                             </Text>
                         </View>
 
-                        <View fd="row" ai="center">
-                            <Text fontSize={"$14"} fontFamily={"$body"}>
-                                {exerciseCount} Exercise
-                                {exerciseCount > 1 ? "s" : ""}
-                            </Text>
-                            <View
-                                ml="$5"
-                                h={"$30"}
-                                w={"$30"}
-                                jc="center"
-                                ai="center"
-                            >
+                        <View height={"100%"} alignSelf="flex-end">
+                            {showCompletedTag ? (
                                 <View
-                                    animation={"medium"}
-                                    transform={[
-                                        { rotate: isOpen ? "-90deg" : "0deg" },
-                                    ]}
+                                    backgroundColor="$surface_accent"
+                                    py="$2"
+                                    px="$5"
+                                    mb="$5"
+                                    br="$6"
+                                    fd="row"
+                                    ai="center"
                                 >
-                                    <Octicons
-                                        name="chevron-down"
-                                        size={18}
-                                        color={colors.gold}
-                                    />
+                                    <View mr={wn(5)}>
+                                        <Octicons
+                                            name="check-circle"
+                                            size={12}
+                                            color={colors.text_secondary}
+                                        />
+                                    </View>
+                                    <Text
+                                        fontFamily={"$acuminProSemibold"}
+                                        color="$text_secondary"
+                                        textTransform="uppercase"
+                                        mt={wn(2)}
+                                    >
+                                        Completed
+                                    </Text>
+                                </View>
+                            ) : null}
+                            <View fd="row" ai="center" alignSelf="flex-end">
+                                <Text
+                                    fontSize={"$14"}
+                                    fontFamily={"$body"}
+                                    alignSelf="flex-end"
+                                >
+                                    {exerciseCount} Exercise
+                                    {exerciseCount > 1 ? "s" : ""}
+                                </Text>
+                                <View
+                                    ml="$5"
+                                    h={"$20"}
+                                    w={"$20"}
+                                    jc="center"
+                                    ai="center"
+                                    alignSelf="flex-end"
+                                >
+                                    <View
+                                        animation={"medium"}
+                                        transform={[
+                                            {
+                                                rotate: isOpen
+                                                    ? "-90deg"
+                                                    : "0deg",
+                                            },
+                                        ]}
+                                    >
+                                        <Octicons
+                                            name="chevron-down"
+                                            size={18}
+                                            color={colors.gold}
+                                        />
+                                    </View>
                                 </View>
                             </View>
                         </View>

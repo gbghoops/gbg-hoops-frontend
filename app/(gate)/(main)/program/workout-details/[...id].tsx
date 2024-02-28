@@ -58,10 +58,36 @@ export default function WorkoutDetails() {
     };
 
     // TODO: Use progression Data to get upcoming and completed workouts.
+    const removeActiveDay = (day: number) => {
+        switch (day) {
+            case 1:
+                return { day_1: undefined, day_1_memo: undefined };
+            case 2:
+                return { day_2: undefined, day_2_memo: undefined };
+            case 3:
+                return { day_3: undefined, day_3_memo: undefined };
+            case 4:
+                return { day_4: undefined, day_4_memo: undefined };
+            case 5:
+                return { day_5: undefined, day_5_memo: undefined };
+            case 6:
+                return { day_6: undefined, day_6_memo: undefined };
+            case 7:
+                return { day_7: undefined, day_7_memo: undefined };
+            default:
+                return {};
+        }
+    };
+
     const upcomingWorkouts: ProgramWeekWithSlug = {
         ...slugifiedWeekData,
-        day_1: undefined,
-        day_1_memo: undefined,
+        ...removeActiveDay(_activeDay),
+    };
+
+    // TODO: Use progression Data to get upcoming and completed workouts.
+    // @ts-ignore
+    const completedWorkouts: ProgramWeekWithSlug = {
+        ...removeActiveDay(_activeDay),
     };
 
     const dayData = getProgramDayInfo({
@@ -208,17 +234,11 @@ export default function WorkoutDetails() {
                     >
                         Completed Workouts
                     </Text>
-                    <View
-                        mt="$20"
-                        borderWidth={0.5}
-                        borderColor="$border_primary"
-                        height={wn(160)}
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Text fontFamily={"$body"} fontSize={"$18"}>
-                            Completed workout goes in here...
-                        </Text>
+                    <View mt="$20">
+                        <WeeklyActivitiesBreakdown
+                            removeHorizontalPadding={true}
+                            weekData={completedWorkouts}
+                        />
                     </View>
                 </View>
             </ScrollView>

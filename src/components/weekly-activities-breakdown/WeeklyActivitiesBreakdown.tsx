@@ -4,7 +4,7 @@ import {
     possibleDays,
     ProgramWeekWithSlug,
 } from "@src/context/ProgramsContext/types";
-import { View } from "tamagui";
+import { Text, View } from "tamagui";
 
 interface WeekylActivitiesBreakdownProps {
     weekData: ProgramWeekWithSlug | null;
@@ -30,12 +30,13 @@ const WeeklyActivitiesBreakdown = ({
 
         // get the day data from the week datas
         const daysData = dayKeys
+            // @ts-ignore
+            .filter((dayKey) => !!week[dayKey])
             .map((dayKey) => {
                 const dayTitle = `Day ${dayKey.split("_")[1]}`;
                 // @ts-ignore
                 return { ...week[dayKey], dayTitle } as ProgramDay;
-            })
-            .filter((day) => !!day && day.exercises?.length > 0);
+            });
 
         return daysData;
     };
@@ -49,21 +50,36 @@ const WeeklyActivitiesBreakdown = ({
 
     return (
         <View>
-            {daysData.map((day, i) => (
-                <DayActivityAccordion
-                    index={i}
-                    day={day}
-                    removeHorizontalPadding={removeHorizontalPadding}
-                    key={day.exercises[0]?.title ?? i}
-                    onAccordionOpenStateChange={(state) => {
-                        setAccordionStates((prev) => {
-                            const newState = [...prev];
-                            newState[daysData.indexOf(day)] = state;
-                            return newState;
-                        });
-                    }}
-                />
-            ))}
+            {daysData.length ? (
+                daysData.map((day, i) => (
+                    <DayActivityAccordion
+                        index={i}
+                        day={day}
+                        removeHorizontalPadding={removeHorizontalPadding}
+                        key={day.exercises[0]?.title ?? i}
+                        onAccordionOpenStateChange={(state) => {
+                            setAccordionStates((prev) => {
+                                const newState = [...prev];
+                                newState[daysData.indexOf(day)] = state;
+                                return newState;
+                            });
+                        }}
+                    />
+                ))
+            ) : (
+                <View
+                    w="100%"
+                    h="$80"
+                    jc="center"
+                    ai="center"
+                    borderWidth={1}
+                    borderColor={"$border_primary"}
+                >
+                    <Text fontFamily={"$acuminProBold"} fontSize={"$16"}>
+                        No data to display
+                    </Text>
+                </View>
+            )}
         </View>
     );
 };
