@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View as RNView } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { Octicons } from "@expo/vector-icons";
+import DayActivityExerciseList from "@src/components/day-activity-exercise-list/DayActivityExerciseList";
 import { ProgramDay } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
-
-import RenderExerciseList from "../WorkoutDetails/RenderExerciseList/RenderExerciseList";
 
 interface DaysAccordionProps {
     index: number;
@@ -103,7 +102,9 @@ const DaysAccordion = ({
                 </RNView>
                 {/* Content */}
                 <View minHeight={"$50"} px={"$20"}>
-                    {isOpen ? <RenderExerciseList exerciseData={day} /> : null}
+                    {isOpen ? (
+                        <DayActivityExerciseList exerciseData={day} />
+                    ) : null}
                 </View>
             </Animated.View>
         </View>

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
+import DayActivityAccordion from "@src/components/day-activity-accordion/DayActivityAccordion";
 import {
     possibleDays,
     ProgramWeekWithSlug,
 } from "@src/context/ProgramsContext/types";
 import { View } from "tamagui";
-
-import DaysAccordion from "./DaysAccordion";
 
 interface WeekylActivitiesBreakdownProps {
     weekData: ProgramWeekWithSlug | null;
@@ -45,7 +44,7 @@ const WeeklyActivitiesBreakdown = ({
     return (
         <View>
             {daysData.map((day, i) => (
-                <DaysAccordion
+                <DayActivityAccordion
                     index={i}
                     day={day}
                     key={day.exercises[0]?.title ?? i}

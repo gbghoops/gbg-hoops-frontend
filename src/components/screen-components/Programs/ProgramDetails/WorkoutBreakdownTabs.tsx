@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { ProgramWeekWithSlug } from "@src/context/ProgramsContext/types";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -16,8 +17,6 @@ import {
     Text,
     YStack,
 } from "tamagui";
-
-import WeeklyActivitiesBreakdown from "./WeeklyActivitiesBreakdown";
 
 export const WorkoutBreakdownTabs = () => {
     const { programs } = usePrograms();
