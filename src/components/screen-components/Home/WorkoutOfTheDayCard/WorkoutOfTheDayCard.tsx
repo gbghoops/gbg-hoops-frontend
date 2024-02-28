@@ -53,8 +53,6 @@ const WorkoutOfTheDayCard = () => {
                     );
                 }}
                 animation="medium"
-                borderWidth={1}
-                borderColor="red"
                 pressStyle={{
                     opacity: 0.85,
                     scale: 0.995,
