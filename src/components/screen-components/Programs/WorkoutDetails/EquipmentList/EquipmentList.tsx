@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import FastImage from "react-native-fast-image";
 import { FlashList } from "@shopify/flash-list";
 import { StyledImage } from "@src/components/styled-components";
 import { EquipmentData } from "@src/context/ProgramsContext/types";
@@ -56,7 +57,7 @@ const EquipmentItem = ({
                     overflow="hidden"
                     backgroundColor={"$surface_primary"}
                 >
-                    <StyledImage
+                    <FastImage
                         source={{ uri: `https:${thumbnail}` }}
                         width={imageDimensions}
                         height={imageDimensions}

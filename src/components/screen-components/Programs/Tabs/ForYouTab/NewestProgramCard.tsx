@@ -1,7 +1,8 @@
 import { useRef } from "react";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { colors } from "@src/styles/theme/colors";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
@@ -75,7 +76,20 @@ const NewestProgramCard = () => {
                         }}
                         resizeMode={ResizeMode.COVER}
                         style={styles.VideoBackground}
-                    />
+                    >
+                        <View
+                            w="100%"
+                            h="100%"
+                            jc="center"
+                            ai="center"
+                            backgroundColor="$surface_primary"
+                        >
+                            <ActivityIndicator
+                                size="small"
+                                color={colors.gold}
+                            />
+                        </View>
+                    </Video>
                 </View>
                 {/* Title */}
                 <View jc={"space-between"} fd={"row"} ai={"center"} mt="$15">

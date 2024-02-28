@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Linking, StyleSheet } from "react-native";
+import { ActivityIndicator, Linking, StyleSheet } from "react-native";
 import {
     MaterialCommunityIcons,
     MaterialIcons,
@@ -134,7 +134,20 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                             uri: `https:${currentProgram?.teaser}`,
                         }}
                         style={styles.TeaserVideo}
-                    />
+                    >
+                        <View
+                            w="100%"
+                            h="100%"
+                            jc="center"
+                            ai="center"
+                            backgroundColor="$surface_primary"
+                        >
+                            <ActivityIndicator
+                                size="small"
+                                color={colors.gold}
+                            />
+                        </View>
+                    </Video>
                 </View>
             </View>
             <View mt="$15" px={"$20"}>

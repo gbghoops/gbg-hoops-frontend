@@ -198,11 +198,18 @@ export default function WorkoutDetails() {
 
                 {/* Exercise List */}
                 <View mx={"$20"}>
-                    <View>
-                        <Text fontFamily={"$body"} fontSize={"$18"} mt={"$20"}>
-                            {dayData.dayMemo}
-                        </Text>
-                    </View>
+                    {dayData.dayMemo ? (
+                        <View>
+                            <Text
+                                fontFamily={"$body"}
+                                fontSize={"$18"}
+                                mt={"$20"}
+                            >
+                                {dayData.dayMemo}
+                            </Text>
+                        </View>
+                    ) : null}
+
                     <View mt={"$20"}>
                         <DayActivityExerciseList
                             exerciseData={dayData.dayData}

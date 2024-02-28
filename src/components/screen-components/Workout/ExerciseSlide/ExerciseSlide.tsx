@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
 import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
+import { colors } from "@src/styles/theme/colors";
 import {
     Audio,
     InterruptionModeAndroid,
@@ -246,6 +247,7 @@ const ExerciseSlide = ({
                                 position="relative"
                                 animation={"slider"}
                                 opacity={1}
+                                backgroundColor={"$surface_primary"}
                             >
                                 {/* Controls Mask */}
                                 <View
@@ -258,6 +260,8 @@ const ExerciseSlide = ({
                                     justifyContent="center"
                                     alignItems="center"
                                     onPress={() => {
+                                        if (!videoLoaded) return;
+
                                         setQueueExercisePlaying(
                                             !queueExercisePlaying,
                                         );
@@ -299,7 +303,9 @@ const ExerciseSlide = ({
                                             color={"$white"}
                                             fontSize={"$24"}
                                         >
-                                            Tap or press play to start
+                                            {!videoLoaded
+                                                ? `Loading...`
+                                                : `Tap or press play to start`}
                                         </Text>
                                     ) : null}
                                 </View>
@@ -307,7 +313,7 @@ const ExerciseSlide = ({
                                     ref={VideoRef}
                                     shouldPlay={exercisePlaying}
                                     isLooping
-                                    resizeMode={ResizeMode.CONTAIN}
+                                    resizeMode={ResizeMode.COVER}
                                     positionMillis={
                                         exerciseCompleted ? 0 : undefined
                                     }
@@ -319,7 +325,22 @@ const ExerciseSlide = ({
                                     onLoad={() => {
                                         setVideoLoaded(true);
                                     }}
-                                />
+                                >
+                                    <View
+                                        w="100%"
+                                        h="100%"
+                                        jc="center"
+                                        ai="center"
+                                        backgroundColor="$surface_primary"
+                                        borderWidth={1}
+                                        borderColor="$border_primary"
+                                    >
+                                        <ActivityIndicator
+                                            size="small"
+                                            color={colors.gold}
+                                        />
+                                    </View>
+                                </Video>
                             </View>
                         )}
                     </View>
@@ -584,7 +605,10 @@ const ExerciseSlide = ({
                                             opacity: 0.65,
                                             scale: 0.98,
                                         }}
+                                        opacity={videoLoaded ? 1 : 0.5}
                                         onPress={() => {
+                                            if (!videoLoaded) return;
+
                                             isRestSlide
                                                 ? setExercisePlaying(
                                                       !exercisePlaying,
