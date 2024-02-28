@@ -1,4 +1,4 @@
 export interface AnimateStates {
-	pressed: boolean;
-	hovered: boolean;
+    pressed: boolean;
+    hovered: boolean;
 }
