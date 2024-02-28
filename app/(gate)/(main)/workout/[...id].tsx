@@ -111,19 +111,25 @@ export default function WorkoutScreen() {
     }
 
     const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
-        (acc, exercise) =>
-            exercise.activities
+        (acc, exercise) => {
+            if (!exercise.activities) {
+                return acc;
+            }
+
+            return exercise.activities
                 .map((activity) => ({
                     ...activity,
                     phase: exercise.phase,
                     execution_mode: exercise.type,
                 }))
-                .concat(acc),
+                .concat(acc);
+        },
         [],
     );
 
     const flattenedActivities =
         flattenActivitiesBySetsAndLaterality(dayActivities);
+
     const activeExercises = flattenedActivities.filter((a) => a.type);
 
     const onExerciseComplete = (index: number) => {
@@ -273,6 +279,8 @@ export default function WorkoutScreen() {
 const flattenActivitiesBySetsAndLaterality = (
     activities: ActivityWithPhase[],
 ) => {
+    if (!activities.length) return [];
+
     const bySet = activities.reduce<ActivityWithPhase[]>((acc, item) => {
         if (item.sets > 1) {
             const sets = Array.from({ length: item.sets }, (_, index) => ({

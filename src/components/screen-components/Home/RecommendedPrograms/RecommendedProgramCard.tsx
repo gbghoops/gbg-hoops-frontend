@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
@@ -74,6 +75,7 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                         </View>
                     </View>
                 ) : null}
+
                 <Video
                     ref={programVideo}
                     isMuted
@@ -82,7 +84,17 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                     }}
                     resizeMode={ResizeMode.COVER}
                     style={styles.VideoBackground}
-                />
+                >
+                    <View
+                        w="100%"
+                        h="100%"
+                        jc="center"
+                        ai="center"
+                        backgroundColor="$surface_primary"
+                    >
+                        <ActivityIndicator size="small" color={colors.gold} />
+                    </View>
+                </Video>
             </View>
             <View mt="$10">
                 <Text color={"$gold"} fontFamily={"$heading"} fontSize="$16">
