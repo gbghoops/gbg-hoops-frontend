@@ -1,10 +1,11 @@
-import { StyleSheet } from "react-native";
-import { StyledImage } from "@src/components/styled-components";
+import { ActivityIndicator, StyleSheet } from "react-native";
+import Image from "react-native-image-progress";
 import {
     ProgramDay,
     ProgramSummary,
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
+import { colors } from "@src/styles/theme/colors";
 import { Text, View } from "tamagui";
 
 interface DayActivityExerciseListProps {
@@ -122,10 +123,16 @@ const DayActivityExerciseList = ({
                                             height={"$100"}
                                             backgroundColor={"$surface_primary"}
                                         >
-                                            <StyledImage
+                                            <Image
                                                 source={{
                                                     uri: `http:${exercise.thumbnail}`,
                                                 }}
+                                                indicator={() => (
+                                                    <ActivityIndicator
+                                                        size="small"
+                                                        color={colors.gold}
+                                                    />
+                                                )}
                                                 style={styles.exerciseImage}
                                             />
                                         </View>

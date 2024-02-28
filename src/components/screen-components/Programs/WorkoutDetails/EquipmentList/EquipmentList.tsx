@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
-import FastImage from "react-native-fast-image";
+import { ActivityIndicator, StyleSheet } from "react-native";
+import Image from "react-native-image-progress";
 import { FlashList } from "@shopify/flash-list";
-import { StyledImage } from "@src/components/styled-components";
 import { EquipmentData } from "@src/context/ProgramsContext/types";
+import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
@@ -33,6 +33,10 @@ const EquipmentListStyles = StyleSheet.create({
         paddingLeft: wn(20),
         paddingRight: wn(20),
     },
+    image: {
+        width: wn(120),
+        height: wn(120),
+    },
 });
 
 interface EquipmentItemProps extends EquipmentData {
@@ -43,8 +47,6 @@ const EquipmentItem = ({
     name,
     isLastItem = false,
 }: EquipmentItemProps) => {
-    const imageDimensions = wn(120);
-
     return (
         <View pr={!isLastItem ? "$12" : "0%"}>
             <View>
@@ -57,10 +59,15 @@ const EquipmentItem = ({
                     overflow="hidden"
                     backgroundColor={"$surface_primary"}
                 >
-                    <FastImage
+                    <Image
                         source={{ uri: `https:${thumbnail}` }}
-                        width={imageDimensions}
-                        height={imageDimensions}
+                        indicator={() => (
+                            <ActivityIndicator
+                                size="small"
+                                color={colors.gold}
+                            />
+                        )}
+                        style={EquipmentListStyles.image}
                         resizeMode="contain"
                     />
                 </View>
