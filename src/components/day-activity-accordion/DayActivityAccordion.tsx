@@ -8,16 +8,16 @@ import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
-interface DaysAccordionProps {
+interface DayActivityAccordionProps {
     index: number;
     day: ProgramDay;
     onAccordionOpenStateChange?: (isOpen: boolean) => void;
 }
-const DaysAccordion = ({
+const DayActivityAccordion = ({
     day,
     index,
     onAccordionOpenStateChange,
-}: DaysAccordionProps) => {
+}: DayActivityAccordionProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const title = day.exercises[0]?.title;
     const summary = day.summary;
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DaysAccordion;
+export default DayActivityAccordion;

@@ -8,7 +8,7 @@ import { View } from "tamagui";
 
 interface WeekylActivitiesBreakdownProps {
     weekData: ProgramWeekWithSlug | null;
-    onDaysAccordionOpenStateChange: (states: boolean[]) => void;
+    onDaysAccordionOpenStateChange?: (states: boolean[]) => void;
 }
 
 const WeeklyActivitiesBreakdown = ({
@@ -36,7 +36,8 @@ const WeeklyActivitiesBreakdown = ({
     };
 
     useEffect(() => {
-        onDaysAccordionOpenStateChange(accordionStates);
+        onDaysAccordionOpenStateChange &&
+            onDaysAccordionOpenStateChange(accordionStates);
     }, [accordionStates]);
 
     const daysData = getDaysData(weekData);
