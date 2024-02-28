@@ -7,7 +7,7 @@ import {
 } from "@src/context/ProgramsContext/types";
 import { Text, View } from "tamagui";
 
-interface RenderExerciseListProps {
+interface DayActivityExerciseListProps {
     exerciseData: ProgramDay;
 }
 
@@ -36,7 +36,9 @@ const mapPhaseToTitle = (phase: WorkoutPhases) => {
     }
 };
 
-const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
+const DayActivityExerciseList = ({
+    exerciseData,
+}: DayActivityExerciseListProps) => {
     if (!exerciseData) {
         return null;
     }
@@ -110,7 +112,7 @@ const RenderExerciseList = ({ exerciseData }: RenderExerciseListProps) => {
                                         borderBottomWidth={
                                             activities.length === index + 1
                                                 ? 0
-                                                : 0.5
+                                                : 0.25
                                         }
                                         borderColor="$border_primary"
                                         py="$10"
@@ -186,4 +188,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RenderExerciseList;
+export default DayActivityExerciseList;

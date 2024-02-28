@@ -113,6 +113,7 @@ export interface ProgramExercise {
 }
 
 export interface ProgramDay {
+    dayTitle: string;
     summary: ProgramSummary[];
     exercises: ProgramExercise[];
 }
@@ -181,33 +182,33 @@ export const possibleDays = [
 ];
 
 interface MappedDays {
-    day_1: ProgramDay;
-    day_2: ProgramDay;
-    day_3: ProgramDay;
-    day_4: ProgramDay;
-    day_5: ProgramDay;
-    day_6: ProgramDay;
-    day_7: ProgramDay;
+    day_1?: ProgramDay;
+    day_2?: ProgramDay;
+    day_3?: ProgramDay;
+    day_4?: ProgramDay;
+    day_5?: ProgramDay;
+    day_6?: ProgramDay;
+    day_7?: ProgramDay;
 }
 
 interface LockedMappedDays {
-    day_1: any[];
-    day_2: any[];
-    day_3: any[];
-    day_4: any[];
-    day_5: any[];
-    day_6: any[];
-    day_7: any[];
+    day_1?: any[];
+    day_2?: any[];
+    day_3?: any[];
+    day_4?: any[];
+    day_5?: any[];
+    day_6?: any[];
+    day_7?: any[];
 }
 
 interface MappedDaysMemo {
-    day_1_memo: string;
-    day_2_memo: string;
-    day_3_memo: string;
-    day_4_memo: string;
-    day_5_memo: string;
-    day_6_memo: string;
-    day_7_memo: string;
+    day_1_memo?: string;
+    day_2_memo?: string;
+    day_3_memo?: string;
+    day_4_memo?: string;
+    day_5_memo?: string;
+    day_6_memo?: string;
+    day_7_memo?: string;
 }
 
 export interface ProgramWeek extends MappedDays, MappedDaysMemo {

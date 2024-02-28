@@ -106,6 +106,10 @@ export default function WorkoutScreen() {
 
     const { dayData } = getProgramDayInfo({ week: weekData, day: activeDay });
 
+    if (!dayData) {
+        return null;
+    }
+
     const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
         (acc, exercise) =>
             exercise.activities
