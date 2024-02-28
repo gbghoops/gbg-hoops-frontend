@@ -69,10 +69,10 @@ const WeeklyActivitiesBreakdown = ({
             ) : (
                 <View
                     w="100%"
-                    h="$80"
+                    h="$120"
                     jc="center"
                     ai="center"
-                    borderWidth={1}
+                    borderWidth={0.25}
                     borderColor={"$border_primary"}
                 >
                     <Text fontFamily={"$acuminProBold"} fontSize={"$16"}>
