@@ -353,9 +353,15 @@ const ExerciseSlide = ({
                     >
                         {/* Details */}
                         {!isRestSlide ? (
-                            <YStack mt={isLandScape ? "0%" : "$20"}>
-                                <XStack>
-                                    <View>
+                            <YStack w={"100%"} mt={isLandScape ? "0%" : "$20"}>
+                                <XStack
+                                    justifyContent={
+                                        isLandScape
+                                            ? "space-between"
+                                            : "flex-start"
+                                    }
+                                >
+                                    <View f={isLandScape ? 1 : 0}>
                                         <InstructionVideoButton
                                             onPress={() => {
                                                 setExercisePlaying(false);
