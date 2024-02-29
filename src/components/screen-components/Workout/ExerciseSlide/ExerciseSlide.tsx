@@ -216,7 +216,7 @@ const ExerciseSlide = ({
                 {/* COLUMN WRAPPER, Detects Screen orientation. */}
                 <View f={1} fd={isLandScape ? "row" : "column"}>
                     {/* Col 1 */}
-                    <View f={isLandScape ? 1 : 0}>
+                    <View f={isLandScape ? 1.75 : 0}>
                         {/* Video Container */}
                         {isRestSlide ? (
                             <View
@@ -346,12 +346,22 @@ const ExerciseSlide = ({
                     </View>
 
                     {/* Col 2 */}
-                    <View f={1} px={isLandScape ? "$15" : undefined}>
+                    <View
+                        f={1}
+                        px={isLandScape ? "$15" : undefined}
+                        maxWidth={isLandScape ? "$350" : "auto"}
+                    >
                         {/* Details */}
                         {!isRestSlide ? (
-                            <YStack mt={isLandScape ? "0%" : "$20"}>
-                                <XStack>
-                                    <View>
+                            <YStack w={"100%"} mt={isLandScape ? "0%" : "$20"}>
+                                <XStack
+                                    justifyContent={
+                                        isLandScape
+                                            ? "space-between"
+                                            : "flex-start"
+                                    }
+                                >
+                                    <View f={isLandScape ? 1 : 0}>
                                         <InstructionVideoButton
                                             onPress={() => {
                                                 setExercisePlaying(false);
@@ -551,7 +561,15 @@ const ExerciseSlide = ({
                             <XStack justifyContent="space-between" mb={"$16"}>
                                 {/* Prev */}
                                 <View
-                                    width={nextExercise?.type ? "$125" : "$80"}
+                                    width={
+                                        nextExercise?.type
+                                            ? isLandScape
+                                                ? "$105"
+                                                : "$125"
+                                            : isLandScape
+                                              ? "$60"
+                                              : "$80"
+                                    }
                                     animation={"fast"}
                                     pressStyle={{
                                         opacity: 0.55,
@@ -592,10 +610,10 @@ const ExerciseSlide = ({
                                     ) : null}
                                 </View>
                                 {/* Play / Pause */}
-                                <View alignSelf="center" ml="auto" mr="auto">
+                                <View alignSelf="flex-end" ml="auto" mr="auto">
                                     <View
-                                        width={"$56"}
-                                        height={"$56"}
+                                        width={isLandScape ? "$40" : "$56"}
+                                        height={isLandScape ? "$40" : "$56"}
                                         borderRadius={100}
                                         backgroundColor={"$gold"}
                                         justifyContent="center"
@@ -619,8 +637,8 @@ const ExerciseSlide = ({
                                         }}
                                     >
                                         <View
-                                            width="$36"
-                                            height="$36"
+                                            width={isLandScape ? "$24" : "$36"}
+                                            height={isLandScape ? "$24" : "$36"}
                                             justifyContent="center"
                                             alignItems="center"
                                         >
@@ -667,7 +685,7 @@ const ExerciseSlide = ({
                                     }}
                                 >
                                     <View
-                                        width={"$80"}
+                                        width={isLandScape ? "$60" : "$80"}
                                         alignContent="flex-end"
                                         justifyContent="flex-end"
                                         alignSelf="flex-end"
@@ -675,7 +693,7 @@ const ExerciseSlide = ({
                                         <Text
                                             textAlign="right"
                                             fontFamily={"$acuminProSemibold"}
-                                            fontSize={"$14"}
+                                            fontSize="$14"
                                             textOverflow="ellipsis"
                                             numberOfLines={3}
                                         >
@@ -698,8 +716,12 @@ const ExerciseSlide = ({
                                                     : "Next"}
                                             </Text>
                                             <View
-                                                width={"$12"}
-                                                height={"$12"}
+                                                width={
+                                                    isLandScape ? "$8" : "$12"
+                                                }
+                                                height={
+                                                    isLandScape ? "$8" : "$12"
+                                                }
                                                 ml="$5"
                                             >
                                                 <StyledImage

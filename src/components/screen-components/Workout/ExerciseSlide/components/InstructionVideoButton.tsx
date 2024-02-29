@@ -19,6 +19,7 @@ const InstructionVideoButton = ({ onPress }: InstructionVideoButtonProps) => {
                 opacity: 0.95,
                 scale: 0.98,
             }}
+            f={1}
         >
             <View width={"$24"} height={"$24"}>
                 <StyledImage
