@@ -646,18 +646,12 @@ const ExerciseSlide = ({
                                             queueExercisePlaying ? (
                                                 <StyledImage
                                                     source={require("@assets/icon/pause.png")}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                    }}
+                                                    style={styles.styledImage}
                                                 />
                                             ) : (
                                                 <StyledImage
                                                     source={require("@assets/icon/play.png")}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                    }}
+                                                    style={styles.styledImage}
                                                 />
                                             )}
                                         </View>
@@ -805,6 +799,10 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     tumbnail: {
+        width: "100%",
+        height: "100%",
+    },
+    styledImage: {
         width: "100%",
         height: "100%",
     },
