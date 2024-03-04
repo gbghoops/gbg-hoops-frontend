@@ -89,12 +89,22 @@ export default function ProgramDetails() {
                     px={"$20"}
                     width={"100%"}
                 >
-                    <Button
-                        text="Add Program"
-                        onPress={onAddProgram}
-                        fullWidth
-                        loading={isAppLoading}
-                    />
+                    {currentProgram?.progress ? (
+                        <Button
+                            text="Continue Program"
+                            fullWidth
+                            onPress={() =>
+                                router.push(`/program/workout-details/${slug}`)
+                            }
+                        />
+                    ) : (
+                        <Button
+                            text="Add Program"
+                            onPress={onAddProgram}
+                            fullWidth
+                            loading={isAppLoading}
+                        />
+                    )}
                 </View>
             ) : null}
 

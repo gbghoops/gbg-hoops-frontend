@@ -45,8 +45,6 @@ export default function WorkoutDetails() {
         [programs, slug],
     );
 
-    console.log("Current Program: ", currentProgram);
-
     const activeWeek =
         currentProgram &&
         !("is_locked" in currentProgram) &&

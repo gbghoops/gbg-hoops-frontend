@@ -12,6 +12,7 @@ import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { styled, Text, View } from "tamagui";
 
+import ActiveProgramsList from "../../ActiveProgramsList/ActiveProgramsList";
 import BuildYoutWorkoutCards from "../../BuildYourWorkoutCard";
 
 import NewestProgramCard from "./NewestProgramCard";
@@ -20,42 +21,17 @@ import RefreshRoutineCard from "./RefreshRoutineCard";
 export const ForYouTab = () => {
     const { bottom } = useSafeAreaInsets();
 
-    const router = useRouter();
-    const { programs, activeDay, activeWeek } = usePrograms();
+    const { programs } = usePrograms();
 
     if (!programs) return null;
-
-    const activeProgram = programs[0];
-
-    const isActiveProgramLocked = activeProgram && "is_locked" in activeProgram;
-
-    const weekData = !isActiveProgramLocked
-        ? activeProgram?.weeks[activeWeek - 1]
-        : null;
-
-    const dayData = weekData
-        ? getProgramDayInfo({ week: weekData, day: activeDay })
-        : null;
 
     return (
         <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
             <ForYouTabWrapper bottom={bottom}>
                 {/* My Program */}
-                {dayData && dayData.dayData ? (
-                    <View px={"$20"} mt={"$20"}>
-                        <CurrentProgramCard
-                            coverImage={require("@assets/programs/basketball-strength-level-1.png")}
-                            currentDay={activeDay}
-                            workoutTitle={dayData?.dayData?.exercises[0].title}
-                            programTitle={activeProgram.name}
-                            onPress={() => {
-                                router.push(
-                                    `/program/workout-details/${activeProgram.slug}`,
-                                );
-                            }}
-                        />
-                    </View>
-                ) : null}
+                <View mx="$20" mt="$20">
+                    <ActiveProgramsList />
+                </View>
 
                 <BuildYoutWorkoutCards />
 
