@@ -36,6 +36,7 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
             backgroundColor="$surface_primary"
             w="100%"
             fd="row"
+            mb="$20"
             animation={"fast"}
             pressStyle={{
                 opacity: 0.85,
