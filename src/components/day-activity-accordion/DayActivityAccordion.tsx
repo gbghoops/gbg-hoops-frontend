@@ -123,10 +123,11 @@ const DayActivityAccordion = ({
                                     w={"$20"}
                                     jc="center"
                                     ai="center"
-                                    alignSelf="flex-end"
+                                    alignSelf="center"
                                 >
                                     <View
                                         animation={"medium"}
+                                        mt={wn(3)}
                                         transform={[
                                             {
                                                 rotate: isOpen

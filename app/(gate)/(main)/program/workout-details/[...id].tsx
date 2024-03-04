@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import DayActivityExerciseList from "@src/components/day-activity-exercise-list/DayActivityExerciseList";
+import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import AddExerciseSheet from "@src/components/screen-components/Programs/WorkoutDetails/AddExerciseSheet/AddExerciseSheet";
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
@@ -28,6 +29,7 @@ const exerciseInfoIconSize = wn(20);
 
 export default function WorkoutDetails() {
     const [exerciseSheetOpen, setExerciseSheetOpen] = useState(false);
+    const [showLegendSheet, setShowLegendSheet] = useState(false);
 
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
@@ -191,6 +193,7 @@ export default function WorkoutDetails() {
                                     opacity: 0.75,
                                     scale: 0.9,
                                 }}
+                                onPress={() => setShowLegendSheet(true)}
                             >
                                 <Octicons
                                     name="info"
@@ -291,6 +294,11 @@ export default function WorkoutDetails() {
                     fullWidth
                 />
             </View>
+
+            <LegendSheet
+                sheetOpen={showLegendSheet}
+                setSheetOpen={setShowLegendSheet}
+            />
         </View>
     );
 }
