@@ -8,14 +8,16 @@ import WorkoutBreakdownHeader from "@src/components/screen-components/Programs/P
 import { WorkoutBreakdownTabs } from "@src/components/screen-components/Programs/ProgramDetails/WorkoutBreakdownTabs";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import * as Burnt from "burnt";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "tamagui";
 
 export default function ProgramDetails() {
     const router = useRouter();
-    const { programs } = usePrograms();
+    const { programs, addProgramToUser } = usePrograms();
     const { bottom } = useSafeAreaInsets();
     const [showLegendSheet, setShowLegendSheet] = useState(false);
+    const [isAppLoading, setIsAppLoading] = useState(false);
     const { slug } = useLocalSearchParams();
 
     const scrollViewRef = useRef<ScrollView>(null);
@@ -23,6 +25,29 @@ export default function ProgramDetails() {
     const currentProgram = programs.find((program) => program.slug === slug);
 
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
+
+    const onAddProgram = async () => {
+        if (!currentProgram || isProgramLocked) return;
+
+        setIsAppLoading(true);
+        try {
+            await addProgramToUser(currentProgram.contentful_id);
+
+            Burnt.toast({
+                title: "Program added successfully",
+                preset: "done",
+            });
+
+            return router.push("/programs");
+        } catch {
+            Burnt.toast({
+                title: "Unable to add this Program. Please try again.",
+                preset: "error",
+            });
+        } finally {
+            setIsAppLoading(false);
+        }
+    };
 
     return (
         <View
@@ -66,12 +91,9 @@ export default function ProgramDetails() {
                 >
                     <Button
                         text="Add Program"
-                        onPress={() => {
-                            return router.replace(
-                                `/program/workout-details/${slug}`,
-                            );
-                        }}
+                        onPress={onAddProgram}
                         fullWidth
+                        loading={isAppLoading}
                     />
                 </View>
             ) : null}

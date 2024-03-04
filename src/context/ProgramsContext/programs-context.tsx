@@ -97,7 +97,7 @@ const fetchPrograms = async () => {
 const addProgramToUser = async (programId: string) => {
     const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
 
-    const response = await fetch(`${backend_url}/users/programs`, {
+    const response = await fetch(`${backend_url}/users/progress`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${idToken}`,
