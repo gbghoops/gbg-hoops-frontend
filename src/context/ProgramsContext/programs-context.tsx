@@ -3,13 +3,36 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 import slugify from "slugify";
 
-import { IProgramsContext, LockedProgram, Program } from "./types";
+import {
+    IProgramsContext,
+    LockedProgram,
+    Program,
+    ProgramProgress,
+} from "./types";
 
 export const ProgramsContext = createContext<IProgramsContext | null>(null);
 
-const fetchPrograms = async () => {
-    const backend_url = process.env.EXPO_PUBLIC_BACKEND_URL ?? "";
+const backend_url = process.env.EXPO_PUBLIC_BACKEND_URL ?? "";
 
+const fetchProgramsProgress = async (): Promise<ProgramProgress[]> => {
+    const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
+    const response = await fetch(`${backend_url}/users/progress`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${idToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Error fetching programs progress");
+    }
+
+    const data = await response.json();
+
+    return data;
+};
+
+const fetchPrograms = async () => {
     try {
         const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
         const response = await fetch(`${backend_url}/content`, {
@@ -25,10 +48,25 @@ const fetchPrograms = async () => {
 
         const data = await response.json();
 
+        const programProgress = await fetchProgramsProgress();
+
         const _programs: Program[] = data.programs;
         const _lockedPrograms: LockedProgram[] = data.lockedPrograms;
 
-        const programs = [..._programs, ..._lockedPrograms];
+        const programsWithProgress = _programs
+            .filter((p) => !!p)
+            .map((program) => {
+                const progress = programProgress.find(
+                    (p) => p.program_id === program.contentful_id,
+                );
+
+                return {
+                    ...program,
+                    progress: progress ?? null,
+                };
+            });
+
+        const programs = [...programsWithProgress, ..._lockedPrograms];
 
         const slugifiedPrograms = programs.map((program) => {
             if ("is_locked" in program) {
@@ -56,10 +94,43 @@ const fetchPrograms = async () => {
     }
 };
 
+const addProgramToUser = async (programId: string) => {
+    const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
+
+    const response = await fetch(`${backend_url}/users/programs`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${idToken}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            program_id: programId,
+            week_completed: 0,
+            day_completed: 0,
+            exercises_completed: [],
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Error adding program to user");
+    }
+
+    return response.json();
+};
+
 export default function ProgramsProvider({ children }: PropsWithChildren) {
     const { data, isLoading, error } = useQuery<(Program | LockedProgram)[]>({
         queryKey: ["programs"],
         queryFn: fetchPrograms,
+    });
+
+    const {
+        data: progressData,
+        isLoading: isProgressDataLoading,
+        error: programDataError,
+    } = useQuery<ProgramProgress[]>({
+        queryKey: ["programsProgress"],
+        queryFn: fetchProgramsProgress,
     });
 
     return (
@@ -67,8 +138,10 @@ export default function ProgramsProvider({ children }: PropsWithChildren) {
             value={{
                 programs: data && !error ? data : [],
                 programsFetching: isLoading,
-                activeDay: 1,
-                activeWeek: 1,
+                programsProgress:
+                    progressData && !programDataError ? progressData : [],
+                programsProgressFetching: isProgressDataLoading,
+                addProgramToUser,
             }}
         >
             {children}

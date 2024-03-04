@@ -108,7 +108,7 @@ export interface ProgramExercise {
     title: string;
     type: WorkoutExecutionMode;
     phase: WorkoutPhases;
-    exercises: ProgramExerciseFields[];
+    sets: number;
     activities: ProgramActivity[];
 }
 
@@ -126,6 +126,7 @@ export interface Program {
     plan: string;
     teaser: string;
     contentful_id: string;
+    progress: ProgramProgress | null;
 }
 
 export interface LockedProgramWeek {
@@ -143,9 +144,10 @@ export interface LockedProgram {
 
 export interface IProgramsContext {
     programs: (Program | LockedProgram)[];
-    activeDay: number;
-    activeWeek: number;
+    programsProgress: ProgramProgress[];
     programsFetching: boolean;
+    programsProgressFetching: boolean;
+    addProgramToUser: (programId: string) => Promise<void>;
 }
 
 export interface ActivityWithPhase extends ProgramActivity {
@@ -219,4 +221,18 @@ export interface LockedProgramWeek extends MappedDaysMemo, LockedMappedDays {}
 
 export interface ProgramWeekWithSlug extends ProgramWeek {
     slug: string;
+}
+
+export interface CompletedExerciseProgress {
+    exercise_id: string;
+    weight: number;
+    week: number;
+    day: number;
+}
+
+export interface ProgramProgress {
+    program_id: string;
+    week_completed: number;
+    day_completed: number;
+    exercises_completed: CompletedExerciseProgress[];
 }

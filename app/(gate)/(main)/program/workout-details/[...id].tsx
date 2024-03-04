@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
@@ -32,17 +32,37 @@ export default function WorkoutDetails() {
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
     const { id } = useLocalSearchParams();
-    const { programs, activeDay, activeWeek } = usePrograms();
+    const { programs } = usePrograms();
 
     if (!id) {
         return null;
     }
 
     const slug = id[0];
+
+    const currentProgram = useMemo(
+        () => programs.find((program) => program.slug === slug),
+        [programs, slug],
+    );
+
+    console.log("Current Program: ", currentProgram);
+
+    const activeWeek =
+        currentProgram &&
+        !("is_locked" in currentProgram) &&
+        currentProgram.progress
+            ? currentProgram.progress.week_completed + 1
+            : 1;
+
+    const activeDay =
+        currentProgram &&
+        !("is_locked" in currentProgram) &&
+        currentProgram.progress
+            ? currentProgram.progress.day_completed + 1
+            : 1;
+
     const _activeWeek = id[1] ? Number(id[1]) : activeWeek;
     const _activeDay = id[2] ? Number(id[2]) : activeDay;
-
-    const currentProgram = programs.find((program) => program.slug === slug);
 
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
