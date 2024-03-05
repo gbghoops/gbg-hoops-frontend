@@ -25,7 +25,6 @@ export default function useAssessmentPagingState({
     const pageBack = () => {
         setPage((prev) => {
             if (prev[0] === 0) {
-                console.log("Set exit modal");
                 setShowAssessmentExitModal(true);
                 return prev;
             }

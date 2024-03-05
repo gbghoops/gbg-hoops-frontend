@@ -46,8 +46,6 @@ export default function AssessmentScreen() {
         setShowAssessmentExitModal,
     } = useAssessmentPagingState({ assessmentState });
 
-    console.log("SHow exit modal", showAssessmentExitModal);
-
     const performAssessmentNextAction = async () => {
         if (submitLoading) return;
 

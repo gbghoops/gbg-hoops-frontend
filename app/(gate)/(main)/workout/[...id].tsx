@@ -16,7 +16,6 @@ import {
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
     Stack as RouterStack,
-    useFocusEffect,
     useLocalSearchParams,
     useRouter,
 } from "expo-router";
@@ -185,9 +184,7 @@ export default function WorkoutScreen() {
     };
 
     const handleWorkoutComplete = async () => {
-        console.log(completedExercises, activeExercises.length);
         if (completedExercises.length < activeExercises.length) {
-            console.log("Show confirm exit");
             setConfirmExitHeading("Workout Incomplete");
             setConfirmExitMessage(
                 `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
