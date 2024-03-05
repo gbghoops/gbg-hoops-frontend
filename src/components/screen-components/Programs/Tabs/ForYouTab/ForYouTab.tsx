@@ -1,8 +1,10 @@
+import { useCallback } from "react";
 import { Tabs } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { useFocusEffect } from "expo-router";
 import { styled, Text, View } from "tamagui";
 
 import ActiveProgramsList from "../../ActiveProgramsList/ActiveProgramsList";
@@ -14,7 +16,13 @@ import RefreshRoutineCard from "./RefreshRoutineCard";
 export const ForYouTab = () => {
     const { bottom } = useSafeAreaInsets();
 
-    const { programs } = usePrograms();
+    const { programs, refetchPrograms } = usePrograms();
+
+    useFocusEffect(
+        useCallback(() => {
+            refetchPrograms();
+        }, []),
+    );
 
     if (!programs) return null;
 

@@ -15,6 +15,9 @@ const WorkoutPageError = () => {
             <Text fontFamily={"$acuminProBold"} fontSize="$30">
                 Oops! Something Went Wrong!
             </Text>
+            <Text fontFamily={"$acuminProSemibold"} fontSize="$15">
+                If this issue persists, please contact support.
+            </Text>
             <View mt="$20">
                 <Button
                     text="Back to Safety"

@@ -167,7 +167,7 @@ const ExerciseSlide = ({
     }, [exerciseReadyCount]);
 
     useEffect(() => {
-        if (!exerciseCompleted) {
+        if (!exerciseCompleted || exercise.type === "no_timer") {
             return;
         }
 
@@ -536,7 +536,14 @@ const ExerciseSlide = ({
                                                 isLandScape ? "row" : "column"
                                             }
                                         >
-                                            <View w={"$90"} h={"$90"} mt="auto">
+                                            <View
+                                                w={"$90"}
+                                                h={"$90"}
+                                                mt="auto"
+                                                backgroundColor={
+                                                    "$surface_background"
+                                                }
+                                            >
                                                 <StyledImage
                                                     source={{
                                                         uri: `https:${nextExercise?.thumbnail}`,
@@ -758,6 +765,7 @@ const ExerciseSlide = ({
                                             h={"$54"}
                                             ml={"$5"}
                                             mt="auto"
+                                            backgroundColor={"$surface_primary"}
                                         >
                                             <StyledImage
                                                 source={{
