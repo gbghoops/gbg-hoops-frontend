@@ -40,7 +40,7 @@ interface ExerciseSlideProps {
     onExerciseCompleted: (exercise: CompletedExercisesData) => void;
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
-    onCompleteWorkout: () => void;
+    onCompleteWorkout: () => Promise<void>;
 }
 
 // Okay, gotta be smart about this component. It's size could really affect the performance of
@@ -107,6 +107,12 @@ const ExerciseSlide = ({
     }, [currentWeight]);
 
     useEffect(() => {
+        if (exercisePlaying && exercise.type === "no_timer") {
+            setExerciseCompleted(true);
+        }
+    }, [exercisePlaying]);
+
+    useEffect(() => {
         if (!isRestSlide) {
             setExercisePlaying(false);
             setQueueExercisePlaying(false);
@@ -132,7 +138,7 @@ const ExerciseSlide = ({
             interruptionModeIOS: InterruptionModeIOS.DuckOthers,
             interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
         });
-        setExerciseCompleted(false);
+        exercise.type !== "no_timer" && setExerciseCompleted(false);
     }, [exercisePlaying]);
 
     useEffect(() => {

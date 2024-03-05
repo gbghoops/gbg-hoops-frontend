@@ -1,4 +1,4 @@
-type exerciseType = "timer" | "tempo" | "mobility";
+type exerciseType = "timer" | "tempo" | "mobility" | "no_timer";
 
 export type WorkoutPhases =
     | "warmup"
@@ -149,6 +149,14 @@ export interface IProgramsContext {
     programsFetching: boolean;
     programsProgressFetching: boolean;
     addProgramToUser: (programId: string) => Promise<void>;
+    onWorkoutComplete: (data: WorkoutCompleteArgs) => Promise<void>;
+}
+
+export interface WorkoutCompleteArgs {
+    programId: string;
+    weekCompleted: number;
+    dayCompleted: number;
+    exercisesCompleted: CompletedExercisesData[];
 }
 
 export interface ActivityWithPhase extends ProgramActivity {

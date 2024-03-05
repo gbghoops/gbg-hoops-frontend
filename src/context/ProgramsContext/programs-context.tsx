@@ -4,10 +4,12 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import slugify from "slugify";
 
 import {
+    CompletedExercisesData,
     IProgramsContext,
     LockedProgram,
     Program,
     ProgramProgress,
+    WorkoutCompleteArgs,
 } from "./types";
 
 export const ProgramsContext = createContext<IProgramsContext | null>(null);
@@ -118,6 +120,35 @@ const addProgramToUser = async (programId: string) => {
     return response.json();
 };
 
+const onWorkoutComplete = async ({
+    programId,
+    weekCompleted,
+    dayCompleted,
+    exercisesCompleted,
+}: WorkoutCompleteArgs) => {
+    const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
+
+    const response = await fetch(`${backend_url}/users/progress`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${idToken}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            program_id: programId,
+            week_completed: weekCompleted,
+            day_completed: dayCompleted,
+            exercises_completed: exercisesCompleted,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Error adding program to user");
+    }
+
+    return response.json();
+};
+
 export default function ProgramsProvider({ children }: PropsWithChildren) {
     const { data, isLoading, error } = useQuery<(Program | LockedProgram)[]>({
         queryKey: ["programs"],
@@ -142,6 +173,7 @@ export default function ProgramsProvider({ children }: PropsWithChildren) {
                     progressData && !programDataError ? progressData : [],
                 programsProgressFetching: isProgressDataLoading,
                 addProgramToUser,
+                onWorkoutComplete,
             }}
         >
             {children}

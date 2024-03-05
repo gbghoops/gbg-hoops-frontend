@@ -44,7 +44,7 @@ export default function WorkoutScreen() {
     const [confirmExitHeading, setConfirmExitHeading] = useState<string>("");
     const [confirmExitMessage, setConfirmExitMessage] = useState<string>("");
 
-    const { programs } = usePrograms();
+    const { programs, onWorkoutComplete } = usePrograms();
     const isFocused = useIsFocused();
 
     const { id } = useLocalSearchParams();
@@ -150,7 +150,7 @@ export default function WorkoutScreen() {
         });
     };
 
-    const onWorkoutComplete = () => {
+    const handleWorkoutComplete = async () => {
         if (completedExercises.length < activeExercises.length) {
             setConfirmExitHeading("Workout Incomplete");
             setConfirmExitMessage(
@@ -160,10 +160,49 @@ export default function WorkoutScreen() {
             return setShowWorkoutExitConfirm(true);
         }
 
-        return router.push("/programs");
+        try {
+            await onWorkoutComplete({
+                programId: currentProgram.contentful_id,
+                weekCompleted: activeWeek,
+                dayCompleted: activeDay,
+                exercisesCompleted: completedExercises,
+            });
+
+            return router.push("/programs");
+        } catch (e) {
+            setConfirmExitHeading("Error");
+            setConfirmExitMessage(
+                `An error occurred while trying to complete the workout. Please try again.`,
+            );
+
+            return setShowWorkoutExitConfirm(true);
+        }
     };
 
-    const performWorkoutComplete = async () => {};
+    const confirmWorkoutExit = async (state: boolean) => {
+        setWorkoutExitConfirmed(state);
+
+        if (state) {
+            // We're exiting the workout with incomplete exercises.
+            try {
+                await onWorkoutComplete({
+                    programId: currentProgram.contentful_id,
+                    weekCompleted: activeWeek,
+                    dayCompleted: activeDay,
+                    exercisesCompleted: completedExercises,
+                });
+
+                return router.push("/programs");
+            } catch (e) {
+                setConfirmExitHeading("Error");
+                setConfirmExitMessage(
+                    `An error occurred while trying to complete the workout. Please try again.`,
+                );
+
+                return setShowWorkoutExitConfirm(true);
+            }
+        }
+    };
 
     return (
         <Stack
@@ -232,7 +271,7 @@ export default function WorkoutScreen() {
                                                 onExerciseComplete
                                             }
                                             onCompleteWorkout={
-                                                onWorkoutComplete
+                                                handleWorkoutComplete
                                             }
                                             onPrevPressed={() => {
                                                 if (index === 0) {
@@ -269,9 +308,7 @@ export default function WorkoutScreen() {
                             </PagerView>
                         </Stack>
                         <ConfirmWorkoutExit
-                            confirmExit={(state) => {
-                                setWorkoutExitConfirmed(state);
-                            }}
+                            confirmExit={confirmWorkoutExit}
                             messageHeading={confirmExitHeading}
                             message={confirmExitMessage}
                             open={showWorkoutExitConfirm}
