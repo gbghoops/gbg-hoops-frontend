@@ -16,6 +16,7 @@ import {
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
     Stack as RouterStack,
+    useFocusEffect,
     useLocalSearchParams,
     useRouter,
 } from "expo-router";
@@ -179,12 +180,14 @@ export default function WorkoutScreen() {
             return setShowWorkoutExitConfirm(true);
         } finally {
             setIsCompletingWorkout(false);
+            setShowWorkoutExitConfirm(false);
         }
     };
 
     const handleWorkoutComplete = async () => {
         console.log(completedExercises, activeExercises.length);
         if (completedExercises.length < activeExercises.length) {
+            console.log("Show confirm exit");
             setConfirmExitHeading("Workout Incomplete");
             setConfirmExitMessage(
                 `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
@@ -203,10 +206,12 @@ export default function WorkoutScreen() {
             if (!backButtonPressed) {
                 // We're exiting the workout with incomplete exercises.
                 return await performWorkoutComplete().then(() => {
+                    setShowWorkoutExitConfirm(false);
                     return router.replace("/programs");
                 });
             }
 
+            setShowWorkoutExitConfirm(false);
             return router.canGoBack()
                 ? router.back()
                 : router.replace("/programs");
@@ -281,9 +286,9 @@ export default function WorkoutScreen() {
                                             onExerciseCompleted={
                                                 onExerciseComplete
                                             }
-                                            onCompleteWorkout={async () => {
-                                                handleWorkoutComplete();
-                                            }}
+                                            onCompleteWorkout={
+                                                handleWorkoutComplete
+                                            }
                                             onPrevPressed={() => {
                                                 if (index === 0) {
                                                     return;

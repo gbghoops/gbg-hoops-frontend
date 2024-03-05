@@ -24,6 +24,7 @@ import ExerciseMobilityProgressBar from "./components/ExerciseMobilityProgressBa
 import ExerciseRepProgressBar from "./components/ExerciseRepProgressBar";
 import ExerciseTimerProgressBar from "./components/ExerciseTimerProgressBar";
 import InstructionVideoButton from "./components/InstructionVideoButton";
+import NoTimerProgressIndicator from "./components/NoTimerProgressIndicator";
 import SetsCounter from "./components/SetsCounter";
 import SlideIndicators from "./components/SlideIndicators";
 import SoundButton from "./components/SoundButton";
@@ -138,7 +139,8 @@ const ExerciseSlide = ({
             interruptionModeIOS: InterruptionModeIOS.DuckOthers,
             interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
         });
-        exercise.type !== "no_timer" && setExerciseCompleted(false);
+
+        setExerciseCompleted(false);
     }, [exercisePlaying]);
 
     useEffect(() => {
@@ -167,12 +169,14 @@ const ExerciseSlide = ({
     }, [exerciseReadyCount]);
 
     useEffect(() => {
-        if (!exerciseCompleted || exercise.type === "no_timer") {
+        if (!exerciseCompleted) {
             return;
         }
 
-        setExercisePlaying(false);
-        setQueueExercisePlaying(false);
+        if (exercise.type !== "no_timer") {
+            // setExercisePlaying(false);
+            setQueueExercisePlaying(false);
+        }
         return (
             onExerciseCompleted && onExerciseCompleted(completeExercisePayload)
         );
@@ -356,8 +360,6 @@ const ExerciseSlide = ({
                                         jc="center"
                                         ai="center"
                                         backgroundColor="$surface_primary"
-                                        borderWidth={1}
-                                        borderColor="$border_primary"
                                     >
                                         <ActivityIndicator
                                             size="small"
@@ -506,6 +508,14 @@ const ExerciseSlide = ({
                                             return;
                                         }}
                                         isLandscape={isLandScape}
+                                    />
+                                ) : exercise.type === "no_timer" ? (
+                                    <NoTimerProgressIndicator
+                                        isPlaying={exercisePlaying}
+                                        isLandscape={isLandScape}
+                                        onMarkCompleted={() => {
+                                            setExerciseCompleted(true);
+                                        }}
                                     />
                                 ) : null
                             ) : (
