@@ -4,7 +4,6 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import slugify from "slugify";
 
 import {
-    CompletedExercisesData,
     IProgramsContext,
     LockedProgram,
     Program,
@@ -150,7 +149,12 @@ const onWorkoutComplete = async ({
 };
 
 export default function ProgramsProvider({ children }: PropsWithChildren) {
-    const { data, isLoading, error } = useQuery<(Program | LockedProgram)[]>({
+    const {
+        data,
+        isLoading,
+        error,
+        refetch: refetchPrograms,
+    } = useQuery<(Program | LockedProgram)[]>({
         queryKey: ["programs"],
         queryFn: fetchPrograms,
     });
@@ -174,6 +178,7 @@ export default function ProgramsProvider({ children }: PropsWithChildren) {
                 programsProgressFetching: isProgressDataLoading,
                 addProgramToUser,
                 onWorkoutComplete,
+                refetchPrograms,
             }}
         >
             {children}

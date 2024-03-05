@@ -66,7 +66,7 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
                     </View>
                 </Video>
             </View>
-            <View p="$15" jc="center">
+            <View p="$15" jc="center" f={1}>
                 <Text
                     fontSize={"$18"}
                     fontFamily={"$acuminProSemibold"}
@@ -80,6 +80,8 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
                         numberOfLines={2}
                         textOverflow="ellipsis"
                         textTransform="uppercase"
+                        borderWidth={1}
+                        borderColor="red"
                     >
                         {dayTitle}
                     </Text>

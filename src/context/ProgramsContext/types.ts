@@ -1,3 +1,5 @@
+import { QueryObserverResult } from "@tanstack/react-query";
+
 type exerciseType = "timer" | "tempo" | "mobility" | "no_timer";
 
 export type WorkoutPhases =
@@ -150,6 +152,9 @@ export interface IProgramsContext {
     programsProgressFetching: boolean;
     addProgramToUser: (programId: string) => Promise<void>;
     onWorkoutComplete: (data: WorkoutCompleteArgs) => Promise<void>;
+    refetchPrograms: () => Promise<
+        QueryObserverResult<(Program | LockedProgram)[], Error>
+    >;
 }
 
 export interface WorkoutCompleteArgs {

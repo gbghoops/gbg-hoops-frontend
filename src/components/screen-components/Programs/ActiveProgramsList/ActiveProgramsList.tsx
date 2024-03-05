@@ -1,10 +1,15 @@
+import { useEffect } from "react";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { View } from "tamagui";
 
 import ProgramProgressCard from "./ActiveProgramCard";
 
 const ActiveProgramsList = () => {
-    const { programs } = usePrograms();
+    const { programs, refetchPrograms } = usePrograms();
+
+    useEffect(() => {
+        refetchPrograms && refetchPrograms();
+    }, []);
 
     const programsWithProgress = programs.filter(
         (p) => !("is_locked" in p) && p.progress,

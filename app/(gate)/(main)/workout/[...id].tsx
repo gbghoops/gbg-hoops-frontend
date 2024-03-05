@@ -40,6 +40,7 @@ export default function WorkoutScreen() {
     const [completedExercises, setCompletedExercises] = useState<
         CompletedExercisesData[]
     >([]);
+    const [backButtonPressed, setBackButtonPressed] = useState(false);
 
     const [confirmExitHeading, setConfirmExitHeading] = useState<string>("");
     const [confirmExitMessage, setConfirmExitMessage] = useState<string>("");
@@ -182,7 +183,7 @@ export default function WorkoutScreen() {
     const confirmWorkoutExit = async (state: boolean) => {
         setWorkoutExitConfirmed(state);
 
-        if (state) {
+        if (state && !backButtonPressed) {
             // We're exiting the workout with incomplete exercises.
             try {
                 await onWorkoutComplete({
@@ -217,6 +218,7 @@ export default function WorkoutScreen() {
                     header: () => (
                         <WorkoutHeader
                             onBackPressed={() => {
+                                setBackButtonPressed(true);
                                 setShowWorkoutExitConfirm(true);
                             }}
                         />
@@ -318,6 +320,7 @@ export default function WorkoutScreen() {
                                     setConfirmExitMessage("");
                                 }
 
+                                setBackButtonPressed(false);
                                 setShowWorkoutExitConfirm(isOpen);
                             }}
                         />
