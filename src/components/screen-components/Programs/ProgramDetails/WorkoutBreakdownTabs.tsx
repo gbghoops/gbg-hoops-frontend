@@ -109,6 +109,7 @@ export const WorkoutBreakdownTabs = () => {
 
     const getDaysData = (weekId: string) => {
         const week = slugifiedWeeks.find((week) => week.slug === weekId);
+
         if (!week) return null;
 
         return week;

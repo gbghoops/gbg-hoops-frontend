@@ -12,10 +12,18 @@ const WorkoutPageError = () => {
             ai={"center"}
             pt="$100"
         >
-            <Text fontFamily={"$acuminProBold"} fontSize="$30">
+            <Text
+                fontFamily={"$acuminProBold"}
+                fontSize="$30"
+                textAlign="center"
+            >
                 Oops! Something Went Wrong!
             </Text>
-            <Text fontFamily={"$acuminProSemibold"} fontSize="$15">
+            <Text
+                fontFamily={"$acuminProSemibold"}
+                fontSize="$15"
+                textAlign="center"
+            >
                 If this issue persists, please contact support.
             </Text>
             <View mt="$20">
