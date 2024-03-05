@@ -101,16 +101,53 @@ export default function WorkoutDetails() {
         }
     };
 
-    const upcomingWorkouts: ProgramWeekWithSlug = {
-        ...slugifiedWeekData,
-        ...removeActiveDay(_activeDay),
+    const getUpcomingWorkouts = (activeDay: number) => {
+        // remove the active and previous days from week data
+        const completedWorkoutDayIndices = Array.from(
+            { length: activeDay },
+            (_, i) => i + 1,
+        );
+
+        const upcomingWorkoutIndices = Array.from(
+            { length: 8 - activeDay },
+            (_, i) => i + activeDay,
+        );
+
+        const previousWorkoutsPrime = {
+            ...slugifiedWeekData,
+        };
+        const upcomingWorkoutsPrime = {
+            ...slugifiedWeekData,
+        };
+
+        // Remove completed and upcoming days from week data to get upcoming workouts data
+        completedWorkoutDayIndices.forEach((day) => {
+            delete (
+                previousWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}`];
+            delete (
+                previousWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}_memo`];
+        });
+
+        // Remove upcoming days from week data to get completed workouts data
+        upcomingWorkoutIndices.forEach((day) => {
+            delete (
+                upcomingWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}`];
+            delete (
+                upcomingWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}_memo`];
+        });
+
+        return {
+            upcomingWorkouts: previousWorkoutsPrime,
+            completedWorkouts: upcomingWorkoutsPrime,
+        };
     };
 
-    // TODO: Use progression Data to get upcoming and completed workouts.
-    // @ts-ignore
-    const completedWorkouts: ProgramWeekWithSlug = {
-        ...removeActiveDay(_activeDay),
-    };
+    const { upcomingWorkouts, completedWorkouts } =
+        getUpcomingWorkouts(_activeDay);
 
     const dayInfo = getProgramDayInfo({
         week: weekData,
@@ -264,6 +301,7 @@ export default function WorkoutDetails() {
                     </Text>
                     <View mt="$20">
                         <WeeklyActivitiesBreakdown
+                            isCompletedBlock={true}
                             removeHorizontalPadding={true}
                             weekData={completedWorkouts}
                         />

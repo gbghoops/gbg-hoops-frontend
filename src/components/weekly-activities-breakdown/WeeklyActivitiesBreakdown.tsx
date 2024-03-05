@@ -7,6 +7,7 @@ import {
 import { Text, View } from "tamagui";
 
 interface WeekylActivitiesBreakdownProps {
+    isCompletedBlock?: boolean;
     weekData: ProgramWeekWithSlug | null;
     removeHorizontalPadding?: boolean;
     onDaysAccordionOpenStateChange?: (states: boolean[]) => void;
@@ -16,6 +17,7 @@ const WeeklyActivitiesBreakdown = ({
     weekData,
     removeHorizontalPadding = false,
     onDaysAccordionOpenStateChange,
+    isCompletedBlock = false,
 }: WeekylActivitiesBreakdownProps) => {
     if (!weekData) return null;
 
@@ -55,6 +57,7 @@ const WeeklyActivitiesBreakdown = ({
                     <DayActivityAccordion
                         index={i}
                         day={day}
+                        showCompletedTag={isCompletedBlock}
                         removeHorizontalPadding={removeHorizontalPadding}
                         key={day.exercises[0]?.title ?? i}
                         onAccordionOpenStateChange={(state) => {
