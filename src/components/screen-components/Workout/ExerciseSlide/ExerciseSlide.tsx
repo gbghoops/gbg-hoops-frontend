@@ -1,8 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import React from "react";
 import { ActivityIndicator, Dimensions, StyleSheet } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
-import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
+import {
+    ActivityWithPhase,
+    CompletedExercisesData,
+} from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import {
     Audio,
@@ -31,8 +34,10 @@ interface ExerciseSlideProps {
     index: number;
     totalSlides: number;
     dayTitle: string;
+    activeProgramDay: number;
+    activeProgramWeek: number;
     currentSlidePosition: number;
-    onExerciseCompleted: (index: number) => void;
+    onExerciseCompleted: (exercise: CompletedExercisesData) => void;
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
     onCompleteWorkout: () => void;
@@ -51,6 +56,8 @@ const ExerciseSlide = ({
     onCompleteWorkout,
     onNextPressed,
     onPrevPressed,
+    activeProgramDay,
+    activeProgramWeek,
 }: ExerciseSlideProps) => {
     const totalExerciseDuration =
         exercise.type === "timer" ? exercise.seconds_hold : 0;
@@ -89,6 +96,15 @@ const ExerciseSlide = ({
 
         return () => subscription.remove();
     }, []);
+
+    const completeExercisePayload = useMemo<CompletedExercisesData>(() => {
+        return {
+            exercise_id: exercise.contentful_id,
+            weight: exercise.include_weights ? currentWeight : 0,
+            week: activeProgramWeek ?? 1,
+            day: activeProgramDay ?? 2,
+        };
+    }, [currentWeight]);
 
     useEffect(() => {
         if (!isRestSlide) {
@@ -151,7 +167,9 @@ const ExerciseSlide = ({
 
         setExercisePlaying(false);
         setQueueExercisePlaying(false);
-        return onExerciseCompleted && onExerciseCompleted(currentIndex);
+        return (
+            onExerciseCompleted && onExerciseCompleted(completeExercisePayload)
+        );
     }, [exerciseCompleted]);
 
     const isLandScape = windowSize.width > windowSize.height;

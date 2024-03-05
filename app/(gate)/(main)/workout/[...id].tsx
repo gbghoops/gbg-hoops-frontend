@@ -7,7 +7,10 @@ import RotateDeviceModal from "@src/components/screen-components/Workout/Exercis
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
+import {
+    ActivityWithPhase,
+    CompletedExercisesData,
+} from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
     Stack as RouterStack,
@@ -34,7 +37,9 @@ export default function WorkoutScreen() {
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
     const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
-    const [completedExercises, setCompletedExercises] = useState<number[]>([]);
+    const [completedExercises, setCompletedExercises] = useState<
+        CompletedExercisesData[]
+    >([]);
 
     const [confirmExitHeading, setConfirmExitHeading] = useState<string>("");
     const [confirmExitMessage, setConfirmExitMessage] = useState<string>("");
@@ -132,10 +137,16 @@ export default function WorkoutScreen() {
 
     const activeExercises = flattenedActivities.filter((a) => a.type);
 
-    const onExerciseComplete = (index: number) => {
+    const onExerciseComplete = (
+        completedExerciseData: CompletedExercisesData,
+    ) => {
         return setCompletedExercises((prev) => {
-            const completedSet = new Set([...prev, index]);
-            return Array.from(completedSet);
+            // remove exercise if already completed
+            const completedWithoutCurrentExercises = prev.filter(
+                (p) => p.exercise_id !== completedExerciseData.exercise_id,
+            );
+
+            return [...completedWithoutCurrentExercises, completedExerciseData];
         });
     };
 
@@ -151,6 +162,8 @@ export default function WorkoutScreen() {
 
         return router.push("/programs");
     };
+
+    const performWorkoutComplete = async () => {};
 
     return (
         <Stack
@@ -201,6 +214,8 @@ export default function WorkoutScreen() {
                                             key={index}
                                             index={index}
                                             exercise={item}
+                                            activeProgramDay={activeDay}
+                                            activeProgramWeek={activeWeek}
                                             dayTitle={
                                                 dayData.exercises[0].title
                                             }

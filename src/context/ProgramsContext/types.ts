@@ -48,6 +48,7 @@ export interface ProgramActivity {
     meta_pain: string[];
     meta_mobility: string[];
     metaLowerbodyGoals: string[];
+    contentful_id: string;
 }
 export interface ProgramExerciseFields {
     fields: {
@@ -235,4 +236,11 @@ export interface ProgramProgress {
     week_completed: number;
     day_completed: number;
     exercises_completed: CompletedExerciseProgress[];
+}
+
+export interface CompletedExercisesData {
+    exercise_id: string;
+    weight?: number;
+    week: number;
+    day: number;
 }

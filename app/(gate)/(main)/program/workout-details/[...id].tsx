@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
@@ -42,10 +42,7 @@ export default function WorkoutDetails() {
 
     const slug = id[0];
 
-    const currentProgram = useMemo(
-        () => programs.find((program) => program.slug === slug),
-        [programs, slug],
-    );
+    const currentProgram = programs.find((program) => program.slug === slug);
 
     const activeWeek =
         currentProgram &&
