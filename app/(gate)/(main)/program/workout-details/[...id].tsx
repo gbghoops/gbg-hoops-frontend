@@ -9,6 +9,7 @@ import AddExerciseSheet from "@src/components/screen-components/Programs/Workout
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
+import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import {
@@ -37,7 +38,7 @@ export default function WorkoutDetails() {
     const { programs } = usePrograms();
 
     if (!id) {
-        return null;
+        return <WorkoutPageError />;
     }
 
     const slug = id[0];
@@ -64,10 +65,14 @@ export default function WorkoutDetails() {
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
     if (!currentProgram || isProgramLocked) {
-        return null;
+        return <WorkoutPageError />;
     }
 
     const weekData = currentProgram?.weeks[_activeWeek - 1];
+
+    if (!weekData) {
+        return <WorkoutPageError />;
+    }
 
     const slugifiedWeekData = {
         ...weekData,
@@ -107,16 +112,16 @@ export default function WorkoutDetails() {
         ...removeActiveDay(_activeDay),
     };
 
-    const dayData = getProgramDayInfo({
+    const dayInfo = getProgramDayInfo({
         week: weekData,
         day: _activeDay,
     });
 
-    if (!dayData.dayData) return null;
+    if (!dayInfo || !dayInfo.dayData) return null;
 
-    const equipments = dayData.dayData
-        ? getEquipmentFromDayData(dayData.dayData)
-        : [];
+    const { dayData, dayMemo } = dayInfo;
+
+    const equipments = dayData ? getEquipmentFromDayData(dayData) : [];
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -164,7 +169,7 @@ export default function WorkoutDetails() {
                         mt="$30"
                         textTransform="uppercase"
                     >
-                        {dayData.dayData.exercises[0].title}
+                        {dayData.exercises[0].title}
                     </Text>
                 </View>
 
@@ -216,22 +221,20 @@ export default function WorkoutDetails() {
 
                 {/* Exercise List */}
                 <View mx={"$20"}>
-                    {dayData.dayMemo ? (
+                    {dayMemo ? (
                         <View>
                             <Text
                                 fontFamily={"$body"}
                                 fontSize={"$18"}
                                 mt={"$20"}
                             >
-                                {dayData.dayMemo}
+                                {dayMemo}
                             </Text>
                         </View>
                     ) : null}
 
                     <View mt={"$20"}>
-                        <DayActivityExerciseList
-                            exerciseData={dayData.dayData}
-                        />
+                        <DayActivityExerciseList exerciseData={dayData} />
                     </View>
                 </View>
 

@@ -110,11 +110,13 @@ export default function WorkoutScreen() {
 
     const weekData = currentProgram?.weeks[activeWeek - 1];
 
-    const { dayData } = getProgramDayInfo({ week: weekData, day: activeDay });
+    const dayInfo = getProgramDayInfo({ week: weekData, day: activeDay });
 
-    if (!dayData) {
+    if (!dayInfo || !dayInfo.dayData || !dayInfo.dayData.exercises) {
         return null;
     }
+
+    const dayData = dayInfo.dayData;
 
     const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
         (acc, exercise) => {
@@ -151,20 +153,14 @@ export default function WorkoutScreen() {
         });
     };
 
-    const handleWorkoutComplete = async () => {
-        if (completedExercises.length < activeExercises.length) {
-            setConfirmExitHeading("Workout Incomplete");
-            setConfirmExitMessage(
-                `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
-            );
-
-            return setShowWorkoutExitConfirm(true);
-        }
+    const performWorkoutComplete = async () => {
+        const isLastDay =
+            getProgramDayInfo({ week: weekData, day: activeDay + 1 }) === null;
 
         try {
             await onWorkoutComplete({
                 programId: currentProgram.contentful_id,
-                weekCompleted: activeWeek,
+                weekCompleted: isLastDay ? activeWeek : activeWeek - 1,
                 dayCompleted: activeDay,
                 exercisesCompleted: completedExercises,
             });
@@ -180,28 +176,25 @@ export default function WorkoutScreen() {
         }
     };
 
+    const handleWorkoutComplete = async () => {
+        if (completedExercises.length < activeExercises.length) {
+            setConfirmExitHeading("Workout Incomplete");
+            setConfirmExitMessage(
+                `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
+            );
+
+            return setShowWorkoutExitConfirm(true);
+        }
+
+        return performWorkoutComplete();
+    };
+
     const confirmWorkoutExit = async (state: boolean) => {
         setWorkoutExitConfirmed(state);
 
         if (state && !backButtonPressed) {
             // We're exiting the workout with incomplete exercises.
-            try {
-                await onWorkoutComplete({
-                    programId: currentProgram.contentful_id,
-                    weekCompleted: activeWeek,
-                    dayCompleted: activeDay,
-                    exercisesCompleted: completedExercises,
-                });
-
-                return router.push("/programs");
-            } catch (e) {
-                setConfirmExitHeading("Error");
-                setConfirmExitMessage(
-                    `An error occurred while trying to complete the workout. Please try again.`,
-                );
-
-                return setShowWorkoutExitConfirm(true);
-            }
+            return performWorkoutComplete();
         }
     };
 

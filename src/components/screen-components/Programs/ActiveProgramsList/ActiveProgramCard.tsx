@@ -25,7 +25,7 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
 
     const dayData = getProgramDayInfo({ week: weekData, day: currentDay });
 
-    const dayTitle = dayData.dayData?.exercises[0].title;
+    const dayTitle = dayData?.dayData?.exercises[0].title ?? "";
 
     const onProgramPress = () => {
         return push(`/program/workout-details/${program.slug}`);

@@ -5,6 +5,8 @@ interface GetDayArgs {
     day: number;
 }
 const getProgramDayInfo = ({ week, day }: GetDayArgs) => {
+    if (!week) return null;
+
     switch (day) {
         case 1:
             return { dayData: week["day_1"], dayMemo: week["day_1_memo"] };
