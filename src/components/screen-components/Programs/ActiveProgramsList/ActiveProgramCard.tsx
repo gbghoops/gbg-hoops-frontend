@@ -45,7 +45,7 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
             onPress={onProgramPress}
         >
             {/* Teaser Container */}
-            <View w="$120" h="$120">
+            <View w="$120" h="$130">
                 <Video
                     shouldPlay={false}
                     isLooping

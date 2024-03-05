@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Avatar from "@src/components/avatar/Avatar";
@@ -8,15 +9,27 @@ import Coach2Coach from "@src/components/screen-components/Home/Coach2Coach/Coac
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import ReferAFriend from "@src/components/screen-components/Home/ReferAFriend/ReferAFriend";
 import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
+import ActiveProgramsList from "@src/components/screen-components/Programs/ActiveProgramsList/ActiveProgramsList";
 import { useAuthState } from "@src/context/auth-context";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { ScrollView, Stack, Text, View } from "tamagui";
 
 export default function HomePage() {
+    const [bannerHeight, setBannerHeight] = useState<number>(0);
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
     const authState = useAuthState();
+    const { programs, refetchPrograms } = usePrograms();
+
+    useEffect(() => {
+        refetchPrograms && refetchPrograms();
+    }, []);
+
+    const programsWithProgress = programs.filter(
+        (p) => !("is_locked" in p) && p.progress,
+    );
 
     const user = authState?.user;
 
@@ -67,31 +80,46 @@ export default function HomePage() {
                         {/* Body */}
                         <View>
                             {/* Intro Banner */}
-                            <View px={"$20"}>
-                                <HomeScreenBanner
-                                    onPress={() => {
-                                        router.push("/programs");
-                                    }}
-                                >
-                                    <View f={1} p={"$20"}>
-                                        <Text
-                                            lh={26}
-                                            fontFamily={"$heading"}
-                                            fontSize={"$24"}
-                                            textTransform="uppercase"
-                                        >
-                                            {`What's New`}
-                                        </Text>
-                                        <Text
-                                            fontFamily={"$body"}
-                                            fontSize={"$16"}
-                                            lh={20}
-                                            mt={"$15"}
-                                        >
-                                            {`Welcome to the GBG Hoops app! Expolore out programs or create your own workout.`}
-                                        </Text>
+                            <View px={"$20"} mt={-(bannerHeight / 1.75)}>
+                                {programsWithProgress.length > 0 ? (
+                                    <View>
+                                        <ActiveProgramsList />
                                     </View>
-                                </HomeScreenBanner>
+                                ) : (
+                                    <View
+                                        onLayout={(layout) => {
+                                            setBannerHeight(
+                                                layout.nativeEvent.layout
+                                                    .height,
+                                            );
+                                        }}
+                                    >
+                                        <HomeScreenBanner
+                                            onPress={() => {
+                                                router.push("/programs");
+                                            }}
+                                        >
+                                            <View f={1} p={"$20"}>
+                                                <Text
+                                                    lh={26}
+                                                    fontFamily={"$heading"}
+                                                    fontSize={"$24"}
+                                                    textTransform="uppercase"
+                                                >
+                                                    {`What's New`}
+                                                </Text>
+                                                <Text
+                                                    fontFamily={"$body"}
+                                                    fontSize={"$16"}
+                                                    lh={20}
+                                                    mt={"$15"}
+                                                >
+                                                    {`Welcome to the GBG Hoops app! Expolore our programs or create your own workout.`}
+                                                </Text>
+                                            </View>
+                                        </HomeScreenBanner>
+                                    </View>
+                                )}
                             </View>
 
                             {/* Recommended For you section... */}

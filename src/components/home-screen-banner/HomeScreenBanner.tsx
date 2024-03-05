@@ -9,15 +9,9 @@ export default function HomeScreenBanner({
     onPress,
     children,
 }: HomeScreenBannerProps) {
-    const [bannerHeight, setBannerHeight] = useState<number>(0);
-
     return (
         <View
             bc="$surface_primary"
-            onLayout={(layout) => {
-                setBannerHeight(layout.nativeEvent.layout.height);
-            }}
-            mt={-(bannerHeight / 1.75)}
             onPress={onPress}
             animation={"medium"}
             pressStyle={{
