@@ -12,11 +12,7 @@ import ProgressIndicator from "@src/components/screen-components/Programs/Workou
 import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import {
-    EquipmentData,
-    ProgramDay,
-    ProgramWeekWithSlug,
-} from "@src/context/ProgramsContext/types";
+import { EquipmentData, ProgramDay } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -77,28 +73,6 @@ export default function WorkoutDetails() {
     const slugifiedWeekData = {
         ...weekData,
         slug: slugify(weekData.name, { lower: true }),
-    };
-
-    // TODO: Use progression Data to get upcoming and completed workouts.
-    const removeActiveDay = (day: number) => {
-        switch (day) {
-            case 1:
-                return { day_1: undefined, day_1_memo: undefined };
-            case 2:
-                return { day_2: undefined, day_2_memo: undefined };
-            case 3:
-                return { day_3: undefined, day_3_memo: undefined };
-            case 4:
-                return { day_4: undefined, day_4_memo: undefined };
-            case 5:
-                return { day_5: undefined, day_5_memo: undefined };
-            case 6:
-                return { day_6: undefined, day_6_memo: undefined };
-            case 7:
-                return { day_7: undefined, day_7_memo: undefined };
-            default:
-                return {};
-        }
     };
 
     const getUpcomingWorkouts = (activeDay: number) => {

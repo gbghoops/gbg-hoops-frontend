@@ -80,7 +80,7 @@ export default function HomePage() {
                         {/* Body */}
                         <View>
                             {/* Intro Banner */}
-                            <View px={"$20"} mt={-(bannerHeight / 1.75)}>
+                            <View px={"$20"} mt={-(bannerHeight / 1.95)}>
                                 {programsWithProgress.length > 0 ? (
                                     <View>
                                         <ActiveProgramsList />
