@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
 import { View } from "tamagui";
 
 interface HomeScreenBannerProps extends PropsWithChildren {
