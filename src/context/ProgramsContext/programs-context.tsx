@@ -159,6 +159,7 @@ export default function ProgramsProvider({ children }: PropsWithChildren) {
     } = useQuery<(Program | LockedProgram)[]>({
         queryKey: ["programs"],
         queryFn: fetchPrograms,
+        refetchOnReconnect: true,
     });
 
     const {
