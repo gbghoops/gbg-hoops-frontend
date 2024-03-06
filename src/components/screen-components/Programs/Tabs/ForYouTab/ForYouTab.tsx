@@ -1,17 +1,13 @@
-import { ImageURISource } from "react-native";
-import { StyleSheet } from "react-native";
+import { useCallback } from "react";
 import { Tabs } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Octicons } from "@expo/vector-icons";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
-import { StyledImage } from "@src/components/styled-components";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
-import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { useRouter } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { styled, Text, View } from "tamagui";
 
+import ActiveProgramsList from "../../ActiveProgramsList/ActiveProgramsList";
 import BuildYoutWorkoutCards from "../../BuildYourWorkoutCard";
 
 import NewestProgramCard from "./NewestProgramCard";
@@ -20,42 +16,23 @@ import RefreshRoutineCard from "./RefreshRoutineCard";
 export const ForYouTab = () => {
     const { bottom } = useSafeAreaInsets();
 
-    const router = useRouter();
-    const { programs, activeDay, activeWeek } = usePrograms();
+    const { programs, refetchPrograms } = usePrograms();
+
+    useFocusEffect(
+        useCallback(() => {
+            refetchPrograms();
+        }, []),
+    );
 
     if (!programs) return null;
-
-    const activeProgram = programs[0];
-
-    const isActiveProgramLocked = activeProgram && "is_locked" in activeProgram;
-
-    const weekData = !isActiveProgramLocked
-        ? activeProgram?.weeks[activeWeek - 1]
-        : null;
-
-    const dayData = weekData
-        ? getProgramDayInfo({ week: weekData, day: activeDay })
-        : null;
 
     return (
         <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
             <ForYouTabWrapper bottom={bottom}>
                 {/* My Program */}
-                {dayData && dayData.dayData ? (
-                    <View px={"$20"} mt={"$20"}>
-                        <CurrentProgramCard
-                            coverImage={require("@assets/programs/basketball-strength-level-1.png")}
-                            currentDay={activeDay}
-                            workoutTitle={dayData?.dayData?.exercises[0].title}
-                            programTitle={activeProgram.name}
-                            onPress={() => {
-                                router.push(
-                                    `/program/workout-details/${activeProgram.slug}`,
-                                );
-                            }}
-                        />
-                    </View>
-                ) : null}
+                <View mx="$20" mt="$20">
+                    <ActiveProgramsList />
+                </View>
 
                 <BuildYoutWorkoutCards />
 
@@ -89,56 +66,6 @@ export const ForYouTab = () => {
     );
 };
 
-interface CurrentProgramCardProps {
-    coverImage: ImageURISource;
-    currentDay: number;
-    workoutTitle: string;
-    programTitle: string;
-    onPress: () => void;
-}
-const CurrentProgramCard = ({
-    coverImage,
-    currentDay,
-    workoutTitle,
-    programTitle,
-    onPress,
-}: CurrentProgramCardProps) => {
-    return (
-        <View
-            fd="row"
-            onPress={onPress}
-            animation={"medium"}
-            bc={"$surface_primary"}
-            height={"$120"}
-            pressStyle={{
-                opacity: 0.85,
-                scale: 0.995,
-            }}
-        >
-            {/* Image Container */}
-            <View width="$120" height="$120">
-                <StyledImage
-                    source={coverImage}
-                    resizeMode="cover"
-                    style={styles.currentProgramCardImage}
-                />
-            </View>
-            <View f={1} height="100%" p="$20" pl="$15" jc="space-evenly">
-                <Text ff="$body" fontSize="$16">{`Day ${currentDay}`}</Text>
-                <Text ff={"$heading"} fontSize="$22" py={wn(10)}>
-                    {workoutTitle}
-                </Text>
-                <Text ff={"$body"} color="$accent_grey" fontSize={"$16"}>
-                    {programTitle}
-                </Text>
-            </View>
-            <View pr="$20" pl="$10" justifyContent="center">
-                <Octicons name="arrow-right" size={30} color={colors.gold} />
-            </View>
-        </View>
-    );
-};
-
 const ForYouTabWrapper = styled(View, {
     flex: 1,
     minHeight: "100%",
@@ -146,12 +73,5 @@ const ForYouTabWrapper = styled(View, {
         bottom: (val: number) => ({
             pb: val + wn(120),
         }),
-    },
-});
-
-const styles = StyleSheet.create({
-    currentProgramCardImage: {
-        width: "100%",
-        height: "100%",
     },
 });

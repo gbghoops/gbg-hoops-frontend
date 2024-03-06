@@ -42,7 +42,7 @@ export const StyledButton = styled(View, {
         },
         isDisabled: {
             true: {
-                opacity: 0.5,
+                backgroundColor: "$button_loading_bg",
                 disabled: true,
             },
         },

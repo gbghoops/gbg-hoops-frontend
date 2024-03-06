@@ -8,6 +8,8 @@ import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
 
+import CompletedTag from "../completed-tag/CompletedTag";
+
 interface DayActivityAccordionProps {
     index: number;
     day: ProgramDay;
@@ -81,33 +83,7 @@ const DayActivityAccordion = ({
                         </View>
 
                         <View height={"100%"} alignSelf="flex-end">
-                            {showCompletedTag ? (
-                                <View
-                                    backgroundColor="$surface_accent"
-                                    py="$2"
-                                    px="$5"
-                                    mb="$5"
-                                    br="$6"
-                                    fd="row"
-                                    ai="center"
-                                >
-                                    <View mr={wn(5)}>
-                                        <Octicons
-                                            name="check-circle"
-                                            size={12}
-                                            color={colors.text_secondary}
-                                        />
-                                    </View>
-                                    <Text
-                                        fontFamily={"$acuminProSemibold"}
-                                        color="$text_secondary"
-                                        textTransform="uppercase"
-                                        mt={wn(2)}
-                                    >
-                                        Completed
-                                    </Text>
-                                </View>
-                            ) : null}
+                            {showCompletedTag ? <CompletedTag /> : null}
                             <View fd="row" ai="center" alignSelf="flex-end">
                                 <Text
                                     fontSize={"$14"}
@@ -123,10 +99,11 @@ const DayActivityAccordion = ({
                                     w={"$20"}
                                     jc="center"
                                     ai="center"
-                                    alignSelf="flex-end"
+                                    alignSelf="center"
                                 >
                                     <View
                                         animation={"medium"}
+                                        mt={wn(3)}
                                         transform={[
                                             {
                                                 rotate: isOpen

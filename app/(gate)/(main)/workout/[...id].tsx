@@ -4,10 +4,15 @@ import { useIsFocused } from "@react-navigation/native";
 import ConfirmWorkoutExit from "@src/components/screen-components/Workout/ConfirmWorkoutExit/ConfirmWorkoutExit";
 import ReadyScreen from "@src/components/screen-components/Workout/ExerciseSlide/components/ReadyScreen";
 import RotateDeviceModal from "@src/components/screen-components/Workout/ExerciseSlide/components/RotateDeviceModal";
+import WorkoutCompleteLoading from "@src/components/screen-components/Workout/ExerciseSlide/components/WorkoutCompleteLoading";
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
+import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
+import {
+    ActivityWithPhase,
+    CompletedExercisesData,
+} from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
     Stack as RouterStack,
@@ -33,13 +38,16 @@ export default function WorkoutScreen() {
     const [currentSlidePosition, setCurrentSlidePosition] = useState<number>(0);
     // Todo: Consider adding global workout pause state when this is true.
     const [showWorkoutExitConfirm, setShowWorkoutExitConfirm] = useState(false);
-    const [workoutExitConfirmed, setWorkoutExitConfirmed] = useState(false);
-    const [completedExercises, setCompletedExercises] = useState<number[]>([]);
+    const [completedExercises, setCompletedExercises] = useState<
+        CompletedExercisesData[]
+    >([]);
+    const [backButtonPressed, setBackButtonPressed] = useState(false);
 
     const [confirmExitHeading, setConfirmExitHeading] = useState<string>("");
     const [confirmExitMessage, setConfirmExitMessage] = useState<string>("");
+    const [isCompletingWorkout, setIsCompletingWorkout] = useState(false);
 
-    const { programs } = usePrograms();
+    const { programs, onWorkoutComplete, refetchPrograms } = usePrograms();
     const isFocused = useIsFocused();
 
     const { id } = useLocalSearchParams();
@@ -76,16 +84,8 @@ export default function WorkoutScreen() {
         }
     }, [showRotateScreen]);
 
-    useEffect(() => {
-        if (workoutExitConfirmed) {
-            setConfirmExitHeading("");
-            setConfirmExitMessage("");
-            router.canGoBack() ? router.back() : router.replace("/home");
-        }
-    }, [workoutExitConfirmed]);
-
     if (!id || id.length === 0) {
-        return null;
+        return <WorkoutPageError />;
     }
 
     const programSlug = id[0];
@@ -99,16 +99,20 @@ export default function WorkoutScreen() {
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
     if (!currentProgram || isProgramLocked || !activeWeek || !activeDay) {
-        return null;
+        return <WorkoutPageError />;
     }
 
-    const weekData = currentProgram?.weeks[activeWeek - 1];
+    const weekData = currentProgram.weeks[activeWeek - 1];
 
-    const { dayData } = getProgramDayInfo({ week: weekData, day: activeDay });
+    const isFinalWeek = !currentProgram.weeks[activeWeek];
 
-    if (!dayData) {
-        return null;
+    const dayInfo = getProgramDayInfo({ week: weekData, day: activeDay });
+
+    if (!dayInfo || !dayInfo.dayData || !dayInfo.dayData.exercises) {
+        return <WorkoutPageError />;
     }
+
+    const dayData = dayInfo.dayData;
 
     const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
         (acc, exercise) => {
@@ -130,16 +134,73 @@ export default function WorkoutScreen() {
     const flattenedActivities =
         flattenActivitiesBySetsAndLaterality(dayActivities);
 
-    const activeExercises = flattenedActivities.filter((a) => a.type);
+    const activeExercises = flattenedActivities
+        .filter((a) => a.type)
+        .reduce((acc, activity) => {
+            // remove duplicate exercises by contentful_id
+            if (acc.find((a) => a.contentful_id === activity.contentful_id)) {
+                return acc;
+            }
 
-    const onExerciseComplete = (index: number) => {
+            return [...acc, activity];
+        }, [] as ActivityWithPhase[]);
+
+    const onExerciseComplete = (
+        completedExerciseData: CompletedExercisesData,
+    ) => {
         return setCompletedExercises((prev) => {
-            const completedSet = new Set([...prev, index]);
-            return Array.from(completedSet);
+            // remove exercise if already completed
+            const completedWithoutCurrentExercises = prev.filter(
+                (p) => p.exercise_id !== completedExerciseData.exercise_id,
+            );
+
+            return [...completedWithoutCurrentExercises, completedExerciseData];
         });
     };
 
-    const onWorkoutComplete = () => {
+    const performWorkoutComplete = async () => {
+        const isLastDay = !getProgramDayInfo({
+            week: weekData,
+            day: activeDay + 1,
+        })?.dayData;
+
+        try {
+            setIsCompletingWorkout(true);
+
+            const weekCompleted = isLastDay
+                ? !isFinalWeek
+                    ? activeWeek
+                    : 0
+                : activeWeek - 1;
+
+            const dayCompleted = !isLastDay ? activeDay : 0;
+
+            const completed_at =
+                isLastDay && isFinalWeek ? Date.now().toString() : undefined;
+
+            await onWorkoutComplete({
+                weekCompleted,
+                dayCompleted,
+                completed_at,
+                exercisesCompleted: completedExercises,
+                programId: currentProgram.contentful_id,
+            });
+
+            await refetchPrograms();
+        } catch (e) {
+            setConfirmExitHeading("Error");
+            setConfirmExitMessage(
+                `An error occurred while trying to complete the workout. Please try again.`,
+            );
+
+            return setShowWorkoutExitConfirm(true);
+        } finally {
+            setIsCompletingWorkout(false);
+            setShowWorkoutExitConfirm(false);
+        }
+    };
+
+    const handleWorkoutComplete = async () => {
         if (completedExercises.length < activeExercises.length) {
             setConfirmExitHeading("Workout Incomplete");
             setConfirmExitMessage(
@@ -149,7 +210,26 @@ export default function WorkoutScreen() {
             return setShowWorkoutExitConfirm(true);
         }
 
-        return router.push("/programs");
+        return await performWorkoutComplete().then(() => {
+            return router.replace("/programs");
+        });
+    };
+
+    const confirmWorkoutExit = async (state: boolean) => {
+        if (state) {
+            if (!backButtonPressed) {
+                // We're exiting the workout with incomplete exercises.
+                return await performWorkoutComplete().then(() => {
+                    setShowWorkoutExitConfirm(false);
+                    return router.replace("/programs");
+                });
+            }
+
+            setShowWorkoutExitConfirm(false);
+            return router.canGoBack()
+                ? router.back()
+                : router.replace("/programs");
+        }
     };
 
     return (
@@ -165,6 +245,7 @@ export default function WorkoutScreen() {
                     header: () => (
                         <WorkoutHeader
                             onBackPressed={() => {
+                                setBackButtonPressed(true);
                                 setShowWorkoutExitConfirm(true);
                             }}
                         />
@@ -172,6 +253,7 @@ export default function WorkoutScreen() {
                     gestureEnabled: false,
                 }}
             />
+            <WorkoutCompleteLoading isVisible={isCompletingWorkout} />
             <AnimatePresence>
                 {showReadyScreen ? (
                     <ReadyScreen key={"ready-screen"} />
@@ -201,6 +283,8 @@ export default function WorkoutScreen() {
                                             key={index}
                                             index={index}
                                             exercise={item}
+                                            activeProgramDay={activeDay}
+                                            activeProgramWeek={activeWeek}
                                             dayTitle={
                                                 dayData.exercises[0].title
                                             }
@@ -217,7 +301,7 @@ export default function WorkoutScreen() {
                                                 onExerciseComplete
                                             }
                                             onCompleteWorkout={
-                                                onWorkoutComplete
+                                                handleWorkoutComplete
                                             }
                                             onPrevPressed={() => {
                                                 if (index === 0) {
@@ -254,9 +338,7 @@ export default function WorkoutScreen() {
                             </PagerView>
                         </Stack>
                         <ConfirmWorkoutExit
-                            confirmExit={(state) => {
-                                setWorkoutExitConfirmed(state);
-                            }}
+                            confirmExit={confirmWorkoutExit}
                             messageHeading={confirmExitHeading}
                             message={confirmExitMessage}
                             open={showWorkoutExitConfirm}
@@ -264,6 +346,7 @@ export default function WorkoutScreen() {
                                 if (!isOpen) {
                                     setConfirmExitHeading("");
                                     setConfirmExitMessage("");
+                                    setBackButtonPressed(false);
                                 }
 
                                 setShowWorkoutExitConfirm(isOpen);

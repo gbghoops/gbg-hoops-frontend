@@ -1,4 +1,6 @@
-type exerciseType = "timer" | "tempo" | "mobility";
+import { QueryObserverResult } from "@tanstack/react-query";
+
+type exerciseType = "timer" | "tempo" | "mobility" | "no_timer";
 
 export type WorkoutPhases =
     | "warmup"
@@ -48,6 +50,7 @@ export interface ProgramActivity {
     meta_pain: string[];
     meta_mobility: string[];
     metaLowerbodyGoals: string[];
+    contentful_id: string;
 }
 export interface ProgramExerciseFields {
     fields: {
@@ -108,7 +111,7 @@ export interface ProgramExercise {
     title: string;
     type: WorkoutExecutionMode;
     phase: WorkoutPhases;
-    exercises: ProgramExerciseFields[];
+    sets: number;
     activities: ProgramActivity[];
 }
 
@@ -126,6 +129,7 @@ export interface Program {
     plan: string;
     teaser: string;
     contentful_id: string;
+    progress: ProgramProgress | null;
 }
 
 export interface LockedProgramWeek {
@@ -143,9 +147,22 @@ export interface LockedProgram {
 
 export interface IProgramsContext {
     programs: (Program | LockedProgram)[];
-    activeDay: number;
-    activeWeek: number;
+    programsProgress: ProgramProgress[];
     programsFetching: boolean;
+    programsProgressFetching: boolean;
+    addProgramToUser: (programId: string) => Promise<void>;
+    onWorkoutComplete: (data: WorkoutCompleteArgs) => Promise<void>;
+    refetchPrograms: () => Promise<
+        QueryObserverResult<(Program | LockedProgram)[], Error>
+    >;
+}
+
+export interface WorkoutCompleteArgs {
+    programId: string;
+    weekCompleted: number;
+    dayCompleted: number;
+    exercisesCompleted: CompletedExercisesData[];
+    completed_at?: string;
 }
 
 export interface ActivityWithPhase extends ProgramActivity {
@@ -219,4 +236,27 @@ export interface LockedProgramWeek extends MappedDaysMemo, LockedMappedDays {}
 
 export interface ProgramWeekWithSlug extends ProgramWeek {
     slug: string;
+}
+
+export interface CompletedExerciseProgress {
+    exercise_id: string;
+    weight: number;
+    week: number;
+    day: number;
+}
+
+export interface ProgramProgress {
+    program_id: string;
+    week_completed: number;
+    day_completed: number;
+    user_id: string;
+    completed_at: string;
+    exercises_completed: CompletedExerciseProgress[];
+}
+
+export interface CompletedExercisesData {
+    exercise_id: string;
+    weight?: number;
+    week: number;
+    day: number;
 }

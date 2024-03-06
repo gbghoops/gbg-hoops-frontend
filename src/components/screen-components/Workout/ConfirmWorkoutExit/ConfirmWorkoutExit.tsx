@@ -48,11 +48,7 @@ const ConfirmWorkoutExit = ({
                 backgroundColor={"rgba(20,20,20,0.75)"}
             />
 
-            <Sheet.Frame
-                padding="$10"
-                space="$5"
-                backgroundColor={"$surface_primary"}
-            >
+            <Sheet.Frame padding="$10" backgroundColor={"$surface_primary"}>
                 <Sheet.Handle
                     mb="$10"
                     height={"$4"}

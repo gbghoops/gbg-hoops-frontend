@@ -1,8 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import React from "react";
 import { ActivityIndicator, Dimensions, StyleSheet } from "react-native";
 import { StyledImage } from "@src/components/styled-components";
-import { ActivityWithPhase } from "@src/context/ProgramsContext/types";
+import {
+    ActivityWithPhase,
+    CompletedExercisesData,
+} from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import {
     Audio,
@@ -21,6 +24,7 @@ import ExerciseMobilityProgressBar from "./components/ExerciseMobilityProgressBa
 import ExerciseRepProgressBar from "./components/ExerciseRepProgressBar";
 import ExerciseTimerProgressBar from "./components/ExerciseTimerProgressBar";
 import InstructionVideoButton from "./components/InstructionVideoButton";
+import NoTimerProgressIndicator from "./components/NoTimerProgressIndicator";
 import SetsCounter from "./components/SetsCounter";
 import SlideIndicators from "./components/SlideIndicators";
 import SoundButton from "./components/SoundButton";
@@ -31,11 +35,13 @@ interface ExerciseSlideProps {
     index: number;
     totalSlides: number;
     dayTitle: string;
+    activeProgramDay: number;
+    activeProgramWeek: number;
     currentSlidePosition: number;
-    onExerciseCompleted: (index: number) => void;
+    onExerciseCompleted: (exercise: CompletedExercisesData) => void;
     onPrevPressed?: () => void;
     onNextPressed?: () => void;
-    onCompleteWorkout: () => void;
+    onCompleteWorkout: () => Promise<void>;
 }
 
 // Okay, gotta be smart about this component. It's size could really affect the performance of
@@ -51,6 +57,8 @@ const ExerciseSlide = ({
     onCompleteWorkout,
     onNextPressed,
     onPrevPressed,
+    activeProgramDay,
+    activeProgramWeek,
 }: ExerciseSlideProps) => {
     const totalExerciseDuration =
         exercise.type === "timer" ? exercise.seconds_hold : 0;
@@ -90,6 +98,21 @@ const ExerciseSlide = ({
         return () => subscription.remove();
     }, []);
 
+    const completeExercisePayload = useMemo<CompletedExercisesData>(() => {
+        return {
+            exercise_id: exercise.contentful_id,
+            weight: exercise.include_weights ? currentWeight : 0,
+            week: activeProgramWeek ?? 1,
+            day: activeProgramDay ?? 2,
+        };
+    }, [currentWeight]);
+
+    useEffect(() => {
+        if (exercisePlaying && exercise.type === "no_timer") {
+            setExerciseCompleted(true);
+        }
+    }, [exercisePlaying]);
+
     useEffect(() => {
         if (!isRestSlide) {
             setExercisePlaying(false);
@@ -116,6 +139,7 @@ const ExerciseSlide = ({
             interruptionModeIOS: InterruptionModeIOS.DuckOthers,
             interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
         });
+
         setExerciseCompleted(false);
     }, [exercisePlaying]);
 
@@ -149,9 +173,13 @@ const ExerciseSlide = ({
             return;
         }
 
-        setExercisePlaying(false);
-        setQueueExercisePlaying(false);
-        return onExerciseCompleted && onExerciseCompleted(currentIndex);
+        if (exercise.type !== "no_timer") {
+            // setExercisePlaying(false);
+            setQueueExercisePlaying(false);
+        }
+        return (
+            onExerciseCompleted && onExerciseCompleted(completeExercisePayload)
+        );
     }, [exerciseCompleted]);
 
     const isLandScape = windowSize.width > windowSize.height;
@@ -332,8 +360,6 @@ const ExerciseSlide = ({
                                         jc="center"
                                         ai="center"
                                         backgroundColor="$surface_primary"
-                                        borderWidth={1}
-                                        borderColor="$border_primary"
                                     >
                                         <ActivityIndicator
                                             size="small"
@@ -483,6 +509,14 @@ const ExerciseSlide = ({
                                         }}
                                         isLandscape={isLandScape}
                                     />
+                                ) : exercise.type === "no_timer" ? (
+                                    <NoTimerProgressIndicator
+                                        isPlaying={exercisePlaying}
+                                        isLandscape={isLandScape}
+                                        onMarkCompleted={() => {
+                                            setExerciseCompleted(true);
+                                        }}
+                                    />
                                 ) : null
                             ) : (
                                 <View mt={isLandScape ? "0%" : "$5"}>
@@ -512,7 +546,14 @@ const ExerciseSlide = ({
                                                 isLandScape ? "row" : "column"
                                             }
                                         >
-                                            <View w={"$90"} h={"$90"} mt="auto">
+                                            <View
+                                                w={"$90"}
+                                                h={"$90"}
+                                                mt="auto"
+                                                backgroundColor={
+                                                    "$surface_background"
+                                                }
+                                            >
                                                 <StyledImage
                                                     source={{
                                                         uri: `https:${nextExercise?.thumbnail}`,
@@ -734,6 +775,7 @@ const ExerciseSlide = ({
                                             h={"$54"}
                                             ml={"$5"}
                                             mt="auto"
+                                            backgroundColor={"$surface_primary"}
                                         >
                                             <StyledImage
                                                 source={{

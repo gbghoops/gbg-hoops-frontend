@@ -10,6 +10,7 @@ import { Text, View } from "tamagui";
 const NewestProgramCard = () => {
     const { programs } = usePrograms();
     const { push } = useRouter();
+    const programVideo = useRef<Video>(null);
 
     // TODO: Add proper logic to get Newest program
     const newestProgram = programs[programs.length - 1];
@@ -17,8 +18,6 @@ const NewestProgramCard = () => {
     const isProgramLocked = newestProgram && "is_locked" in newestProgram;
 
     if (!newestProgram) return null;
-
-    const programVideo = useRef<Video>(null);
 
     const video = newestProgram.teaser;
 

@@ -15,7 +15,7 @@ export const AllProgramsTab = () => {
     const { programs } = usePrograms();
     const { bottom } = useSafeAreaInsets();
 
-    if (!programs) return null;
+    if (!programs) return <EmptyPrograms />;
 
     return (
         <FlashList
@@ -104,6 +104,28 @@ const ProgramCard = ({ program }: ProgramCard) => {
                     {name}
                 </Text>
             </View>
+        </View>
+    );
+};
+
+const EmptyPrograms = () => {
+    return (
+        <View jc="center" ai="center" f={1} mx="$20">
+            <Text
+                fontFamily={"$acuminProBold"}
+                fontSize="$24"
+                textAlign="center"
+            >
+                No programs available at this moment, please try again later.
+            </Text>
+            <Text
+                fontFamily={"$acuminProRegular"}
+                fontSize="$20"
+                textAlign="center"
+                mt="$10"
+            >
+                If this issue persists, please contact support.
+            </Text>
         </View>
     );
 };

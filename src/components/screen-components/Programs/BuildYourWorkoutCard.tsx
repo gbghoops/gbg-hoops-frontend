@@ -1,7 +1,7 @@
 import Button from "@src/components/button/Button";
 import { Text, View } from "tamagui";
 const BuildYoutWorkoutCard = () => (
-    <View mt="$20" px="$20">
+    <View px="$20">
         <View backgroundColor="$surface_primary" py="$20" px="$15" pb="$30">
             <Text
                 textTransform="uppercase"

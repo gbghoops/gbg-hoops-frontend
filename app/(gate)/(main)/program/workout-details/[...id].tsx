@@ -4,17 +4,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import DayActivityExerciseList from "@src/components/day-activity-exercise-list/DayActivityExerciseList";
+import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import AddExerciseSheet from "@src/components/screen-components/Programs/WorkoutDetails/AddExerciseSheet/AddExerciseSheet";
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
+import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import {
-    EquipmentData,
-    ProgramDay,
-    ProgramWeekWithSlug,
-} from "@src/context/ProgramsContext/types";
+import { EquipmentData, ProgramDay } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -28,78 +26,113 @@ const exerciseInfoIconSize = wn(20);
 
 export default function WorkoutDetails() {
     const [exerciseSheetOpen, setExerciseSheetOpen] = useState(false);
+    const [showLegendSheet, setShowLegendSheet] = useState(false);
 
     const router = useRouter();
     const { bottom } = useSafeAreaInsets();
     const { id } = useLocalSearchParams();
-    const { programs, activeDay, activeWeek } = usePrograms();
+    const { programs } = usePrograms();
 
     if (!id) {
-        return null;
+        return <WorkoutPageError />;
     }
 
     const slug = id[0];
-    const _activeWeek = id[1] ? Number(id[1]) : activeWeek;
-    const _activeDay = id[2] ? Number(id[2]) : activeDay;
 
     const currentProgram = programs.find((program) => program.slug === slug);
+
+    const activeWeek =
+        currentProgram &&
+        !("is_locked" in currentProgram) &&
+        currentProgram.progress
+            ? currentProgram.progress.week_completed + 1
+            : 1;
+
+    const activeDay =
+        currentProgram &&
+        !("is_locked" in currentProgram) &&
+        currentProgram.progress
+            ? currentProgram.progress.day_completed + 1
+            : 1;
+
+    const _activeWeek = id[1] ? Number(id[1]) : activeWeek;
+    const _activeDay = id[2] ? Number(id[2]) : activeDay;
 
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
     if (!currentProgram || isProgramLocked) {
-        return null;
+        return <WorkoutPageError />;
     }
 
     const weekData = currentProgram?.weeks[_activeWeek - 1];
+
+    if (!weekData) {
+        return <WorkoutPageError />;
+    }
 
     const slugifiedWeekData = {
         ...weekData,
         slug: slugify(weekData.name, { lower: true }),
     };
 
-    // TODO: Use progression Data to get upcoming and completed workouts.
-    const removeActiveDay = (day: number) => {
-        switch (day) {
-            case 1:
-                return { day_1: undefined, day_1_memo: undefined };
-            case 2:
-                return { day_2: undefined, day_2_memo: undefined };
-            case 3:
-                return { day_3: undefined, day_3_memo: undefined };
-            case 4:
-                return { day_4: undefined, day_4_memo: undefined };
-            case 5:
-                return { day_5: undefined, day_5_memo: undefined };
-            case 6:
-                return { day_6: undefined, day_6_memo: undefined };
-            case 7:
-                return { day_7: undefined, day_7_memo: undefined };
-            default:
-                return {};
-        }
+    const getUpcomingWorkouts = (activeDay: number) => {
+        // remove the active and previous days from week data
+        const completedWorkoutDayIndices = Array.from(
+            { length: activeDay },
+            (_, i) => i + 1,
+        );
+
+        const upcomingWorkoutIndices = Array.from(
+            { length: 8 - activeDay },
+            (_, i) => i + activeDay,
+        );
+
+        const previousWorkoutsPrime = {
+            ...slugifiedWeekData,
+        };
+        const upcomingWorkoutsPrime = {
+            ...slugifiedWeekData,
+        };
+
+        // Remove completed and upcoming days from week data to get upcoming workouts data
+        completedWorkoutDayIndices.forEach((day) => {
+            delete (
+                previousWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}`];
+            delete (
+                previousWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}_memo`];
+        });
+
+        // Remove upcoming days from week data to get completed workouts data
+        upcomingWorkoutIndices.forEach((day) => {
+            delete (
+                upcomingWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}`];
+            delete (
+                upcomingWorkoutsPrime as Record<string, string | ProgramDay>
+            )[`day_${day}_memo`];
+        });
+
+        return {
+            upcomingWorkouts: previousWorkoutsPrime,
+            completedWorkouts: upcomingWorkoutsPrime,
+        };
     };
 
-    const upcomingWorkouts: ProgramWeekWithSlug = {
-        ...slugifiedWeekData,
-        ...removeActiveDay(_activeDay),
-    };
+    const { upcomingWorkouts, completedWorkouts } =
+        getUpcomingWorkouts(_activeDay);
 
-    // TODO: Use progression Data to get upcoming and completed workouts.
-    // @ts-ignore
-    const completedWorkouts: ProgramWeekWithSlug = {
-        ...removeActiveDay(_activeDay),
-    };
-
-    const dayData = getProgramDayInfo({
+    const dayInfo = getProgramDayInfo({
         week: weekData,
         day: _activeDay,
     });
 
-    if (!dayData.dayData) return null;
+    if (!dayInfo || !dayInfo.dayData) return <WorkoutPageError />;
 
-    const equipments = dayData.dayData
-        ? getEquipmentFromDayData(dayData.dayData)
-        : [];
+    const { dayData, dayMemo } = dayInfo;
+
+    const equipments = dayData ? getEquipmentFromDayData(dayData) : [];
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -147,7 +180,7 @@ export default function WorkoutDetails() {
                         mt="$30"
                         textTransform="uppercase"
                     >
-                        {dayData.dayData.exercises[0].title}
+                        {dayData.exercises[0].title}
                     </Text>
                 </View>
 
@@ -173,6 +206,7 @@ export default function WorkoutDetails() {
                                     opacity: 0.75,
                                     scale: 0.9,
                                 }}
+                                onPress={() => setShowLegendSheet(true)}
                             >
                                 <Octicons
                                     name="info"
@@ -198,22 +232,20 @@ export default function WorkoutDetails() {
 
                 {/* Exercise List */}
                 <View mx={"$20"}>
-                    {dayData.dayMemo ? (
+                    {dayMemo ? (
                         <View>
                             <Text
                                 fontFamily={"$body"}
                                 fontSize={"$18"}
                                 mt={"$20"}
                             >
-                                {dayData.dayMemo}
+                                {dayMemo}
                             </Text>
                         </View>
                     ) : null}
 
                     <View mt={"$20"}>
-                        <DayActivityExerciseList
-                            exerciseData={dayData.dayData}
-                        />
+                        <DayActivityExerciseList exerciseData={dayData} />
                     </View>
                 </View>
 
@@ -243,6 +275,7 @@ export default function WorkoutDetails() {
                     </Text>
                     <View mt="$20">
                         <WeeklyActivitiesBreakdown
+                            isCompletedBlock={true}
                             removeHorizontalPadding={true}
                             weekData={completedWorkouts}
                         />
@@ -273,6 +306,11 @@ export default function WorkoutDetails() {
                     fullWidth
                 />
             </View>
+
+            <LegendSheet
+                sheetOpen={showLegendSheet}
+                setSheetOpen={setShowLegendSheet}
+            />
         </View>
     );
 }
