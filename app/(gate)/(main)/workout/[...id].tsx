@@ -102,7 +102,9 @@ export default function WorkoutScreen() {
         return <WorkoutPageError />;
     }
 
-    const weekData = currentProgram?.weeks[activeWeek - 1];
+    const weekData = currentProgram.weeks[activeWeek - 1];
+
+    const isFinalWeek = !currentProgram.weeks[activeWeek];
 
     const dayInfo = getProgramDayInfo({ week: weekData, day: activeDay });
 
@@ -157,16 +159,27 @@ export default function WorkoutScreen() {
     };
 
     const performWorkoutComplete = async () => {
-        const isLastDay =
-            getProgramDayInfo({ week: weekData, day: activeDay + 1 }) === null;
+        const isLastDay = !getProgramDayInfo({
+            week: weekData,
+            day: activeDay + 1,
+        })?.dayData;
 
         try {
             setIsCompletingWorkout(true);
+
             await onWorkoutComplete({
                 programId: currentProgram.contentful_id,
-                weekCompleted: isLastDay ? activeWeek : activeWeek - 1,
-                dayCompleted: activeDay,
+                weekCompleted: isLastDay
+                    ? !isFinalWeek
+                        ? activeWeek
+                        : 0
+                    : activeWeek - 1,
+                dayCompleted: !isLastDay ? activeDay : 0,
                 exercisesCompleted: completedExercises,
+                completed_at:
+                    isLastDay && isFinalWeek
+                        ? Date.now().toString()
+                        : undefined,
             });
 
             await refetchPrograms();

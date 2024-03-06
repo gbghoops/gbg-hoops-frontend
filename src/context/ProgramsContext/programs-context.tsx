@@ -124,6 +124,7 @@ const onWorkoutComplete = async ({
     weekCompleted,
     dayCompleted,
     exercisesCompleted,
+    completed_at,
 }: WorkoutCompleteArgs) => {
     const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
 
@@ -138,6 +139,7 @@ const onWorkoutComplete = async ({
             week_completed: weekCompleted,
             day_completed: dayCompleted,
             exercises_completed: exercisesCompleted,
+            completed_at,
         }),
     });
 

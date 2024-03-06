@@ -162,6 +162,7 @@ export interface WorkoutCompleteArgs {
     weekCompleted: number;
     dayCompleted: number;
     exercisesCompleted: CompletedExercisesData[];
+    completed_at?: string;
 }
 
 export interface ActivityWithPhase extends ProgramActivity {
@@ -248,6 +249,8 @@ export interface ProgramProgress {
     program_id: string;
     week_completed: number;
     day_completed: number;
+    user_id: string;
+    completed_at: string;
     exercises_completed: CompletedExerciseProgress[];
 }
 

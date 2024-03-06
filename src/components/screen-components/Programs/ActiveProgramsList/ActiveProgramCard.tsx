@@ -1,5 +1,6 @@
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { Octicons } from "@expo/vector-icons";
+import CompletedTag from "@src/components/completed-tag/CompletedTag";
 import { Program } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
@@ -67,10 +68,17 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
                 </Video>
             </View>
             <View p="$15" jc="center" f={1}>
-                <Text
-                    fontSize={"$18"}
-                    fontFamily={"$acuminProSemibold"}
-                >{`Day ${currentDay}`}</Text>
+                <View fd="row" ai="center">
+                    <Text
+                        fontSize={"$18"}
+                        fontFamily={"$acuminProSemibold"}
+                    >{`Day ${currentDay}`}</Text>
+                    {progress.completed_at ? (
+                        <View ml="$10">
+                            <CompletedTag />
+                        </View>
+                    ) : null}
+                </View>
 
                 {dayTitle ? (
                     <Text
