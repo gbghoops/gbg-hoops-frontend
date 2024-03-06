@@ -128,7 +128,7 @@ export default function WorkoutDetails() {
         day: _activeDay,
     });
 
-    if (!dayInfo || !dayInfo.dayData) return null;
+    if (!dayInfo || !dayInfo.dayData) return <WorkoutPageError />;
 
     const { dayData, dayMemo } = dayInfo;
 

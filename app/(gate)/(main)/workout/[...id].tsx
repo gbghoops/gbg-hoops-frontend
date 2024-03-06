@@ -167,19 +167,23 @@ export default function WorkoutScreen() {
         try {
             setIsCompletingWorkout(true);
 
+            const weekCompleted = isLastDay
+                ? !isFinalWeek
+                    ? activeWeek
+                    : 0
+                : activeWeek - 1;
+
+            const dayCompleted = !isLastDay ? activeDay : 0;
+
+            const completed_at =
+                isLastDay && isFinalWeek ? Date.now().toString() : undefined;
+
             await onWorkoutComplete({
-                programId: currentProgram.contentful_id,
-                weekCompleted: isLastDay
-                    ? !isFinalWeek
-                        ? activeWeek
-                        : 0
-                    : activeWeek - 1,
-                dayCompleted: !isLastDay ? activeDay : 0,
+                weekCompleted,
+                dayCompleted,
+                completed_at,
                 exercisesCompleted: completedExercises,
-                completed_at:
-                    isLastDay && isFinalWeek
-                        ? Date.now().toString()
-                        : undefined,
+                programId: currentProgram.contentful_id,
             });
 
             await refetchPrograms();
