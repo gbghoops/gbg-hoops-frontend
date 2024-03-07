@@ -29,7 +29,11 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
     const dayTitle = dayData?.dayData?.exercises[0].title ?? "";
 
     const onProgramPress = () => {
-        return push(`/program/workout-details/${program.slug}`);
+        return push(
+            progress.completed_at
+                ? `/program/completed-program-details/${program.slug}`
+                : `/program/workout-details/${program.slug}`,
+        );
     };
 
     return (
