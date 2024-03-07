@@ -236,6 +236,7 @@ export interface LockedProgramWeek extends MappedDaysMemo, LockedMappedDays {}
 
 export interface ProgramWeekWithSlug extends ProgramWeek {
     slug: string;
+    weekNumber: number;
 }
 
 export interface CompletedExerciseProgress {

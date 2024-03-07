@@ -72,6 +72,7 @@ export default function WorkoutDetails() {
 
     const slugifiedWeekData = {
         ...weekData,
+        weekNumber: _activeWeek,
         slug: slugify(weekData.name, { lower: true }),
     };
 
@@ -97,20 +98,32 @@ export default function WorkoutDetails() {
         // Remove completed and upcoming days from week data to get upcoming workouts data
         completedWorkoutDayIndices.forEach((day) => {
             delete (
-                previousWorkoutsPrime as Record<string, string | ProgramDay>
+                previousWorkoutsPrime as Record<
+                    string,
+                    string | number | ProgramDay
+                >
             )[`day_${day}`];
             delete (
-                previousWorkoutsPrime as Record<string, string | ProgramDay>
+                previousWorkoutsPrime as Record<
+                    string,
+                    string | number | ProgramDay
+                >
             )[`day_${day}_memo`];
         });
 
         // Remove upcoming days from week data to get completed workouts data
         upcomingWorkoutIndices.forEach((day) => {
             delete (
-                upcomingWorkoutsPrime as Record<string, string | ProgramDay>
+                upcomingWorkoutsPrime as Record<
+                    string,
+                    string | number | ProgramDay
+                >
             )[`day_${day}`];
             delete (
-                upcomingWorkoutsPrime as Record<string, string | ProgramDay>
+                upcomingWorkoutsPrime as Record<
+                    string,
+                    string | number | ProgramDay
+                >
             )[`day_${day}_memo`];
         });
 
@@ -259,6 +272,8 @@ export default function WorkoutDetails() {
                     </Text>
                     <View>
                         <WeeklyActivitiesBreakdown
+                            programSlug={slug}
+                            weekNumber={_activeWeek}
                             removeHorizontalPadding={true}
                             weekData={upcomingWorkouts}
                         />
@@ -275,6 +290,8 @@ export default function WorkoutDetails() {
                     </Text>
                     <View mt="$20">
                         <WeeklyActivitiesBreakdown
+                            programSlug={slug}
+                            weekNumber={_activeWeek}
                             isCompletedBlock={true}
                             removeHorizontalPadding={true}
                             weekData={completedWorkouts}

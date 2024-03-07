@@ -6,10 +6,17 @@ import {
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
+import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
+import Button from "../button/Button";
+import CompletedTag from "../completed-tag/CompletedTag";
+
 interface DayActivityExerciseListProps {
+    exercisesCompleted?: boolean;
     exerciseData: ProgramDay;
+    dayWorkoutPath?: string;
+    allowRedo?: boolean;
 }
 
 interface GroupedExercises {
@@ -39,7 +46,11 @@ const mapPhaseToTitle = (phase: WorkoutPhases) => {
 
 const DayActivityExerciseList = ({
     exerciseData,
+    allowRedo = false,
+    exercisesCompleted = false,
+    dayWorkoutPath = "",
 }: DayActivityExerciseListProps) => {
+    const router = useRouter();
     if (!exerciseData) {
         return null;
     }
@@ -137,15 +148,27 @@ const DayActivityExerciseList = ({
                                             />
                                         </View>
                                         <View pl="$20" f={1}>
-                                            <Text
-                                                fontSize={"$20"}
-                                                fontFamily={"$heading"}
-                                                color={"$gold"}
-                                                width={"100%"}
-                                                lineHeight={25}
-                                            >
-                                                {exercise.name}
-                                            </Text>
+                                            <View>
+                                                <Text
+                                                    fontSize={"$20"}
+                                                    fontFamily={"$heading"}
+                                                    color={
+                                                        exercisesCompleted
+                                                            ? "$text_accent"
+                                                            : "$gold"
+                                                    }
+                                                    width={"100%"}
+                                                    lineHeight={25}
+                                                >
+                                                    {exercise.name}
+                                                </Text>
+                                                {exercisesCompleted ? (
+                                                    <View w="$90" mt="$5">
+                                                        <CompletedTag />
+                                                    </View>
+                                                ) : null}
+                                            </View>
+
                                             <View
                                                 flexDirection="row"
                                                 mt="$10"
@@ -154,6 +177,11 @@ const DayActivityExerciseList = ({
                                                 <Text
                                                     fontFamily={"$body"}
                                                     fontSize="$16"
+                                                    color={
+                                                        exercisesCompleted
+                                                            ? "$text_accent"
+                                                            : "$text_primary"
+                                                    }
                                                 >
                                                     {`${exercise.sets} set${
                                                         exercise.sets > 1
@@ -165,12 +193,22 @@ const DayActivityExerciseList = ({
                                                     mx={"$10"}
                                                     fontFamily={"$body"}
                                                     fontSize="$16"
+                                                    color={
+                                                        exercisesCompleted
+                                                            ? "$text_accent"
+                                                            : "$text_primary"
+                                                    }
                                                 >
                                                     |
                                                 </Text>
                                                 <Text
                                                     fontFamily={"$body"}
                                                     fontSize="$16"
+                                                    color={
+                                                        exercisesCompleted
+                                                            ? "$text_accent"
+                                                            : "$text_primary"
+                                                    }
                                                 >
                                                     {`${getExerciseTypeScheme(
                                                         exercise,
@@ -184,6 +222,16 @@ const DayActivityExerciseList = ({
                     </View>
                 </View>
             ))}
+            {allowRedo && dayWorkoutPath ? (
+                <View mx="$20" mt="$20" mb="$20">
+                    <Button
+                        text="Redo"
+                        secondary_transparent
+                        fullWidth
+                        onPress={() => router.push(dayWorkoutPath)}
+                    />
+                </View>
+            ) : null}
         </View>
     );
 };
