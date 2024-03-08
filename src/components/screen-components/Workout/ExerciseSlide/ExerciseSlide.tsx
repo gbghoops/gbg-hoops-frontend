@@ -799,14 +799,6 @@ const ExerciseSlide = ({
                     </View>
                 </View>
             </YStack>
-            {/* <FullscreenVideoModal
-                open={showFullscreenVideo}
-                videoSource={require("@assets/programs/videos/db-rdl-stretch.mp4")}
-                isLandScape={isLandScape}
-                onClose={() => {
-                    setShowFullscreenVideo(false);
-                }}
-            /> */}
             <AdjustWeightSheet
                 open={showWeightAdjust}
                 currentWeight={currentWeight}
