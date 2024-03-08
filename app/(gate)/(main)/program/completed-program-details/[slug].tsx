@@ -5,21 +5,19 @@ import {
     MaterialTabItem,
     Tabs,
 } from "react-native-collapsible-tab-view";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { ProgramWeek } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import slugify from "slugify";
 import { styled, Text, View } from "tamagui";
 
 export default function CompletedProgramDetails() {
-    const router = useRouter();
     const { programs } = usePrograms();
-    const { bottom } = useSafeAreaInsets();
+
     const { slug } = useLocalSearchParams();
 
     const currentProgram = programs.find((program) => program.slug === slug);
@@ -88,8 +86,6 @@ export default function CompletedProgramDetails() {
         </Tabs.Container>
     );
 }
-
-const WeekTab = () => {};
 
 const PageHeaderWrapper = styled(View, {
     px: "$20",
