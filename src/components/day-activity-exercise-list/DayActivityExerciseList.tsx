@@ -1,5 +1,4 @@
 import { ActivityIndicator, StyleSheet } from "react-native";
-import Image from "react-native-image-progress";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import {
     ProgramDay,
