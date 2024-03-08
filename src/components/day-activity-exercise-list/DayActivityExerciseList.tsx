@@ -1,5 +1,5 @@
 import { ActivityIndicator, StyleSheet } from "react-native";
-import Image from "react-native-image-progress";
+import { CachedImage } from "@georstat/react-native-image-cache";
 import {
     ProgramDay,
     ProgramSummary,
@@ -123,11 +123,9 @@ const DayActivityExerciseList = ({
                                             height={"$100"}
                                             backgroundColor={"$surface_primary"}
                                         >
-                                            <Image
-                                                source={{
-                                                    uri: `http:${exercise.thumbnail}`,
-                                                }}
-                                                indicator={() => (
+                                            <CachedImage
+                                                source={`http:${exercise.thumbnail}`}
+                                                loadingImageComponent={() => (
                                                     <ActivityIndicator
                                                         size="small"
                                                         color={colors.gold}

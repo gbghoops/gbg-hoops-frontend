@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, StyleSheet } from "react-native";
+import convertToProxyURL from "react-native-video-cache";
 import {
     MaterialCommunityIcons,
     MaterialIcons,
@@ -131,7 +132,9 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
                         isLooping
                         resizeMode={ResizeMode.COVER}
                         source={{
-                            uri: `https:${currentProgram?.teaser}`,
+                            uri: convertToProxyURL(
+                                `https:${currentProgram?.teaser}`,
+                            ),
                         }}
                         style={styles.TeaserVideo}
                     >

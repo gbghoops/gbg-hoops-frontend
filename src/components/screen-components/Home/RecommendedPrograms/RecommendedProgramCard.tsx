@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
+import convertToProxyURL from "react-native-video-cache";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -80,7 +81,7 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                     ref={programVideo}
                     isMuted
                     source={{
-                        uri: `https:${video}`,
+                        uri: convertToProxyURL(`https:${video}`),
                     }}
                     resizeMode={ResizeMode.COVER}
                     style={styles.VideoBackground}
