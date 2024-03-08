@@ -67,9 +67,10 @@ export const WorkoutBreakdownTabs = () => {
 
     const weeks = currentProgram?.weeks;
 
-    const slugifiedWeeks: ProgramWeekWithSlug[] = weeks.map((week) => {
+    const slugifiedWeeks: ProgramWeekWithSlug[] = weeks.map((week, i) => {
         return {
             ...week,
+            weekNumber: i + 1,
             slug: slugify(week.name, { lower: true }),
         };
     });
@@ -197,6 +198,8 @@ export const WorkoutBreakdownTabs = () => {
                         <H5 textAlign="center" fontSize={"$20"}>
                             {weekData ? (
                                 <WeeklyActivitiesBreakdown
+                                    programSlug={currentProgram.slug}
+                                    weekNumber={weekData.weekNumber}
                                     weekData={weekData}
                                     onDaysAccordionOpenStateChange={(
                                         states,

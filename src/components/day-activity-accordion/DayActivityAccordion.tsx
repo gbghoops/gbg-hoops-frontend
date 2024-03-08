@@ -13,7 +13,11 @@ import CompletedTag from "../completed-tag/CompletedTag";
 interface DayActivityAccordionProps {
     index: number;
     day: ProgramDay;
+    programSlug: string;
+    programDayNumber: number;
+    programWeekNumber: number;
     showCompletedTag?: boolean;
+    allowRedo?: boolean;
     removeHorizontalPadding?: boolean;
     onAccordionOpenStateChange?: (isOpen: boolean) => void;
 }
@@ -21,8 +25,12 @@ const DayActivityAccordion = ({
     day,
     index,
     showCompletedTag = false,
+    allowRedo = false,
     removeHorizontalPadding = false,
     onAccordionOpenStateChange,
+    programSlug,
+    programDayNumber,
+    programWeekNumber,
 }: DayActivityAccordionProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const title = day.exercises[0]?.title;
@@ -129,7 +137,12 @@ const DayActivityAccordion = ({
                     px={!removeHorizontalPadding ? "$20" : 0}
                 >
                     {isOpen ? (
-                        <DayActivityExerciseList exerciseData={day} />
+                        <DayActivityExerciseList
+                            exerciseData={day}
+                            allowRedo={allowRedo}
+                            dayWorkoutPath={`/program/workout-details/${programSlug}/${programWeekNumber}/${programDayNumber}`}
+                            exercisesCompleted={showCompletedTag}
+                        />
                     ) : null}
                 </View>
             </Animated.View>

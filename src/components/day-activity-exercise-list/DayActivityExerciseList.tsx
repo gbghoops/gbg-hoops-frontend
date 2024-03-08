@@ -6,10 +6,17 @@ import {
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
+import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
+import Button from "../button/Button";
+import CompletedTag from "../completed-tag/CompletedTag";
+
 interface DayActivityExerciseListProps {
+    exercisesCompleted?: boolean;
     exerciseData: ProgramDay;
+    dayWorkoutPath?: string;
+    allowRedo?: boolean;
 }
 
 interface GroupedExercises {
@@ -39,7 +46,11 @@ const mapPhaseToTitle = (phase: WorkoutPhases) => {
 
 const DayActivityExerciseList = ({
     exerciseData,
+    allowRedo = false,
+    exercisesCompleted = false,
+    dayWorkoutPath = "",
 }: DayActivityExerciseListProps) => {
+    const router = useRouter();
     if (!exerciseData) {
         return null;
     }
@@ -72,36 +83,18 @@ const DayActivityExerciseList = ({
 
     const phases = getExerciseBlocksByPhases(exerciseSummary);
 
-    const getExerciseTypeScheme = (exercise: ProgramSummary) => {
-        switch (exercise.timer_type) {
-            case "timer":
-                return `${exercise.seconds ?? 0} seconds`;
-            case "tempo":
-                return `${exercise.reps ?? 0} reps`;
-            case "mobility":
-                return `${exercise.seconds ?? 0} seconds`;
-
-            default:
-                return `${
-                    exercise.seconds
-                        ? `${exercise.seconds} seconds`
-                        : `${exercise.reps} reps`
-                }`;
-        }
-    };
-
     return (
         <View>
             {phases.map((phase, index) => (
-                <View key={index} mt="$5">
+                <View key={index}>
                     {/* Title */}
                     {phase.activities.length && phase.phase !== "none" ? (
-                        <Text fontFamily="$heading" fontSize={"$20"} my="$10">
+                        <Text fontFamily="$heading" fontSize={"$20"} my="$5">
                             {mapPhaseToTitle(phase.phase)}
                         </Text>
                     ) : null}
 
-                    <View mt="$5">
+                    <View>
                         {phase.activities
                             .filter((e) => e.timer_type)
                             .map((exercise, index, activities) => (
@@ -135,46 +128,32 @@ const DayActivityExerciseList = ({
                                             />
                                         </View>
                                         <View pl="$20" f={1}>
-                                            <Text
-                                                fontSize={"$20"}
-                                                fontFamily={"$heading"}
-                                                color={"$gold"}
-                                                width={"100%"}
-                                                lineHeight={25}
-                                            >
-                                                {exercise.name}
-                                            </Text>
-                                            <View
-                                                flexDirection="row"
-                                                mt="$10"
-                                                ai="center"
-                                            >
+                                            <View>
                                                 <Text
-                                                    fontFamily={"$body"}
-                                                    fontSize="$16"
+                                                    fontSize={"$20"}
+                                                    fontFamily={"$heading"}
+                                                    color={
+                                                        exercisesCompleted
+                                                            ? "$text_accent"
+                                                            : "$gold"
+                                                    }
+                                                    width={"100%"}
+                                                    lineHeight={25}
                                                 >
-                                                    {`${exercise.sets} set${
-                                                        exercise.sets > 1
-                                                            ? "s"
-                                                            : ""
-                                                    }`}
+                                                    {exercise.name}
                                                 </Text>
-                                                <Text
-                                                    mx={"$10"}
-                                                    fontFamily={"$body"}
-                                                    fontSize="$16"
-                                                >
-                                                    |
-                                                </Text>
-                                                <Text
-                                                    fontFamily={"$body"}
-                                                    fontSize="$16"
-                                                >
-                                                    {`${getExerciseTypeScheme(
-                                                        exercise,
-                                                    )}`}
-                                                </Text>
+                                                {exercisesCompleted ? (
+                                                    <View w="$90" mt="$5">
+                                                        <CompletedTag />
+                                                    </View>
+                                                ) : null}
                                             </View>
+                                            <RenderExerciseWorkMerics
+                                                exercise={exercise}
+                                                exercisesCompleted={
+                                                    exercisesCompleted
+                                                }
+                                            />
                                         </View>
                                     </View>
                                 </View>
@@ -182,6 +161,74 @@ const DayActivityExerciseList = ({
                     </View>
                 </View>
             ))}
+            {allowRedo && dayWorkoutPath ? (
+                <View mt="$20" mb="$30">
+                    <Button
+                        text="Redo Workout"
+                        secondary_transparent
+                        fullWidth
+                        onPress={() => router.push(dayWorkoutPath)}
+                    />
+                </View>
+            ) : null}
+        </View>
+    );
+};
+
+interface RenderExerciseWorkMetricsProps {
+    exercisesCompleted?: boolean;
+    exercise: ProgramSummary;
+}
+const RenderExerciseWorkMerics = ({
+    exercise,
+    exercisesCompleted,
+}: RenderExerciseWorkMetricsProps) => {
+    const sets = exercise.sets;
+    const scheme = getExerciseTypeScheme(exercise);
+
+    return exercisesCompleted ? (
+        Array.from({ length: sets }).map((_, index) => (
+            <ExerciseWorkMetrics
+                key={index}
+                sets={sets}
+                exerciseScheme={scheme}
+                isCompletedSummary={exercisesCompleted}
+                setIndex={index + 1}
+            />
+        ))
+    ) : (
+        <ExerciseWorkMetrics sets={sets} exerciseScheme={scheme} />
+    );
+};
+
+interface ExerciseWorkMetricsProps {
+    sets: number;
+    exerciseScheme: string;
+    isCompletedSummary?: boolean;
+    setIndex?: number;
+}
+
+const ExerciseWorkMetrics = ({
+    sets,
+    exerciseScheme,
+    isCompletedSummary,
+    setIndex,
+}: ExerciseWorkMetricsProps) => {
+    const color = isCompletedSummary ? "$text_accent" : "$text_primary";
+
+    return (
+        <View flexDirection="row" mt="$10" ai="center">
+            <Text fontFamily={"$body"} fontSize="$16" color={color}>
+                {isCompletedSummary
+                    ? `Set ${setIndex}`
+                    : `${sets} set${sets > 1 ? "s" : ""}`}
+            </Text>
+            <Text mx={"$10"} fontFamily={"$body"} fontSize="$16" color={color}>
+                |
+            </Text>
+            <Text fontFamily={"$body"} fontSize="$16" color={color}>
+                {`${exerciseScheme}`}
+            </Text>
         </View>
     );
 };
@@ -192,5 +239,23 @@ const styles = StyleSheet.create({
         height: "100%",
     },
 });
+
+const getExerciseTypeScheme = (exercise: ProgramSummary) => {
+    switch (exercise.timer_type) {
+        case "timer":
+            return `${exercise.seconds ?? 0} seconds`;
+        case "tempo":
+            return `${exercise.reps ?? 0} reps`;
+        case "mobility":
+            return `${exercise.seconds ?? 0} seconds`;
+
+        default:
+            return `${
+                exercise.seconds
+                    ? `${exercise.seconds} seconds`
+                    : `${exercise.reps} reps`
+            }`;
+    }
+};
 
 export default DayActivityExerciseList;
