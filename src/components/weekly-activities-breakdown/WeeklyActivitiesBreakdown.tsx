@@ -12,6 +12,7 @@ interface WeekylActivitiesBreakdownProps {
     weekNumber: number;
     weekData: ProgramWeekWithSlug | null;
     removeHorizontalPadding?: boolean;
+    allowRedo?: boolean;
     onDaysAccordionOpenStateChange?: (states: boolean[]) => void;
 }
 
@@ -21,6 +22,7 @@ const WeeklyActivitiesBreakdown = ({
     weekNumber,
     removeHorizontalPadding = false,
     onDaysAccordionOpenStateChange,
+    allowRedo = false,
     isCompletedBlock = false,
 }: WeekylActivitiesBreakdownProps) => {
     if (!weekData) return null;
@@ -67,6 +69,7 @@ const WeeklyActivitiesBreakdown = ({
                         showCompletedTag={isCompletedBlock}
                         removeHorizontalPadding={removeHorizontalPadding}
                         key={day.exercises[0]?.title ?? i}
+                        allowRedo={allowRedo}
                         onAccordionOpenStateChange={(state) => {
                             setAccordionStates((prev) => {
                                 const newState = [...prev];

@@ -140,7 +140,7 @@ const DayActivityAccordion = ({
                         <DayActivityExerciseList
                             exerciseData={day}
                             allowRedo={allowRedo}
-                            dayWorkoutPath={`/${programSlug}/${programWeekNumber}/${programDayNumber}`}
+                            dayWorkoutPath={`/program/workout-details/${programSlug}/${programWeekNumber}/${programDayNumber}`}
                             exercisesCompleted={showCompletedTag}
                         />
                     ) : null}

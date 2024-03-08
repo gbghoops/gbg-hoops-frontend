@@ -7,15 +7,18 @@ import {
 } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
+import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { ProgramWeek } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import slugify from "slugify";
 import { styled, Text, View } from "tamagui";
 
 export default function CompletedProgramDetails() {
     const router = useRouter();
-    const { programs, addProgramToUser } = usePrograms();
+    const { programs } = usePrograms();
     const { bottom } = useSafeAreaInsets();
     const { slug } = useLocalSearchParams();
 
@@ -35,6 +38,11 @@ export default function CompletedProgramDetails() {
 
     const headerHeight = wn(80);
 
+    // Filter locked weeks from program weeks.
+    const programWeeks: ProgramWeek[] = currentProgram.weeks.filter(
+        (week) => !("is_locked" in week),
+    ) as ProgramWeek[];
+
     return (
         <Tabs.Container
             renderHeader={renderProgramDetailsHeader}
@@ -53,11 +61,30 @@ export default function CompletedProgramDetails() {
                 />
             )}
         >
-            <Tabs.Tab name="Workout">
-                <View>
-                    <Text>Workout</Text>
-                </View>
-            </Tabs.Tab>
+            {programWeeks.map((week, index) => {
+                const slugifiedWeekData = {
+                    ...week,
+                    weekNumber: index + 1,
+                    slug: slugify(week.name, { lower: true }),
+                };
+
+                return (
+                    <Tabs.Tab name={`Week ${index + 1}`} key={index}>
+                        <Tabs.ScrollView
+                            showsVerticalScrollIndicator={false}
+                            style={styles.tabScrollView}
+                        >
+                            <WeeklyActivitiesBreakdown
+                                weekNumber={index + 1}
+                                weekData={slugifiedWeekData}
+                                programSlug={currentProgram.slug}
+                                isCompletedBlock
+                                allowRedo
+                            />
+                        </Tabs.ScrollView>
+                    </Tabs.Tab>
+                );
+            })}
         </Tabs.Container>
     );
 }
@@ -109,5 +136,10 @@ const styles = StyleSheet.create({
         height: wn(100),
         width: "100%",
         backgroundColor: "#2196f3",
+    },
+    tabScrollView: {
+        flex: 1,
+        minHeight: "100%",
+        backgroundColor: colors.surface_background,
     },
 });

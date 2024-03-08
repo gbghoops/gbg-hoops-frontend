@@ -83,36 +83,18 @@ const DayActivityExerciseList = ({
 
     const phases = getExerciseBlocksByPhases(exerciseSummary);
 
-    const getExerciseTypeScheme = (exercise: ProgramSummary) => {
-        switch (exercise.timer_type) {
-            case "timer":
-                return `${exercise.seconds ?? 0} seconds`;
-            case "tempo":
-                return `${exercise.reps ?? 0} reps`;
-            case "mobility":
-                return `${exercise.seconds ?? 0} seconds`;
-
-            default:
-                return `${
-                    exercise.seconds
-                        ? `${exercise.seconds} seconds`
-                        : `${exercise.reps} reps`
-                }`;
-        }
-    };
-
     return (
         <View>
             {phases.map((phase, index) => (
-                <View key={index} mt="$5">
+                <View key={index}>
                     {/* Title */}
                     {phase.activities.length && phase.phase !== "none" ? (
-                        <Text fontFamily="$heading" fontSize={"$20"} my="$10">
+                        <Text fontFamily="$heading" fontSize={"$20"} my="$5">
                             {mapPhaseToTitle(phase.phase)}
                         </Text>
                     ) : null}
 
-                    <View mt="$5">
+                    <View>
                         {phase.activities
                             .filter((e) => e.timer_type)
                             .map((exercise, index, activities) => (
@@ -166,53 +148,12 @@ const DayActivityExerciseList = ({
                                                     </View>
                                                 ) : null}
                                             </View>
-
-                                            <View
-                                                flexDirection="row"
-                                                mt="$10"
-                                                ai="center"
-                                            >
-                                                <Text
-                                                    fontFamily={"$body"}
-                                                    fontSize="$16"
-                                                    color={
-                                                        exercisesCompleted
-                                                            ? "$text_accent"
-                                                            : "$text_primary"
-                                                    }
-                                                >
-                                                    {`${exercise.sets} set${
-                                                        exercise.sets > 1
-                                                            ? "s"
-                                                            : ""
-                                                    }`}
-                                                </Text>
-                                                <Text
-                                                    mx={"$10"}
-                                                    fontFamily={"$body"}
-                                                    fontSize="$16"
-                                                    color={
-                                                        exercisesCompleted
-                                                            ? "$text_accent"
-                                                            : "$text_primary"
-                                                    }
-                                                >
-                                                    |
-                                                </Text>
-                                                <Text
-                                                    fontFamily={"$body"}
-                                                    fontSize="$16"
-                                                    color={
-                                                        exercisesCompleted
-                                                            ? "$text_accent"
-                                                            : "$text_primary"
-                                                    }
-                                                >
-                                                    {`${getExerciseTypeScheme(
-                                                        exercise,
-                                                    )}`}
-                                                </Text>
-                                            </View>
+                                            <RenderExerciseWorkMerics
+                                                exercise={exercise}
+                                                exercisesCompleted={
+                                                    exercisesCompleted
+                                                }
+                                            />
                                         </View>
                                     </View>
                                 </View>
@@ -221,9 +162,9 @@ const DayActivityExerciseList = ({
                 </View>
             ))}
             {allowRedo && dayWorkoutPath ? (
-                <View mx="$20" mt="$20" mb="$20">
+                <View mt="$20" mb="$30">
                     <Button
-                        text="Redo"
+                        text="Redo Workout"
                         secondary_transparent
                         fullWidth
                         onPress={() => router.push(dayWorkoutPath)}
@@ -234,11 +175,87 @@ const DayActivityExerciseList = ({
     );
 };
 
+interface RenderExerciseWorkMetricsProps {
+    exercisesCompleted?: boolean;
+    exercise: ProgramSummary;
+}
+const RenderExerciseWorkMerics = ({
+    exercise,
+    exercisesCompleted,
+}: RenderExerciseWorkMetricsProps) => {
+    const sets = exercise.sets;
+    const scheme = getExerciseTypeScheme(exercise);
+
+    return exercisesCompleted ? (
+        Array.from({ length: sets }).map((_, index) => (
+            <ExerciseWorkMetrics
+                key={index}
+                sets={sets}
+                exerciseScheme={scheme}
+                isCompletedSummary={exercisesCompleted}
+                setIndex={index + 1}
+            />
+        ))
+    ) : (
+        <ExerciseWorkMetrics sets={sets} exerciseScheme={scheme} />
+    );
+};
+
+interface ExerciseWorkMetricsProps {
+    sets: number;
+    exerciseScheme: string;
+    isCompletedSummary?: boolean;
+    setIndex?: number;
+}
+
+const ExerciseWorkMetrics = ({
+    sets,
+    exerciseScheme,
+    isCompletedSummary,
+    setIndex,
+}: ExerciseWorkMetricsProps) => {
+    const color = isCompletedSummary ? "$text_accent" : "$text_primary";
+
+    return (
+        <View flexDirection="row" mt="$10" ai="center">
+            <Text fontFamily={"$body"} fontSize="$16" color={color}>
+                {isCompletedSummary
+                    ? `Set ${setIndex}`
+                    : `${sets} set${sets > 1 ? "s" : ""}`}
+            </Text>
+            <Text mx={"$10"} fontFamily={"$body"} fontSize="$16" color={color}>
+                |
+            </Text>
+            <Text fontFamily={"$body"} fontSize="$16" color={color}>
+                {`${exerciseScheme}`}
+            </Text>
+        </View>
+    );
+};
+
 const styles = StyleSheet.create({
     exerciseImage: {
         width: "100%",
         height: "100%",
     },
 });
+
+const getExerciseTypeScheme = (exercise: ProgramSummary) => {
+    switch (exercise.timer_type) {
+        case "timer":
+            return `${exercise.seconds ?? 0} seconds`;
+        case "tempo":
+            return `${exercise.reps ?? 0} reps`;
+        case "mobility":
+            return `${exercise.seconds ?? 0} seconds`;
+
+        default:
+            return `${
+                exercise.seconds
+                    ? `${exercise.seconds} seconds`
+                    : `${exercise.reps} reps`
+            }`;
+    }
+};
 
 export default DayActivityExerciseList;
