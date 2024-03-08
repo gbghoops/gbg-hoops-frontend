@@ -1,4 +1,4 @@
-import { StyledImage } from "@src/components/styled-components";
+import { CachedImage } from "@georstat/react-native-image-cache";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { useRouter } from "expo-router";
@@ -60,8 +60,8 @@ const WorkoutOfTheDayCard = () => {
             >
                 {/* Image */}
                 <View width={"100%"} height="$200">
-                    <StyledImage
-                        source={{ uri: `https:${programImage}` }}
+                    <CachedImage
+                        source={`https:${programImage}`}
                         resizeMode={"cover"}
                         style={{
                             width: "100%",

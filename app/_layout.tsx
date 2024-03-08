@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { Dirs } from "react-native-file-access";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { CacheManager } from "@georstat/react-native-image-cache";
 import AuthProvider from "@src/context/auth-context";
 import UserProvider from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
@@ -21,6 +23,16 @@ const MainLayout = () => {
     SplashScreen.preventAutoHideAsync();
 
     SystemUI.setBackgroundColorAsync(colors.surface_background);
+
+    CacheManager.config = {
+        baseDir: `${Dirs.CacheDir}/images_cache/`,
+        blurRadius: 15,
+        cacheLimit: 0,
+        maxRetries: 3 /* optional, if not provided defaults to 0 */,
+        retryDelay: 3000 /* in milliseconds, optional, if not provided defaults to 0 */,
+        sourceAnimationDuration: 1000,
+        thumbnailAnimationDuration: 1000,
+    };
 
     const queryClient = new QueryClient();
 

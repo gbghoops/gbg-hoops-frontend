@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import React from "react";
 import { ActivityIndicator, Dimensions, StyleSheet } from "react-native";
+import convertToProxyURL from "react-native-video-cache";
+import { CachedImage } from "@georstat/react-native-image-cache";
 import { StyledImage } from "@src/components/styled-components";
 import {
     ActivityWithPhase,
@@ -346,7 +348,9 @@ const ExerciseSlide = ({
                                         exerciseCompleted ? 0 : undefined
                                     }
                                     source={{
-                                        uri: `https:${exercise.video}`,
+                                        uri: convertToProxyURL(
+                                            `https:${exercise.video}`,
+                                        ),
                                     }}
                                     style={styles.ExerciseVideo}
                                     isMuted={isVideoMuted}
@@ -554,10 +558,8 @@ const ExerciseSlide = ({
                                                     "$surface_background"
                                                 }
                                             >
-                                                <StyledImage
-                                                    source={{
-                                                        uri: `https:${nextExercise?.thumbnail}`,
-                                                    }}
+                                                <CachedImage
+                                                    source={`https:${nextExercise?.thumbnail}`}
                                                     style={styles.tumbnail}
                                                     resizeMode="cover"
                                                 />
@@ -777,10 +779,8 @@ const ExerciseSlide = ({
                                             mt="auto"
                                             backgroundColor={"$surface_primary"}
                                         >
-                                            <StyledImage
-                                                source={{
-                                                    uri: `https:${nextExercise?.thumbnail}`,
-                                                }}
+                                            <CachedImage
+                                                source={`https:${nextExercise?.thumbnail}`}
                                                 style={styles.tumbnail}
                                                 resizeMode="cover"
                                             />

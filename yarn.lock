@@ -2392,6 +2392,13 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
+"@georstat/react-native-image-cache@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@georstat/react-native-image-cache/-/react-native-image-cache-3.1.0.tgz#80d2cbe2bc5e8d1956fa722c48aa9db8c46ce428"
+  integrity sha512-p84UVar4YUJWnyJ62VwWe82pFuIDs3eqeTLON/ZabDUJY2kE9IBHMbFwMYKgYUW2vN9oDtaRO4NtEW44sb7dTQ==
+  dependencies:
+    crypto-js "^4.1.1"
+
 "@graphql-typed-document-node/core@^3.1.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
@@ -5939,6 +5946,11 @@ crypt@0.0.2, crypt@~0.0.1:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
   integrity sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
+
+crypto-js@^4.1.1:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
+  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
 
 crypto-random-string@^1.0.0:
   version "1.0.0"
@@ -10013,6 +10025,11 @@ react-native-collapsible-tab-view@^6.2.1:
   dependencies:
     use-deep-compare "^1.1.0"
 
+react-native-file-access@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-file-access/-/react-native-file-access-3.0.5.tgz#c63af958451e12bf2e3f89ca9aabde9e3fc3cd9b"
+  integrity sha512-r9AFT4islJTZnh/kLTapBBwWzJM/JcVmKelP5rOQY1u5XTCrIL7JkTh6KQNJc8oA6jDqB3DioZ01LSqpiCxeOw==
+
 react-native-gesture-handler@~2.12.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.12.1.tgz#f11a99fb95169810c6886fad5efa01a17fd81660"
@@ -10119,6 +10136,11 @@ react-native-user-avatar@^1.0.8:
     abortcontroller-polyfill "^1.4.0"
     initials "^3.0.1"
     prop-types "^15.7.2"
+
+react-native-video-cache@^2.7.4:
+  version "2.7.4"
+  resolved "https://registry.yarnpkg.com/react-native-video-cache/-/react-native-video-cache-2.7.4.tgz#d81b66faa58c315d33a23051f2864145e3f4b82d"
+  integrity sha512-0bSJowf9jZaPX+OohjNH6DFPf0/UDgX1foWJAS5Uyv7tuByj9sD9UNbVreEGFjNNya/xVhZffmDaLWMTrx7VBg==
 
 react-native-web-internals@1.90.3:
   version "1.90.3"
