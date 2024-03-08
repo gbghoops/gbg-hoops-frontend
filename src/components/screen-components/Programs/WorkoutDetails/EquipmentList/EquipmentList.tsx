@@ -1,11 +1,10 @@
 import { ActivityIndicator, StyleSheet } from "react-native";
-import Image from "react-native-image-progress";
+import { CachedImage } from "@georstat/react-native-image-cache";
 import { FlashList } from "@shopify/flash-list";
 import { EquipmentData } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
-
 interface EquipmentListProps {
     equipments: EquipmentData[];
 }
@@ -59,16 +58,16 @@ const EquipmentItem = ({
                     overflow="hidden"
                     backgroundColor={"$surface_primary"}
                 >
-                    <Image
-                        source={{ uri: `https:${thumbnail}` }}
-                        indicator={() => (
+                    <CachedImage
+                        source={`https:${thumbnail}`}
+                        style={EquipmentListStyles.image}
+                        resizeMode="contain"
+                        loadingImageComponent={() => (
                             <ActivityIndicator
                                 size="small"
                                 color={colors.gold}
                             />
                         )}
-                        style={EquipmentListStyles.image}
-                        resizeMode="contain"
                     />
                 </View>
                 <Text

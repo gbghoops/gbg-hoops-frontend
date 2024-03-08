@@ -1,4 +1,5 @@
 import { ActivityIndicator, StyleSheet } from "react-native";
+import convertToProxyURL from "react-native-video-cache";
 import { Octicons } from "@expo/vector-icons";
 import CompletedTag from "@src/components/completed-tag/CompletedTag";
 import { Program } from "@src/context/ProgramsContext/types";
@@ -56,7 +57,7 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
                     isLooping
                     resizeMode={ResizeMode.COVER}
                     source={{
-                        uri: `https:${teaser}`,
+                        uri: convertToProxyURL(`https:${teaser}`),
                     }}
                     style={styles.TeaserVideo}
                 >
