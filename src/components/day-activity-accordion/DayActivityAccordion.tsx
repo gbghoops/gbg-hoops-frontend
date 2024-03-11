@@ -3,7 +3,8 @@ import { StyleSheet, View as RNView } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { Octicons } from "@expo/vector-icons";
 import DayActivityExerciseList from "@src/components/day-activity-exercise-list/DayActivityExerciseList";
-import { ProgramDay } from "@src/context/ProgramsContext/types";
+import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { Program, ProgramDay } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Text, View } from "tamagui";
@@ -37,11 +38,30 @@ const DayActivityAccordion = ({
     const summary = day.summary;
     const exerciseCount = summary.length;
 
+    const { programs } = usePrograms();
+
     useEffect(() => {
         onAccordionOpenStateChange && onAccordionOpenStateChange(isOpen);
     }, [isOpen]);
 
     const headerHeight = wn(75);
+
+    const programsWithProgress: Program[] = programs.filter(
+        (p) => !("is_locked" in p) && p.progress,
+    ) as Program[];
+
+    const currentProgram = programsWithProgress.find(
+        (p) => p.slug === programSlug,
+    );
+
+    if (!currentProgram) return null;
+
+    const progress = currentProgram.progress?.exercises_completed ?? [];
+
+    // Find only progress relating to current week and day
+    const dayProgress = progress.filter(
+        (p) => p.week === programWeekNumber && p.day === programDayNumber,
+    );
 
     return (
         <View
@@ -140,7 +160,8 @@ const DayActivityAccordion = ({
                         <DayActivityExerciseList
                             exerciseData={day}
                             allowRedo={allowRedo}
-                            dayWorkoutPath={`/program/workout-details/${programSlug}/${programWeekNumber}/${programDayNumber}`}
+                            progress={dayProgress}
+                            dayWorkoutPath={`/workout/${programSlug}/${programWeekNumber}/${programDayNumber}`}
                             exercisesCompleted={showCompletedTag}
                         />
                     ) : null}
