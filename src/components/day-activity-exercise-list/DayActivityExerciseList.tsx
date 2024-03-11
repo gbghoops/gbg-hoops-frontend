@@ -1,6 +1,7 @@
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import {
+    CompletedExerciseProgress,
     ProgramDay,
     ProgramSummary,
     WorkoutPhases,
@@ -17,6 +18,7 @@ interface DayActivityExerciseListProps {
     exerciseData: ProgramDay;
     dayWorkoutPath?: string;
     allowRedo?: boolean;
+    progress?: CompletedExerciseProgress[];
 }
 
 interface GroupedExercises {
@@ -49,6 +51,7 @@ const DayActivityExerciseList = ({
     allowRedo = false,
     exercisesCompleted = false,
     dayWorkoutPath = "",
+    progress = [],
 }: DayActivityExerciseListProps) => {
     const router = useRouter();
     if (!exerciseData) {
@@ -98,65 +101,13 @@ const DayActivityExerciseList = ({
                         {phase.activities
                             .filter((e) => e.timer_type)
                             .map((exercise, index, activities) => (
-                                <View key={index}>
-                                    <View
-                                        fd="row"
-                                        key={index}
-                                        ai="center"
-                                        borderBottomWidth={
-                                            activities.length === index + 1
-                                                ? 0
-                                                : 0.25
-                                        }
-                                        borderColor="$border_primary"
-                                        py="$10"
-                                    >
-                                        <View
-                                            width={"$100"}
-                                            height={"$100"}
-                                            backgroundColor={"$surface_primary"}
-                                        >
-                                            <CachedImage
-                                                source={`http:${exercise.thumbnail}`}
-                                                loadingImageComponent={() => (
-                                                    <ActivityIndicator
-                                                        size="small"
-                                                        color={colors.gold}
-                                                    />
-                                                )}
-                                                style={styles.exerciseImage}
-                                            />
-                                        </View>
-                                        <View pl="$20" f={1}>
-                                            <View>
-                                                <Text
-                                                    fontSize={"$20"}
-                                                    fontFamily={"$heading"}
-                                                    color={
-                                                        exercisesCompleted
-                                                            ? "$text_accent"
-                                                            : "$gold"
-                                                    }
-                                                    width={"100%"}
-                                                    lineHeight={25}
-                                                >
-                                                    {exercise.name}
-                                                </Text>
-                                                {exercisesCompleted ? (
-                                                    <View w="$90" mt="$5">
-                                                        <CompletedTag />
-                                                    </View>
-                                                ) : null}
-                                            </View>
-                                            <RenderExerciseWorkMerics
-                                                exercise={exercise}
-                                                exercisesCompleted={
-                                                    exercisesCompleted
-                                                }
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
+                                <RenderPhaseActivities
+                                    key={exercise.exercise_id}
+                                    exercise={exercise}
+                                    exercisesCompleted={exercisesCompleted}
+                                    isLastItem={index === activities.length - 1}
+                                    progress={progress ?? []}
+                                />
                             ))}
                     </View>
                 </View>
@@ -175,13 +126,80 @@ const DayActivityExerciseList = ({
     );
 };
 
+interface RenderPhaseActivitiesProps {
+    exercise: ProgramSummary;
+    exercisesCompleted?: boolean;
+    isLastItem?: boolean;
+    progress?: CompletedExerciseProgress[];
+}
+const RenderPhaseActivities = ({
+    exercise,
+    exercisesCompleted,
+    isLastItem,
+    progress = [],
+}: RenderPhaseActivitiesProps) => {
+    // Find exercise in progress data
+    const exerciseProgress = progress.filter(
+        (e) => e.exercise_id === exercise.exercise_id,
+    );
+
+    return (
+        <View
+            fd="row"
+            ai="center"
+            borderBottomWidth={isLastItem ? 0 : 0.25}
+            borderColor="$border_primary"
+            py="$10"
+        >
+            <View
+                width={"$100"}
+                height={"$100"}
+                backgroundColor={"$surface_primary"}
+            >
+                <CachedImage
+                    source={`http:${exercise.thumbnail}`}
+                    loadingImageComponent={() => (
+                        <ActivityIndicator size="small" color={colors.gold} />
+                    )}
+                    style={styles.exerciseImage}
+                />
+            </View>
+            <View pl="$20" f={1}>
+                <View>
+                    <Text
+                        fontSize={"$20"}
+                        fontFamily={"$heading"}
+                        color={exercisesCompleted ? "$text_accent" : "$gold"}
+                        width={"100%"}
+                        lineHeight={25}
+                    >
+                        {exercise.name}
+                    </Text>
+                    {exercisesCompleted ? (
+                        <View w="$90" mt="$5">
+                            <CompletedTag />
+                        </View>
+                    ) : null}
+                </View>
+                <RenderExerciseWorkMerics
+                    exercise={exercise}
+                    exercisesCompleted={exercisesCompleted}
+                    progress={exerciseProgress}
+                />
+            </View>
+        </View>
+    );
+};
+
 interface RenderExerciseWorkMetricsProps {
     exercisesCompleted?: boolean;
     exercise: ProgramSummary;
+    progress?: CompletedExerciseProgress[];
 }
 const RenderExerciseWorkMerics = ({
     exercise,
     exercisesCompleted,
+    progress = [],
 }: RenderExerciseWorkMetricsProps) => {
     const sets = exercise.sets;
     const scheme = getExerciseTypeScheme(exercise);
@@ -194,6 +212,7 @@ const RenderExerciseWorkMerics = ({
                 exerciseScheme={scheme}
                 isCompletedSummary={exercisesCompleted}
                 setIndex={index + 1}
+                weight={progress[index]?.weight}
             />
         ))
     ) : (
@@ -206,6 +225,7 @@ interface ExerciseWorkMetricsProps {
     exerciseScheme: string;
     isCompletedSummary?: boolean;
     setIndex?: number;
+    weight?: number;
 }
 
 const ExerciseWorkMetrics = ({
@@ -213,6 +233,7 @@ const ExerciseWorkMetrics = ({
     exerciseScheme,
     isCompletedSummary,
     setIndex,
+    weight = 0,
 }: ExerciseWorkMetricsProps) => {
     const color = isCompletedSummary ? "$text_accent" : "$text_primary";
 
@@ -229,6 +250,21 @@ const ExerciseWorkMetrics = ({
             <Text fontFamily={"$body"} fontSize="$16" color={color}>
                 {`${exerciseScheme}`}
             </Text>
+            {weight ? (
+                <>
+                    <Text
+                        mx={"$10"}
+                        fontFamily={"$body"}
+                        fontSize="$16"
+                        color={color}
+                    >
+                        |
+                    </Text>
+                    <Text fontFamily={"$body"} fontSize="$16" color={color}>
+                        {weight} lbs
+                    </Text>
+                </>
+            ) : null}
         </View>
     );
 };

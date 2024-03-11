@@ -20,6 +20,7 @@ export interface ProgramSummary {
     group_type: WorkoutExecutionMode;
     seconds: number;
     sets: number;
+    exercise_id: string;
 }
 
 export interface EquipmentData {

@@ -295,6 +295,7 @@ export default function WorkoutDetails() {
                             isCompletedBlock={true}
                             removeHorizontalPadding={true}
                             weekData={completedWorkouts}
+                            allowRedo
                         />
                     </View>
                 </View>

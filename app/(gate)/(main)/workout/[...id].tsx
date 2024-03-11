@@ -120,13 +120,13 @@ export default function WorkoutScreen() {
                 return acc;
             }
 
-            return exercise.activities
-                .map((activity) => ({
-                    ...activity,
-                    phase: exercise.phase,
-                    execution_mode: exercise.type,
-                }))
-                .concat(acc);
+            const activities = exercise.activities.map((activity) => ({
+                ...activity,
+                phase: exercise.phase,
+                execution_mode: exercise.type,
+            }));
+
+            return [...acc, ...activities];
         },
         [],
     );
