@@ -26,10 +26,12 @@ const SettingsHeader = ({ showBackButton = false }: SettingsHeaderProps) => {
         >
             {showBackButton ? (
                 <View
-                    width={"$36"}
-                    height={"$36"}
+                    width={"$40"}
+                    height={"$40"}
                     animation={"slow"}
                     onPress={back}
+                    jc={"center"}
+                    ai={"center"}
                     pressStyle={{
                         opacity: 0.15,
                         scale: 0.95,
@@ -42,6 +44,8 @@ const SettingsHeader = ({ showBackButton = false }: SettingsHeaderProps) => {
                 ml="auto"
                 w="$40"
                 h="$40"
+                jc={"center"}
+                ai={"center"}
                 animation="medium"
                 pressStyle={{
                     opacity: 0.85,

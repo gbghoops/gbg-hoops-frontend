@@ -15,7 +15,7 @@ export default function SettingsScreen() {
     const authState = useAuthState();
     const userContext = useUser();
     const { bottom } = useSafeAreaInsets();
-    const { replace } = useRouter();
+    const { replace, push } = useRouter();
 
     if (!userContext || !userContext.user) return <PageError />;
 
@@ -58,9 +58,7 @@ export default function SettingsScreen() {
                     <View mt="$30">
                         <SettingsListItem
                             title="Edit Profile"
-                            onPress={() => {
-                                console.log("Account");
-                            }}
+                            onPress={() => push("/settings/edit-profile")}
                         />
                         <SettingsListItem
                             title="Notification Preferences"
