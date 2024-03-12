@@ -118,6 +118,9 @@ export default function DateOfBirthSelectModal({
                                 ...styles.calendarText,
                                 ...styles.calendarTextGold,
                             }}
+                            maxDate={dayjs()}
+                            monthContainerStyle={styles.monthYearContainer}
+                            yearContainerStyle={styles.monthYearContainer}
                             buttonPrevIcon={
                                 <Octicons
                                     name="chevron-left"
@@ -156,5 +159,9 @@ const styles = StyleSheet.create({
     },
     calendarTextGold: {
         color: colors.gold,
+    },
+    monthYearContainer: {
+        backgroundColor: "rgba(0,0,0,0.2)",
+        borderWidth: 0,
     },
 });
