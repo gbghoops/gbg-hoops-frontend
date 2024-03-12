@@ -43,11 +43,15 @@ export default function DateOfBirthSelectModal({
                 key="rotate-device-screen"
                 animation={"fast"}
                 zIndex={200000}
+                onPress={() => setIsVisible(false)}
             >
                 <View
                     width={"80%"}
                     backgroundColor={"$surface_primary"}
                     borderRadius={"$10"}
+                    pressStyle={{
+                        scale: 1, // <-- ADD THIS TO PREVENT OVERLAY PRESS OVERRIDE.
+                    }}
                 >
                     {/* Header */}
                     <View
