@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ActivityIndicator, ImageBackground, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Avatar from "@src/components/avatar/Avatar";
 import HomeScreenBanner from "@src/components/home-screen-banner/HomeScreenBanner";
@@ -12,16 +12,17 @@ import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutO
 import ActiveProgramsList from "@src/components/screen-components/Programs/ActiveProgramsList/ActiveProgramsList";
 import { useAuthState } from "@src/context/auth-context";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { ScrollView, Stack, Text, View } from "tamagui";
 
 export default function HomePage() {
-    const [bannerHeight, setBannerHeight] = useState<number>(0);
+    const [bannerHeight, setBannerHeight] = useState<number>(wn(100));
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
     const authState = useAuthState();
-    const { programs, refetchPrograms } = usePrograms();
+    const { programs, refetchPrograms, programsFetching } = usePrograms();
 
     useEffect(() => {
         refetchPrograms && refetchPrograms();
@@ -81,43 +82,58 @@ export default function HomePage() {
                         <View>
                             {/* Intro Banner */}
                             <View px={"$20"} mt={-(bannerHeight / 1.95)}>
-                                {programsWithProgress.length > 0 ? (
-                                    <View>
-                                        <ActiveProgramsList />
-                                    </View>
-                                ) : (
-                                    <View
-                                        onLayout={(layout) => {
-                                            setBannerHeight(
-                                                layout.nativeEvent.layout
-                                                    .height,
-                                            );
-                                        }}
-                                    >
-                                        <HomeScreenBanner
-                                            onPress={() => {
-                                                router.push("/programs");
+                                {!programsFetching ? (
+                                    programsWithProgress.length > 0 ? (
+                                        <View>
+                                            <ActiveProgramsList />
+                                        </View>
+                                    ) : (
+                                        <View
+                                            onLayout={(layout) => {
+                                                setBannerHeight(
+                                                    layout.nativeEvent.layout
+                                                        .height,
+                                                );
                                             }}
                                         >
-                                            <View f={1} p={"$20"}>
-                                                <Text
-                                                    lh={26}
-                                                    fontFamily={"$heading"}
-                                                    fontSize={"$24"}
-                                                    textTransform="uppercase"
-                                                >
-                                                    {`What's New`}
-                                                </Text>
-                                                <Text
-                                                    fontFamily={"$body"}
-                                                    fontSize={"$16"}
-                                                    lh={20}
-                                                    mt={"$15"}
-                                                >
-                                                    {`Welcome to the GBG Hoops app! Expolore our programs or create your own workout.`}
-                                                </Text>
-                                            </View>
-                                        </HomeScreenBanner>
+                                            <HomeScreenBanner
+                                                onPress={() => {
+                                                    router.push("/programs");
+                                                }}
+                                            >
+                                                <View f={1} p={"$20"}>
+                                                    <Text
+                                                        lh={26}
+                                                        fontFamily={"$heading"}
+                                                        fontSize={"$24"}
+                                                        textTransform="uppercase"
+                                                    >
+                                                        {`What's New`}
+                                                    </Text>
+                                                    <Text
+                                                        fontFamily={"$body"}
+                                                        fontSize={"$16"}
+                                                        lh={20}
+                                                        mt={"$15"}
+                                                    >
+                                                        {`Welcome to the GBG Hoops app! Expolore our programs or create your own workout.`}
+                                                    </Text>
+                                                </View>
+                                            </HomeScreenBanner>
+                                        </View>
+                                    )
+                                ) : (
+                                    <View
+                                        p="$20"
+                                        backgroundColor="$surface_primary"
+                                        jc="center"
+                                        ai={"center"}
+                                        h="$100"
+                                    >
+                                        <ActivityIndicator
+                                            size="small"
+                                            color={colors.gold}
+                                        />
                                     </View>
                                 )}
                             </View>

@@ -4,12 +4,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import DayActivityExerciseList from "@src/components/day-activity-exercise-list/DayActivityExerciseList";
+import PageError from "@src/components/screen-components/PageError/PageError";
 import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import AddExerciseSheet from "@src/components/screen-components/Programs/WorkoutDetails/AddExerciseSheet/AddExerciseSheet";
 import EquipmentList from "@src/components/screen-components/Programs/WorkoutDetails/EquipmentList/EquipmentList";
 import ExerciseHeaderButton from "@src/components/screen-components/Programs/WorkoutDetails/ExerciseHeaderButton/ExerciseHeaderButton";
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
-import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { EquipmentData, ProgramDay } from "@src/context/ProgramsContext/types";
@@ -34,7 +34,7 @@ export default function WorkoutDetails() {
     const { programs } = usePrograms();
 
     if (!id) {
-        return <WorkoutPageError />;
+        return <PageError returnPath="/programs" />;
     }
 
     const slug = id[0];
@@ -61,13 +61,13 @@ export default function WorkoutDetails() {
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
     if (!currentProgram || isProgramLocked) {
-        return <WorkoutPageError />;
+        return <PageError returnPath="/programs" />;
     }
 
     const weekData = currentProgram?.weeks[_activeWeek - 1];
 
     if (!weekData) {
-        return <WorkoutPageError />;
+        return <PageError returnPath="/programs" />;
     }
 
     const slugifiedWeekData = {
@@ -128,7 +128,8 @@ export default function WorkoutDetails() {
         day: _activeDay,
     });
 
-    if (!dayInfo || !dayInfo.dayData) return <WorkoutPageError />;
+    if (!dayInfo || !dayInfo.dayData)
+        return <PageError returnPath="/programs" />;
 
     const { dayData, dayMemo } = dayInfo;
 
