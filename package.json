@@ -32,6 +32,7 @@
         "aws-amplify": "^6.0.15",
         "babel-plugin-transform-inline-environment-variables": "^0.4.4",
         "burnt": "^0.12.1",
+        "dayjs": "^1.11.10",
         "email-validator": "^2.0.4",
         "expo": "~49.0.15",
         "expo-av": "~13.4.1",
