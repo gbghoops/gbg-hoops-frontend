@@ -25,8 +25,6 @@ function EditProfile() {
 
     if (!user) return <PageError returnPath="/settings" />;
 
-    console.log("dateOfBirth", dateOfBirth);
-
     const canProceed = !!(firstName && lastName && dateOfBirth);
 
     return (

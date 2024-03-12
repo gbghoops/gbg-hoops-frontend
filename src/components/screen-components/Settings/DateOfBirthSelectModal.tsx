@@ -1,9 +1,8 @@
-import { ActivityIndicator, Modal } from "react-native";
+import { Modal } from "react-native";
 import { StyleSheet } from "react-native";
 import DateTimePicker from "react-native-ui-datepicker";
 import { Octicons } from "@expo/vector-icons";
 import { colors } from "@src/styles/theme/colors";
-import { sizes } from "@src/styles/theme/sizes";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import dayjs from "dayjs";
 import { Text, View } from "tamagui";
