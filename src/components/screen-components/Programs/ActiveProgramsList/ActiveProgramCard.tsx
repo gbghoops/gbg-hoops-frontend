@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import convertToProxyURL from "react-native-video-cache";
 import { Octicons } from "@expo/vector-icons";
 import CompletedTag from "@src/components/completed-tag/CompletedTag";
 import { Program } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
+import { useUser } from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
 import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
+
+import DaySelectSheet from "./DaySelectSheet";
 interface ActiveProgramCardProps {
     program: Program;
 }
@@ -16,6 +20,9 @@ interface ActiveProgramCardProps {
 const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
     const { name, progress, weeks, teaser } = program;
     const { push } = useRouter();
+    const { user } = useUser();
+    const [isDaySelectSheetVisible, setIsDaySelectSheetVisible] =
+        useState(false);
 
     if (!progress) return null;
 
@@ -37,18 +44,27 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
         );
     };
 
+    const onProgramLongPress = () => {
+        if (!user?.isPrivilegedUser) return;
+
+        // display day and week select sheet
+        setIsDaySelectSheetVisible(true);
+    };
+
+    const programWeekLength = weeks.length;
+
     return (
         <View
             backgroundColor="$surface_primary"
             w="100%"
             fd="row"
             mb="$20"
-            animation={"fast"}
             pressStyle={{
                 opacity: 0.85,
                 scale: 0.995,
             }}
             onPress={onProgramPress}
+            onLongPress={onProgramLongPress}
         >
             {/* Teaser Container */}
             <View w="$120" h="$130">
@@ -114,6 +130,15 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
                     size={wn(26)}
                 />
             </View>
+            <DaySelectSheet
+                isVisible={isDaySelectSheetVisible}
+                setIsVisible={setIsDaySelectSheetVisible}
+                currentDay={currentDay}
+                currentWeek={currentWeek}
+                maxWeek={programWeekLength}
+                maxDay={5}
+                programSlug={program.slug}
+            />
         </View>
     );
 };

@@ -176,13 +176,11 @@ export default function WorkoutDetails() {
                     </View>
                 </View>
                 <View px={"$20"}>
-                    {!id[2] || !id[1] ? (
-                        <ProgressIndicator
-                            totalDays={5}
-                            currentDay={_activeDay}
-                            currentWeek={_activeWeek}
-                        />
-                    ) : null}
+                    <ProgressIndicator
+                        totalDays={5}
+                        currentDay={_activeDay}
+                        currentWeek={_activeWeek}
+                    />
                 </View>
                 {/* Workout title. */}
                 <View>
@@ -318,7 +316,7 @@ export default function WorkoutDetails() {
                     text="Workout Now"
                     onPress={() => {
                         return router.replace(
-                            `/workout/${slug}/${activeWeek}/${activeDay}`,
+                            `/workout/${slug}/${_activeWeek}/${_activeDay}`,
                         );
                     }}
                     fullWidth

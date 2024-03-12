@@ -1,4 +1,5 @@
 import { createContext, PropsWithChildren, useContext } from "react";
+import { whiteList } from "@src/constants/privileged-mode-whitelist";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 
@@ -45,9 +46,17 @@ export default function UserProvider({ children }: PropsWithChildren) {
         queryFn: fetchUser,
     });
 
+    const isPrivilegedUser = data?.email
+        ? whiteList.includes(data?.email)
+        : false;
+
     return (
         <UserContext.Provider
-            value={{ user: data ?? null, userDataLoading: isLoading, error }}
+            value={{
+                error,
+                userDataLoading: isLoading,
+                user: data ? { ...data, isPrivilegedUser } : null,
+            }}
         >
             {children}
         </UserContext.Provider>

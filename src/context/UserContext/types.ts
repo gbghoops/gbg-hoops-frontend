@@ -40,5 +40,6 @@ export interface User {
     hoop_level: HoopLevelType;
     birthdate: string;
     pain_areas: PainAreasType[];
+    isPrivilegedUser?: boolean;
     id: string;
 }
