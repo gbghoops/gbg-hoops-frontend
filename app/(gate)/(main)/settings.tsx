@@ -1,7 +1,9 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Feather, Octicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import PageError from "@src/components/screen-components/PageError/PageError";
+import SettingsHeader from "@src/components/screen-components/Settings/SettingsHeader";
+import SettingsListItem from "@src/components/screen-components/Settings/SettingsItem";
 import { useAuthState } from "@src/context/auth-context";
 import { useUser } from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
@@ -136,88 +138,3 @@ export default function SettingsScreen() {
         </Stack>
     );
 }
-
-interface SettingsListItemProps {
-    title: string;
-    onPress: () => void;
-}
-
-const SettingsListItem = ({ title, onPress }: SettingsListItemProps) => {
-    return (
-        <View
-            w={"100%"}
-            py="$18"
-            borderBottomWidth={0.5}
-            borderBottomColor="$border_primary"
-            flexDirection="row"
-            ai="center"
-            animation={"medium"}
-            pressStyle={{
-                opacity: 0.85,
-                scale: 0.985,
-            }}
-            onPress={onPress}
-        >
-            <Text fontFamily={"$heading"} fontSize={"$20"}>
-                {title}
-            </Text>
-            <View ml="auto">
-                <Octicons
-                    name="chevron-right"
-                    size={wn(26)}
-                    color={colors.gold}
-                />
-            </View>
-        </View>
-    );
-};
-
-interface SettingsHeaderProps {
-    showBackButton?: boolean;
-}
-
-const SettingsHeader = ({ showBackButton = false }: SettingsHeaderProps) => {
-    const { top } = useSafeAreaInsets();
-    const { back, replace } = useRouter();
-
-    return (
-        <View
-            ac="center"
-            ai={"center"}
-            justifyContent="space-between"
-            height={wn(60) + top}
-            fd={"row"}
-            paddingTop={top}
-            paddingHorizontal={"$20"}
-            backgroundColor={"$surface_background"}
-        >
-            {showBackButton ? (
-                <View
-                    width={"$36"}
-                    height={"$36"}
-                    animation={"slow"}
-                    onPress={back}
-                    pressStyle={{
-                        opacity: 0.15,
-                        scale: 0.95,
-                    }}
-                >
-                    <Octicons name="arrow-left" size={36} color={colors.gold} />
-                </View>
-            ) : null}
-            <View
-                ml="auto"
-                w="$40"
-                h="$40"
-                animation="medium"
-                pressStyle={{
-                    opacity: 0.85,
-                    scale: 0.985,
-                }}
-                onPress={() => replace("/home")}
-            >
-                <Octicons name="x" size={36} color={colors.gold} />
-            </View>
-        </View>
-    );
-};
