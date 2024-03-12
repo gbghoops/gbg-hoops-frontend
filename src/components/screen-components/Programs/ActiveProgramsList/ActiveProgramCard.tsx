@@ -51,13 +51,14 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
         setIsDaySelectSheetVisible(true);
     };
 
+    const programWeekLength = weeks.length;
+
     return (
         <View
             backgroundColor="$surface_primary"
             w="100%"
             fd="row"
             mb="$20"
-            animation={"fast"}
             pressStyle={{
                 opacity: 0.85,
                 scale: 0.995,
@@ -132,6 +133,11 @@ const ActiveProgramCard = ({ program }: ActiveProgramCardProps) => {
             <DaySelectSheet
                 isVisible={isDaySelectSheetVisible}
                 setIsVisible={setIsDaySelectSheetVisible}
+                currentDay={currentDay}
+                currentWeek={currentWeek}
+                maxWeek={programWeekLength}
+                maxDay={5}
+                programSlug={program.slug}
             />
         </View>
     );

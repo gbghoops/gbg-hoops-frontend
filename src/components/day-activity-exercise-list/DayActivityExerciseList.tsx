@@ -102,7 +102,7 @@ const DayActivityExerciseList = ({
                             .filter((e) => e.timer_type)
                             .map((exercise, index, activities) => (
                                 <RenderPhaseActivities
-                                    key={exercise.exercise_id}
+                                    key={`${exercise.exercise_id}-${index}`}
                                     exercise={exercise}
                                     exercisesCompleted={exercisesCompleted}
                                     isLastItem={index === activities.length - 1}

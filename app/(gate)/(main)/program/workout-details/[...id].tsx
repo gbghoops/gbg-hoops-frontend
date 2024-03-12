@@ -318,7 +318,7 @@ export default function WorkoutDetails() {
                     text="Workout Now"
                     onPress={() => {
                         return router.replace(
-                            `/workout/${slug}/${activeWeek}/${activeDay}`,
+                            `/workout/${slug}/${_activeWeek}/${_activeDay}`,
                         );
                     }}
                     fullWidth
