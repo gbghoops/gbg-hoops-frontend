@@ -27,17 +27,23 @@ const BeginAuth = () => {
                     justifyContent="center"
                     alignItems="center"
                     alignContent="center"
+                    f={1}
                 >
                     <View
-                        w="$400"
-                        h="$400"
+                        w="$220"
+                        h="$220"
                         justifyContent="center"
                         ai="center"
                         marginHorizontal="auto"
-                        marginTop="$30"
+                        marginTop="auto"
+                        mb="$50"
                     >
                         <StyledImage
                             source={require("@assets/gbg-hoops-logo.png")}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                            }}
                         />
                     </View>
                 </YStack>
@@ -68,18 +74,11 @@ const BackgroundVideo = () => {
             height={height}
             zIndex={0}
         >
-            <View
-                pos="absolute"
-                height={"100%"}
-                width={"100%"}
-                zIndex={1}
-                backgroundColor={"rgba(30, 30, 30, 0.85)"}
-            />
             <Video
                 shouldPlay
                 isLooping
                 resizeMode={ResizeMode.COVER}
-                source={require("@assets/video/gbg-hoops-reel.mp4")}
+                source={require("@assets/video/gbg-sizzle-reel.mp4")}
                 style={styles.VideoBackgroundVideo}
             />
         </View>
