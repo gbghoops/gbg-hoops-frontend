@@ -5,7 +5,7 @@ import {
     MaterialTabItem,
     Tabs,
 } from "react-native-collapsible-tab-view";
-import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
+import PageError from "@src/components/screen-components/PageError/PageError";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { ProgramWeek } from "@src/context/ProgramsContext/types";
@@ -32,7 +32,7 @@ export default function CompletedProgramDetails() {
         [],
     );
 
-    if (!currentProgram) return <WorkoutPageError />;
+    if (!currentProgram) return <PageError returnPath="/programs" />;
 
     const headerHeight = wn(80);
 
