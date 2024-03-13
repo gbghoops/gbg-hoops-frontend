@@ -70,9 +70,7 @@ export default function ForgotPassword() {
         <View f={1} px={wn(20)} pb={bottom + wn(20)} onPress={Keyboard.dismiss}>
             {/* Forgot Password content */}
             <KeyboardAwareScrollView>
-                <AnimatePresence>
-                    <>{RenderPasswordResetState}</>
-                </AnimatePresence>
+                <AnimatePresence>{RenderPasswordResetState()}</AnimatePresence>
             </KeyboardAwareScrollView>
         </View>
     );

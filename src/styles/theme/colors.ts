@@ -6,6 +6,7 @@ export const base = {
     gold_hightlight: "#FFF415",
     gold_hot: "#FD901B",
     gold_dominant: "#A35614",
+    gold_indicator: "rgba(253, 191, 11, 0.085)",
     grey_accent: "#A4A4A4",
     black: "#000000",
     transparent: "rgba(0, 0, 0, 0)",

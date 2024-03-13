@@ -2,7 +2,14 @@ import Button from "@src/components/button/Button";
 import { useRouter } from "expo-router";
 import { Text, View } from "tamagui";
 
-const WorkoutPageError = () => {
+const DEFAULT_ERROR_MESSAGE = "Oops! Something Went Wrong!";
+
+interface PageErrorProps {
+    message?: string;
+    returnPath?: string;
+}
+
+const PageError = ({ message, returnPath }: PageErrorProps) => {
     const { back, canGoBack, push } = useRouter();
 
     return (
@@ -17,7 +24,7 @@ const WorkoutPageError = () => {
                 fontSize="$30"
                 textAlign="center"
             >
-                Oops! Something Went Wrong!
+                {message ?? DEFAULT_ERROR_MESSAGE}
             </Text>
             <Text
                 fontFamily={"$acuminProSemibold"}
@@ -30,7 +37,9 @@ const WorkoutPageError = () => {
                 <Button
                     text="Back to Safety"
                     onPress={() => {
-                        return canGoBack() ? back() : push("/programs");
+                        return canGoBack()
+                            ? back()
+                            : push(returnPath ?? "/home");
                     }}
                 />
             </View>
@@ -38,4 +47,4 @@ const WorkoutPageError = () => {
     );
 };
 
-export default WorkoutPageError;
+export default PageError;

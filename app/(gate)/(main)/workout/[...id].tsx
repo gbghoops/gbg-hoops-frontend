@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 import { useIsFocused } from "@react-navigation/native";
+import PageError from "@src/components/screen-components/PageError/PageError";
 import ConfirmWorkoutExit from "@src/components/screen-components/Workout/ConfirmWorkoutExit/ConfirmWorkoutExit";
 import ReadyScreen from "@src/components/screen-components/Workout/ExerciseSlide/components/ReadyScreen";
 import RotateDeviceModal from "@src/components/screen-components/Workout/ExerciseSlide/components/RotateDeviceModal";
 import WorkoutCompleteLoading from "@src/components/screen-components/Workout/ExerciseSlide/components/WorkoutCompleteLoading";
 import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSlide/ExerciseSlide";
-import WorkoutPageError from "@src/components/screen-components/Workout/PageError/WorkoutPageError";
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import {
@@ -85,7 +85,7 @@ export default function WorkoutScreen() {
     }, [showRotateScreen]);
 
     if (!id || id.length === 0) {
-        return <WorkoutPageError />;
+        return <PageError returnPath="/programs" />;
     }
 
     const programSlug = id[0];
@@ -99,7 +99,7 @@ export default function WorkoutScreen() {
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
     if (!currentProgram || isProgramLocked || !activeWeek || !activeDay) {
-        return <WorkoutPageError />;
+        return <PageError returnPath="/programs" />;
     }
 
     const weekData = currentProgram.weeks[activeWeek - 1];
@@ -109,7 +109,7 @@ export default function WorkoutScreen() {
     const dayInfo = getProgramDayInfo({ week: weekData, day: activeDay });
 
     if (!dayInfo || !dayInfo.dayData || !dayInfo.dayData.exercises) {
-        return <WorkoutPageError />;
+        return <PageError returnPath="/programs" />;
     }
 
     const dayData = dayInfo.dayData;
