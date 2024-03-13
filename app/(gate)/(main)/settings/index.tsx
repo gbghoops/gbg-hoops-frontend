@@ -1,12 +1,11 @@
+import { Linking } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Feather } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import PageError from "@src/components/screen-components/PageError/PageError";
 import SettingsHeader from "@src/components/screen-components/Settings/SettingsHeader";
 import SettingsListItem from "@src/components/screen-components/Settings/SettingsItem";
 import { useAuthState } from "@src/context/auth-context";
 import { useUser } from "@src/context/UserContext/user-context";
-import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Stack as RouterStack, useRouter } from "expo-router";
 import { ScrollView, Stack, Text, View } from "tamagui";
@@ -22,6 +21,8 @@ export default function SettingsScreen() {
     const { user } = userContext;
 
     const fullName = `${user.given_name} ${user.family_name}`;
+
+    const websiteUrl = process.env.EXPO_PUBLIC_GBG_WEBSITE_URL ?? "";
 
     return (
         <Stack
@@ -69,13 +70,13 @@ export default function SettingsScreen() {
                         <SettingsListItem
                             title="FAQs"
                             onPress={() => {
-                                console.log("Privacy");
+                                Linking.openURL(websiteUrl);
                             }}
                         />
                         <SettingsListItem
                             title="Help and Support Center"
                             onPress={() => {
-                                console.log("Security");
+                                Linking.openURL(websiteUrl);
                             }}
                         />
                     </View>
@@ -90,20 +91,28 @@ export default function SettingsScreen() {
                     </View>
 
                     <View mt="$30">
-                        <Text
-                            color="$gold"
-                            fontFamily="$heading"
-                            fontSize={"$20"}
-                            textTransform="uppercase"
+                        <View
                             animation={"medium"}
                             pressStyle={{
                                 opacity: 0.85,
                                 scale: 0.985,
                             }}
+                            onPress={() => {
+                                Linking.openURL(websiteUrl);
+                            }}
                         >
-                            About GBG
-                        </Text>
-                        <View mt="$10" fd="row">
+                            <Text
+                                color="$gold"
+                                fontFamily="$heading"
+                                fontSize={"$20"}
+                                textTransform="uppercase"
+                            >
+                                About GBG
+                            </Text>
+                        </View>
+
+                        {/* TODO: Re-add App Store rating link when published */}
+                        {/* <View mt="$10" fd="row">
                             <Text
                                 color="$gold"
                                 fontFamily="$heading"
@@ -119,7 +128,7 @@ export default function SettingsScreen() {
                                     color={colors.gold}
                                 />
                             </View>
-                        </View>
+                        </View> */}
                     </View>
                 </View>
                 <View px={"$20"} py="$20" mt={"$45"}>
