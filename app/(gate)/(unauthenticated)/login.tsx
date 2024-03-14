@@ -79,7 +79,7 @@ export default function Page() {
 
     const loginDisabled = !email.length || !password.length || loginLoading;
 
-    const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
+    const websiteUrl = `${process.env.EXPO_PUBLIC_SIGNUP_URL}/signup` ?? "";
 
     return (
         <CustomSafeAreaView>
