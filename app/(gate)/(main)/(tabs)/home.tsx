@@ -21,6 +21,7 @@ export default function HomePage() {
     const [bannerHeight, setBannerHeight] = useState<number>(wn(100));
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
+
     const authState = useAuthState();
     const { programs, refetchPrograms, programsFetching } = usePrograms();
 

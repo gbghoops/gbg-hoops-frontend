@@ -5,14 +5,23 @@ import { HomeIcon } from "@src/components/tab-bar/tab-icons/HomeIcon";
 import { MoreIcon } from "@src/components/tab-bar/tab-icons/MoreIcon";
 import { ProgramsIcon } from "@src/components/tab-bar/tab-icons/ProgramsIcon";
 import TabBar from "@src/components/tab-bar/TabBar";
+import { User } from "@src/context/UserContext/types";
+import { useUser } from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 
 export default function TabLayout() {
     return <ScreenTabs />;
 }
 
 const ScreenTabs = () => {
+    const { user: user } = useUser();
+
+    // Confirm Assessment is complete
+    if (user && !checkIfAssesmentComplete(user)) {
+        return <Redirect href="/assessment" />;
+    }
+
     return (
         <Tabs
             sceneContainerStyle={styles.tabBar}
@@ -91,3 +100,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.surface_background,
     },
 });
+
+const checkIfAssesmentComplete = (user: User) => {
+    return !!(user.gender && user.hoop_level && user.performance_goal);
+};
