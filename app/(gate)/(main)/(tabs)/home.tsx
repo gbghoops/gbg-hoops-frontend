@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ActivityIndicator, ImageBackground, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Avatar from "@src/components/avatar/Avatar";
@@ -23,11 +23,7 @@ export default function HomePage() {
     const router = useRouter();
 
     const authState = useAuthState();
-    const { programs, refetchPrograms, programsFetching } = usePrograms();
-
-    useEffect(() => {
-        refetchPrograms && refetchPrograms();
-    }, []);
+    const { programs, programsFetching } = usePrograms();
 
     const programsWithProgress = programs.filter(
         (p) => !("is_locked" in p) && p.progress,

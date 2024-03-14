@@ -29,18 +29,18 @@ const AdjustWeightSheet = ({
         onOpenStateChange(sheetOpen);
     }, [sheetOpen]);
 
-    useEffect(() => {
-        onWeightChange(weight);
-    }, [weight]);
-
     const AddWeight = () => {
-        setWeight(weight + 5);
+        const newWeight = weight + 5;
+        setWeight(newWeight);
+        onWeightChange(newWeight);
     };
 
     const RemoveWeight = () => {
         if (weight <= 0) return;
 
-        setWeight(weight - 5);
+        const newWeight = weight - 5;
+        setWeight(newWeight);
+        onWeightChange(newWeight);
     };
 
     return (

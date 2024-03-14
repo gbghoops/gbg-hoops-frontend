@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View as RNView } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { Octicons } from "@expo/vector-icons";
@@ -33,16 +33,14 @@ const DayActivityAccordion = ({
     programDayNumber,
     programWeekNumber,
 }: DayActivityAccordionProps) => {
-    const [isOpen, setIsOpen] = useState(false);
     const title = day.exercises[0]?.title;
     const summary = day.summary;
     const exerciseCount = summary.length;
 
     const { programs } = usePrograms();
 
-    useEffect(() => {
-        onAccordionOpenStateChange && onAccordionOpenStateChange(isOpen);
-    }, [isOpen]);
+    // Internal open state
+    const [accordionOpen, setAccordionOpen] = useState(false);
 
     const headerHeight = wn(75);
 
@@ -67,7 +65,7 @@ const DayActivityAccordion = ({
         <View
             py="$5"
             px={!removeHorizontalPadding ? "$5" : 0}
-            height={isOpen ? "auto" : headerHeight}
+            height={accordionOpen ? "auto" : headerHeight}
         >
             <Animated.View
                 layout={LinearTransition.springify()
@@ -76,7 +74,7 @@ const DayActivityAccordion = ({
                     .stiffness(200)}
                 style={[
                     styles.container,
-                    { height: isOpen ? "auto" : headerHeight },
+                    { height: accordionOpen ? "auto" : headerHeight },
                 ]}
             >
                 {/* Header */}
@@ -93,7 +91,12 @@ const DayActivityAccordion = ({
                             opacity: 0.55,
                             scale: 0.99,
                         }}
-                        onPress={() => setIsOpen(!isOpen)}
+                        onPress={() => {
+                            onAccordionOpenStateChange &&
+                                onAccordionOpenStateChange(!accordionOpen);
+
+                            return setAccordionOpen(!accordionOpen);
+                        }}
                     >
                         <View maxWidth={"$200"} h="100%">
                             <Text fontSize={"$14"} fontFamily={"$body"}>
@@ -134,7 +137,7 @@ const DayActivityAccordion = ({
                                         mt={wn(3)}
                                         transform={[
                                             {
-                                                rotate: isOpen
+                                                rotate: accordionOpen
                                                     ? "-90deg"
                                                     : "0deg",
                                             },
@@ -156,7 +159,7 @@ const DayActivityAccordion = ({
                     minHeight={"$50"}
                     px={!removeHorizontalPadding ? "$20" : 0}
                 >
-                    {isOpen ? (
+                    {accordionOpen ? (
                         <DayActivityExerciseList
                             exerciseData={day}
                             allowRedo={allowRedo}
