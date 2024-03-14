@@ -799,16 +799,18 @@ const ExerciseSlide = ({
                     </View>
                 </View>
             </YStack>
+
             <AdjustWeightSheet
                 open={showWeightAdjust}
                 currentWeight={currentWeight}
-                onOpenStateChange={(open) => {
-                    setShowWeightAdjust(open);
+                onOpenStateChange={(state) => {
+                    setShowWeightAdjust(state);
                 }}
                 onWeightChange={(weight) => {
                     setCurrentWeight(weight);
                 }}
             />
+
             {/* ---------------------------- */}
         </View>
     );
