@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import convertToProxyURL from "react-native-video-cache";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -32,13 +32,11 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
 
     const router = useRouter();
 
-    useEffect(() => {
-        if (isVisible) {
-            programVideo.current?.playAsync();
-        } else {
-            programVideo.current?.stopAsync();
-        }
-    }, [isVisible]);
+    if (isVisible) {
+        programVideo.current?.playAsync();
+    } else {
+        programVideo.current?.stopAsync();
+    }
 
     return (
         <View
