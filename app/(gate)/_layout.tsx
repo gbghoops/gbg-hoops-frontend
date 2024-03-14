@@ -1,29 +1,15 @@
-import { useEffect } from "react";
-import { useAuthState } from "@src/context/auth-context";
-import { User } from "@src/context/UserContext/types";
-import { useUser } from "@src/context/UserContext/user-context";
-import { Slot, useRouter } from "expo-router";
+import { colors } from "@src/styles/theme/colors";
+import { Stack } from "expo-router";
 
 export default function GatingLayout() {
-    const authState = useAuthState();
-    const { user } = useUser();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (authState?.user) {
-            if (user && !checkIfAssesmentComplete(user)) {
-                return router.replace("/assessment");
-            }
-
-            return router.replace("/home");
-        }
-
-        return router.replace("/begin-auth");
-    }, [authState?.user]);
-
-    return <Slot />;
+    return (
+        <Stack
+            screenOptions={{
+                header: () => null,
+                contentStyle: {
+                    backgroundColor: colors.surface_background,
+                },
+            }}
+        />
+    );
 }
-
-const checkIfAssesmentComplete = (user: User) => {
-    return !!(user.gender && user.hoop_level && user.performance_goal);
-};

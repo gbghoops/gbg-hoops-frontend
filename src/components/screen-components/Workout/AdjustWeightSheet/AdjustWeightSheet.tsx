@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import Button from "@src/components/button/Button";
 import { StyledImage } from "@src/components/styled-components";
@@ -9,7 +9,6 @@ interface AdjustWeightSheetProps {
     open: boolean;
     currentWeight: number;
     onOpenStateChange: (isOpen: boolean) => void;
-
     onWeightChange: (weight: number) => void;
 }
 const AdjustWeightSheet = ({
@@ -18,38 +17,22 @@ const AdjustWeightSheet = ({
     currentWeight,
     onWeightChange,
 }: AdjustWeightSheetProps) => {
-    const [sheetOpen, setSheetOpen] = useState(false);
     const [weight, setWeight] = useState(currentWeight);
 
-    useEffect(() => {
-        setSheetOpen(open);
-    }, [open]);
-
-    useEffect(() => {
-        onOpenStateChange(sheetOpen);
-    }, [sheetOpen]);
-
-    useEffect(() => {
-        onWeightChange(weight);
-    }, [weight]);
-
-    const AddWeight = () => {
-        setWeight(weight + 5);
-    };
-
-    const RemoveWeight = () => {
+    const adjustWeight = (weight: number) => {
         if (weight <= 0) return;
 
-        setWeight(weight - 5);
+        setWeight(weight);
+        onWeightChange(weight);
     };
 
     return (
         <Sheet
-            forceRemoveScrollEnabled={sheetOpen}
+            forceRemoveScrollEnabled={open}
             modal={true}
-            open={sheetOpen}
+            open={open}
             snapPointsMode="fit"
-            onOpenChange={setSheetOpen}
+            onOpenChange={onOpenStateChange}
             dismissOnSnapToBottom
             zIndex={100_000}
             animation="fast"
@@ -95,7 +78,7 @@ const AdjustWeightSheet = ({
                             borderWidth={1}
                             borderColor="$gold"
                             animation="fast"
-                            onPress={RemoveWeight}
+                            onPress={() => adjustWeight(weight - 5)}
                             opacity={weight <= 0 ? 0.5 : 1}
                             pressStyle={{
                                 opacity: 0.75,
@@ -123,7 +106,7 @@ const AdjustWeightSheet = ({
                             borderWidth={1}
                             borderColor="$gold"
                             animation="fast"
-                            onPress={AddWeight}
+                            onPress={() => adjustWeight(weight + 5)}
                             pressStyle={{
                                 opacity: 0.75,
                                 scale: 0.9,
@@ -141,10 +124,7 @@ const AdjustWeightSheet = ({
                             <Button
                                 text="RESET"
                                 secondary_transparent
-                                onPress={() => {
-                                    setWeight(5);
-                                    setSheetOpen(false);
-                                }}
+                                onPress={() => adjustWeight(5)}
                                 fullWidth
                             />
                         </View>
@@ -153,7 +133,7 @@ const AdjustWeightSheet = ({
                                 text="Save"
                                 fullWidth
                                 onPress={() => {
-                                    setSheetOpen(false);
+                                    onOpenStateChange(false);
                                 }}
                             />
                         </View>

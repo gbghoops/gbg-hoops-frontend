@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import GenderSelectOptions from "@src/components/radio-select/constants/gender-select-options";
 import RadioSelect from "@src/components/radio-select/RadioSelect";
 import { GenderType } from "@src/context/UserContext/types";
@@ -14,25 +13,22 @@ export default function AssesmentSlide1({
     selectedGender,
     onValuesChange,
 }: AssesmentSlide1Props) {
-    const [selectedGenderId, setSelectedGenderId] = useState<number>(0);
-
-    useEffect(() => {
+    const getSelectedGenderId = (selectedGender: GenderType | null) => {
         if (selectedGender) {
             const selectedGenderOption = GenderSelectOptions.find(
                 (g) => g.gender === selectedGender,
             );
 
             if (selectedGenderOption) {
-                setSelectedGenderId(selectedGenderOption.id);
+                return selectedGenderOption.id;
             }
         }
-    }, [selectedGender]);
 
-    useEffect(() => {
-        if (selectedGenderId) {
-            onValuesChange(selectedGenderId);
-        }
-    }, [selectedGenderId]);
+        return 0;
+    };
+
+    const selectedGenderId = getSelectedGenderId(selectedGender);
+
     return isActiveSlide ? (
         <View mt="$20" mx="$20">
             <Text fontFamily={"$heading"} fontSize="$24" mb="$10">
@@ -42,7 +38,7 @@ export default function AssesmentSlide1({
                 options={GenderSelectOptions}
                 selectedOption={selectedGenderId}
                 onSelectedOption={(id) => {
-                    setSelectedGenderId(id);
+                    onValuesChange(id);
                 }}
             />
         </View>

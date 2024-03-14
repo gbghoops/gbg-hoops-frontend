@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import convertToProxyURL from "react-native-video-cache";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CompletedTag from "@src/components/completed-tag/CompletedTag";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { ResizeMode, Video } from "expo-av";
@@ -15,6 +16,7 @@ export interface RecommendedProgramCardProps {
     video: string;
     is_locked: boolean;
     programTitle: string;
+    isCompleted: boolean;
     isVisible?: boolean;
     isLastItem?: boolean;
 }
@@ -26,19 +28,18 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
         isLastItem,
         isVisible,
         slug,
+        isCompleted = false,
         is_locked = false,
     } = props;
     const programVideo = useRef<Video>(null);
 
     const router = useRouter();
 
-    useEffect(() => {
-        if (isVisible) {
-            programVideo.current?.playAsync();
-        } else {
-            programVideo.current?.stopAsync();
-        }
-    }, [isVisible]);
+    if (isVisible) {
+        programVideo.current?.playAsync();
+    } else {
+        programVideo.current?.stopAsync();
+    }
 
     return (
         <View
@@ -50,7 +51,11 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                 scale: 0.995,
             }}
             onPress={() => {
-                router.push(`/program/program-details/${slug}`);
+                router.push(
+                    isCompleted
+                        ? `/program/completed-program-details/${slug}`
+                        : `/program/program-details/${slug}`,
+                );
             }}
         >
             {/* Video */}
@@ -73,6 +78,22 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
                                 color="white"
                                 size={24}
                             />
+                        </View>
+                    </View>
+                ) : null}
+
+                {isCompleted ? (
+                    <View
+                        position="absolute"
+                        top={0}
+                        left={0}
+                        zIndex={1}
+                        width={"100%"}
+                        height={"100%"}
+                        p="$10"
+                    >
+                        <View w="$85">
+                            <CompletedTag />
                         </View>
                     </View>
                 ) : null}

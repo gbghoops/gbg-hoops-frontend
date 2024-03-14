@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import DayActivityAccordion from "@src/components/day-activity-accordion/DayActivityAccordion";
 import {
     possibleDays,
@@ -6,13 +5,14 @@ import {
 } from "@src/context/ProgramsContext/types";
 import { Text, View } from "tamagui";
 
-interface WeekylActivitiesBreakdownProps {
+interface WeeklyActivitiesBreakdownProps {
     isCompletedBlock?: boolean;
     programSlug: string;
     weekNumber: number;
     weekData: ProgramWeekWithSlug | null;
     removeHorizontalPadding?: boolean;
     allowRedo?: boolean;
+    accordionStates?: boolean[];
     onDaysAccordionOpenStateChange?: (states: boolean[]) => void;
 }
 
@@ -24,35 +24,9 @@ const WeeklyActivitiesBreakdown = ({
     onDaysAccordionOpenStateChange,
     allowRedo = false,
     isCompletedBlock = false,
-}: WeekylActivitiesBreakdownProps) => {
+    accordionStates = [],
+}: WeeklyActivitiesBreakdownProps) => {
     if (!weekData) return null;
-
-    const [accordionStates, setAccordionStates] = useState<boolean[]>([]);
-
-    // get week days data from the weekData
-    const getDaysData = (week: ProgramWeekWithSlug) => {
-        // get the day keys from the week data
-        const dayKeys = Object.keys(week).filter((key) =>
-            possibleDays.includes(key),
-        );
-
-        // get the day data from the week datas
-        const daysData = dayKeys
-            // @ts-ignore
-            .filter((dayKey) => !!week[dayKey])
-            .map((dayKey) => {
-                const dayTitle = `Day ${dayKey.split("_")[1]}`;
-                // @ts-ignore
-                return { ...week[dayKey], dayTitle } as ProgramDay;
-            });
-
-        return daysData;
-    };
-
-    useEffect(() => {
-        onDaysAccordionOpenStateChange &&
-            onDaysAccordionOpenStateChange(accordionStates);
-    }, [accordionStates]);
 
     const daysData = getDaysData(weekData);
 
@@ -71,11 +45,14 @@ const WeeklyActivitiesBreakdown = ({
                         key={day.exercises[0]?.title ?? i}
                         allowRedo={allowRedo}
                         onAccordionOpenStateChange={(state) => {
-                            setAccordionStates((prev) => {
-                                const newState = [...prev];
-                                newState[daysData.indexOf(day)] = state;
-                                return newState;
-                            });
+                            const newState = [...accordionStates];
+
+                            newState[daysData.indexOf(day)] = state;
+
+                            onDaysAccordionOpenStateChange &&
+                                onDaysAccordionOpenStateChange(newState);
+
+                            return newState;
                         }}
                     />
                 ))
@@ -95,6 +72,26 @@ const WeeklyActivitiesBreakdown = ({
             )}
         </View>
     );
+};
+
+// get week days data from the weekData
+const getDaysData = (week: ProgramWeekWithSlug) => {
+    // get the day keys from the week data
+    const dayKeys = Object.keys(week).filter((key) =>
+        possibleDays.includes(key),
+    );
+
+    // get the day data from the week datas
+    const daysData = dayKeys
+        // @ts-ignore
+        .filter((dayKey) => !!week[dayKey])
+        .map((dayKey) => {
+            const dayTitle = `Day ${dayKey.split("_")[1]}`;
+            // @ts-ignore
+            return { ...week[dayKey], dayTitle } as ProgramDay;
+        });
+
+    return daysData;
 };
 
 export default WeeklyActivitiesBreakdown;

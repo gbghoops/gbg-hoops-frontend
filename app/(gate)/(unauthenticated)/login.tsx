@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Keyboard, Linking } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Button from "@src/components/button/Button";
@@ -37,12 +37,8 @@ export default function Page() {
 
     const clearError = () => {
         setError(null);
-    };
-
-    useEffect(() => {
-        clearError();
         setEmailErrored(false);
-    }, [email, password]);
+    };
 
     const handleLogin = async () => {
         if (!loginLoading) {
@@ -83,7 +79,7 @@ export default function Page() {
 
     const loginDisabled = !email.length || !password.length || loginLoading;
 
-    const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
+    const websiteUrl = `${process.env.EXPO_PUBLIC_SIGNUP_URL}/signup` ?? "";
 
     return (
         <CustomSafeAreaView>
@@ -180,14 +176,10 @@ export default function Page() {
                                 placeholder="Enter your email address"
                                 handleChange={(value) => {
                                     setEmail(value);
-                                    setEmailErrored(false);
+                                    clearError();
                                 }}
-                                handleFocus={() => {
-                                    setEmailErrored(false);
-                                }}
-                                handleBlur={() => {
-                                    setEmailErrored(false);
-                                }}
+                                handleFocus={clearError}
+                                handleBlur={clearError}
                             />
                         </View>
 
@@ -197,7 +189,12 @@ export default function Page() {
                                 title="Password"
                                 type={FieldType.PASSWORD}
                                 placeholder="••••••••••••"
-                                handleChange={(value) => setPassword(value)}
+                                handleChange={(value) => {
+                                    setPassword(value);
+                                    clearError();
+                                }}
+                                handleBlur={clearError}
+                                handleFocus={clearError}
                             />
                         </View>
 

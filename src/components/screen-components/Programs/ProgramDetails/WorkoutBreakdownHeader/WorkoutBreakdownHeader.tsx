@@ -44,14 +44,12 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
         return null;
     }
 
-    useEffect(() => {
-        if (teaserVideoPlaying) {
-            Audio.setAudioModeAsync({
-                interruptionModeIOS: InterruptionModeIOS.DuckOthers,
-                interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
-            });
-        }
-    }, [teaserVideoPlaying]);
+    if (teaserVideoPlaying) {
+        Audio.setAudioModeAsync({
+            interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+            interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+        });
+    }
 
     useEffect(() => {
         return () => {

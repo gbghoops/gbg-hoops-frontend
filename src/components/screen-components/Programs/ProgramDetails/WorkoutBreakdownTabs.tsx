@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { ProgramWeekWithSlug } from "@src/context/ProgramsContext/types";
+import {
+    LockedProgram,
+    Program,
+    ProgramWeekWithSlug,
+} from "@src/context/ProgramsContext/types";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams } from "expo-router";
 import slugify from "slugify";
@@ -44,26 +48,31 @@ export const WorkoutBreakdownTabs = () => {
 
     const setCurrentTab = (currentTab: string) =>
         setTabState({ ...tabState, currentTab });
+
     const setIntentIndicator = (intentAt: TabLayout) =>
         setTabState({ ...tabState, intentAt });
+
     const setActiveIndicator = (activeAt: TabLayout) =>
         setTabState({ ...tabState, prevActiveAt: tabState.activeAt, activeAt });
+
     const { activeAt, intentAt, prevActiveAt, currentTab } = tabState;
     const [accordionStates, setAccordionStates] = useState<boolean[]>([]);
 
     const currentProgram = programs.find((program) => program.slug === slug);
 
     useEffect(() => {
-        if (!currentProgram || "is_locked" in currentProgram) return;
+        if (currentTab) return;
 
-        const week1 = currentProgram?.weeks[0];
-        const week1Slug = slugify(week1.name, { lower: true });
-        setCurrentTab(week1Slug);
-    }, [currentProgram]);
+        const tab = getCurrentTab(currentProgram);
+
+        tab && setCurrentTab(tab);
+    }, []);
+
+    const initialTab = getCurrentTab(currentProgram);
 
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
-    if (!currentProgram || isProgramLocked) return null;
+    if (!currentProgram || isProgramLocked || !initialTab) return null;
 
     const weeks = currentProgram?.weeks;
 
@@ -201,6 +210,7 @@ export const WorkoutBreakdownTabs = () => {
                                     programSlug={currentProgram.slug}
                                     weekNumber={weekData.weekNumber}
                                     weekData={weekData}
+                                    accordionStates={accordionStates}
                                     onDaysAccordionOpenStateChange={(
                                         states,
                                     ) => {
@@ -241,6 +251,14 @@ const TabsRovingIndicator = ({
             {...props}
         />
     );
+};
+
+const getCurrentTab = (currentProgram: Program | LockedProgram | undefined) => {
+    if (!currentProgram || "is_locked" in currentProgram) return;
+
+    const week1 = currentProgram?.weeks[0];
+    const week1Slug = slugify(week1.name, { lower: true });
+    return week1Slug;
 };
 
 const AnimatedYStack = styled(YStack, {

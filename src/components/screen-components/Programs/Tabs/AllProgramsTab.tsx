@@ -4,6 +4,7 @@ import { FlashList } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
+import CompletedTag from "@src/components/completed-tag/CompletedTag";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { LockedProgram, Program } from "@src/context/ProgramsContext/types";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -52,6 +53,11 @@ const ProgramCard = ({ program }: ProgramCard) => {
     const router = useRouter();
     const programVideo = useRef<Video>(null);
     const is_locked = "is_locked" in program;
+
+    const isCompleted = !("is_locked" in program)
+        ? !!program.progress?.completed_at
+        : false;
+
     return (
         <View
             f={1}
@@ -63,7 +69,11 @@ const ProgramCard = ({ program }: ProgramCard) => {
                 scale: 0.995,
             }}
             onPress={() => {
-                router.push(`/program/program-details/${slug}`);
+                router.push(
+                    isCompleted
+                        ? `/program/completed-program-details/${slug}`
+                        : `/program/program-details/${slug}`,
+                );
             }}
         >
             {/* Video */}
@@ -86,6 +96,22 @@ const ProgramCard = ({ program }: ProgramCard) => {
                                 color="white"
                                 size={24}
                             />
+                        </View>
+                    </View>
+                ) : null}
+
+                {isCompleted ? (
+                    <View
+                        position="absolute"
+                        top={0}
+                        left={0}
+                        zIndex={1}
+                        width={"100%"}
+                        height={"100%"}
+                        p="$10"
+                    >
+                        <View w="$85">
+                            <CompletedTag />
                         </View>
                     </View>
                 ) : null}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "@src/components/button/Button";
 import { Sheet, Text, View } from "tamagui";
 
@@ -20,23 +20,13 @@ const ConfirmWorkoutExit = ({
     messageHeading = DEFAULT_MESSAGE_HEADING,
     message = DEFAULT_MESSAGE,
 }: ConfirmWorkoutExitProps) => {
-    const [sheetOpen, setSheetOpen] = useState(false);
-
-    useEffect(() => {
-        setSheetOpen(open);
-    }, [open]);
-
-    useEffect(() => {
-        onOpenStateChange(sheetOpen);
-    }, [sheetOpen]);
-
     return (
         <Sheet
-            forceRemoveScrollEnabled={sheetOpen}
+            forceRemoveScrollEnabled={open}
             modal={true}
-            open={sheetOpen}
+            open={open}
             snapPointsMode="fit"
-            onOpenChange={setSheetOpen}
+            onOpenChange={onOpenStateChange}
             dismissOnSnapToBottom
             zIndex={100_000}
             animation="fast"
@@ -83,7 +73,7 @@ const ConfirmWorkoutExit = ({
                             fullWidth
                             onPress={() => {
                                 confirmExit(false);
-                                setSheetOpen(false);
+                                onOpenStateChange(false);
                             }}
                         />
                     </View>

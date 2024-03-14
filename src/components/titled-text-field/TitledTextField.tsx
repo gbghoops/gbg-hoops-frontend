@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { Input, Text, View, XStack, YStack } from "tamagui";
@@ -40,14 +40,6 @@ export const TitledTextField = ({
     errorMessage = "",
 }: TitledTextFieldProps) => {
     const [value, setValue] = useState(initialValue ?? "");
-
-    useEffect(() => {
-        handleChange && handleChange(value);
-    }, [value]);
-
-    useEffect(() => {
-        setValue(initialValue ?? "");
-    }, [initialValue]);
 
     const resolveKeyboardType = (fieldType: FieldType) => {
         switch (fieldType) {
@@ -97,11 +89,13 @@ export const TitledTextField = ({
                                 /^\d+$/.test(value.toString()) ||
                                 value === ""
                             ) {
+                                handleChange && handleChange(value);
                                 return setValue(value);
                             }
                             return;
                         }
 
+                        handleChange && handleChange(value);
                         setValue(value);
                     }}
                     onFocus={() => {

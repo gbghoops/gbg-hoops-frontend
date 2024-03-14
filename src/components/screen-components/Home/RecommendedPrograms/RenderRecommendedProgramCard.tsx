@@ -44,6 +44,9 @@ const RenderRecommendedProgramCard = () => {
                     programTitle={item.name}
                     slug={item.slug}
                     id={index}
+                    isCompleted={
+                        "progress" in item && !!item.progress?.completed_at
+                    }
                     is_locked={"is_locked" in item}
                 />
             )}

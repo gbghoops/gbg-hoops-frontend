@@ -11,7 +11,7 @@ export default function Entry() {
 
     // redirect if not a valid user
     if (!authState.user) {
-        return <Redirect href="/login" />;
+        return <Redirect href="/begin-auth" />;
     }
 
     return <Redirect href="/home" />;
