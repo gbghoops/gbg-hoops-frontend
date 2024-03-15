@@ -12,6 +12,7 @@ import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import {
     ActivityWithPhase,
     CompletedExercisesData,
+    ExerciseExecutionSide,
 } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
@@ -380,7 +381,8 @@ const flattenActivitiesBySetsAndLaterality = (
         if (item.uni_lateral) {
             const sets = ["left", "right"].map((side) => ({
                 ...item,
-                name: `${item.name} - ${side} side`,
+                name: `${item.name}`,
+                execution_side: side as ExerciseExecutionSide,
                 uni_lateral: false,
             }));
 

@@ -234,14 +234,39 @@ const ExerciseSlide = ({
                     </View>
                 </XStack>
                 <Stack mt="$10" jc="center" mb="$5">
-                    <Text
-                        fontFamily={"$heading"}
-                        fontSize={"$24"}
-                        textOverflow="ellipsis"
-                        numberOfLines={1}
-                    >
-                        {isRestSlide ? `Rest` : exercise.name}
-                    </Text>
+                    {isRestSlide ? (
+                        <Text
+                            fontFamily={"$heading"}
+                            fontSize={"$24"}
+                            textOverflow="ellipsis"
+                            numberOfLines={1}
+                        >
+                            Rest
+                        </Text>
+                    ) : (
+                        <View fd="row" flexWrap="wrap">
+                            <Text
+                                fontFamily={"$heading"}
+                                fontSize={"$24"}
+                                textOverflow="ellipsis"
+                                numberOfLines={1}
+                            >
+                                {exercise.name}{" "}
+                            </Text>
+                            {exercise.execution_side ? (
+                                <Text
+                                    fontFamily={"$heading"}
+                                    fontSize={"$24"}
+                                    textOverflow="ellipsis"
+                                    textTransform="uppercase"
+                                    color="$gold"
+                                    numberOfLines={1}
+                                >
+                                    {`(${exercise.execution_side} side)`}
+                                </Text>
+                            ) : null}
+                        </View>
+                    )}
                 </Stack>
                 {/* COLUMN WRAPPER, Detects Screen orientation. */}
                 <View f={1} fd={isLandScape ? "row" : "column"}>

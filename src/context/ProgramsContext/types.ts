@@ -11,6 +11,8 @@ export type WorkoutPhases =
 
 export type WorkoutExecutionMode = "circuit" | "superset";
 
+export type ExerciseExecutionSide = "left" | "right";
+
 export interface ProgramSummary {
     name: string;
     thumbnail: string;
@@ -169,6 +171,7 @@ export interface WorkoutCompleteArgs {
 export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
     execution_mode: WorkoutExecutionMode;
+    execution_side?: ExerciseExecutionSide;
 }
 
 export type PossibleDays =
