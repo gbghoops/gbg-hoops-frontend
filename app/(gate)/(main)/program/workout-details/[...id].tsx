@@ -337,7 +337,7 @@ const getEquipmentFromDayData = (dayData: ProgramDay) => {
 
     const equipments = dayData.exercises
         .reduce((acc: EquipmentData[][], exercise) => {
-            if (!exercise.activities || !exercise.activities.length) return acc;
+            if (exercise && !("activities" in exercise)) return acc;
 
             const equipments = exercise.activities
                 .map((activity) => activity.equipment)

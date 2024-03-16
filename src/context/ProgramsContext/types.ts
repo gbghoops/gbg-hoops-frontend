@@ -11,6 +11,8 @@ export type WorkoutPhases =
 
 export type WorkoutExecutionMode = "circuit" | "superset";
 
+export type ExerciseExecutionSide = "left" | "right";
+
 export interface ProgramSummary {
     name: string;
     thumbnail: string;
@@ -31,7 +33,7 @@ export interface EquipmentData {
 
 export interface ProgramActivity {
     name: string;
-    type?: exerciseType;
+    type: exerciseType;
     sets: number;
     include_weights?: boolean;
     uni_lateral?: boolean;
@@ -108,13 +110,23 @@ export interface ProgramExerciseFields {
     };
 }
 
-export interface ProgramExercise {
+export interface ProgramExerciseWithActivity {
     title: string;
     type: WorkoutExecutionMode;
     phase: WorkoutPhases;
     sets: number;
     activities: ProgramActivity[];
 }
+
+export interface ProgramTransitionPhase {
+    title: string;
+    minutes: number;
+    contentful_id: string;
+}
+
+export type ProgramExercise =
+    | ProgramExerciseWithActivity
+    | ProgramTransitionPhase;
 
 export interface ProgramDay {
     dayTitle: string;
@@ -169,7 +181,16 @@ export interface WorkoutCompleteArgs {
 export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
     execution_mode: WorkoutExecutionMode;
+    execution_side?: ExerciseExecutionSide;
 }
+
+export interface PhaseTransition {
+    title: string;
+    minutes: number;
+    contentful_id: string;
+}
+
+export type DayActivity = ActivityWithPhase | PhaseTransition;
 
 export type PossibleDays =
     | "day_1"
