@@ -10,9 +10,10 @@ import ExerciseSlide from "@src/components/screen-components/Workout/ExerciseSli
 import { WorkoutHeader } from "@src/components/stack-header/WorkoutScreenHeader";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import {
-    ActivityWithPhase,
     CompletedExercisesData,
+    DayActivity,
     ExerciseExecutionSide,
+    PhaseTransition,
 } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import {
@@ -115,10 +116,10 @@ export default function WorkoutScreen() {
 
     const dayData = dayInfo.dayData;
 
-    const dayActivities = dayData.exercises.reduce<ActivityWithPhase[]>(
+    const dayActivities = dayData.exercises.reduce<DayActivity[]>(
         (acc, exercise) => {
-            if (!exercise.activities) {
-                return acc;
+            if (exercise && !("activities" in exercise)) {
+                return [...acc, exercise];
             }
 
             const activities = exercise.activities.map((activity) => ({
@@ -135,16 +136,21 @@ export default function WorkoutScreen() {
     const flattenedActivities =
         flattenActivitiesBySetsAndLaterality(dayActivities);
 
-    const activeExercises = flattenedActivities
-        .filter((a) => a.type)
-        .reduce((acc, activity) => {
-            // remove duplicate exercises by contentful_id
-            if (acc.find((a) => a.contentful_id === activity.contentful_id)) {
-                return acc;
-            }
+    const activeExercises = flattenedActivities.reduce((acc, activity) => {
+        // remove duplicate exercises by contentful_id
+        if (acc.find((a) => a.contentful_id === activity.contentful_id)) {
+            return acc;
+        }
 
-            return [...acc, activity];
-        }, [] as ActivityWithPhase[]);
+        return [...acc, activity];
+    }, [] as DayActivity[]);
+
+    const phaseTransitions = activeExercises.filter(
+        (ex) => !("type" in ex),
+    ) as PhaseTransition[];
+
+    const activeExercisesWithoutTransitions =
+        activeExercises.length - phaseTransitions.length;
 
     const onExerciseComplete = (
         completedExerciseData: CompletedExercisesData,
@@ -202,7 +208,7 @@ export default function WorkoutScreen() {
     };
 
     const handleWorkoutComplete = async () => {
-        if (completedExercises.length < activeExercises.length) {
+        if (completedExercises.length < activeExercisesWithoutTransitions) {
             setConfirmExitHeading("Workout Incomplete");
             setConfirmExitMessage(
                 `Are you sure you want to exit? \nYou still have some exercises left to complete.`,
@@ -360,13 +366,11 @@ export default function WorkoutScreen() {
     );
 }
 
-const flattenActivitiesBySetsAndLaterality = (
-    activities: ActivityWithPhase[],
-) => {
+const flattenActivitiesBySetsAndLaterality = (activities: DayActivity[]) => {
     if (!activities.length) return [];
 
-    const bySet = activities.reduce<ActivityWithPhase[]>((acc, item) => {
-        if (item.sets > 1) {
+    const bySet = activities.reduce<DayActivity[]>((acc, item) => {
+        if ("type" in item && item.sets > 1) {
             const sets = Array.from({ length: item.sets }, (_, index) => ({
                 ...item,
                 name: `${item.name} - Set ${index + 1}`,
@@ -377,8 +381,8 @@ const flattenActivitiesBySetsAndLaterality = (
         return acc.concat(item);
     }, []);
 
-    const res = bySet.reduce<ActivityWithPhase[]>((acc, item) => {
-        if (item.uni_lateral) {
+    const res = bySet.reduce<DayActivity[]>((acc, item) => {
+        if ("type" in item && item.uni_lateral) {
             const sets = ["left", "right"].map((side) => ({
                 ...item,
                 name: `${item.name}`,

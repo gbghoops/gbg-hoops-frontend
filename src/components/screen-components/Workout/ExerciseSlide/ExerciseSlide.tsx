@@ -5,8 +5,9 @@ import convertToProxyURL from "react-native-video-cache";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { StyledImage } from "@src/components/styled-components";
 import {
-    ActivityWithPhase,
     CompletedExercisesData,
+    DayActivity,
+    PhaseTransition,
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import {
@@ -32,8 +33,8 @@ import SlideIndicators from "./components/SlideIndicators";
 import SoundButton from "./components/SoundButton";
 
 interface ExerciseSlideProps {
-    exercise: ActivityWithPhase;
-    nextExercise: ActivityWithPhase;
+    exercise: DayActivity;
+    nextExercise: DayActivity;
     index: number;
     totalSlides: number;
     dayTitle: string;
@@ -48,6 +49,12 @@ interface ExerciseSlideProps {
 
 // Okay, gotta be smart about this component. It's size could really affect the performance of
 // Literally the most important function of the entire app...
+
+// Lots of naive implementations here. Need to refactor this component to improve performance
+// and readability.
+
+// Something that immediately comes to mind is the use of the `useEffect` hook and its liberal usage
+// throughout the component. This could be a performance bottleneck ue to the number of side effects and possible re-renders.
 const ExerciseSlide = ({
     exercise,
     nextExercise,
@@ -62,10 +69,9 @@ const ExerciseSlide = ({
     activeProgramDay,
     activeProgramWeek,
 }: ExerciseSlideProps) => {
+    const isRestSlide = !(exercise && "type" in exercise);
     const totalExerciseDuration =
-        exercise.type === "timer" ? exercise.seconds_hold : 0;
-
-    const isRestSlide = !exercise.type;
+        !isRestSlide && exercise.type === "timer" ? exercise.seconds_hold : 0;
 
     const isCurrentSlide = currentSlidePosition === currentIndex;
 
@@ -77,7 +83,7 @@ const ExerciseSlide = ({
     const [currentWeight, setCurrentWeight] = useState(5);
     const [showWeightAdjust, setShowWeightAdjust] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
-    const [restTimer] = useState(30); // <-- Time in seconds.
+    const [restTimer, setRestTimer] = useState(30); // <-- Time in seconds.
 
     const VideoRef = useRef<Video>(null);
     const [videoLoaded, setVideoLoaded] = useState(false);
@@ -100,25 +106,38 @@ const ExerciseSlide = ({
         return () => subscription.remove();
     }, []);
 
-    const completeExercisePayload = useMemo<CompletedExercisesData>(() => {
-        return {
-            exercise_id: exercise.contentful_id,
-            weight: exercise.include_weights ? currentWeight : 0,
-            week: activeProgramWeek ?? 1,
-            day: activeProgramDay ?? 2,
-        };
-    }, [currentWeight]);
+    const completeExercisePayload =
+        useMemo<CompletedExercisesData | null>(() => {
+            if (!("type" in exercise)) return null;
+
+            return {
+                exercise_id: exercise.contentful_id,
+                weight: exercise.include_weights ? currentWeight : 0,
+                week: activeProgramWeek ?? 1,
+                day: activeProgramDay ?? 2,
+            };
+        }, [currentWeight]);
 
     useEffect(() => {
-        if (exercisePlaying && exercise.type === "no_timer") {
+        if (!isRestSlide && exercisePlaying && exercise.type === "no_timer") {
             setExerciseCompleted(true);
         }
     }, [exercisePlaying]);
 
     useEffect(() => {
+        if (isRestSlide) {
+            setVideoLoaded(false);
+
+            setRestTimer(exercise.minutes * 60);
+        }
+    }, [isRestSlide]);
+
+    useEffect(() => {
         if (!isRestSlide) {
             setExercisePlaying(false);
             setQueueExercisePlaying(false);
+        } else {
+            setExercisePlaying(isCurrentSlide);
         }
     }, [isCurrentSlide]);
 
@@ -175,13 +194,13 @@ const ExerciseSlide = ({
             return;
         }
 
-        if (exercise.type !== "no_timer") {
+        if (!isRestSlide && exercise.type !== "no_timer") {
             // setExercisePlaying(false);
             setQueueExercisePlaying(false);
         }
-        return (
-            onExerciseCompleted && onExerciseCompleted(completeExercisePayload)
-        );
+        onExerciseCompleted &&
+            completeExercisePayload &&
+            onExerciseCompleted(completeExercisePayload);
     }, [exerciseCompleted]);
 
     const isLandScape = windowSize.width > windowSize.height;
@@ -190,7 +209,13 @@ const ExerciseSlide = ({
         return <View key={currentIndex}></View>;
     }
 
-    const slugified_name = slugify(`${exercise.name}-${currentIndex}`, {
+    const exerciseActivity = !isRestSlide ? exercise : null;
+
+    const restBlock = isRestSlide ? exercise : null;
+
+    const slideName = restBlock ? restBlock.title : exerciseActivity?.name;
+
+    const slugified_name = slugify(`${slideName}-${currentIndex}`, {
         lower: true,
     });
 
@@ -212,7 +237,7 @@ const ExerciseSlide = ({
                     </View>
                     <View pr={isLandScape ? "$15" : "0%"}>
                         {/* Parent block title tag. */}
-                        {exercise.phase ? (
+                        {exerciseActivity?.phase ? (
                             <View
                                 width="auto"
                                 backgroundColor="$gold_hot"
@@ -227,43 +252,47 @@ const ExerciseSlide = ({
                                     color="$text_secondary"
                                     fontSize={"$12"}
                                 >
-                                    {exercise.phase}
+                                    {exerciseActivity.phase}
                                 </Text>
                             </View>
                         ) : null}
                     </View>
                 </XStack>
                 <Stack mt="$10" jc="center" mb="$5">
-                    {isRestSlide ? (
+                    {restBlock ? (
                         <Text
                             fontFamily={"$heading"}
                             fontSize={"$24"}
                             textOverflow="ellipsis"
                             numberOfLines={1}
                         >
-                            Rest
+                            {restBlock.title}
                         </Text>
                     ) : (
                         <View fd="row" flexWrap="wrap">
-                            <Text
-                                fontFamily={"$heading"}
-                                fontSize={"$24"}
-                                textOverflow="ellipsis"
-                                numberOfLines={1}
-                            >
-                                {exercise.name}{" "}
-                            </Text>
-                            {exercise.execution_side ? (
-                                <Text
-                                    fontFamily={"$heading"}
-                                    fontSize={"$24"}
-                                    textOverflow="ellipsis"
-                                    textTransform="uppercase"
-                                    color="$gold"
-                                    numberOfLines={1}
-                                >
-                                    {`(${exercise.execution_side} side)`}
-                                </Text>
+                            {exerciseActivity ? (
+                                <>
+                                    <Text
+                                        fontFamily={"$heading"}
+                                        fontSize={"$24"}
+                                        textOverflow="ellipsis"
+                                        numberOfLines={1}
+                                    >
+                                        {exerciseActivity.name}{" "}
+                                    </Text>
+                                    {exerciseActivity.execution_side ? (
+                                        <Text
+                                            fontFamily={"$heading"}
+                                            fontSize={"$24"}
+                                            textOverflow="ellipsis"
+                                            textTransform="uppercase"
+                                            color="$gold"
+                                            numberOfLines={1}
+                                        >
+                                            {`(${exerciseActivity.execution_side} side)`}
+                                        </Text>
+                                    ) : null}
+                                </>
                             ) : null}
                         </View>
                     )}
@@ -380,7 +409,7 @@ const ExerciseSlide = ({
                                     style={styles.ExerciseVideo}
                                     isMuted={isVideoMuted}
                                     onLoad={() => {
-                                        setVideoLoaded(true);
+                                        !isRestSlide && setVideoLoaded(true);
                                     }}
                                 >
                                     <View
@@ -493,8 +522,8 @@ const ExerciseSlide = ({
                                     : "$15"
                             }
                         >
-                            {exercise.type ? (
-                                exercise.type === "timer" ? (
+                            {exerciseActivity ? (
+                                exerciseActivity.type === "timer" ? (
                                     <ExerciseTimerProgressBar
                                         duration={totalExerciseDuration}
                                         isPlaying={exercisePlaying}
@@ -505,17 +534,19 @@ const ExerciseSlide = ({
                                             return;
                                         }}
                                     />
-                                ) : exercise.type === "tempo" ? (
+                                ) : exerciseActivity.type === "tempo" ? (
                                     <ExerciseRepProgressBar
                                         isPlaying={exercisePlaying}
-                                        reps={exercise.reps ?? 0}
+                                        reps={exerciseActivity.reps ?? 0}
                                         isLandscape={isLandScape}
-                                        seconds_up={exercise.seconds_up ?? 1}
+                                        seconds_up={
+                                            exerciseActivity.seconds_up ?? 1
+                                        }
                                         seconds_down={
-                                            exercise.seconds_down ?? 1
+                                            exerciseActivity.seconds_down ?? 1
                                         }
                                         seconds_hold={
-                                            exercise.seconds_hold ?? 1
+                                            exerciseActivity.seconds_hold ?? 1
                                         }
                                         onRepsCompleted={() => {
                                             setExerciseCompleted(true);
@@ -523,13 +554,14 @@ const ExerciseSlide = ({
                                             return;
                                         }}
                                     />
-                                ) : exercise.type === "mobility" ? (
+                                ) : exerciseActivity.type === "mobility" ? (
                                     <ExerciseMobilityProgressBar
                                         seconds_hold={
-                                            exercise.seconds_hold ?? 1
+                                            exerciseActivity.seconds_hold ?? 1
                                         }
                                         seconds_release={
-                                            exercise.seconds_release ?? 1
+                                            exerciseActivity.seconds_release ??
+                                            1
                                         }
                                         isPlaying={exercisePlaying}
                                         onTimerCompleted={() => {
@@ -538,7 +570,7 @@ const ExerciseSlide = ({
                                         }}
                                         isLandscape={isLandScape}
                                     />
-                                ) : exercise.type === "no_timer" ? (
+                                ) : exerciseActivity.type === "no_timer" ? (
                                     <NoTimerProgressIndicator
                                         isPlaying={exercisePlaying}
                                         isLandscape={isLandScape}
@@ -583,11 +615,13 @@ const ExerciseSlide = ({
                                                     "$surface_background"
                                                 }
                                             >
-                                                <CachedImage
-                                                    source={`https:${nextExercise?.thumbnail}`}
-                                                    style={styles.tumbnail}
-                                                    resizeMode="cover"
-                                                />
+                                                {"type" in nextExercise ? (
+                                                    <CachedImage
+                                                        source={`https:${nextExercise?.thumbnail}`}
+                                                        style={styles.tumbnail}
+                                                        resizeMode="cover"
+                                                    />
+                                                ) : null}
                                             </View>
                                             <View
                                                 mt={isLandScape ? "0%" : "$10"}
@@ -603,20 +637,40 @@ const ExerciseSlide = ({
                                                         : "center"
                                                 }
                                             >
-                                                <Text
-                                                    fontFamily={"$heading"}
-                                                    fontSize={"$20"}
-                                                >
-                                                    Get Ready for the Next
-                                                    Exercise
-                                                </Text>
-                                                <Text
-                                                    fontFamily={"$heading"}
-                                                    fontSize={"$14"}
-                                                    mt={"$5"}
-                                                >
-                                                    {`(${nextExercise?.name})`}
-                                                </Text>
+                                                {"type" in nextExercise ? (
+                                                    <>
+                                                        <Text
+                                                            fontFamily={
+                                                                "$heading"
+                                                            }
+                                                            fontSize={"$20"}
+                                                        >
+                                                            Get Ready for the
+                                                            Next Exercise
+                                                        </Text>
+                                                        <Text
+                                                            fontFamily={
+                                                                "$heading"
+                                                            }
+                                                            fontSize={"$14"}
+                                                            mt={"$5"}
+                                                        >
+                                                            {`(${nextExercise?.name})`}
+                                                        </Text>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Text
+                                                            fontFamily={
+                                                                "$heading"
+                                                            }
+                                                            fontSize={"$20"}
+                                                        >
+                                                            Get Ready for the
+                                                            Next Phase
+                                                        </Text>
+                                                    </>
+                                                )}
                                             </View>
                                         </View>
                                     ) : null}
@@ -630,7 +684,9 @@ const ExerciseSlide = ({
                                 {/* Prev */}
                                 <View
                                     width={
-                                        nextExercise?.type
+                                        nextExercise &&
+                                        "type" in nextExercise &&
+                                        nextExercise.type
                                             ? isLandScape
                                                 ? "$105"
                                                 : "$125"
@@ -691,9 +747,13 @@ const ExerciseSlide = ({
                                             opacity: 0.65,
                                             scale: 0.98,
                                         }}
-                                        opacity={videoLoaded ? 1 : 0.5}
+                                        opacity={
+                                            videoLoaded || isRestSlide ? 1 : 0.5
+                                        }
                                         onPress={() => {
-                                            if (!videoLoaded) return;
+                                            if (!isRestSlide && !videoLoaded) {
+                                                return;
+                                            }
 
                                             isRestSlide
                                                 ? setExercisePlaying(
@@ -761,9 +821,11 @@ const ExerciseSlide = ({
                                         >
                                             {!nextExercise
                                                 ? "End of Workout"
-                                                : nextExercise.type
+                                                : "type" in nextExercise
                                                   ? nextExercise.name
-                                                  : "Rest"}
+                                                  : (
+                                                        nextExercise as PhaseTransition
+                                                    ).title}
                                         </Text>
                                         {/* Indicator */}
                                         <XStack alignItems="center" ml="auto">
@@ -796,7 +858,7 @@ const ExerciseSlide = ({
                                         </XStack>
                                     </View>
                                     {/* Thumbnail Holder */}
-                                    {nextExercise?.type ? (
+                                    {nextExercise && "type" in nextExercise ? (
                                         <View
                                             w={"$40"}
                                             h={"$54"}
