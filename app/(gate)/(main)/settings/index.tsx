@@ -61,12 +61,6 @@ export default function SettingsScreen() {
                             title="Edit Profile"
                             onPress={() => push("/settings/edit-profile")}
                         />
-                        {/* <SettingsListItem
-                            title="Notification Preferences"
-                            onPress={() => {
-                                console.log("Notifications");
-                            }}
-                        /> */}
                         <SettingsListItem
                             title="FAQs"
                             onPress={() => {
