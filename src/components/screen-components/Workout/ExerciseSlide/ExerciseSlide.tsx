@@ -11,6 +11,7 @@ import {
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
+import getPhaseTitle from "@src/utils/getPhaseTitle";
 import {
     Audio,
     InterruptionModeAndroid,
@@ -925,20 +926,5 @@ const styles = StyleSheet.create({
         height: "100%",
     },
 });
-
-const getPhaseTitle = (phase: WorkoutPhases) => {
-    switch (phase) {
-        case "warmup":
-            return "Warm Up";
-        case "3d_strength":
-            return "3D Strength";
-        case "athleticism":
-            return "Athleticism";
-        case "force":
-            return "Force";
-        case "recovery":
-            return "Recovery";
-    }
-};
 
 export default React.memo(ExerciseSlide);

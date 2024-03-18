@@ -1,5 +1,6 @@
 import { WorkoutPhases } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
+import getPhaseTitle from "@src/utils/getPhaseTitle";
 import { Text, View } from "tamagui";
 
 interface PhaseIndicatorProps {
@@ -21,7 +22,7 @@ export default function PhaseIndicator({ phase }: PhaseIndicatorProps) {
                 color="$text_secondary"
                 fontSize={"$12"}
             >
-                {phase}
+                {getPhaseTitle(phase)}
             </Text>
         </View>
     ) : null;
