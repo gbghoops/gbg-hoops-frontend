@@ -486,6 +486,8 @@ const ExerciseSlide = ({
                                         isLandScape={isLandScape}
                                         totalSetCount={exercise.sets ?? 0}
                                         totalRepsCount={exercise.reps ?? 0}
+                                        round={exercise.round ?? 0}
+                                        totalRounds={exercise.total_rounds ?? 0}
                                         subBlockTitle={
                                             exercise.execution_mode ?? ""
                                         }

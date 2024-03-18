@@ -5,11 +5,15 @@ interface SetsCounterProps {
     totalRepsCount: number;
     subBlockTitle?: string;
     isLandScape?: boolean;
+    round?: number;
+    totalRounds?: number;
 }
 const SetsCounter = ({
     totalRepsCount,
     totalSetCount,
     subBlockTitle,
+    round,
+    totalRounds,
     isLandScape = false,
 }: SetsCounterProps) => {
     return (
@@ -46,7 +50,7 @@ const SetsCounter = ({
                     </View>
                 ) : null}
             </View>
-            <View>
+            <View fd="row">
                 {/* Parent block title tag. */}
                 {subBlockTitle ? (
                     <View
@@ -64,6 +68,28 @@ const SetsCounter = ({
                             fontSize={"$12"}
                         >
                             {subBlockTitle}
+                        </Text>
+                    </View>
+                ) : null}
+
+                {/* Round tag */}
+                {round ? (
+                    <View
+                        width="auto"
+                        backgroundColor="$gold"
+                        ai="center"
+                        justifyContent="center"
+                        p={"$4"}
+                        pt={"$5"}
+                        ml="$5"
+                    >
+                        <Text
+                            fontFamily={"$acuminProBold"}
+                            textTransform="uppercase"
+                            color="$text_secondary"
+                            fontSize={"$12"}
+                        >
+                            RD {round} / {totalRounds}
                         </Text>
                     </View>
                 ) : null}

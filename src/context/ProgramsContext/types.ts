@@ -54,6 +54,7 @@ export interface ProgramActivity {
     meta_mobility: string[];
     metaLowerbodyGoals: string[];
     contentful_id: string;
+    round?: number;
 }
 export interface ProgramExerciseFields {
     fields: {
@@ -182,6 +183,7 @@ export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
     execution_mode: WorkoutExecutionMode;
     execution_side?: ExerciseExecutionSide;
+    total_rounds?: number;
 }
 
 export interface PhaseTransition {
