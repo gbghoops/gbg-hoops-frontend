@@ -29,32 +29,35 @@ const WeeklyActivitiesBreakdown = ({
     if (!weekData) return null;
 
     const daysData = getDaysData(weekData);
+    console.log("daysData", daysData.length);
 
     return (
         <View>
             {daysData.length ? (
                 daysData.map((day, i) => (
-                    <DayActivityAccordion
-                        index={i}
-                        day={day}
-                        programSlug={programSlug}
-                        programWeekNumber={weekNumber}
-                        programDayNumber={i + 1}
-                        showCompletedTag={isCompletedBlock}
-                        removeHorizontalPadding={removeHorizontalPadding}
-                        key={day.exercises[0]?.title ?? i}
-                        allowRedo={allowRedo}
-                        onAccordionOpenStateChange={(state) => {
-                            const newState = [...accordionStates];
+                    <View key={i} w={"100%"}>
+                        <DayActivityAccordion
+                            index={i}
+                            day={day}
+                            programSlug={programSlug}
+                            programWeekNumber={weekNumber}
+                            programDayNumber={i + 1}
+                            showCompletedTag={isCompletedBlock}
+                            removeHorizontalPadding={removeHorizontalPadding}
+                            key={day.exercises[0]?.title ?? i}
+                            allowRedo={allowRedo}
+                            onAccordionOpenStateChange={(state) => {
+                                const newState = [...accordionStates];
 
-                            newState[daysData.indexOf(day)] = state;
+                                newState[daysData.indexOf(day)] = state;
 
-                            onDaysAccordionOpenStateChange &&
-                                onDaysAccordionOpenStateChange(newState);
+                                onDaysAccordionOpenStateChange &&
+                                    onDaysAccordionOpenStateChange(newState);
 
-                            return newState;
-                        }}
-                    />
+                                return newState;
+                            }}
+                        />
+                    </View>
                 ))
             ) : (
                 <View

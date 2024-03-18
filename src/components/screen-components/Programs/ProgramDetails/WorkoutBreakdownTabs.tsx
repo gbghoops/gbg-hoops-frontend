@@ -11,7 +11,6 @@ import { useLocalSearchParams } from "expo-router";
 import slugify from "slugify";
 import {
     AnimatePresence,
-    H5,
     ScrollView,
     StackProps,
     styled,
@@ -204,21 +203,17 @@ export const WorkoutBreakdownTabs = () => {
                     flex={1}
                 >
                     <Tabs.Content value={currentTab} forceMount flexGrow={1}>
-                        <H5 textAlign="center" fontSize={"$20"}>
-                            {weekData ? (
-                                <WeeklyActivitiesBreakdown
-                                    programSlug={currentProgram.slug}
-                                    weekNumber={weekData.weekNumber}
-                                    weekData={weekData}
-                                    accordionStates={accordionStates}
-                                    onDaysAccordionOpenStateChange={(
-                                        states,
-                                    ) => {
-                                        setAccordionStates(states);
-                                    }}
-                                />
-                            ) : null}
-                        </H5>
+                        {weekData ? (
+                            <WeeklyActivitiesBreakdown
+                                programSlug={currentProgram.slug}
+                                weekNumber={weekData.weekNumber}
+                                weekData={weekData}
+                                accordionStates={accordionStates}
+                                onDaysAccordionOpenStateChange={(states) => {
+                                    setAccordionStates(states);
+                                }}
+                            />
+                        ) : null}
                     </Tabs.Content>
                 </AnimatedYStack>
             </AnimatePresence>
