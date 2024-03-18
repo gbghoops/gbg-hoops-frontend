@@ -11,7 +11,7 @@ interface ConfirmWorkoutExitProps {
 }
 
 const DEFAULT_MESSAGE_HEADING = "Are you sure you want to quit?";
-const DEFAULT_MESSAGE = `You don’t really want to quit… \nAll of the shots you don’t take are misses!`;
+const DEFAULT_MESSAGE = `You miss 100% of the shots you don’t take!`;
 
 const ConfirmWorkoutExit = ({
     onOpenStateChange,
