@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import { whiteList } from "@src/constants/privileged-mode-whitelist";
-import { useQuery } from "@tanstack/react-query";
+import { QueryObserverResult, useQuery } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 
 import { User } from "./types";
@@ -10,8 +10,6 @@ const fetchUser = async () => {
 
     try {
         const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
-
-        console.log("idToken", idToken);
 
         const response = await fetch(`${backend_url}/users/me`, {
             method: "GET",
@@ -38,11 +36,17 @@ interface UserContextProps {
     user: User | null;
     error: Error | null;
     userDataLoading: boolean;
+    refetchUser: () => Promise<QueryObserverResult<User, Error>>;
 }
 export const UserContext = createContext<UserContextProps | null>(null);
 
 export default function UserProvider({ children }: PropsWithChildren) {
-    const { data, isLoading, error } = useQuery<User>({
+    const {
+        data,
+        isLoading,
+        error,
+        refetch: refetchUser,
+    } = useQuery<User>({
         queryKey: ["user"],
         queryFn: fetchUser,
     });
@@ -57,6 +61,7 @@ export default function UserProvider({ children }: PropsWithChildren) {
                 error,
                 userDataLoading: isLoading,
                 user: data ? { ...data, isPrivilegedUser } : null,
+                refetchUser,
             }}
         >
             {children}

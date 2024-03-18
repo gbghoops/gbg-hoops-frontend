@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Header } from "@src/components/stack-header/StackHeader";
 import { CommunityIcon } from "@src/components/tab-bar/tab-icons/CommunityIcon";
@@ -8,7 +9,7 @@ import TabBar from "@src/components/tab-bar/TabBar";
 import { User } from "@src/context/UserContext/types";
 import { useUser } from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
-import { Redirect, Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 
 export default function TabLayout() {
     return <ScreenTabs />;
@@ -16,11 +17,14 @@ export default function TabLayout() {
 
 const ScreenTabs = () => {
     const { user: user } = useUser();
+    const router = useRouter();
 
     // Confirm Assessment is complete
-    if (user && !checkIfAssesmentComplete(user)) {
-        return <Redirect href="/assessment" />;
-    }
+    useEffect(() => {
+        if (user && !checkIfAssesmentComplete(user)) {
+            return router.replace("/assessment");
+        }
+    }, [user]);
 
     return (
         <Tabs
