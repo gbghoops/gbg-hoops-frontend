@@ -8,7 +8,6 @@ import {
     CompletedExercisesData,
     DayActivity,
     PhaseTransition,
-    WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import getPhaseTitle from "@src/utils/getPhaseTitle";
