@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Header } from "@src/components/stack-header/StackHeader";
 import { CommunityIcon } from "@src/components/tab-bar/tab-icons/CommunityIcon";
@@ -8,19 +9,27 @@ import TabBar from "@src/components/tab-bar/TabBar";
 import { User } from "@src/context/UserContext/types";
 import { useUser } from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
-import { Redirect, Tabs } from "expo-router";
+import { Tabs, useGlobalSearchParams, useRouter } from "expo-router";
 
 export default function TabLayout() {
     return <ScreenTabs />;
 }
 
 const ScreenTabs = () => {
-    const { user: user } = useUser();
+    const { refetchUser } = useUser();
+    const router = useRouter();
+    const { exit_assessment } = useGlobalSearchParams();
 
     // Confirm Assessment is complete
-    if (user && !checkIfAssesmentComplete(user)) {
-        return <Redirect href="/assessment" />;
-    }
+    useEffect(() => {
+        // Handle this imperatively to prevent async issues
+        refetchUser().then((res) => {
+            const user = res.data;
+            if (user && !checkIfAssesmentComplete(user)) {
+                return !exit_assessment && router.replace("/assessment");
+            }
+        });
+    }, []);
 
     return (
         <Tabs

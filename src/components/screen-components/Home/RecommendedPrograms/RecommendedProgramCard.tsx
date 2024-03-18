@@ -36,9 +36,13 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
     const router = useRouter();
 
     if (isVisible) {
-        programVideo.current?.playAsync();
+        programVideo.current?.playAsync().catch(() => {
+            return;
+        });
     } else {
-        programVideo.current?.stopAsync();
+        programVideo.current?.stopAsync().catch(() => {
+            return;
+        });
     }
 
     return (

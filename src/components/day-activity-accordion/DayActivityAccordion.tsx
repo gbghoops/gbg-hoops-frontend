@@ -52,9 +52,7 @@ const DayActivityAccordion = ({
         (p) => p.slug === programSlug,
     );
 
-    if (!currentProgram) return null;
-
-    const progress = currentProgram.progress?.exercises_completed ?? [];
+    const progress = currentProgram?.progress?.exercises_completed ?? [];
 
     // Find only progress relating to current week and day
     const dayProgress = progress.filter(

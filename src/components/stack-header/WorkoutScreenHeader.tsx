@@ -27,6 +27,8 @@ export const WorkoutHeader = ({
         canRouterGoBack ? back() : replace("/home");
     };
 
+    const displaySettings = false;
+
     return (
         <View
             ac="center"
@@ -68,19 +70,21 @@ export const WorkoutHeader = ({
 
             {/* More */}
             <View ml={"auto"}>
-                <View
-                    animation={"medium"}
-                    pressStyle={{
-                        opacity: 0.15,
-                        scale: 0.95,
-                    }}
-                >
-                    <Octicons
-                        name={"kebab-horizontal"}
-                        color={colors.gold}
-                        size={wn(24)}
-                    />
-                </View>
+                {displaySettings ? (
+                    <View
+                        animation={"medium"}
+                        pressStyle={{
+                            opacity: 0.15,
+                            scale: 0.95,
+                        }}
+                    >
+                        <Octicons
+                            name={"kebab-horizontal"}
+                            color={colors.gold}
+                            size={wn(24)}
+                        />
+                    </View>
+                ) : null}
             </View>
         </View>
     );

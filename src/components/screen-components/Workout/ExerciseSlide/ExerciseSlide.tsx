@@ -10,6 +10,7 @@ import {
     PhaseTransition,
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
+import getPhaseTitle from "@src/utils/getPhaseTitle";
 import {
     Audio,
     InterruptionModeAndroid,
@@ -28,6 +29,7 @@ import ExerciseRepProgressBar from "./components/ExerciseRepProgressBar";
 import ExerciseTimerProgressBar from "./components/ExerciseTimerProgressBar";
 import InstructionVideoButton from "./components/InstructionVideoButton";
 import NoTimerProgressIndicator from "./components/NoTimerProgressIndicator";
+import PhaseIndicator from "./components/PhaseIndicator";
 import SetsCounter from "./components/SetsCounter";
 import SlideIndicators from "./components/SlideIndicators";
 import SoundButton from "./components/SoundButton";
@@ -219,6 +221,8 @@ const ExerciseSlide = ({
         lower: true,
     });
 
+    const isPhaseTransition = restBlock?.title?.trim() === "Phase Transition";
+
     return (
         <View
             key={slugified_name}
@@ -237,25 +241,7 @@ const ExerciseSlide = ({
                     </View>
                     <View pr={isLandScape ? "$15" : "0%"}>
                         {/* Parent block title tag. */}
-                        {exerciseActivity?.phase ? (
-                            <View
-                                width="auto"
-                                backgroundColor="$gold_hot"
-                                ai="center"
-                                justifyContent="center"
-                                p={"$4"}
-                                pt={"$5"}
-                            >
-                                <Text
-                                    fontFamily={"$acuminProBold"}
-                                    textTransform="uppercase"
-                                    color="$text_secondary"
-                                    fontSize={"$12"}
-                                >
-                                    {exerciseActivity.phase}
-                                </Text>
-                            </View>
-                        ) : null}
+                        <PhaseIndicator phase={exerciseActivity?.phase} />
                     </View>
                 </XStack>
                 <Stack mt="$10" jc="center" mb="$5">
@@ -486,6 +472,8 @@ const ExerciseSlide = ({
                                         isLandScape={isLandScape}
                                         totalSetCount={exercise.sets ?? 0}
                                         totalRepsCount={exercise.reps ?? 0}
+                                        round={exercise.round ?? 0}
+                                        totalRounds={exercise.total_rounds ?? 0}
                                         subBlockTitle={
                                             exercise.execution_mode ?? ""
                                         }
@@ -645,17 +633,24 @@ const ExerciseSlide = ({
                                                             }
                                                             fontSize={"$20"}
                                                         >
-                                                            Get Ready for the
-                                                            Next Exercise
+                                                            {isPhaseTransition
+                                                                ? `Get Ready for the Next Phase`
+                                                                : `Get Ready for the Next Exercise`}
                                                         </Text>
                                                         <Text
                                                             fontFamily={
                                                                 "$heading"
                                                             }
-                                                            fontSize={"$14"}
+                                                            fontSize={
+                                                                isPhaseTransition
+                                                                    ? "$18"
+                                                                    : "$14"
+                                                            }
                                                             mt={"$5"}
                                                         >
-                                                            {`(${nextExercise?.name})`}
+                                                            {isPhaseTransition
+                                                                ? `(${getPhaseTitle(nextExercise.phase)})`
+                                                                : `(${nextExercise?.name})`}
                                                         </Text>
                                                     </>
                                                 ) : (

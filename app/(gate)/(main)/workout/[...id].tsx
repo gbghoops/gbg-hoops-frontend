@@ -125,6 +125,8 @@ export default function WorkoutScreen() {
             const activities = exercise.activities.map((activity) => ({
                 ...activity,
                 phase: exercise.phase,
+                total_rounds:
+                    exercise.type === "circuit" ? exercise.sets : undefined,
                 execution_mode: exercise.type,
             }));
 

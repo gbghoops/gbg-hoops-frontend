@@ -14,6 +14,11 @@ export const base = {
     surface_primary_transparent: "rgba(53, 53, 53, 0.5)",
     error_red: "#FF6948",
     button_loading_bg: "rgb(114, 91, 25)",
+    warm_up_indicator: "#FCFF00",
+    "3d_strength_indicator": "#12FF00",
+    athleticism_indicator: "#FF5400",
+    force_indicator: "#A555FF",
+    recovery_indicator: "#00D8FF",
 };
 export const colors = {
     ...base,

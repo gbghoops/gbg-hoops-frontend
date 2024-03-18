@@ -7,6 +7,7 @@ import AssessmentSlide1 from "@src/components/screen-components/Assessment/Slide
 import AssessmentSlide2 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide2";
 import AssessmentSlide3 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide3";
 import AssessmentSlide4 from "@src/components/screen-components/Assessment/Slides/AssessmentSlide4";
+import { useUser } from "@src/context/UserContext/user-context";
 import useAssessmentPagingState from "@src/hooks/assessment/useAssessmentPagingState";
 import useAssessmentState from "@src/hooks/assessment/useAssessmentState";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -23,6 +24,7 @@ import {
 export default function AssessmentScreen() {
     const { bottom } = useSafeAreaInsets();
     const router = useRouter();
+    const { refetchUser } = useUser();
 
     const { canGoBack, back, replace } = router;
 
@@ -54,6 +56,9 @@ export default function AssessmentScreen() {
                 const res = await onSubmitAssessment();
 
                 if (res) {
+                    // Ensure to refetch user data ...
+                    await refetchUser();
+
                     return router.replace("/home");
                 }
             } catch (e) {
@@ -174,7 +179,9 @@ export default function AssessmentScreen() {
             <ConfirmAssessmentExit
                 confirmExit={(state) => {
                     if (state) {
-                        return canGoBack() ? back() : replace("/home");
+                        return canGoBack()
+                            ? back()
+                            : replace("/home?exit_assessment=true");
                     }
                 }}
                 open={showAssessmentExitModal}

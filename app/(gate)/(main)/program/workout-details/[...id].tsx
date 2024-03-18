@@ -197,12 +197,16 @@ export default function WorkoutDetails() {
                 </View>
 
                 {/* Equipment Needed. */}
-                <View px={"$20"} my="$40" mb="$10">
-                    <Text ff={"$heading"} fontSize={"$24"}>
-                        Equipment Needed
-                    </Text>
-                </View>
-                <EquipmentList equipments={equipments} />
+                {equipments.length > 0 ? (
+                    <>
+                        <View px={"$20"} my="$40" mb="$10">
+                            <Text ff={"$heading"} fontSize={"$24"}>
+                                Equipment Needed
+                            </Text>
+                        </View>
+                        <EquipmentList equipments={equipments} />
+                    </>
+                ) : null}
 
                 <View px="$20">
                     {/* Exercises Header */}

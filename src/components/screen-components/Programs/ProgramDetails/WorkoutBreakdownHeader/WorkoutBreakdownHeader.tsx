@@ -40,10 +40,6 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
 
     const isProgramLocked = currentProgram && "is_locked" in currentProgram;
 
-    if (!currentProgram) {
-        return null;
-    }
-
     if (teaserVideoPlaying) {
         Audio.setAudioModeAsync({
             interruptionModeIOS: InterruptionModeIOS.DuckOthers,
@@ -59,6 +55,10 @@ const WorkoutBreakdownHeader = ({ onInfoPress }: WorkoutBreakdownProps) => {
             });
         };
     }, []);
+
+    if (!currentProgram) {
+        return null;
+    }
 
     const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
 
