@@ -29,7 +29,6 @@ const WeeklyActivitiesBreakdown = ({
     if (!weekData) return null;
 
     const daysData = getDaysData(weekData);
-    console.log("daysData", daysData.length);
 
     return (
         <View>
