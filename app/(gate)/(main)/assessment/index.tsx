@@ -179,7 +179,9 @@ export default function AssessmentScreen() {
             <ConfirmAssessmentExit
                 confirmExit={(state) => {
                     if (state) {
-                        return canGoBack() ? back() : replace("/home");
+                        return canGoBack()
+                            ? back()
+                            : replace("/home?exit_assessment=true");
                     }
                 }}
                 open={showAssessmentExitModal}
