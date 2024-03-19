@@ -33,6 +33,7 @@ const ScreenTabs = () => {
 
     return (
         <Tabs
+            initialRouteName="home"
             sceneContainerStyle={styles.tabBar}
             tabBar={(props) => <TabBar {...props} />}
         >

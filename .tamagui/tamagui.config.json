@@ -23443,122 +23443,157 @@
             "val": "rgb(114, 91, 25)",
             "variable": ""
           },
+          "warm_up_indicator": {
+            "isVar": true,
+            "key": "$warm_up_indicator",
+            "name": "color-16",
+            "val": "#FCFF00",
+            "variable": ""
+          },
+          "3d_strength_indicator": {
+            "isVar": true,
+            "key": "$3d_strength_indicator",
+            "name": "color-17",
+            "val": "#12FF00",
+            "variable": ""
+          },
+          "athleticism_indicator": {
+            "isVar": true,
+            "key": "$athleticism_indicator",
+            "name": "color-18",
+            "val": "#FF5400",
+            "variable": ""
+          },
+          "force_indicator": {
+            "isVar": true,
+            "key": "$force_indicator",
+            "name": "color-19",
+            "val": "#A555FF",
+            "variable": ""
+          },
+          "recovery_indicator": {
+            "isVar": true,
+            "key": "$recovery_indicator",
+            "name": "color-20",
+            "val": "#00D8FF",
+            "variable": ""
+          },
           "accent_hightlight": {
             "isVar": true,
             "key": "$accent_hightlight",
-            "name": "color-16",
+            "name": "color-21",
             "val": "#FFF415",
             "variable": ""
           },
           "accent_hot": {
             "isVar": true,
             "key": "$accent_hot",
-            "name": "color-17",
+            "name": "color-22",
             "val": "#FD901B",
             "variable": ""
           },
           "accent_dominant": {
             "isVar": true,
             "key": "$accent_dominant",
-            "name": "color-18",
+            "name": "color-23",
             "val": "#A35614",
             "variable": ""
           },
           "accent_grey": {
             "isVar": true,
             "key": "$accent_grey",
-            "name": "color-19",
+            "name": "color-24",
             "val": "#A4A4A4",
             "variable": ""
           },
           "surface_primary": {
             "isVar": true,
             "key": "$surface_primary",
-            "name": "color-20",
+            "name": "color-25",
             "val": "#353535",
             "variable": ""
           },
           "surface_secondary": {
             "isVar": true,
             "key": "$surface_secondary",
-            "name": "color-21",
+            "name": "color-26",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_background": {
             "isVar": true,
             "key": "$surface_background",
-            "name": "color-22",
+            "name": "color-27",
             "val": "#212121",
             "variable": ""
           },
           "surface_foreground": {
             "isVar": true,
             "key": "$surface_foreground",
-            "name": "color-23",
+            "name": "color-28",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_brand": {
             "isVar": true,
             "key": "$surface_brand",
-            "name": "color-24",
+            "name": "color-29",
             "val": "#FDBF0B",
             "variable": ""
           },
           "surface_accent": {
             "isVar": true,
             "key": "$surface_accent",
-            "name": "color-25",
+            "name": "color-30",
             "val": "#A4A4A4",
             "variable": ""
           },
           "text_primary": {
             "isVar": true,
             "key": "$text_primary",
-            "name": "color-26",
+            "name": "color-31",
             "val": "#FFFFFF",
             "variable": ""
           },
           "text_secondary": {
             "isVar": true,
             "key": "$text_secondary",
-            "name": "color-27",
+            "name": "color-32",
             "val": "#353535",
             "variable": ""
           },
           "text_brand": {
             "isVar": true,
             "key": "$text_brand",
-            "name": "color-28",
+            "name": "color-33",
             "val": "#FDBF0B",
             "variable": ""
           },
           "text_accent": {
             "isVar": true,
             "key": "$text_accent",
-            "name": "color-29",
+            "name": "color-34",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_primary": {
             "isVar": true,
             "key": "$border_primary",
-            "name": "color-30",
+            "name": "color-35",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_brand": {
             "isVar": true,
             "key": "$border_brand",
-            "name": "color-31",
+            "name": "color-36",
             "val": "#FDBF0B",
             "variable": ""
           },
           "error_primary": {
             "isVar": true,
             "key": "$error_primary",
-            "name": "color-32",
+            "name": "color-37",
             "val": "#FF6948",
             "variable": ""
           }
@@ -24585,122 +24620,157 @@
             "val": "rgb(114, 91, 25)",
             "variable": ""
           },
+          "warm_up_indicator": {
+            "isVar": true,
+            "key": "$warm_up_indicator",
+            "name": "color-16",
+            "val": "#FCFF00",
+            "variable": ""
+          },
+          "3d_strength_indicator": {
+            "isVar": true,
+            "key": "$3d_strength_indicator",
+            "name": "color-17",
+            "val": "#12FF00",
+            "variable": ""
+          },
+          "athleticism_indicator": {
+            "isVar": true,
+            "key": "$athleticism_indicator",
+            "name": "color-18",
+            "val": "#FF5400",
+            "variable": ""
+          },
+          "force_indicator": {
+            "isVar": true,
+            "key": "$force_indicator",
+            "name": "color-19",
+            "val": "#A555FF",
+            "variable": ""
+          },
+          "recovery_indicator": {
+            "isVar": true,
+            "key": "$recovery_indicator",
+            "name": "color-20",
+            "val": "#00D8FF",
+            "variable": ""
+          },
           "accent_hightlight": {
             "isVar": true,
             "key": "$accent_hightlight",
-            "name": "color-16",
+            "name": "color-21",
             "val": "#FFF415",
             "variable": ""
           },
           "accent_hot": {
             "isVar": true,
             "key": "$accent_hot",
-            "name": "color-17",
+            "name": "color-22",
             "val": "#FD901B",
             "variable": ""
           },
           "accent_dominant": {
             "isVar": true,
             "key": "$accent_dominant",
-            "name": "color-18",
+            "name": "color-23",
             "val": "#A35614",
             "variable": ""
           },
           "accent_grey": {
             "isVar": true,
             "key": "$accent_grey",
-            "name": "color-19",
+            "name": "color-24",
             "val": "#A4A4A4",
             "variable": ""
           },
           "surface_primary": {
             "isVar": true,
             "key": "$surface_primary",
-            "name": "color-20",
+            "name": "color-25",
             "val": "#353535",
             "variable": ""
           },
           "surface_secondary": {
             "isVar": true,
             "key": "$surface_secondary",
-            "name": "color-21",
+            "name": "color-26",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_background": {
             "isVar": true,
             "key": "$surface_background",
-            "name": "color-22",
+            "name": "color-27",
             "val": "#212121",
             "variable": ""
           },
           "surface_foreground": {
             "isVar": true,
             "key": "$surface_foreground",
-            "name": "color-23",
+            "name": "color-28",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_brand": {
             "isVar": true,
             "key": "$surface_brand",
-            "name": "color-24",
+            "name": "color-29",
             "val": "#FDBF0B",
             "variable": ""
           },
           "surface_accent": {
             "isVar": true,
             "key": "$surface_accent",
-            "name": "color-25",
+            "name": "color-30",
             "val": "#A4A4A4",
             "variable": ""
           },
           "text_primary": {
             "isVar": true,
             "key": "$text_primary",
-            "name": "color-26",
+            "name": "color-31",
             "val": "#FFFFFF",
             "variable": ""
           },
           "text_secondary": {
             "isVar": true,
             "key": "$text_secondary",
-            "name": "color-27",
+            "name": "color-32",
             "val": "#353535",
             "variable": ""
           },
           "text_brand": {
             "isVar": true,
             "key": "$text_brand",
-            "name": "color-28",
+            "name": "color-33",
             "val": "#FDBF0B",
             "variable": ""
           },
           "text_accent": {
             "isVar": true,
             "key": "$text_accent",
-            "name": "color-29",
+            "name": "color-34",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_primary": {
             "isVar": true,
             "key": "$border_primary",
-            "name": "color-30",
+            "name": "color-35",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_brand": {
             "isVar": true,
             "key": "$border_brand",
-            "name": "color-31",
+            "name": "color-36",
             "val": "#FDBF0B",
             "variable": ""
           },
           "error_primary": {
             "isVar": true,
             "key": "$error_primary",
-            "name": "color-32",
+            "name": "color-37",
             "val": "#FF6948",
             "variable": ""
           }
@@ -25727,122 +25797,157 @@
             "val": "rgb(114, 91, 25)",
             "variable": ""
           },
+          "warm_up_indicator": {
+            "isVar": true,
+            "key": "$warm_up_indicator",
+            "name": "color-16",
+            "val": "#FCFF00",
+            "variable": ""
+          },
+          "3d_strength_indicator": {
+            "isVar": true,
+            "key": "$3d_strength_indicator",
+            "name": "color-17",
+            "val": "#12FF00",
+            "variable": ""
+          },
+          "athleticism_indicator": {
+            "isVar": true,
+            "key": "$athleticism_indicator",
+            "name": "color-18",
+            "val": "#FF5400",
+            "variable": ""
+          },
+          "force_indicator": {
+            "isVar": true,
+            "key": "$force_indicator",
+            "name": "color-19",
+            "val": "#A555FF",
+            "variable": ""
+          },
+          "recovery_indicator": {
+            "isVar": true,
+            "key": "$recovery_indicator",
+            "name": "color-20",
+            "val": "#00D8FF",
+            "variable": ""
+          },
           "accent_hightlight": {
             "isVar": true,
             "key": "$accent_hightlight",
-            "name": "color-16",
+            "name": "color-21",
             "val": "#FFF415",
             "variable": ""
           },
           "accent_hot": {
             "isVar": true,
             "key": "$accent_hot",
-            "name": "color-17",
+            "name": "color-22",
             "val": "#FD901B",
             "variable": ""
           },
           "accent_dominant": {
             "isVar": true,
             "key": "$accent_dominant",
-            "name": "color-18",
+            "name": "color-23",
             "val": "#A35614",
             "variable": ""
           },
           "accent_grey": {
             "isVar": true,
             "key": "$accent_grey",
-            "name": "color-19",
+            "name": "color-24",
             "val": "#A4A4A4",
             "variable": ""
           },
           "surface_primary": {
             "isVar": true,
             "key": "$surface_primary",
-            "name": "color-20",
+            "name": "color-25",
             "val": "#353535",
             "variable": ""
           },
           "surface_secondary": {
             "isVar": true,
             "key": "$surface_secondary",
-            "name": "color-21",
+            "name": "color-26",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_background": {
             "isVar": true,
             "key": "$surface_background",
-            "name": "color-22",
+            "name": "color-27",
             "val": "#212121",
             "variable": ""
           },
           "surface_foreground": {
             "isVar": true,
             "key": "$surface_foreground",
-            "name": "color-23",
+            "name": "color-28",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_brand": {
             "isVar": true,
             "key": "$surface_brand",
-            "name": "color-24",
+            "name": "color-29",
             "val": "#FDBF0B",
             "variable": ""
           },
           "surface_accent": {
             "isVar": true,
             "key": "$surface_accent",
-            "name": "color-25",
+            "name": "color-30",
             "val": "#A4A4A4",
             "variable": ""
           },
           "text_primary": {
             "isVar": true,
             "key": "$text_primary",
-            "name": "color-26",
+            "name": "color-31",
             "val": "#FFFFFF",
             "variable": ""
           },
           "text_secondary": {
             "isVar": true,
             "key": "$text_secondary",
-            "name": "color-27",
+            "name": "color-32",
             "val": "#353535",
             "variable": ""
           },
           "text_brand": {
             "isVar": true,
             "key": "$text_brand",
-            "name": "color-28",
+            "name": "color-33",
             "val": "#FDBF0B",
             "variable": ""
           },
           "text_accent": {
             "isVar": true,
             "key": "$text_accent",
-            "name": "color-29",
+            "name": "color-34",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_primary": {
             "isVar": true,
             "key": "$border_primary",
-            "name": "color-30",
+            "name": "color-35",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_brand": {
             "isVar": true,
             "key": "$border_brand",
-            "name": "color-31",
+            "name": "color-36",
             "val": "#FDBF0B",
             "variable": ""
           },
           "error_primary": {
             "isVar": true,
             "key": "$error_primary",
-            "name": "color-32",
+            "name": "color-37",
             "val": "#FF6948",
             "variable": ""
           }
@@ -26869,122 +26974,157 @@
             "val": "rgb(114, 91, 25)",
             "variable": ""
           },
+          "warm_up_indicator": {
+            "isVar": true,
+            "key": "$warm_up_indicator",
+            "name": "color-16",
+            "val": "#FCFF00",
+            "variable": ""
+          },
+          "3d_strength_indicator": {
+            "isVar": true,
+            "key": "$3d_strength_indicator",
+            "name": "color-17",
+            "val": "#12FF00",
+            "variable": ""
+          },
+          "athleticism_indicator": {
+            "isVar": true,
+            "key": "$athleticism_indicator",
+            "name": "color-18",
+            "val": "#FF5400",
+            "variable": ""
+          },
+          "force_indicator": {
+            "isVar": true,
+            "key": "$force_indicator",
+            "name": "color-19",
+            "val": "#A555FF",
+            "variable": ""
+          },
+          "recovery_indicator": {
+            "isVar": true,
+            "key": "$recovery_indicator",
+            "name": "color-20",
+            "val": "#00D8FF",
+            "variable": ""
+          },
           "accent_hightlight": {
             "isVar": true,
             "key": "$accent_hightlight",
-            "name": "color-16",
+            "name": "color-21",
             "val": "#FFF415",
             "variable": ""
           },
           "accent_hot": {
             "isVar": true,
             "key": "$accent_hot",
-            "name": "color-17",
+            "name": "color-22",
             "val": "#FD901B",
             "variable": ""
           },
           "accent_dominant": {
             "isVar": true,
             "key": "$accent_dominant",
-            "name": "color-18",
+            "name": "color-23",
             "val": "#A35614",
             "variable": ""
           },
           "accent_grey": {
             "isVar": true,
             "key": "$accent_grey",
-            "name": "color-19",
+            "name": "color-24",
             "val": "#A4A4A4",
             "variable": ""
           },
           "surface_primary": {
             "isVar": true,
             "key": "$surface_primary",
-            "name": "color-20",
+            "name": "color-25",
             "val": "#353535",
             "variable": ""
           },
           "surface_secondary": {
             "isVar": true,
             "key": "$surface_secondary",
-            "name": "color-21",
+            "name": "color-26",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_background": {
             "isVar": true,
             "key": "$surface_background",
-            "name": "color-22",
+            "name": "color-27",
             "val": "#212121",
             "variable": ""
           },
           "surface_foreground": {
             "isVar": true,
             "key": "$surface_foreground",
-            "name": "color-23",
+            "name": "color-28",
             "val": "#FFFFFF",
             "variable": ""
           },
           "surface_brand": {
             "isVar": true,
             "key": "$surface_brand",
-            "name": "color-24",
+            "name": "color-29",
             "val": "#FDBF0B",
             "variable": ""
           },
           "surface_accent": {
             "isVar": true,
             "key": "$surface_accent",
-            "name": "color-25",
+            "name": "color-30",
             "val": "#A4A4A4",
             "variable": ""
           },
           "text_primary": {
             "isVar": true,
             "key": "$text_primary",
-            "name": "color-26",
+            "name": "color-31",
             "val": "#FFFFFF",
             "variable": ""
           },
           "text_secondary": {
             "isVar": true,
             "key": "$text_secondary",
-            "name": "color-27",
+            "name": "color-32",
             "val": "#353535",
             "variable": ""
           },
           "text_brand": {
             "isVar": true,
             "key": "$text_brand",
-            "name": "color-28",
+            "name": "color-33",
             "val": "#FDBF0B",
             "variable": ""
           },
           "text_accent": {
             "isVar": true,
             "key": "$text_accent",
-            "name": "color-29",
+            "name": "color-34",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_primary": {
             "isVar": true,
             "key": "$border_primary",
-            "name": "color-30",
+            "name": "color-35",
             "val": "#A4A4A4",
             "variable": ""
           },
           "border_brand": {
             "isVar": true,
             "key": "$border_brand",
-            "name": "color-31",
+            "name": "color-36",
             "val": "#FDBF0B",
             "variable": ""
           },
           "error_primary": {
             "isVar": true,
             "key": "$error_primary",
-            "name": "color-32",
+            "name": "color-37",
             "val": "#FF6948",
             "variable": ""
           }
@@ -27205,122 +27345,157 @@
           "val": "rgb(114, 91, 25)",
           "variable": ""
         },
+        "warm_up_indicator": {
+          "isVar": true,
+          "key": "$warm_up_indicator",
+          "name": "color-16",
+          "val": "#FCFF00",
+          "variable": ""
+        },
+        "3d_strength_indicator": {
+          "isVar": true,
+          "key": "$3d_strength_indicator",
+          "name": "color-17",
+          "val": "#12FF00",
+          "variable": ""
+        },
+        "athleticism_indicator": {
+          "isVar": true,
+          "key": "$athleticism_indicator",
+          "name": "color-18",
+          "val": "#FF5400",
+          "variable": ""
+        },
+        "force_indicator": {
+          "isVar": true,
+          "key": "$force_indicator",
+          "name": "color-19",
+          "val": "#A555FF",
+          "variable": ""
+        },
+        "recovery_indicator": {
+          "isVar": true,
+          "key": "$recovery_indicator",
+          "name": "color-20",
+          "val": "#00D8FF",
+          "variable": ""
+        },
         "accent_hightlight": {
           "isVar": true,
           "key": "$accent_hightlight",
-          "name": "color-16",
+          "name": "color-21",
           "val": "#FFF415",
           "variable": ""
         },
         "accent_hot": {
           "isVar": true,
           "key": "$accent_hot",
-          "name": "color-17",
+          "name": "color-22",
           "val": "#FD901B",
           "variable": ""
         },
         "accent_dominant": {
           "isVar": true,
           "key": "$accent_dominant",
-          "name": "color-18",
+          "name": "color-23",
           "val": "#A35614",
           "variable": ""
         },
         "accent_grey": {
           "isVar": true,
           "key": "$accent_grey",
-          "name": "color-19",
+          "name": "color-24",
           "val": "#A4A4A4",
           "variable": ""
         },
         "surface_primary": {
           "isVar": true,
           "key": "$surface_primary",
-          "name": "color-20",
+          "name": "color-25",
           "val": "#353535",
           "variable": ""
         },
         "surface_secondary": {
           "isVar": true,
           "key": "$surface_secondary",
-          "name": "color-21",
+          "name": "color-26",
           "val": "#FFFFFF",
           "variable": ""
         },
         "surface_background": {
           "isVar": true,
           "key": "$surface_background",
-          "name": "color-22",
+          "name": "color-27",
           "val": "#212121",
           "variable": ""
         },
         "surface_foreground": {
           "isVar": true,
           "key": "$surface_foreground",
-          "name": "color-23",
+          "name": "color-28",
           "val": "#FFFFFF",
           "variable": ""
         },
         "surface_brand": {
           "isVar": true,
           "key": "$surface_brand",
-          "name": "color-24",
+          "name": "color-29",
           "val": "#FDBF0B",
           "variable": ""
         },
         "surface_accent": {
           "isVar": true,
           "key": "$surface_accent",
-          "name": "color-25",
+          "name": "color-30",
           "val": "#A4A4A4",
           "variable": ""
         },
         "text_primary": {
           "isVar": true,
           "key": "$text_primary",
-          "name": "color-26",
+          "name": "color-31",
           "val": "#FFFFFF",
           "variable": ""
         },
         "text_secondary": {
           "isVar": true,
           "key": "$text_secondary",
-          "name": "color-27",
+          "name": "color-32",
           "val": "#353535",
           "variable": ""
         },
         "text_brand": {
           "isVar": true,
           "key": "$text_brand",
-          "name": "color-28",
+          "name": "color-33",
           "val": "#FDBF0B",
           "variable": ""
         },
         "text_accent": {
           "isVar": true,
           "key": "$text_accent",
-          "name": "color-29",
+          "name": "color-34",
           "val": "#A4A4A4",
           "variable": ""
         },
         "border_primary": {
           "isVar": true,
           "key": "$border_primary",
-          "name": "color-30",
+          "name": "color-35",
           "val": "#A4A4A4",
           "variable": ""
         },
         "border_brand": {
           "isVar": true,
           "key": "$border_brand",
-          "name": "color-31",
+          "name": "color-36",
           "val": "#FDBF0B",
           "variable": ""
         },
         "error_primary": {
           "isVar": true,
           "key": "$error_primary",
-          "name": "color-32",
+          "name": "color-37",
           "val": "#FF6948",
           "variable": ""
         }
@@ -29779,122 +29954,157 @@
         "val": "rgb(114, 91, 25)",
         "variable": ""
       },
+      "$color.warm_up_indicator": {
+        "isVar": true,
+        "key": "$warm_up_indicator",
+        "name": "color-16",
+        "val": "#FCFF00",
+        "variable": ""
+      },
+      "$color.3d_strength_indicator": {
+        "isVar": true,
+        "key": "$3d_strength_indicator",
+        "name": "color-17",
+        "val": "#12FF00",
+        "variable": ""
+      },
+      "$color.athleticism_indicator": {
+        "isVar": true,
+        "key": "$athleticism_indicator",
+        "name": "color-18",
+        "val": "#FF5400",
+        "variable": ""
+      },
+      "$color.force_indicator": {
+        "isVar": true,
+        "key": "$force_indicator",
+        "name": "color-19",
+        "val": "#A555FF",
+        "variable": ""
+      },
+      "$color.recovery_indicator": {
+        "isVar": true,
+        "key": "$recovery_indicator",
+        "name": "color-20",
+        "val": "#00D8FF",
+        "variable": ""
+      },
       "$color.accent_hightlight": {
         "isVar": true,
         "key": "$accent_hightlight",
-        "name": "color-16",
+        "name": "color-21",
         "val": "#FFF415",
         "variable": ""
       },
       "$color.accent_hot": {
         "isVar": true,
         "key": "$accent_hot",
-        "name": "color-17",
+        "name": "color-22",
         "val": "#FD901B",
         "variable": ""
       },
       "$color.accent_dominant": {
         "isVar": true,
         "key": "$accent_dominant",
-        "name": "color-18",
+        "name": "color-23",
         "val": "#A35614",
         "variable": ""
       },
       "$color.accent_grey": {
         "isVar": true,
         "key": "$accent_grey",
-        "name": "color-19",
+        "name": "color-24",
         "val": "#A4A4A4",
         "variable": ""
       },
       "$color.surface_primary": {
         "isVar": true,
         "key": "$surface_primary",
-        "name": "color-20",
+        "name": "color-25",
         "val": "#353535",
         "variable": ""
       },
       "$color.surface_secondary": {
         "isVar": true,
         "key": "$surface_secondary",
-        "name": "color-21",
+        "name": "color-26",
         "val": "#FFFFFF",
         "variable": ""
       },
       "$color.surface_background": {
         "isVar": true,
         "key": "$surface_background",
-        "name": "color-22",
+        "name": "color-27",
         "val": "#212121",
         "variable": ""
       },
       "$color.surface_foreground": {
         "isVar": true,
         "key": "$surface_foreground",
-        "name": "color-23",
+        "name": "color-28",
         "val": "#FFFFFF",
         "variable": ""
       },
       "$color.surface_brand": {
         "isVar": true,
         "key": "$surface_brand",
-        "name": "color-24",
+        "name": "color-29",
         "val": "#FDBF0B",
         "variable": ""
       },
       "$color.surface_accent": {
         "isVar": true,
         "key": "$surface_accent",
-        "name": "color-25",
+        "name": "color-30",
         "val": "#A4A4A4",
         "variable": ""
       },
       "$color.text_primary": {
         "isVar": true,
         "key": "$text_primary",
-        "name": "color-26",
+        "name": "color-31",
         "val": "#FFFFFF",
         "variable": ""
       },
       "$color.text_secondary": {
         "isVar": true,
         "key": "$text_secondary",
-        "name": "color-27",
+        "name": "color-32",
         "val": "#353535",
         "variable": ""
       },
       "$color.text_brand": {
         "isVar": true,
         "key": "$text_brand",
-        "name": "color-28",
+        "name": "color-33",
         "val": "#FDBF0B",
         "variable": ""
       },
       "$color.text_accent": {
         "isVar": true,
         "key": "$text_accent",
-        "name": "color-29",
+        "name": "color-34",
         "val": "#A4A4A4",
         "variable": ""
       },
       "$color.border_primary": {
         "isVar": true,
         "key": "$border_primary",
-        "name": "color-30",
+        "name": "color-35",
         "val": "#A4A4A4",
         "variable": ""
       },
       "$color.border_brand": {
         "isVar": true,
         "key": "$border_brand",
-        "name": "color-31",
+        "name": "color-36",
         "val": "#FDBF0B",
         "variable": ""
       },
       "$color.error_primary": {
         "isVar": true,
         "key": "$error_primary",
-        "name": "color-32",
+        "name": "color-37",
         "val": "#FF6948",
         "variable": ""
       },

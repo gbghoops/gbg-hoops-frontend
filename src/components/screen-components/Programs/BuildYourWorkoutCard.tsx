@@ -1,8 +1,35 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Button from "@src/components/button/Button";
 import { Text, View } from "tamagui";
-const BuildYoutWorkoutCard = () => (
-    <View px="$20">
-        <View backgroundColor="$surface_primary" py="$20" px="$15" pb="$30">
+
+interface BuildYoutWorkoutCardProps {
+    isLocked?: boolean;
+}
+
+const BuildYoutWorkoutCard = ({
+    isLocked = false,
+}: BuildYoutWorkoutCardProps) => (
+    <View mx="$20" pos="relative" backgroundColor="$surface_primary">
+        {isLocked ? (
+            <View
+                width={"100%"}
+                height={"100%"}
+                pos="absolute"
+                zIndex={2}
+                backgroundColor={"$surface_primary_transparent"}
+                jc="center"
+                ai="center"
+            >
+                <View width="$24" height="$24">
+                    <MaterialCommunityIcons
+                        name="lock-outline"
+                        color="white"
+                        size={24}
+                    />
+                </View>
+            </View>
+        ) : null}
+        <View py="$20" px="$15" pb="$30" position="relative" zIndex={0}>
             <Text
                 textTransform="uppercase"
                 textAlign="center"
