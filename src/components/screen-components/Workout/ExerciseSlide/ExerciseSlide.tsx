@@ -472,8 +472,8 @@ const ExerciseSlide = ({
                                         isLandScape={isLandScape}
                                         totalSetCount={exercise.sets ?? 0}
                                         totalRepsCount={exercise.reps ?? 0}
-                                        round={exercise.round ?? 0}
-                                        totalRounds={exercise.total_rounds ?? 0}
+                                        round={exercise.round}
+                                        totalRounds={exercise.total_rounds}
                                         subBlockTitle={
                                             exercise.execution_mode ?? ""
                                         }
@@ -580,6 +580,32 @@ const ExerciseSlide = ({
                                             );
                                         }}
                                     />
+
+                                    {isPhaseTransition &&
+                                    nextExercise &&
+                                    "type" in nextExercise ? (
+                                        <View
+                                            mt={isLandScape ? "$10" : "$20"}
+                                            p={isLandScape ? "$10" : "$20"}
+                                            backgroundColor={"$surface_primary"}
+                                            justifyContent={
+                                                isLandScape
+                                                    ? "flex-start"
+                                                    : "center"
+                                            }
+                                            alignItems="center"
+                                        >
+                                            <Text
+                                                fontFamily={"$heading"}
+                                                textAlign="center"
+                                                fontSize={
+                                                    isLandScape ? "$14" : "$20"
+                                                }
+                                            >
+                                                {`Phase "${getPhaseTitle(nextExercise.phase)}" Coming up next!`}
+                                            </Text>
+                                        </View>
+                                    ) : null}
                                     {nextExercise ? (
                                         <View
                                             mt={isLandScape ? "$10" : "$20"}
@@ -596,8 +622,8 @@ const ExerciseSlide = ({
                                             }
                                         >
                                             <View
-                                                w={"$90"}
-                                                h={"$90"}
+                                                w={isLandScape ? "$40" : "$90"}
+                                                h={isLandScape ? "$40" : "$90"}
                                                 mt="auto"
                                                 backgroundColor={
                                                     "$surface_background"
@@ -631,26 +657,26 @@ const ExerciseSlide = ({
                                                             fontFamily={
                                                                 "$heading"
                                                             }
-                                                            fontSize={"$20"}
+                                                            fontSize={
+                                                                isLandScape
+                                                                    ? "$14"
+                                                                    : "$20"
+                                                            }
                                                         >
-                                                            {isPhaseTransition
-                                                                ? `Get Ready for the Next Phase`
-                                                                : `Get Ready for the Next Exercise`}
+                                                            {`Get Ready for the Next Exercise`}
                                                         </Text>
                                                         <Text
                                                             fontFamily={
                                                                 "$heading"
                                                             }
                                                             fontSize={
-                                                                isPhaseTransition
-                                                                    ? "$18"
-                                                                    : "$14"
+                                                                isLandScape
+                                                                    ? "$14"
+                                                                    : "$20"
                                                             }
                                                             mt={"$5"}
                                                         >
-                                                            {isPhaseTransition
-                                                                ? `(${getPhaseTitle(nextExercise.phase)})`
-                                                                : `(${nextExercise?.name})`}
+                                                            {`(${nextExercise?.name})`}
                                                         </Text>
                                                     </>
                                                 ) : (
