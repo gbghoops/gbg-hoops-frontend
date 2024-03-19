@@ -13,6 +13,7 @@ export default function Layout() {
     return (
         <ProgramsProvider>
             <Stack
+                initialRouteName="home"
                 screenOptions={{
                     header: () => null,
                     contentStyle: {
