@@ -56,7 +56,7 @@ export default function Page() {
         }
 
         try {
-            await authState?.login(email, password);
+            await authState?.login(email.toLowerCase(), password);
         } catch (e) {
             if (e instanceof Error) {
                 setError({
