@@ -3,6 +3,7 @@ import { Tabs } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { useUser } from "@src/context/UserContext/user-context";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useFocusEffect } from "expo-router";
 import { styled, Text, View } from "tamagui";
@@ -15,6 +16,7 @@ import RefreshRoutineCard from "./RefreshRoutineCard";
 
 export const ForYouTab = () => {
     const { bottom } = useSafeAreaInsets();
+    const { user } = useUser();
 
     const { programs, refetchPrograms } = usePrograms();
 
@@ -26,15 +28,20 @@ export const ForYouTab = () => {
 
     if (!programs) return null;
 
+    const isFreeUser = user?.subscription === "free";
+
     return (
-        <Tabs.ScrollView style={{ flex: 1, minHeight: "100%" }}>
+        <Tabs.ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1, minHeight: "100%" }}
+        >
             <ForYouTabWrapper bottom={bottom}>
                 {/* My Program */}
                 <View mx="$20" mt="$20">
                     <ActiveProgramsList />
                 </View>
 
-                <BuildYoutWorkoutCards />
+                {!isFreeUser ? <BuildYoutWorkoutCards /> : null}
 
                 {/* Recommended For you section... */}
                 <View>
@@ -53,6 +60,12 @@ export const ForYouTab = () => {
                         <RenderRecommendedProgramCard />
                     </View>
                 </View>
+
+                {isFreeUser ? (
+                    <View mt="$20">
+                        <BuildYoutWorkoutCards isLocked={isFreeUser} />
+                    </View>
+                ) : null}
 
                 {/* Newest Program */}
                 <View pt={"$30"} px={"$20"}>

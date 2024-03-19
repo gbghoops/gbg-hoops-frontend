@@ -6,12 +6,13 @@ import HomeScreenBanner from "@src/components/home-screen-banner/HomeScreenBanne
 import Link from "@src/components/link/Link";
 import BackgroundVideo from "@src/components/screen-components/Home/BackgroundVideo/BackgroundVideo";
 import Coach2Coach from "@src/components/screen-components/Home/Coach2Coach/Coach2Coach";
+import FreePlanUpgrade from "@src/components/screen-components/Home/FreePlanUpgrade/FreePlanUpgrade";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import ReferAFriend from "@src/components/screen-components/Home/ReferAFriend/ReferAFriend";
 import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutOfTheDayCard/WorkoutOfTheDayCard";
 import ActiveProgramsList from "@src/components/screen-components/Programs/ActiveProgramsList/ActiveProgramsList";
-import { useAuthState } from "@src/context/auth-context";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
+import { useUser } from "@src/context/UserContext/user-context";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
@@ -21,15 +22,15 @@ export default function HomePage() {
     const [bannerHeight, setBannerHeight] = useState<number>(wn(100));
     const { top, bottom } = useSafeAreaInsets();
     const router = useRouter();
+    const { user } = useUser();
 
-    const authState = useAuthState();
     const { programs, programsFetching } = usePrograms();
 
     const programsWithProgress = programs.filter(
         (p) => !("is_locked" in p) && p.progress,
     );
 
-    const user = authState?.user;
+    const isFreeUser = user?.subscription === "free";
 
     return (
         <Stack
@@ -167,12 +168,17 @@ export default function HomePage() {
                                 </View>
                             </View>
 
-                            {/* Workout of th Day */}
-                            <View mt={"$20"} px={"$20"}>
-                                <View>
-                                    <WorkoutOfTheDayCard />
+                            {/* Upgrde Free Plan */}
+                            {isFreeUser ? <FreePlanUpgrade /> : null}
+
+                            {/* Workout of the Day */}
+                            {!isFreeUser ? (
+                                <View mt={"$20"} px={"$20"}>
+                                    <View>
+                                        <WorkoutOfTheDayCard />
+                                    </View>
                                 </View>
-                            </View>
+                            ) : null}
 
                             {/* Coach2Coach */}
                             <Coach2Coach />

@@ -29,6 +29,8 @@ export type PainAreasType =
     | "neck"
     | "shoulder";
 
+export type UserSubscriptionType = "free" | "family";
+
 export interface User {
     performance_goal: PerformanceGoalType;
     given_name: string;
@@ -42,4 +44,5 @@ export interface User {
     pain_areas: PainAreasType[];
     isPrivilegedUser?: boolean;
     id: string;
+    subscription: UserSubscriptionType;
 }
