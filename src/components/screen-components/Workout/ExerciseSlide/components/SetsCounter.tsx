@@ -73,7 +73,7 @@ const SetsCounter = ({
                 ) : null}
 
                 {/* Round tag */}
-                {round ? (
+                {round && totalRounds ? (
                     <View
                         width="auto"
                         backgroundColor="$gold"
