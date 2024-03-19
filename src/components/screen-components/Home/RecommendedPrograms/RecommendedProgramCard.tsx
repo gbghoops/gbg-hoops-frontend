@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import convertToProxyURL from "react-native-video-cache";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -33,16 +33,29 @@ const RecommendedProgramCard = (props: RecommendedProgramCardProps) => {
     } = props;
     const programVideo = useRef<Video>(null);
 
+    const [isVideoPlayRequested, setIsVideoPlayRequested] = useState(false);
+
     const router = useRouter();
 
     if (isVisible) {
-        programVideo.current?.playAsync().catch(() => {
-            return;
-        });
+        programVideo.current
+            ?.playAsync()
+            .then(() => {
+                return setIsVideoPlayRequested(true);
+            })
+            .catch(() => {
+                return;
+            });
     } else {
-        programVideo.current?.stopAsync().catch(() => {
-            return;
-        });
+        isVideoPlayRequested &&
+            programVideo.current
+                ?.stopAsync()
+                .then(() => {
+                    return setIsVideoPlayRequested(false);
+                })
+                .catch(() => {
+                    return;
+                });
     }
 
     return (
