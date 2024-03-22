@@ -71,13 +71,13 @@ export default function SettingsScreen() {
                         <SettingsListItem
                             title="FAQs"
                             onPress={() => {
-                                Linking.openURL(websiteUrl);
+                                Linking.openURL(`${websiteUrl}/faq`);
                             }}
                         />
                         <SettingsListItem
                             title="Help and Support Center"
                             onPress={() => {
-                                Linking.openURL(websiteUrl);
+                                Linking.openURL(`${websiteUrl}/contact`);
                             }}
                         />
                     </View>

@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { ActivityIndicator } from "react-native";
 import { Tabs } from "react-native-collapsible-tab-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import FreePlanUpgrade from "@src/components/screen-components/Home/FreePlanUpgrade/FreePlanUpgrade";
 import RenderRecommendedProgramCard from "@src/components/screen-components/Home/RecommendedPrograms/RenderRecommendedProgramCard";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { useUser } from "@src/context/UserContext/user-context";
@@ -55,6 +56,7 @@ export const ForYouTab = () => {
                     </View>
                 )}
 
+                {/* Build Your Workout */}
                 {!isFreeUser ? <BuildYoutWorkoutCards /> : null}
 
                 {/* Recommended For you section... */}
@@ -75,8 +77,15 @@ export const ForYouTab = () => {
                     </View>
                 </View>
 
+                {/* Free Plan Upgrade */}
                 {isFreeUser ? (
-                    <View mt="$20">
+                    <View m="$20">
+                        <FreePlanUpgrade />
+                    </View>
+                ) : null}
+
+                {isFreeUser ? (
+                    <View>
                         <BuildYoutWorkoutCards isLocked={isFreeUser} />
                     </View>
                 ) : null}

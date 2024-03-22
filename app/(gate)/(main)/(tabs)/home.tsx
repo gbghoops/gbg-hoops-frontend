@@ -169,7 +169,11 @@ export default function HomePage() {
                             </View>
 
                             {/* Upgrde Free Plan */}
-                            {isFreeUser ? <FreePlanUpgrade /> : null}
+                            {isFreeUser ? (
+                                <View mx="$20" mt="$20">
+                                    <FreePlanUpgrade />
+                                </View>
+                            ) : null}
 
                             {/* Workout of the Day */}
                             {!isFreeUser ? (

@@ -489,9 +489,7 @@ const ExerciseSlide = ({
                                     >
                                         <AdjustWeight
                                             onPress={() => {
-                                                setShowWeightAdjust(
-                                                    !showWeightAdjust,
-                                                );
+                                                setShowWeightAdjust(true);
                                             }}
                                             currentWeight={currentWeight}
                                             weightUnit="lbs"
@@ -911,18 +909,15 @@ const ExerciseSlide = ({
                         </YStack>
                     </View>
                 </View>
+                {showWeightAdjust ? (
+                    <AdjustWeightSheet
+                        open={showWeightAdjust}
+                        currentWeight={currentWeight}
+                        onOpenStateChange={setShowWeightAdjust}
+                        onWeightChange={setCurrentWeight}
+                    />
+                ) : null}
             </YStack>
-
-            <AdjustWeightSheet
-                open={showWeightAdjust}
-                currentWeight={currentWeight}
-                onOpenStateChange={(state) => {
-                    setShowWeightAdjust(state);
-                }}
-                onWeightChange={(weight) => {
-                    setCurrentWeight(weight);
-                }}
-            />
 
             {/* ---------------------------- */}
         </View>
