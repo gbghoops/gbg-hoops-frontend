@@ -60,6 +60,10 @@ const ProgramTabs = () => {
                 <AllProgramsTab />
             </Tabs.Tab>
 
+            <Tabs.Tab name="Library">
+                <ExerciseLibrary />
+            </Tabs.Tab>
+
             <Tabs.Tab name="Favorites">
                 <Tabs.ScrollView>
                     <View f={1} jc={"center"} ai={"center"}>
@@ -74,10 +78,6 @@ const ProgramTabs = () => {
                         <Text>Tab 1</Text>
                     </View>
                 </Tabs.ScrollView>
-            </Tabs.Tab>
-
-            <Tabs.Tab name="Library">
-                <ExerciseLibrary />
             </Tabs.Tab>
 
             <Tabs.Tab name="History">
