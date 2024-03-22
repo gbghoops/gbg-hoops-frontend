@@ -909,14 +909,13 @@ const ExerciseSlide = ({
                         </YStack>
                     </View>
                 </View>
-                {showWeightAdjust ? (
-                    <AdjustWeightSheet
-                        open={showWeightAdjust}
-                        currentWeight={currentWeight}
-                        onOpenStateChange={setShowWeightAdjust}
-                        onWeightChange={setCurrentWeight}
-                    />
-                ) : null}
+
+                <AdjustWeightSheet
+                    open={showWeightAdjust}
+                    currentWeight={currentWeight}
+                    onOpenStateChange={setShowWeightAdjust}
+                    onWeightChange={setCurrentWeight}
+                />
             </YStack>
 
             {/* ---------------------------- */}
