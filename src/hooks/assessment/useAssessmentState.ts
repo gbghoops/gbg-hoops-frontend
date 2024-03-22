@@ -80,8 +80,7 @@ export default function useAssessmentState() {
 
         setAssessmentState((prev) => ({
             ...prev,
-            pain_areas:
-                painAreas.length || painFreeSelected ? painAreas : undefined,
+            pain_areas: painAreas.length || painFreeSelected ? painAreas : [],
         }));
     };
 
@@ -121,7 +120,6 @@ export default function useAssessmentState() {
             );
 
             if (!response.ok) {
-                console.log("response", response);
                 throw new Error("Failed to submit assessment");
             }
 
