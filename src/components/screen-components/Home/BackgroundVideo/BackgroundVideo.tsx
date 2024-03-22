@@ -16,13 +16,13 @@ const BackgroundVideo = () => {
                 height={"100%"}
                 width={"100%"}
                 zIndex={1}
-                backgroundColor={"rgba(20, 20, 20, 0.75)"}
+                backgroundColor={"rgba(20, 20, 20, 0.45)"}
             />
             <Video
                 shouldPlay
                 isLooping
                 resizeMode={ResizeMode.COVER}
-                source={require("@assets/video/gbg-reel-landscape.mp4")}
+                source={require("@assets/video/gbg-header-video.mp4")}
                 style={{
                     width: "100%",
                     height: "100%",

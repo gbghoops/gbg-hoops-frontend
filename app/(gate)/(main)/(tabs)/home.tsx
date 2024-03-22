@@ -64,7 +64,7 @@ export default function HomePage() {
                                 <View width={"100%"} fd="row" jc="flex-end">
                                     <Avatar />
                                 </View>
-                                <View my={"$30"}>
+                                <View mt={"$50"}>
                                     <Text
                                         fontFamily={"$heading"}
                                         fontSize={"$40"}
