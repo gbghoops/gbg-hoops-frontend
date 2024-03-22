@@ -9,6 +9,7 @@ import { RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { CachedImage } from "@georstat/react-native-image-cache";
+import Button from "@src/components/button/Button";
 import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import {
     FieldType,
@@ -122,6 +123,9 @@ const FlashListHeader = ({
                         handleChange={onChange}
                         maxCharacters={128}
                     />
+                </View>
+                <View ml={"$10"}>
+                    <Button text="Filter" secondary_transparent />
                 </View>
             </View>
             <View alignItems="flex-end">

@@ -42,9 +42,9 @@ const EnterNewPassword = ({
         } catch (err) {
             // TODO: Swap with branded error handling
             alert(`Something went wrong: ${(err as Error).message}`);
+        } finally {
+            setPasswordResetLoading(false);
         }
-
-        setPasswordResetLoading(false);
     };
 
     const passwordResetDisabled =
@@ -69,7 +69,7 @@ const EnterNewPassword = ({
                     Forgot Password
                 </Text>
                 <Text fontFamily={"$body"} fontSize="$16" mt="$10">
-                    Enter your email below to reset your password.
+                    Please enter your new Password
                 </Text>
             </View>
             <View mt="$16">
@@ -87,7 +87,7 @@ const EnterNewPassword = ({
                     handleFocus={() => setIsPasswordErrored(false)}
                 />
             </View>
-            <View mt="$16">
+            <View mt="$10">
                 <TitledTextField
                     title={"Confirm Password"}
                     type={FieldType.PASSWORD}
@@ -99,7 +99,7 @@ const EnterNewPassword = ({
                     handleFocus={() => setIsPasswordErrored(false)}
                 />
             </View>
-            <View mt={"auto"}>
+            <View mt={"$10"}>
                 <Button
                     text="Return to Login"
                     fullWidth
