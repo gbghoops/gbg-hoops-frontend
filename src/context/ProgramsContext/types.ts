@@ -1,6 +1,6 @@
 import { QueryObserverResult } from "@tanstack/react-query";
 
-type exerciseType = "timer" | "tempo" | "mobility" | "no_timer";
+export type exerciseType = "timer" | "tempo" | "mobility" | "no_timer";
 
 export type WorkoutPhases =
     | "warmup"

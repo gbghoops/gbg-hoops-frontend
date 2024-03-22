@@ -23,6 +23,8 @@ interface TitledTextFieldProps {
     type: FieldType;
     value?: string;
     errorMessage?: string;
+    height?: number;
+    maxCharacters?: number;
     handleChange?: (value: string) => void;
     handleFocus?: () => void;
     handleBlur?: () => void;
@@ -31,13 +33,14 @@ interface TitledTextFieldProps {
 export const TitledTextField = ({
     title,
     placeholder,
-
+    height,
     type,
     value: initialValue,
     handleChange,
     handleBlur,
     handleFocus,
     errorMessage = "",
+    maxCharacters,
 }: TitledTextFieldProps) => {
     const [value, setValue] = useState(initialValue ?? "");
 
@@ -60,7 +63,7 @@ export const TitledTextField = ({
         <View>
             <StyledInputContainer
                 animation={"medium"}
-                height="$60"
+                height={height ? height : "$60"}
                 errored={errorMessage.length > 0}
             >
                 <XStack justifyContent="space-between" alignItems="center">
@@ -79,6 +82,7 @@ export const TitledTextField = ({
                     autoCapitalize={
                         type === FieldType.EMAIL ? "none" : "sentences"
                     }
+                    maxLength={maxCharacters}
                     placeholder={placeholder}
                     keyboardType={resolveKeyboardType(type)}
                     value={value}

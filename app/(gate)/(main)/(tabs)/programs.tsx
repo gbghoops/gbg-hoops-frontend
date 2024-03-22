@@ -6,6 +6,7 @@ import {
     Tabs,
 } from "react-native-collapsible-tab-view";
 import { AllProgramsTab } from "@src/components/screen-components/Programs/Tabs/AllProgramsTab";
+import { ExerciseLibrary } from "@src/components/screen-components/Programs/Tabs/ExerciseLibrary";
 import { ForYouTab } from "@src/components/screen-components/Programs/Tabs/ForYouTab/ForYouTab";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
@@ -59,6 +60,10 @@ const ProgramTabs = () => {
                 <AllProgramsTab />
             </Tabs.Tab>
 
+            <Tabs.Tab name="Library">
+                <ExerciseLibrary />
+            </Tabs.Tab>
+
             <Tabs.Tab name="Favorites">
                 <Tabs.ScrollView>
                     <View f={1} jc={"center"} ai={"center"}>
@@ -68,14 +73,6 @@ const ProgramTabs = () => {
             </Tabs.Tab>
 
             <Tabs.Tab name="Offline">
-                <Tabs.ScrollView>
-                    <View f={1} jc={"center"} ai={"center"}>
-                        <Text>Tab 1</Text>
-                    </View>
-                </Tabs.ScrollView>
-            </Tabs.Tab>
-
-            <Tabs.Tab name="Library">
                 <Tabs.ScrollView>
                     <View f={1} jc={"center"} ai={"center"}>
                         <Text>Tab 1</Text>
