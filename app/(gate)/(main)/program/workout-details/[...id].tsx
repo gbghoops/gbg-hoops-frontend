@@ -194,7 +194,7 @@ export default function WorkoutDetails() {
                         mt="$30"
                         textTransform="uppercase"
                     >
-                        {dayData.exercises[0].title}
+                        {`Day ${_activeDay}`}
                     </Text>
                 </View>
 

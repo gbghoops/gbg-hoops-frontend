@@ -181,6 +181,7 @@ export interface WorkoutCompleteArgs {
 
 export interface ActivityWithPhase extends ProgramActivity {
     phase: WorkoutPhases;
+    phase_title: string;
     execution_mode: WorkoutExecutionMode;
     execution_side?: ExerciseExecutionSide;
     total_rounds?: number;

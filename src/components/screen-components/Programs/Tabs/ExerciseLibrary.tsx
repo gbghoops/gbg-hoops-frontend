@@ -146,7 +146,6 @@ const ExerciseListItem = ({ exercise }: { exercise: Exercise }) => {
                 scale: 0.995,
             }}
             onPress={() => {
-                console.log("exerciseID: ", exercise.contentful_id);
                 router.push(
                     `/exercise-details?exercise_id=${exercise.contentful_id}`,
                 );
