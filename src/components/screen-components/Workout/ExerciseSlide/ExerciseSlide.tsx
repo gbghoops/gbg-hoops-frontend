@@ -11,6 +11,7 @@ import {
 } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import getPhaseTitle from "@src/utils/getPhaseTitle";
+import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import {
     Audio,
     InterruptionModeAndroid,
@@ -291,7 +292,7 @@ const ExerciseSlide = ({
                         {isRestSlide ? (
                             <View
                                 mt={isLandScape ? "0%" : "$10"}
-                                height={isLandScape ? "100%" : 230}
+                                height={isLandScape ? "100%" : wn(230)}
                                 position="relative"
                             >
                                 <View
