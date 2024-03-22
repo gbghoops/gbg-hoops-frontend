@@ -37,6 +37,8 @@ export default function WorkoutDetails() {
         return <PageError returnPath="/programs" />;
     }
 
+    const isCustomWorkout = false;
+
     const slug = id[0];
 
     const currentProgram = programs.find((program) => program.slug === slug);
@@ -192,7 +194,7 @@ export default function WorkoutDetails() {
                         mt="$30"
                         textTransform="uppercase"
                     >
-                        {dayData.exercises[0].title}
+                        {`Day ${_activeDay}`}
                     </Text>
                 </View>
 
@@ -231,18 +233,20 @@ export default function WorkoutDetails() {
                                 />
                             </View>
                         </View>
-                        <View fd="row" ai="center">
-                            <ExerciseHeaderButton
-                                iconName="plus"
-                                onPress={() => {
-                                    setExerciseSheetOpen(true);
-                                }}
-                            />
-                            <ExerciseHeaderButton
-                                iconName="pencil"
-                                onPress={() => {}}
-                            />
-                        </View>
+                        {isCustomWorkout ? (
+                            <View fd="row" ai="center">
+                                <ExerciseHeaderButton
+                                    iconName="plus"
+                                    onPress={() => {
+                                        setExerciseSheetOpen(true);
+                                    }}
+                                />
+                                <ExerciseHeaderButton
+                                    iconName="pencil"
+                                    onPress={() => {}}
+                                />
+                            </View>
+                        ) : null}
                     </View>
                 </View>
 

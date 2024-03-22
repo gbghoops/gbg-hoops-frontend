@@ -27,7 +27,8 @@ export type PainAreasType =
     | "hip"
     | "lower_back"
     | "neck"
-    | "shoulder";
+    | "shoulder"
+    | "pain_free";
 
 export type UserSubscriptionType = "free" | "family";
 

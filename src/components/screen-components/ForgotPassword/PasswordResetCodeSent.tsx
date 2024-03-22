@@ -74,7 +74,7 @@ const PasswordResetCodeSent = ({
                 }}
                 handleFocus={() => setResetCodeErrored(false)}
             />
-            <View mt={"auto"}>
+            <View mt={"$10"}>
                 <Button
                     text="Continue"
                     fullWidth

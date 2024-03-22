@@ -32,7 +32,13 @@ export default function AssesmentSlide4({
             .map((e) => painAreasSelectOptions.find((o) => o.id === e)?.value)
             .filter((e) => !!e) as PainAreasType[];
 
-        return onValuesChange(newSelectedPainAreas);
+        const painFreeSelected = id === 7;
+
+        return onValuesChange(
+            painFreeSelected
+                ? ["pain_free"]
+                : newSelectedPainAreas.filter((e) => e !== "pain_free"),
+        );
     };
 
     return isActiveSlide ? (

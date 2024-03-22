@@ -78,7 +78,7 @@ const EnterResetPasswordEmail = ({
                     handleFocus={() => setEmailErrored(false)}
                 />
             </View>
-            <View mt={"auto"}>
+            <View mt={"$10"}>
                 <Button
                     text="Continue"
                     fullWidth

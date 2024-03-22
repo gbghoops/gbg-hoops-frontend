@@ -64,7 +64,7 @@ export default function HomePage() {
                                 <View width={"100%"} fd="row" jc="flex-end">
                                     <Avatar />
                                 </View>
-                                <View my={"$30"}>
+                                <View mt={"$50"}>
                                     <Text
                                         fontFamily={"$heading"}
                                         fontSize={"$40"}
@@ -169,7 +169,11 @@ export default function HomePage() {
                             </View>
 
                             {/* Upgrde Free Plan */}
-                            {isFreeUser ? <FreePlanUpgrade /> : null}
+                            {isFreeUser ? (
+                                <View mx="$20" mt="$20">
+                                    <FreePlanUpgrade />
+                                </View>
+                            ) : null}
 
                             {/* Workout of the Day */}
                             {!isFreeUser ? (

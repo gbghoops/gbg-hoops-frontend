@@ -424,7 +424,7 @@ const ExerciseSlide = ({
                     >
                         {/* Details */}
                         {!isRestSlide ? (
-                            <YStack w={"100%"} mt={isLandScape ? "0%" : "$20"}>
+                            <YStack w={"100%"} mt={isLandScape ? 0 : "$20"}>
                                 <XStack
                                     justifyContent={
                                         isLandScape
@@ -489,9 +489,7 @@ const ExerciseSlide = ({
                                     >
                                         <AdjustWeight
                                             onPress={() => {
-                                                setShowWeightAdjust(
-                                                    !showWeightAdjust,
-                                                );
+                                                setShowWeightAdjust(true);
                                             }}
                                             currentWeight={currentWeight}
                                             weightUnit="lbs"
@@ -508,7 +506,7 @@ const ExerciseSlide = ({
                                     ? isRestSlide
                                         ? "0%"
                                         : "$5"
-                                    : "$15"
+                                    : "$10"
                             }
                         >
                             {exerciseActivity ? (
@@ -586,8 +584,8 @@ const ExerciseSlide = ({
                                     nextExercise &&
                                     "type" in nextExercise ? (
                                         <View
-                                            mt={isLandScape ? "$10" : "$20"}
-                                            p={isLandScape ? "$10" : "$20"}
+                                            mt={"$10"}
+                                            p={"$10"}
                                             backgroundColor={"$surface_primary"}
                                             justifyContent={
                                                 isLandScape
@@ -600,16 +598,16 @@ const ExerciseSlide = ({
                                                 fontFamily={"$heading"}
                                                 textAlign="center"
                                                 fontSize={
-                                                    isLandScape ? "$14" : "$20"
+                                                    isLandScape ? "$14" : "$16"
                                                 }
                                             >
-                                                {`Phase "${getPhaseTitle(nextExercise.phase)}" Coming up next!`}
+                                                {`Get ready for next phase: ${getPhaseTitle(nextExercise.phase)}`}
                                             </Text>
                                         </View>
                                     ) : null}
                                     {nextExercise ? (
                                         <View
-                                            mt={isLandScape ? "$10" : "$20"}
+                                            mt={"$10"}
                                             p={isLandScape ? "$10" : "$20"}
                                             backgroundColor={"$surface_primary"}
                                             justifyContent={
@@ -661,7 +659,7 @@ const ExerciseSlide = ({
                                                             fontSize={
                                                                 isLandScape
                                                                     ? "$14"
-                                                                    : "$20"
+                                                                    : "$18"
                                                             }
                                                         >
                                                             {`Get Ready for the Next Exercise`}
@@ -673,9 +671,13 @@ const ExerciseSlide = ({
                                                             fontSize={
                                                                 isLandScape
                                                                     ? "$14"
-                                                                    : "$20"
+                                                                    : "$16"
                                                             }
                                                             mt={"$5"}
+                                                            textAlign="center"
+                                                            flexShrink={0}
+                                                            numberOfLines={1}
+                                                            textOverflow="ellipsis"
                                                         >
                                                             {`(${nextExercise?.name})`}
                                                         </Text>
@@ -907,18 +909,14 @@ const ExerciseSlide = ({
                         </YStack>
                     </View>
                 </View>
-            </YStack>
 
-            <AdjustWeightSheet
-                open={showWeightAdjust}
-                currentWeight={currentWeight}
-                onOpenStateChange={(state) => {
-                    setShowWeightAdjust(state);
-                }}
-                onWeightChange={(weight) => {
-                    setCurrentWeight(weight);
-                }}
-            />
+                <AdjustWeightSheet
+                    open={showWeightAdjust}
+                    currentWeight={currentWeight}
+                    onOpenStateChange={setShowWeightAdjust}
+                    onWeightChange={setCurrentWeight}
+                />
+            </YStack>
 
             {/* ---------------------------- */}
         </View>

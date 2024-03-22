@@ -9,6 +9,8 @@ import { RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { CachedImage } from "@georstat/react-native-image-cache";
+import Button from "@src/components/button/Button";
+import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import {
     FieldType,
     TitledTextField,
@@ -101,6 +103,8 @@ const FlashListHeader = ({
     isLoading = false,
 }: FlashListHeaderProps) => {
     const [searchTerm, setSearchTerm] = useState("");
+    const [showLegendSheet, setShowLegendSheet] = useState(false);
+
     const onChange = (text: string) => {
         setSearchTerm(text);
         onTextChange(text);
@@ -108,7 +112,6 @@ const FlashListHeader = ({
     return (
         <View>
             <View fd="row" jc="flex-end" py={"$10"}>
-                {/* Loading Indicator */}
                 <View f={1} height={"$54"}>
                     <TitledTextField
                         key={"search-field"}
@@ -121,12 +124,52 @@ const FlashListHeader = ({
                         maxCharacters={128}
                     />
                 </View>
+                <View ml={"$10"}>
+                    <Button text="Filter" secondary_transparent />
+                </View>
             </View>
+            <View alignItems="flex-end">
+                <View
+                    fd="row"
+                    onPress={() => setShowLegendSheet(true)}
+                    animation={"fast"}
+                    ai="center"
+                    pressStyle={{
+                        opacity: 0.75,
+                        scale: 0.995,
+                    }}
+                >
+                    <View>
+                        <Octicons
+                            name="info"
+                            size={wn(20)}
+                            color={colors.gold}
+                        />
+                    </View>
+                    <Text
+                        fontFamily={"$heading"}
+                        fontSize={"$20"}
+                        color={"$white"}
+                        ml="$5"
+                        mt="$5"
+                        textTransform="uppercase"
+                    >
+                        Legend
+                    </Text>
+                </View>
+            </View>
+
+            {/* Activity Indicator */}
             <View>
                 {isLoading ? (
                     <ActivityIndicator size="small" color={colors.gold} />
                 ) : null}
             </View>
+
+            <LegendSheet
+                sheetOpen={showLegendSheet}
+                setSheetOpen={setShowLegendSheet}
+            />
         </View>
     );
 };
@@ -146,7 +189,6 @@ const ExerciseListItem = ({ exercise }: { exercise: Exercise }) => {
                 scale: 0.995,
             }}
             onPress={() => {
-                console.log("exerciseID: ", exercise.contentful_id);
                 router.push(
                     `/exercise-details?exercise_id=${exercise.contentful_id}`,
                 );

@@ -23,6 +23,7 @@ export default function SettingsScreen() {
     const fullName = `${user.given_name} ${user.family_name}`;
 
     const websiteUrl = process.env.EXPO_PUBLIC_GBG_WEBSITE_URL ?? "";
+    const manageSubscriptionUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
 
     return (
         <Stack
@@ -62,15 +63,21 @@ export default function SettingsScreen() {
                             onPress={() => push("/settings/edit-profile")}
                         />
                         <SettingsListItem
+                            title="Manage Subscription"
+                            onPress={() =>
+                                Linking.openURL(manageSubscriptionUrl)
+                            }
+                        />
+                        <SettingsListItem
                             title="FAQs"
                             onPress={() => {
-                                Linking.openURL(websiteUrl);
+                                Linking.openURL(`${websiteUrl}/faq`);
                             }}
                         />
                         <SettingsListItem
                             title="Help and Support Center"
                             onPress={() => {
-                                Linking.openURL(websiteUrl);
+                                Linking.openURL(`${websiteUrl}/contact`);
                             }}
                         />
                     </View>

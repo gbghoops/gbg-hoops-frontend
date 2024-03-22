@@ -105,6 +105,9 @@ export default function useAssessmentState() {
                 await fetchAuthSession()
             ).tokens?.idToken?.toString();
 
+            const isPainFree =
+                assessmentState.pain_areas?.includes("pain_free");
+
             const response = await fetch(
                 `${process.env.EXPO_PUBLIC_BACKEND_URL}/users/intro`,
                 {
@@ -113,7 +116,12 @@ export default function useAssessmentState() {
                         Authorization: `Bearer ${idToken}`,
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(assessmentState),
+                    body: JSON.stringify({
+                        ...assessmentState,
+                        pain_areas: isPainFree
+                            ? []
+                            : assessmentState.pain_areas,
+                    }),
                 },
             );
 

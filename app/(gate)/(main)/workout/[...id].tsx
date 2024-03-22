@@ -125,8 +125,11 @@ export default function WorkoutScreen() {
             const activities = exercise.activities.map((activity) => ({
                 ...activity,
                 phase: exercise.phase,
+                phase_title: exercise.title,
                 total_rounds:
-                    exercise.type === "circuit" ? exercise.sets : undefined,
+                    exercise.type === "circuit" || exercise.type === "superset"
+                        ? exercise.sets
+                        : undefined,
                 execution_mode: exercise.type,
             }));
 
@@ -295,7 +298,9 @@ export default function WorkoutScreen() {
                                             activeProgramDay={activeDay}
                                             activeProgramWeek={activeWeek}
                                             dayTitle={
-                                                dayData.exercises[0].title
+                                                "phase_title" in item
+                                                    ? item.phase_title
+                                                    : ""
                                             }
                                             nextExercise={
                                                 flattenedActivities[index + 1]
