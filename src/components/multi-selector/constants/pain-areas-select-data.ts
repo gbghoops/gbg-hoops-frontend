@@ -13,4 +13,5 @@ export const painAreasSelectOptions: PainAreasSelectProps[] = [
     { id: 4, label: "Lower Back", value: "lower_back" },
     { id: 5, label: "Neck", value: "neck" },
     { id: 6, label: "Shoulder", value: "shoulder" },
+    { id: 7, label: "I'm Pain Free", value: "pain_free" },
 ];

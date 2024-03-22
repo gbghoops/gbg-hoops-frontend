@@ -76,9 +76,12 @@ export default function useAssessmentState() {
     };
 
     const onSlide4ValuesChange = (painAreas: PainAreasType[]) => {
+        const painFreeSelected = painAreas.includes("pain_free");
+
         setAssessmentState((prev) => ({
             ...prev,
-            pain_areas: painAreas.length ? painAreas : undefined,
+            pain_areas:
+                painAreas.length || painFreeSelected ? painAreas : undefined,
         }));
     };
 
@@ -118,6 +121,7 @@ export default function useAssessmentState() {
             );
 
             if (!response.ok) {
+                console.log("response", response);
                 throw new Error("Failed to submit assessment");
             }
 
