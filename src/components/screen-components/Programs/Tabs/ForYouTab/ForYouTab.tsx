@@ -12,7 +12,7 @@ import { useFocusEffect } from "expo-router";
 import { styled, Text, View } from "tamagui";
 
 import ActiveProgramsList from "../../ActiveProgramsList/ActiveProgramsList";
-import BuildYoutWorkoutCards from "../../BuildYourWorkoutCard";
+import BuildYourWorkoutCards from "../../BuildYourWorkoutCard";
 
 import NewestProgramCard from "./NewestProgramCard";
 import RefreshRoutineCard from "./RefreshRoutineCard";
@@ -57,7 +57,7 @@ export const ForYouTab = () => {
                 )}
 
                 {/* Build Your Workout */}
-                {!isFreeUser ? <BuildYoutWorkoutCards /> : null}
+                {!isFreeUser ? <BuildYourWorkoutCards /> : null}
 
                 {/* Recommended For you section... */}
                 <View>
@@ -86,7 +86,7 @@ export const ForYouTab = () => {
 
                 {isFreeUser ? (
                     <View>
-                        <BuildYoutWorkoutCards isLocked={isFreeUser} />
+                        <BuildYourWorkoutCards isFreeUser={isFreeUser} />
                     </View>
                 ) : null}
 
