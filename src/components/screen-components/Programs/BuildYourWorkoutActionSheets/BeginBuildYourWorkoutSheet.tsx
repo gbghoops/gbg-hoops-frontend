@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Linking } from "react-native";
-import {
-    AvoidSoftInput,
-    AvoidSoftInputView,
-} from "react-native-avoid-softinput";
+import { AvoidSoftInputView } from "react-native-avoid-softinput";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@src/components/button/Button";
+import { StyledImage } from "@src/components/styled-components";
 import {
     FieldType,
     TitledTextField,
 } from "@src/components/titled-text-field/TitledTextField";
+import useCustomWorkouts from "@src/hooks/custom-workout/useCustomWorkouts";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { toast } from "burnt";
 import { useRouter } from "expo-router";
-import { Sheet, Text, View } from "tamagui";
+import { Sheet, Text, View, XStack } from "tamagui";
 
 interface BeginBuildYourWorkoutSheetProps {
     sheetOpen: boolean;
@@ -26,14 +26,38 @@ const BeginBuildYourWorkoutSheet = ({
     setSheetOpen,
 }: BeginBuildYourWorkoutSheetProps) => {
     const websiteUrl = process.env.EXPO_PUBLIC_SIGNUP_URL ?? "";
-    const [exerciseName, setExerciseName] = useState("");
+    const [exerciseName, setExerciseName] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { top } = useSafeAreaInsets();
+    const { createCustomWorkout, createCustomWorkoutLoading } =
+        useCustomWorkouts();
+    const { push } = useRouter();
+
     const handleFreeUserUpgradeAction = () => {
         setSheetOpen(false);
 
         setTimeout(() => {
             Linking.openURL(websiteUrl);
         }, 300);
+    };
+
+    const onCustomWorkoutCreate = async () => {
+        try {
+            const res = await createCustomWorkout({ name: exerciseName });
+
+            console.log(res);
+
+            return push("/custom-workouts");
+        } catch (e) {
+            if (e instanceof Error) {
+                setErrorMessage(e.message);
+
+                return toast({
+                    title: e.message,
+                    preset: "error",
+                });
+            }
+        }
     };
 
     return (
@@ -127,14 +151,60 @@ const BeginBuildYourWorkoutSheet = ({
                                     value={exerciseName}
                                     handleChange={setExerciseName}
                                     placeholder="Enter workout name"
+                                    handleFocus={() => {
+                                        console.log("focus");
+                                        setErrorMessage(null);
+                                    }}
+                                    handleBlur={() => setErrorMessage(null)}
                                 />
+                                {/* Error container */}
+                                <View mt={"$5"}>
+                                    {errorMessage ? (
+                                        <XStack
+                                            borderWidth={1}
+                                            borderColor="$error_primary"
+                                            py={wn(10)}
+                                            px={wn(10)}
+                                            justifyContent="flex-start"
+                                            alignItems="center"
+                                            animation={"medium"}
+                                            enterStyle={{
+                                                opacity: 0,
+                                                y: 10,
+                                            }}
+                                            exitStyle={{
+                                                opacity: 0,
+                                                y: -10,
+                                            }}
+                                        >
+                                            <View
+                                                w={wn(24)}
+                                                h={wn(24)}
+                                                jc="center"
+                                                ai="center"
+                                            >
+                                                <StyledImage
+                                                    source={require("@assets/icon/error.png")}
+                                                />
+                                            </View>
+                                            <View f={1} ml={wn(5)}>
+                                                <Text
+                                                    fontFamily={"$body"}
+                                                    fontSize={wn(17)}
+                                                    lineHeight={wn(18)}
+                                                >
+                                                    {errorMessage}
+                                                </Text>
+                                            </View>
+                                        </XStack>
+                                    ) : null}
+                                </View>
                                 <View mt="$10" mb="$10" width={"100%"}>
                                     <Button
-                                        text="START BUILDING"
                                         fullWidth
-                                        onPress={() => {
-                                            setSheetOpen(false);
-                                        }}
+                                        text="START BUILDING"
+                                        onPress={onCustomWorkoutCreate}
+                                        loading={createCustomWorkoutLoading}
                                     />
                                 </View>
                             </View>
