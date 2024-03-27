@@ -1,6 +1,6 @@
 import { ActivityIndicator } from "react-native";
 import { CachedImage } from "@georstat/react-native-image-cache";
-import { Exercise } from "@src/hooks/exercise-list/useExerciseList";
+import { Exercise } from "@src/context/ProgramsContext/types";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";

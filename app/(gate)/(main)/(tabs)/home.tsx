@@ -26,8 +26,7 @@ export default function HomePage() {
     const { user } = useUser();
 
     const { programs, programsFetching } = usePrograms();
-    const { customWorkouts, fetchCustomWorkouts, customWorkoutsLoading } =
-        useCustomWorkouts();
+    const { customWorkoutsLoading } = useCustomWorkouts();
 
     const programsWithProgress = programs.filter(
         (p) => !("is_locked" in p) && p.progress,

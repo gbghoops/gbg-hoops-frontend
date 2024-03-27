@@ -19,6 +19,7 @@ export const base = {
     athleticism_indicator: "#FF5400",
     force_indicator: "#A555FF",
     recovery_indicator: "#00D8FF",
+    modal_overlay: "rgba(20, 20, 20, 0.75)",
 };
 export const colors = {
     ...base,

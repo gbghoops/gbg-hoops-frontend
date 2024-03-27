@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ActivityIndicator, Keyboard } from "react-native";
 import { AvoidSoftInputView } from "react-native-avoid-softinput";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { FlashList } from "@shopify/flash-list";
@@ -10,12 +9,13 @@ import {
     FieldType,
     TitledTextField,
 } from "@src/components/titled-text-field/TitledTextField";
-import {
-    Exercise,
-    useExerciseList,
-} from "@src/hooks/exercise-list/useExerciseList";
+import { Exercise, ProgramActivity } from "@src/context/ProgramsContext/types";
+import useCustomWorkout from "@src/hooks/custom-workout/useCustomWorkout";
+import useCustomWorkouts from "@src/hooks/custom-workout/useCustomWorkouts";
+import { useExerciseList } from "@src/hooks/exercise-list/useExerciseList";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
+import { toast } from "burnt";
 import { useRouter } from "expo-router";
 import {
     debounce,
@@ -26,17 +26,19 @@ import {
     View,
 } from "tamagui";
 
-import type { CheckboxProps, SizeTokens } from "tamagui";
-
-import ExerciseListItem from "../ExerciseList/ExerciseListItem";
-
 interface AddExerciseSheetProps {
     open: boolean;
+    name: string;
+    workoutId: string;
+    exercises: ProgramActivity[];
     onOpenStateChange: (open: boolean) => void;
 }
 
 const AddExerciseSheet = ({
     open,
+    name,
+    workoutId,
+    exercises: customWorkoutExercises,
     onOpenStateChange,
 }: AddExerciseSheetProps) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -45,15 +47,19 @@ const AddExerciseSheet = ({
         exercises = [],
         fetchNextPage,
         hasNextPage,
-        isLoading,
+        isLoading: isExerciseListLoading,
         refetch,
-        isFetching,
+        isFetching: isExerciseListFetching,
     } = useExerciseList({
         searchTerm,
     });
 
+    const { updateCustomWorkout, updateCustomWorkoutPending } =
+        useCustomWorkout(workoutId);
+
+    const { fetchCustomWorkouts } = useCustomWorkouts();
+
     const { height } = useWindowDimensions();
-    const { bottom } = useSafeAreaInsets();
     const router = useRouter();
 
     const loadNextPage = async () => {
@@ -72,6 +78,46 @@ const AddExerciseSheet = ({
         refetchOnchange();
     };
 
+    // TODO: Implement add functionality complete with loading state
+
+    const handleExerciseAdd = async () => {
+        if (!selectedExercises.length) return;
+
+        const activities: Exercise[] = selectedExercises
+            .map((id) => {
+                return exercises.find(
+                    (exercise) => exercise.contentful_id === id,
+                );
+            })
+            .filter(
+                (exercise) => !!exercise || exercise !== undefined,
+            ) as Exercise[];
+
+        try {
+            await updateCustomWorkout({
+                workout_id: workoutId,
+                name,
+                activities: [...customWorkoutExercises, ...activities].flat(),
+            });
+
+            await fetchCustomWorkouts();
+
+            onOpenStateChange(false);
+
+            setTimeout(() => {
+                router.push(`/custom-workouts/${workoutId}`);
+            }, 300);
+        } catch (e) {
+            return toast({
+                title: "We were unable to add the exercises to this workout.",
+                preset: "error",
+                message: "Please try again later.",
+            });
+        }
+    };
+
+    const isListLoading = isExerciseListLoading || isExerciseListFetching;
+
     return (
         <Sheet
             forceRemoveScrollEnabled={open}
@@ -88,11 +134,13 @@ const AddExerciseSheet = ({
                 animation="slow"
                 enterStyle={{ opacity: 0 }}
                 exitStyle={{ opacity: 0 }}
-                backgroundColor={"rgba(20,20,20,0.75)"}
+                backgroundColor={"$modal_overlay"}
             />
+            {updateCustomWorkoutPending ? <LoadingScreenSection /> : null}
             <AvoidSoftInputView>
                 <Sheet.Frame
                     padding="$10"
+                    paddingBottom={0}
                     space="$5"
                     backgroundColor={"$surface_primary"}
                     position="relative"
@@ -107,7 +155,7 @@ const AddExerciseSheet = ({
                         opacity={0.35}
                         animation={"fast"}
                     />
-                    <View my={"$20"}>
+                    <View my={"$20"} position="relative">
                         <View px="$5">
                             <Text
                                 fontFamily={"$heading"}
@@ -142,14 +190,21 @@ const AddExerciseSheet = ({
                             <FlashList
                                 data={exercises}
                                 onEndReached={loadNextPage}
-                                refreshing={isLoading}
+                                refreshing={isExerciseListLoading}
                                 showsVerticalScrollIndicator={false}
                                 estimatedItemSize={wn(136.3)}
+                                ListHeaderComponent={
+                                    <ListHeaderComponent
+                                        isLoading={isListLoading}
+                                    />
+                                }
                                 contentContainerStyle={{
                                     paddingHorizontal: wn(5),
                                 }}
                                 ListEmptyComponent={
-                                    !isLoading ? <ListEmptyComponent /> : null
+                                    !isExerciseListLoading ? (
+                                        <ListEmptyComponent />
+                                    ) : null
                                 }
                                 renderItem={({ item }) => (
                                     <AddExerciseItem
@@ -195,7 +250,8 @@ const AddExerciseSheet = ({
                                         selectedExercises.length > 1 ? "s" : ""
                                     }`}
                                     isDisabled={selectedExercises.length === 0}
-                                    onPress={() => {}}
+                                    onPress={handleExerciseAdd}
+                                    loading={updateCustomWorkoutPending}
                                     fullWidth
                                 />
                             </View>
@@ -204,6 +260,37 @@ const AddExerciseSheet = ({
                 </Sheet.Frame>
             </AvoidSoftInputView>
         </Sheet>
+    );
+};
+
+const LoadingScreenSection = () => {
+    return (
+        <View
+            top={0}
+            left={0}
+            w="100%"
+            h="100%"
+            backgroundColor={"$modal_overlay"}
+            jc={"center"}
+            ai={"center"}
+            pos={"absolute"}
+            zIndex={100_000}
+        >
+            <ActivityIndicator size="small" color={colors.gold} />
+        </View>
+    );
+};
+
+interface ListHeaderComponentProps {
+    isLoading: boolean;
+}
+const ListHeaderComponent = ({ isLoading }: ListHeaderComponentProps) => {
+    return (
+        <View>
+            {isLoading ? (
+                <ActivityIndicator size="small" color={colors.gold} />
+            ) : null}
+        </View>
     );
 };
 
@@ -222,8 +309,6 @@ const AddExerciseItem = ({
             fd="row"
             ai="center"
             py="$15"
-            borderBottomWidth={0.25}
-            borderBottomColor={"$border_primary"}
             animation={"fast"}
             pressStyle={{
                 opacity: 0.75,
@@ -240,8 +325,6 @@ const AddExerciseItem = ({
                     style={{
                         width: wn(60),
                         height: wn(60),
-                        borderWidth: 1,
-                        borderColor: colors.gold,
                     }}
                 />
             </View>
@@ -279,9 +362,10 @@ const ListEmptyComponent = () => {
             borderColor={"rgba(250, 250, 250, 0.5)"}
             jc={"center"}
             ai={"center"}
+            h={wn(200)}
         >
             <View mb={"$10"}>
-                <Octicons name="search" size={wn(40)} color={colors.gold} />
+                <Octicons name="search" size={wn(30)} color={colors.gold} />
             </View>
             <Text fontSize={"$20"} fontFamily={"$heading"} color={"$gold"}>
                 No exercises found

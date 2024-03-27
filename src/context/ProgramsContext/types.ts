@@ -137,7 +137,7 @@ export interface ProgramDay {
 
 export interface CustomWorkout {
     summary: ProgramSummary[];
-    exercises: ProgramExerciseWithActivity[];
+    exercises: ProgramExercise[];
     workout_id: string;
     name: string;
 }
@@ -292,4 +292,18 @@ export interface CompletedExercisesData {
     weight?: number;
     week: number;
     day: number;
+}
+
+export interface Exercise {
+    name: string;
+    video: string;
+    instructional_video: string;
+    thumbnail: string;
+    type: exerciseType;
+    uni_lateral: boolean;
+    sets: number;
+    contentful_id: string;
+    include_weights: boolean;
+    seconds_hold: number;
+    equipment: EquipmentData[];
 }

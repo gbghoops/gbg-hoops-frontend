@@ -8,20 +8,16 @@ import { Tabs } from "react-native-collapsible-tab-view";
 import { RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import { CachedImage } from "@georstat/react-native-image-cache";
 import Button from "@src/components/button/Button";
 import LegendSheet from "@src/components/screen-components/Programs/ProgramDetails/LegendSheet";
 import {
     FieldType,
     TitledTextField,
 } from "@src/components/titled-text-field/TitledTextField";
-import {
-    Exercise,
-    useExerciseList,
-} from "@src/hooks/exercise-list/useExerciseList";
+import { Exercise } from "@src/context/ProgramsContext/types";
+import { useExerciseList } from "@src/hooks/exercise-list/useExerciseList";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
-import { useRouter } from "expo-router";
 import { debounce, Text, View } from "tamagui";
 
 import ExerciseListItem from "../../ExerciseList/ExerciseListItem";
@@ -90,7 +86,13 @@ export function ExerciseLibrary() {
                     <ExerciseListItem exercise={item as Exercise} />
                 )}
                 showsVerticalScrollIndicator={false}
-                ListEmptyComponent={!isLoading ? <ListEmptyComponent /> : null}
+                ListEmptyComponent={
+                    !isLoading ? (
+                        <View mt="$30">
+                            <ListEmptyComponent />
+                        </View>
+                    ) : null
+                }
             />
         </KeyboardAvoidingView>
     );
@@ -186,9 +188,10 @@ const ListEmptyComponent = () => {
             borderColor={"rgba(250, 250, 250, 0.5)"}
             jc={"center"}
             ai={"center"}
+            height={wn(200)}
         >
             <View mb={"$10"}>
-                <Octicons name="search" size={wn(40)} color={colors.gold} />
+                <Octicons name="search" size={wn(30)} color={colors.gold} />
             </View>
             <Text fontSize={"$20"} fontFamily={"$heading"} color={"$gold"}>
                 No exercises found

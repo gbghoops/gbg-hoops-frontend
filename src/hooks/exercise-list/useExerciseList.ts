@@ -1,27 +1,10 @@
-import {
-    EquipmentData,
-    exerciseType,
-} from "@src/context/ProgramsContext/types";
+import { Exercise } from "@src/context/ProgramsContext/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 
 interface FetchExercisesProps {
     page: number;
     search_term?: string;
-}
-
-export interface Exercise {
-    name: string;
-    video: string;
-    instructional_video: string;
-    thumbnail: string;
-    type: exerciseType;
-    uni_lateral: boolean;
-    sets: number;
-    contentful_id: string;
-    include_weights: boolean;
-    seconds_hold: number;
-    equipment: EquipmentData[];
 }
 
 const fetchExercises = async ({
@@ -31,8 +14,13 @@ const fetchExercises = async ({
     const backend_url = process.env.EXPO_PUBLIC_BACKEND_URL ?? "";
 
     const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
+
+    const searchParams = search_term.length
+        ? new URLSearchParams({ search_term, page: String(page) })
+        : new URLSearchParams({ page: String(page) });
+
     const response = await fetch(
-        `${backend_url}/content/exercises?${new URLSearchParams({ page: String(page), search_term }).toString()}`,
+        `${backend_url}/content/exercises?${searchParams.toString()}`,
         {
             method: "GET",
             headers: {
