@@ -204,6 +204,7 @@ const BeginBuildYourWorkoutSheet = ({
                                     <Button
                                         fullWidth
                                         text="START BUILDING"
+                                        isDisabled={!exerciseName}
                                         onPress={onCustomWorkoutCreate}
                                         loading={createCustomWorkoutLoading}
                                     />

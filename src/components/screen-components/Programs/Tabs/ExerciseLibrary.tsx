@@ -24,6 +24,8 @@ import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
 import { debounce, Text, View } from "tamagui";
 
+import ExerciseListItem from "../../ExerciseList/ExerciseListItem";
+
 export function ExerciseLibrary() {
     const [searchTerm, setSearchTerm] = useState("");
     const { bottom, top } = useSafeAreaInsets();
@@ -170,50 +172,6 @@ const FlashListHeader = ({
                 sheetOpen={showLegendSheet}
                 setSheetOpen={setShowLegendSheet}
             />
-        </View>
-    );
-};
-
-const ExerciseListItem = ({ exercise }: { exercise: Exercise }) => {
-    const router = useRouter();
-    return (
-        <View
-            fd="row"
-            ai="center"
-            py="$15"
-            borderBottomWidth={0.25}
-            borderBottomColor={"$border_primary"}
-            animation={"fast"}
-            pressStyle={{
-                opacity: 0.75,
-                scale: 0.995,
-            }}
-            onPress={() => {
-                router.push(
-                    `/exercise-details?exercise_id=${exercise.contentful_id}`,
-                );
-            }}
-        >
-            <View width={wn(100)} height={wn(100)}>
-                <CachedImage
-                    source={`http:${exercise.thumbnail}`}
-                    loadingImageComponent={() => (
-                        <ActivityIndicator size="small" color={colors.gold} />
-                    )}
-                    style={{ width: wn(100), height: wn(100) }}
-                />
-            </View>
-            <Text
-                fontFamily={"$heading"}
-                color={"$gold"}
-                fontSize={"$20"}
-                numberOfLines={2}
-                textOverflow="ellipsis"
-                flexShrink={1}
-                ml="$10"
-            >
-                {exercise.name}
-            </Text>
         </View>
     );
 };
