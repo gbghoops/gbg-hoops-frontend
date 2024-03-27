@@ -12,9 +12,10 @@ import ExerciseHeaderButton from "@src/components/screen-components/Programs/Wor
 import ProgressIndicator from "@src/components/screen-components/Programs/WorkoutDetails/ProgressIndicator/ProgressIndicator";
 import WeeklyActivitiesBreakdown from "@src/components/weekly-activities-breakdown/WeeklyActivitiesBreakdown";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
-import { EquipmentData, ProgramDay } from "@src/context/ProgramsContext/types";
+import { ProgramDay } from "@src/context/ProgramsContext/types";
 import getProgramDayInfo from "@src/context/ProgramsContext/utils/getProgramDayInfo";
 import { colors } from "@src/styles/theme/colors";
+import getEquipmentFromExerciseData from "@src/utils/getEquipmentFromExerciseData";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import slugify from "slugify";
@@ -148,7 +149,9 @@ export default function WorkoutDetails() {
 
     const { dayData, dayMemo } = dayInfo;
 
-    const equipments = dayData ? getEquipmentFromDayData(dayData) : [];
+    const equipments = dayData
+        ? getEquipmentFromExerciseData(dayData.exercises)
+        : [];
 
     return (
         <View f={1} bc="$surface_background" position="relative">
@@ -265,7 +268,9 @@ export default function WorkoutDetails() {
                     ) : null}
 
                     <View mt={"$20"}>
-                        <DayActivityExerciseList exerciseData={dayData} />
+                        <DayActivityExerciseList
+                            exerciseSummary={dayData.summary}
+                        />
                     </View>
                 </View>
 
@@ -339,38 +344,6 @@ export default function WorkoutDetails() {
         </View>
     );
 }
-
-const getEquipmentFromDayData = (dayData: ProgramDay) => {
-    // get unique equipments from dayData > daydata.exercises > activities > equipment
-
-    const equipments = dayData.exercises
-        .reduce((acc: EquipmentData[][], exercise) => {
-            if (exercise && !("activities" in exercise)) return acc;
-
-            const equipments = exercise.activities
-                .map((activity) => activity.equipment)
-                .filter((equipment) => equipment);
-            return [...acc, ...equipments];
-        }, [])
-        .flat() as EquipmentData[];
-
-    const uniqueEquipments = equipments.reduce(
-        (acc: EquipmentData[], equipment) => {
-            if (
-                acc.find(
-                    (accEquipment) =>
-                        accEquipment.contentful_id === equipment.contentful_id,
-                )
-            ) {
-                return acc;
-            }
-            return [...acc, equipment];
-        },
-        [],
-    );
-
-    return uniqueEquipments;
-};
 
 interface stylesProps {
     contentContainer: {

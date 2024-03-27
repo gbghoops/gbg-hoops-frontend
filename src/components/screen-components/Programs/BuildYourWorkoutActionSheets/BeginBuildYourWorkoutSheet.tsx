@@ -45,9 +45,11 @@ const BeginBuildYourWorkoutSheet = ({
         try {
             const res = await createCustomWorkout({ name: exerciseName });
 
-            console.log(res);
+            setSheetOpen(false);
 
-            return push("/custom-workouts");
+            return setTimeout(() => {
+                return push(`/custom-workouts/${res.workout_id}`);
+            }, 300);
         } catch (e) {
             if (e instanceof Error) {
                 setErrorMessage(e.message);
@@ -105,7 +107,7 @@ const BeginBuildYourWorkoutSheet = ({
                     {isFreeUser ? (
                         <View
                             backgroundColor={"$surface_primary"}
-                            p={"$20"}
+                            p={"$10"}
                             pb="$30"
                         >
                             <Text
@@ -115,7 +117,7 @@ const BeginBuildYourWorkoutSheet = ({
                                 fontFamily={"$heading"}
                                 my="$10"
                             >
-                                Ready to Level Up?
+                                Upgrade Your Account to Access This Feature
                             </Text>
                             <Text
                                 textAlign="center"
@@ -152,7 +154,6 @@ const BeginBuildYourWorkoutSheet = ({
                                     handleChange={setExerciseName}
                                     placeholder="Enter workout name"
                                     handleFocus={() => {
-                                        console.log("focus");
                                         setErrorMessage(null);
                                     }}
                                     handleBlur={() => setErrorMessage(null)}

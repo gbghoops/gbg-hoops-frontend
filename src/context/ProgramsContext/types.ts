@@ -135,6 +135,13 @@ export interface ProgramDay {
     exercises: ProgramExercise[];
 }
 
+export interface CustomWorkout {
+    summary: ProgramSummary[];
+    exercises: ProgramExerciseWithActivity[];
+    workout_id: string;
+    name: string;
+}
+
 export interface Program {
     name: string;
     slug: string;

@@ -1,21 +1,22 @@
+import { useState } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import {
     CompletedExerciseProgress,
-    ProgramDay,
     ProgramSummary,
     WorkoutPhases,
 } from "@src/context/ProgramsContext/types";
+import { useExerciseList } from "@src/hooks/exercise-list/useExerciseList";
 import { colors } from "@src/styles/theme/colors";
 import { useRouter } from "expo-router";
-import { Text, View } from "tamagui";
+import { debounce, Text, View } from "tamagui";
 
 import Button from "../button/Button";
 import CompletedTag from "../completed-tag/CompletedTag";
 
 interface DayActivityExerciseListProps {
     exercisesCompleted?: boolean;
-    exerciseData: ProgramDay;
+    exerciseSummary: ProgramSummary[];
     dayWorkoutPath?: string;
     allowRedo?: boolean;
     progress?: CompletedExerciseProgress[];
@@ -47,18 +48,17 @@ const mapPhaseToTitle = (phase: WorkoutPhases) => {
 };
 
 const DayActivityExerciseList = ({
-    exerciseData,
+    exerciseSummary,
     allowRedo = false,
     exercisesCompleted = false,
     dayWorkoutPath = "",
     progress = [],
 }: DayActivityExerciseListProps) => {
     const router = useRouter();
-    if (!exerciseData) {
+
+    if (!exerciseSummary) {
         return null;
     }
-
-    const exerciseSummary = exerciseData.summary;
 
     const getExerciseBlocksByPhases = (exerciseSummary: ProgramSummary[]) => {
         const groupedExercises: GroupedExercises = {

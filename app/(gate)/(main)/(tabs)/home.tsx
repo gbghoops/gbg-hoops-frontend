@@ -13,6 +13,7 @@ import WorkoutOfTheDayCard from "@src/components/screen-components/Home/WorkoutO
 import ActiveProgramsList from "@src/components/screen-components/Programs/ActiveProgramsList/ActiveProgramsList";
 import { usePrograms } from "@src/context/ProgramsContext/programs-context";
 import { useUser } from "@src/context/UserContext/user-context";
+import useCustomWorkouts from "@src/hooks/custom-workout/useCustomWorkouts";
 import { colors } from "@src/styles/theme/colors";
 import { widthNormalized as wn } from "@src/utils/normalize-dimensions";
 import { useRouter } from "expo-router";
@@ -25,6 +26,8 @@ export default function HomePage() {
     const { user } = useUser();
 
     const { programs, programsFetching } = usePrograms();
+    const { customWorkouts, fetchCustomWorkouts, customWorkoutsLoading } =
+        useCustomWorkouts();
 
     const programsWithProgress = programs.filter(
         (p) => !("is_locked" in p) && p.progress,
@@ -80,7 +83,7 @@ export default function HomePage() {
                         <View>
                             {/* Intro Banner */}
                             <View px={"$20"} mt={-(bannerHeight / 1.95)}>
-                                {!programsFetching ? (
+                                {!programsFetching && !customWorkoutsLoading ? (
                                     programsWithProgress.length > 0 ? (
                                         <View>
                                             <ActiveProgramsList />

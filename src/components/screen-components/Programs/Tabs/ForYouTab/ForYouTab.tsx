@@ -42,7 +42,7 @@ export const ForYouTab = () => {
                 {/* My Program */}
                 {programsFetching ? (
                     <View
-                        p="$20"
+                        m="$20"
                         backgroundColor="$surface_primary"
                         jc="center"
                         ai={"center"}
@@ -51,7 +51,7 @@ export const ForYouTab = () => {
                         <ActivityIndicator size="small" color={colors.gold} />
                     </View>
                 ) : (
-                    <View mx="$20" mt="$20">
+                    <View m="$20" mb="$10">
                         <ActiveProgramsList />
                     </View>
                 )}

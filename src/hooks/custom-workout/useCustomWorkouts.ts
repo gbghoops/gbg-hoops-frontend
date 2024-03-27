@@ -1,4 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { CustomWorkout } from "@src/context/ProgramsContext/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 
 interface CreateCustomWorkoutProps {
@@ -6,7 +7,9 @@ interface CreateCustomWorkoutProps {
 }
 
 const backend_url = process.env.EXPO_PUBLIC_BACKEND_URL ?? "";
-const createCustomWorkout = async ({ name }: CreateCustomWorkoutProps) => {
+const createCustomWorkout = async ({
+    name,
+}: CreateCustomWorkoutProps): Promise<CustomWorkout> => {
     const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
 
     try {
@@ -29,6 +32,29 @@ const createCustomWorkout = async ({ name }: CreateCustomWorkoutProps) => {
     }
 };
 
+const getCustomWorkouts = async () => {
+    const idToken = (await fetchAuthSession()).tokens?.idToken?.toString();
+
+    try {
+        const response = await fetch(`${backend_url}/content/custom_workouts`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${idToken}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Error fetching custom workouts");
+        }
+
+        const res = await response.json();
+
+        return res.custom_workouts;
+    } catch (e) {
+        throw new Error("Error fetching custom workouts");
+    }
+};
+
 export default function useCustomWorkouts() {
     const {
         mutateAsync: createCustomWorkoutMutation,
@@ -39,7 +65,21 @@ export default function useCustomWorkouts() {
         mutationKey: ["createCustomWorkout"],
     });
 
+    const {
+        data: customWorkouts,
+        isLoading: customWorkoutsLoading,
+        error: customWorkoutsError,
+        refetch: fetchCustomWorkouts,
+    } = useQuery<CustomWorkout[]>({
+        queryFn: getCustomWorkouts,
+        queryKey: ["customWorkouts"],
+    });
+
     return {
+        customWorkouts,
+        customWorkoutsLoading,
+        customWorkoutsError,
+        fetchCustomWorkouts,
         createCustomWorkout: createCustomWorkoutMutation,
         createCustomWorkoutLoading: isPending,
         createCustomWorkoutError: error,

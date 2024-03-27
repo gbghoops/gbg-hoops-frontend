@@ -159,7 +159,7 @@ const DayActivityAccordion = ({
                 >
                     {accordionOpen ? (
                         <DayActivityExerciseList
-                            exerciseData={day}
+                            exerciseSummary={day.summary}
                             allowRedo={allowRedo}
                             progress={dayProgress}
                             dayWorkoutPath={`/workout/${programSlug}/${programWeekNumber}/${programDayNumber}`}
