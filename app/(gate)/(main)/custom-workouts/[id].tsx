@@ -61,7 +61,7 @@ export default function CustomWorkouts() {
                 showsVerticalScrollIndicator={false}
                 f={1}
                 contentContainerStyle={{
-                    paddingBottom: wn(30),
+                    paddingBottom: wn(150),
                     width: "100%",
                     minHeight: "100%",
                     position: "relative",

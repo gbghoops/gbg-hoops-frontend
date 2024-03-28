@@ -46,13 +46,13 @@ export interface ProgramActivity {
     instructional_video: string;
     thumbnail: string;
     equipment: EquipmentData[];
-    meta_workout_template: string[];
-    meta_type: string[];
-    meta_environment: string[];
-    metaEquipment: string[];
-    meta_pain: string[];
-    meta_mobility: string[];
-    metaLowerbodyGoals: string[];
+    meta_workout_template?: string[];
+    meta_type?: string[];
+    meta_environment?: string[];
+    metaEquipment?: string[];
+    meta_pain?: string[];
+    meta_mobility?: string[];
+    metaLowerbodyGoals?: string[];
     contentful_id: string;
     round?: number;
 }
