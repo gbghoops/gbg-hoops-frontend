@@ -178,12 +178,6 @@ const AddExerciseSheet = ({
                                         maxCharacters={128}
                                     />
                                 </View>
-                                <View ml={"$10"}>
-                                    <Button
-                                        text="Filter"
-                                        secondary_transparent
-                                    />
-                                </View>
                             </View>
                         </View>
                         <View height={height * 0.65}>

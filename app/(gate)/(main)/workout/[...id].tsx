@@ -59,31 +59,41 @@ export default function WorkoutScreen() {
     const router = useRouter();
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setShowReadyScreen(false);
             setShowRotateScreen(true);
         }, 1000);
+
+        return () => clearTimeout(timer);
     }, []);
 
     useEffect(() => {
+        let timer: NodeJS.Timeout | null = null;
+
         if (!showReadyScreen) {
-            setTimeout(() => {
+            timer = setTimeout(() => {
                 unlockScreenOrientation();
             }, 400);
         }
+
         return () => {
+            timer && clearTimeout(timer);
             lockScreenOrientation();
         };
     }, [showReadyScreen]);
 
     // Listen to changes in showRotateScreen state.
-
     useEffect(() => {
+        let timer: NodeJS.Timeout | null = null;
         if (showRotateScreen) {
-            setTimeout(() => {
+            timer = setTimeout(() => {
                 setShowRotateScreen(false);
             }, 2000);
         }
+
+        return () => {
+            timer && clearTimeout(timer);
+        };
     }, [showRotateScreen]);
 
     if (!id || id.length === 0) {

@@ -34,6 +34,7 @@ export default function CustomWorkouts() {
     const [showLegendSheet, setShowLegendSheet] = useState(false);
 
     const exerciseInfoIconSize = wn(20);
+    const exerciseListBottomPadding = wn(150);
 
     // TODO: Remember to show error state / error message
     if (
@@ -61,7 +62,7 @@ export default function CustomWorkouts() {
                 showsVerticalScrollIndicator={false}
                 f={1}
                 contentContainerStyle={{
-                    paddingBottom: wn(150),
+                    paddingBottom: exerciseListBottomPadding,
                     width: "100%",
                     minHeight: "100%",
                     position: "relative",
